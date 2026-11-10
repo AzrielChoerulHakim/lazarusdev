@@ -1,36 +1,58 @@
 # LAZARUS DEV — The Rupture
 
-A scroll-directed **real 3D WebGL experience** for an independent creative development studio.
+A surrealist digital experience for an independent creative development studio. **Actual interactive WebGL**, not a video, iframe, or still-image parallax.
 
-## Run locally
+**Live:** https://azrielchoerulhakim.github.io/lazarusdev/
+
+## Get started
 
 ```bash
 npm install
 npm run dev
-```
-
-Build and preview:
-
-```bash
 npm run build
 npm run preview
 ```
 
-## Implementation
+The website works both as a Vite build and directly from GitHub Pages source (using a pinned Three.js import map). Set Vercel's framework to **Vite** and output directory to **dist** if connecting a Vercel project later.
 
-- **Three.js:** real meshes for a fragmented marble bust, stone portal, arched ruins, hovering architecture, moon, floating debris, and a dynamic crimson ribbon. No image/video is passed off as 3D.
-- **Scroll as camera direction:** damped camera position and look-at target progress along five story chapters.
-- **Progressive enhancement:** WebGL/capability checks, static atmospheric fallback, adaptive pixel ratio, reduced-motion support, pause control, and visibility-based rendering.
-- **Interactive editorial layer:** responsive navigation, animated reveal, three explicitly labeled *concept* explorations, project detail dialogs, and a local-only project brief builder that copies content to the clipboard.
+## The world
 
-## Content truthfulness
+- **CC0 artist-modelled bust:** a real 3D marble sculpture by Rico Cilliers (Poly Haven), with embedded glTF PBR maps. Two independently clipped instances create a surreal gap across the face. The original procedural bust remains a loading/failure fallback.
+- **Weathered architectural surfaces:** three local photographic sandstone PBR maps (diffuse/normal/roughness), CC0 by Dimitrios Savva, on original procedural masonry.
+- **Lighting:** image-based physical illumination, aged golden-hour directional light, responsive portal light and shadow quality tiers.
+- **Atmosphere:** animated multi-octave procedural clouds, layered mist sprites, responsive water shader, moon, carved arches and hovering rocky architecture.
+- **Motion:** multi-subdivision folded cloth geometry, a portal shader, scroll-following camera paths with separate mobile framing and restrained pointer parallax.
+- **Editorial website:** selected worlds (clearly marked concepts), capabilities, manifesto, accessible navigation, dialogs, and a local-only project brief builder.
 
-The showcased projects are **fictional concept explorations**, *not* completed client commissions. The project brief dialog **does not send** data; wire up a studio-approved contact channel or backend before launching publicly.
+**Attribution and exact SHA-256 hashes:** [assets/ATTRIBUTION.md](assets/ATTRIBUTION.md).
 
-## Deployment
+## Quality pipeline
 
-Static Vite output works on Vercel: framework **Vite**, build command `npm run build`, output directory `dist`.
+```text
+GitHub push
+  ├── verify JS syntax + Vite production build
+  ├── Playwright WebGL 2 desktop/mobile: verify bust and sandstone actually load
+  ├── test navigation, project detail dialogs and portal scroll
+  ├── save screenshots to GitHub Actions artifacts
+  └── render isolated visual QA branch snapshots for art-direction review
+```
 
-## Accessibility and performance
+Build and browser verification: [GitHub Actions](../../actions/workflows/build.yml).
 
-Semantic landmarks, visible keyboard focus, skip link, accessible dialogs, native form validation, `prefers-reduced-motion`, WebGL failure fallback, a motion toggle, capped DPR and geometry budgets. The scene is intentionally stylized/procedural: production-grade photogrammetric sculpture would require separately authored and optimized 3D assets.
+Visual snapshot workflow: [GitHub Actions](../../actions/workflows/visual-qa.yml).
+
+The snapshot screenshots live on separate `visual-qa-<commit>` branches rather than inflating the main production repository.
+
+## Performance and accessibility
+
+- Hardware/software renderer detection; software GPU disables dynamic shadows and reduces pixel ratio; mobile has an independent resolution budget.
+- `prefers-reduced-motion`, a working motion toggle, visibility-aware animation loop and a usable no-WebGL fallback.
+- Semantic headings, focus styles, accessible dialogs, keyboard-usable navigation, skip link and native brief validation.
+- Progressive GLB/PBR loading; the HTML experience remains available during downloads.
+
+## Remaining production requirements
+
+- The sample project cards are **fictional explorations**, not completed client commissions.
+- The brief dialog **does not send** data. Connect a verified studio contact channel or backend before taking client requests.
+- This CC0 marble sculpt is **not the exact head in the reference painting**. Matching that illustration exactly would require a custom sculpt and art-directed topology work.
+- Professional cross-browser physical-device profiling and visual sign-off are still recommended before marketing claims such as a guaranteed 60 FPS.
