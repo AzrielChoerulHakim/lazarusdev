@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { loadScannedOracle } from './sculpture.js';
 import { enhanceEnvironment } from './environment.js';
 import { attachPortalVeil } from './portalFx.js';
+import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const THREE_BG = 0x081a1d;
@@ -375,6 +376,8 @@ export function createWorld(canvas) {
   scene.add(gateLight);
 
   const stone = makeStoneMaterials(marbleTexture());
+  const proceduralColor = stone[0].map;
+  const proceduralNormal = stone[0].normalMap;
   const statue = makeBust(stone);
   scene.add(statue);
   const threshold = portal(stone, -2.15, -.28, -7.5, 1.30, true);
@@ -395,7 +398,15 @@ export function createWorld(canvas) {
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
   let scannedOracle = null;
+  let sandstone = null;
   let isDisposed = false;
+  document.documentElement.dataset.sceneMaterial = 'loading';
+  loadSandstoneMaterials(stone, status => {
+    if (!isDisposed) document.documentElement.dataset.sceneMaterial = status;
+  }).then(value => {
+    if (!isDisposed) sandstone = value;
+    else value?.dispose();
+  });
   document.documentElement.dataset.sceneAsset = 'loading';
   document.documentElement.dataset.webgl = 'loading';
   loadScannedOracle({
@@ -465,11 +476,12 @@ export function createWorld(canvas) {
       isDisposed = true;
       cancelAnimationFrame(raf);
       scannedOracle?.dispose();
+      sandstone?.dispose();
       portalVeil?.dispose();
       atmosphere.dispose();
       reflectedLight.dispose();
-      stone[0].map?.dispose();
-      stone[0].normalMap?.dispose();
+      proceduralColor.dispose();
+      proceduralNormal.dispose();
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       canvas.removeEventListener('webglcontextlost', onContextLost);
