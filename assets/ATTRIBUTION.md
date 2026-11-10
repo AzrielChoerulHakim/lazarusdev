@@ -19,3 +19,19 @@ The model preserves the artist's attribution as a courtesy even though CC0
 does not require it. Other scene elements are custom procedural geometry and
 shaders. Do not mistake this model for the exact statue depicted in the
 reference painting.
+
+
+## Old Sandstone 02 — weathered architectural PBR maps
+
+- **Creator:** Dimitrios Savva
+- **Source:** Poly Haven — https://polyhaven.com/a/old_sandstone_02
+- **License:** CC0 1.0 — https://polyhaven.com/license
+- **Files:** `textures/old_sandstone_02_{diff,nor_gl,rough}_1k.jpg`
+- **Acquisition:** `python scripts/fetch_stone_pbr.py`
+- **SHA-256 diffuse:** `a58111224570bb33eba3c348bc7e3207255b5efb07f9cf274209c56b71d6825c`
+- **SHA-256 normal:** `4dcaa85f9de33d77cec4e89e6f63cd1afecb81e436104c1b7eb4b151fe0b7f75`
+- **SHA-256 roughness:** `5473aa8e1c244f8e191f4e6616b75062af98fc04594c2c28f66c44aa078c0ebe`
+
+The portal geometry, sky, seawater and ribbons are Lazarus Dev's original
+procedural 3D and shaders, while the stone *surface maps* are the licensed
+Poly Haven photography. The sculpt and stone texture remain CC0 when reused.
