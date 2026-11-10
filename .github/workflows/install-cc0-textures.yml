@@ -1,0 +1,37 @@
+name: Install CC0 sandstone PBR maps
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/fetch_stone_pbr.py
+      - .github/workflows/install-cc0-textures.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: cc0-stone-pbr-install
+  cancel-in-progress: false
+jobs:
+  install:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download official CC0 PBR maps
+        run: python scripts/fetch_stone_pbr.py
+      - name: Commit material files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/textures/*.jpg
+          if git diff --cached --quiet; then
+            echo "Textures are already tracked"
+            exit 0
+          fi
+          git commit -m 'assets: vendor CC0 Poly Haven sandstone diffuse normal roughness'
+          git pull --rebase origin main
+          git push origin HEAD:main
