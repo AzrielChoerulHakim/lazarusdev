@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { loadScannedOracle } from './sculpture.js';
 import { enhanceEnvironment } from './environment.js';
+import { attachPortalVeil } from './portalFx.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -34,12 +36,39 @@ function marbleTexture() {
   return tex;
 }
 
+function makeStoneNormal(texture) {
+  const canvas = texture.image;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const pixels = ctx.getImageData(0,0,w,h).data;
+  const output = new Uint8Array(w*h*4);
+  const sample = (x,y) => pixels[(((y+h)%h)*w+((x+w)%w))*4]/255;
+  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
+    const dx = sample(x+1,y)-sample(x-1,y);
+    const dy = sample(x,y+1)-sample(x,y-1);
+    const norm = new THREE.Vector3(-dx*.9, -dy*.9, 1).normalize();
+    const i=(y*w+x)*4;
+    output[i]=(norm.x*.5+.5)*255;
+    output[i+1]=(norm.y*.5+.5)*255;
+    output[i+2]=(norm.z*.5+.5)*255;
+    output[i+3]=255;
+  }
+  const map=new THREE.DataTexture(output,w,h,THREE.RGBAFormat);
+  map.wrapS=map.wrapT=THREE.RepeatWrapping;
+  map.needsUpdate=true;
+  return map;
+}
 function makeStoneMaterials(texture) {
-  return [
-    new THREE.MeshStandardMaterial({ map: texture, color: 0xd8c9ad, roughness: 1, metalness: 0, flatShading: false }),
-    new THREE.MeshStandardMaterial({ map: texture, color: 0xb2a38c, roughness: 1, metalness: 0 }),
-    new THREE.MeshStandardMaterial({ map: texture, color: 0x7d796d, roughness: 1, metalness: 0 }),
+  const normal = makeStoneNormal(texture);
+  const configs = [
+    {color:0xd8c9ad, roughness:.99},
+    {color:0xb2a38c, roughness:1},
+    {color:0x7d796d, roughness:1},
   ];
+  return configs.map(config => new THREE.MeshStandardMaterial({
+    map:texture, normalMap:normal, normalScale:new THREE.Vector2(.47,.47),
+    color:config.color, roughness:config.roughness, metalness:0
+  }));
 }
 function stoneMesh(geometry, material, shadow = true) {
   const mesh = new THREE.Mesh(geometry, material);
@@ -290,11 +319,18 @@ export function createWorld(canvas) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.28;
   renderer.localClippingEnabled = true;
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const roomEnvironment = new RoomEnvironment();
+  const reflectedLight = pmrem.fromScene(roomEnvironment, .04).texture;
+  roomEnvironment.dispose();
+  pmrem.dispose();
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(THREE_BG);
   scene.fog = new THREE.FogExp2(0x0a1b1f, .022);
+  scene.environment = reflectedLight;
+  scene.environmentIntensity = .56;
   const camera = new THREE.PerspectiveCamera(43, 1, .1, 130);
   const hemisphere = new THREE.HemisphereLight(0xb7d5c8, 0x33261e, 2.0);
   scene.add(hemisphere);
@@ -318,6 +354,7 @@ export function createWorld(canvas) {
   const threshold = portal(stone, -2.15, -.28, -7.5, 1.30, true);
   threshold.rotation.y = .12;
   scene.add(threshold);
+  const portalVeil = attachPortalVeil(threshold);
   const sideRuins = [portal(stone, -7.2, -.7, -12, 1.05), portal(stone, 5.3, -.3, -17, .88), portal(stone, -5.8, -.85, -23, .9)];
   sideRuins.forEach((g, i) => { g.rotation.y = (i - 1) * .23; scene.add(g); });
   const islandA = floatingIsland(stone, 2.7, -.4, -16, 1.5);
@@ -380,6 +417,7 @@ export function createWorld(canvas) {
     statue.rotation.y = -.20 + (motion ? .014 * Math.sin(elapsed * .26) : 0);
     scannedOracle?.update(dt, progress, motion);
     atmosphere.update(dt, camera, motion);
+    portalVeil?.update(dt, progress, motion);
     moon.rotation.y = elapsed * .009;
     dust.rotation.y = elapsed * .003;
     islandA.position.y = -.4 + (motion ? Math.sin(elapsed * .35) * .09 : 0);
@@ -397,7 +435,11 @@ export function createWorld(canvas) {
       isDisposed = true;
       cancelAnimationFrame(raf);
       scannedOracle?.dispose();
+      portalVeil?.dispose();
       atmosphere.dispose();
+      reflectedLight.dispose();
+      stone[0].map?.dispose();
+      stone[0].normalMap?.dispose();
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       canvas.removeEventListener('webglcontextlost', onContextLost);
