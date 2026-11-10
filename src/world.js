@@ -209,20 +209,38 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   return group;
 }
 function ribbon(xStart, xEnd, y, z, width, color) {
-  const steps = 100;
-  const positions = new Float32Array((steps + 1) * 2 * 3);
-  const uvs = new Float32Array((steps + 1) * 2 * 2);
+  // Eight longitudinal subdivisions let the cloth fold across its WIDTH,
+  // rather than behaving like a flat strip between two animated edges.
+  const steps = 112, across = 8, stride = across + 1;
+  const positions = new Float32Array((steps + 1) * stride * 3);
+  const uvs = new Float32Array((steps + 1) * stride * 2);
+  const colors = new Float32Array((steps + 1) * stride * 3);
   const indices = [];
   for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    uvs.set([t, 0, t, 1], i * 4);
-    if (i < steps) { const b = i * 2; indices.push(b, b + 1, b + 2, b + 1, b + 3, b + 2); }
+    for(let j = 0; j <= across; j++) {
+      const t = i / steps, v = j / across;
+      const n = i * stride + j;
+      uvs[n*2] = t; uvs[n*2+1] = v;
+      const shade = .76 + .22 * (1 - Math.abs(v * 2 - 1)) + .08 * Math.sin(t * 27 + v * 9);
+      colors[n*3] = shade;
+      colors[n*3+1] = shade * .94;
+      colors[n*3+2] = shade * .9;
+      if (i < steps && j < across) {
+        const q = i * stride + j;
+        indices.push(q, q + stride, q + 1, q + 1, q + stride, q + stride + 1);
+      }
+    }
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   geometry.setIndex(indices);
-  const material = new THREE.MeshStandardMaterial({ color, roughness: .78, metalness: .04, side: THREE.DoubleSide, emissive: 0x3e0d08, emissiveIntensity: .10 });
+  const material = new THREE.MeshPhysicalMaterial({
+    color, vertexColors: true, side: THREE.DoubleSide, roughness: .96,
+    metalness: 0, sheen: .68, sheenColor: new THREE.Color(0x702920),
+    sheenRoughness: .89, clearcoat: 0,
+  });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.frustumCulled = false;
   mesh.castShadow = true;
@@ -230,15 +248,18 @@ function ribbon(xStart, xEnd, y, z, width, color) {
     for (let i = 0; i <= steps; i++) {
       const t = i / steps;
       const x = mix(xStart, xEnd, t);
-      const wave = Math.sin(t * Math.PI * 2.6 + time * .31) * (.32 + .26 * Math.sin(t * Math.PI));
-      const yy = y + Math.sin(t * Math.PI * 1.75 + .28) * .63 + wave;
-      const zz = z + .35 * Math.sin(t * 9 + time * .26) - .25 * Math.cos(t * 4);
-      const w = width * (.37 + .63 * Math.sin(Math.PI * Math.pow(t, .72)));
-      for (let row = 0; row < 2; row++) {
-        const p = (i * 2 + row) * 3;
-        positions[p] = x;
-        positions[p + 1] = yy + (row ? w / 2 : -w / 2) * Math.cos(t * 13 + time * .28);
-        positions[p + 2] = zz + (row ? w / 2 : -w / 2) * Math.sin(t * 13 + time * .28);
+      const wind = Math.sin(t * Math.PI * 2.3 + time * .27) * (.14 + .22 * Math.sin(t * Math.PI));
+      const centerY = y + Math.sin(t * Math.PI * 1.65 + .28) * .55 + wind;
+      const centerZ = z + .18 * Math.sin(t * 8.8 + time * .25) - .18 * Math.cos(t * 3.9);
+      const taper = Math.pow(Math.sin(Math.PI * t), .65);
+      const w = width * (.12 + .88 * taper);
+      const pitch = t * 8.5 + time * .22;
+      for(let j = 0; j <= across; j++) {
+        const v = j / across * 2 - 1, p = (i * stride + j) * 3;
+        const fold = (.035 + .055 * taper) * Math.sin(t * 26 + v * 9.6 - time * .61);
+        positions[p] = x + fold * v * .14;
+        positions[p+1] = centerY + v * w * .5 * Math.cos(pitch) + fold;
+        positions[p+2] = centerZ + v * w * .5 * Math.sin(pitch) + fold * .95;
       }
     }
     geometry.attributes.position.needsUpdate = true;
@@ -265,7 +286,7 @@ function floatingIsland(stone, x, y, z, scale) {
 function addAtmosphere(scene, stone) {
   const moonMat = new THREE.MeshStandardMaterial({ color: 0x9f9784, roughness: 1, metalness: 0, map: stone[1].map });
   const moon = new THREE.Mesh(new THREE.SphereGeometry(2.25, 48, 36), moonMat);
-  moon.position.set(-4.1, 2.2, -18.5);
+  moon.position.set(-1.8, 3.1, -18.5);
   scene.add(moon);
   const dustG = new THREE.BufferGeometry();
   const pts = new Float32Array(350 * 3);
@@ -368,8 +389,8 @@ export function createWorld(canvas) {
   scene.add(islandA, islandB, islandC);
   const { moon, dust, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
-  const ribbonA = ribbon(-3.0, 5.5, .52, 1.18, .71, 0xb44231);
-  const ribbonB = ribbon(-4.0, 5.4, -1.80, .95, .77, 0x9e382c);
+  const ribbonA = ribbon(.45, 7.5, .8, -.38, .49, 0x943528);
+  const ribbonB = ribbon(-.85, 8.2, -2.35, -3.15, .38, 0x78281f);
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
