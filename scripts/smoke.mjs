@@ -15,10 +15,18 @@ try {
     page.on('pageerror', err => errors.push(err.message));
     page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); if (m.type() === 'warning') warnings.push(m.text()); });
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    await page.waitForFunction(() => {
-      const el = document.querySelector('#world');
-      return el && el.width > 0 && el.height > 0;
-    }, { timeout: 18000 });
+    try {
+      await page.waitForFunction(
+        ({ width, height }) => {
+          const el = document.querySelector('#world');
+          return el && (el.width >= width * .8 && el.height >= height * .8 || getComputedStyle(el).display === 'none');
+        },
+        { width, height },
+        { timeout: 30000 },
+      );
+    } catch (err) {
+      throw new Error(`${name}: timed out waiting for Three.js: ${warnings.join(' | ')} | ${errors.join(' | ')} | ${err.message}`);
+    }
     const state = await page.evaluate(() => {
       const canvas = document.querySelector('#world');
       const gl = canvas.getContext('webgl2');
