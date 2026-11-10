@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a1b20" />
+  <meta name="description" content="Lazarus Dev is an independent creative development studio. We build digital experiences that exist beyond the expected." />
+  <meta property="og:title" content="Lazarus Dev — Beyond the Known" />
+  <meta property="og:description" content="Independent creative engineering studio. Digital worlds, products, and experiences beyond the expected." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <title>Lazarus Dev — Beyond the Known</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="webgl-wrap" aria-hidden="true"><canvas id="world"></canvas></div>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="page-progress" aria-hidden="true"><span id="progress-fill"></span></div>
+  <header class="header" id="site-header">
+    <a href="#origin" class="brand" aria-label="Lazarus Dev, go to beginning">
+      <svg class="brand-glyph" viewBox="0 0 60 60" aria-hidden="true"><path fill="currentColor" d="M22 4 12 41 4 48l31-7 14-14-26 6L34 9Z"/><path fill="currentColor" d="M6 51 30 46 45 39 55 40 41 56 26 51Z"/></svg>
+      <span class="brand-type">LAZARUS<br />DEV<span class="brand-dot">.</span></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#worlds">Selected worlds</a><a href="#practice">The practice</a><a href="#manifesto">Manifesto</a>
+    </nav>
+    <button class="header-cta" data-open-brief>BEGIN A PROJECT <span aria-hidden="true">↗</span></button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" inert>
+    <a href="#origin">00 <span>Origin</span></a>
+    <a href="#passage">01 <span>The passage</span></a>
+    <a href="#worlds">02 <span>Selected worlds</span></a>
+    <a href="#practice">03 <span>The practice</span></a>
+    <a href="#manifesto">04 <span>Manifesto</span></a>
+    <button data-open-brief>05 <span>Begin a project ↗</span></button>
+  </nav>
+  <main id="main">
+    <section class="chapter chapter-hero" id="origin" aria-labelledby="hero-title">
+      <div class="chapter-content hero-copy">
+        <div class="eyebrow hero-eyebrow"><i></i> INDEPENDENT CREATIVE DEVELOPMENT STUDIO <span>— EST. 2026</span></div>
+        <h1 id="hero-title">We make<br />the <em>impossible</em><br />feel inevitable<span class="period">.</span></h1>
+        <p class="hero-lead">We design and engineer digital worlds for people unwilling to settle for the ordinary.</p>
+        <div class="hero-actions"><a href="#passage" class="button-solid">ENTER THE UNKNOWN <span aria-hidden="true">↗</span></a><a href="#worlds" class="underlink">EXPLORE OUR WORK <span>↗</span></a></div>
+      </div>
+      <div class="hero-footer"><div>ART DIRECTION / SURREALIST DIGITAL<br />ENGINEERED FOR THE UNEXPECTED</div><div class="scroll-marker">SCROLL TO ALTER REALITY <span aria-hidden="true">↓</span></div><div class="chapter-index">[ 00 — 05 ]</div></div>
+    </section>
+    <section class="chapter chapter-passage" id="passage" aria-labelledby="passage-title">
+      <div class="passage-copy chapter-content">
+        <span class="eyebrow reveal"><i></i> 01 / THE THRESHOLD</span>
+        <h2 id="passage-title" class="reveal">Reality is<br />only a <em>starting</em><br />point.</h2>
+        <p class="reveal">An idea becomes an interface. An interface becomes an experience. And somewhere between code and imagination, a new world begins.</p>
+        <div class="passage-notation">THE PORTAL IS NOT AN IMAGE.<br />IT IS A PLACE IN SPACE. <span>↘</span></div>
+      </div>
+      <div class="chapter-index passage-index">[ 01 — 05 ]</div>
+    </section>
+    <section class="chapter chapter-worlds" id="worlds" aria-labelledby="worlds-title">
+      <div class="section-top reveal"><span class="eyebrow"><i></i> 02 / SELECTED WORLDS</span><span>EXPLORE THE POSSIBILITIES</span></div>
+      <div class="worlds-intro reveal"><h2 id="worlds-title">Not just websites.<br /><em>Entire worlds.</em></h2><p>Each project is a different answer to the same question: what if we went further?</p></div>
+      <div class="world-grid">
+        <button class="world-card reveal" data-project="0" aria-label="Explore The Atrium concept"><span class="world-media media-atrium"><span class="media-moon"></span><span class="media-arch"></span><span class="media-floor"></span></span><span class="world-meta"><span>01 / EXPERIENCE CONCEPT</span><span>↗</span></span><strong>THE ATRIUM <em>01</em></strong><span class="world-caption">A place for the beautifully impossible.</span></button>
+        <button class="world-card reveal" data-project="1" aria-label="Explore The Oracle concept"><span class="world-media media-oracle"><span class="oracle-orbit orbit-one"></span><span class="oracle-orbit orbit-two"></span><span class="oracle-core"></span><span class="oracle-rule"></span></span><span class="world-meta"><span>02 / PRODUCT EXPLORATION</span><span>↗</span></span><strong>THE ORACLE <em>02</em></strong><span class="world-caption">Intelligence, with a sense of wonder.</span></button>
+        <button class="world-card reveal" data-project="2" aria-label="Explore The Archive concept"><span class="world-media media-archive"><span class="archive-pillars"></span><span class="archive-disc"></span><span class="archive-line"></span></span><span class="world-meta"><span>03 / EDITORIAL EXPLORATION</span><span>↗</span></span><strong>THE ARCHIVE <em>03</em></strong><span class="world-caption">A digital monument to ideas.</span></button>
+      </div>
+      <p class="concept-notice">STUDIO EXPLORATIONS / CONCEPT WORK — NOT CLIENT COMMISSIONS</p>
+    </section>
+    <section class="chapter chapter-practice" id="practice" aria-labelledby="practice-title">
+      <div class="section-top reveal"><span class="eyebrow"><i></i> 03 / WHAT WE CREATE</span><span>ART MEETS ENGINEERING</span></div>
+      <div class="practice-layout"><div class="practice-heading reveal"><h2 id="practice-title">Built with<br /><em>intention.</em></h2><p>Two disciplines, one obsession: making the digital feel unforgettable.</p><div class="practice-symbol" aria-hidden="true">✳</div></div><div class="service-list"><article class="service-row reveal"><span>01</span><div><h3>Creative development</h3><p>Distinctive sites, refined interactions, cinematic frontends.</p></div><span aria-hidden="true">↗</span></article><article class="service-row reveal"><span>02</span><div><h3>Digital products</h3><p>Scalable platforms and tools designed for real use.</p></div><span aria-hidden="true">↗</span></article><article class="service-row reveal"><span>03</span><div><h3>Immersive experiences</h3><p>WebGL, motion systems, and worlds that respond to you.</p></div><span aria-hidden="true">↗</span></article><article class="service-row reveal"><span>04</span><div><h3>Independent experiments</h3><p>Our own ideas, crafted beyond the boundaries of a brief.</p></div><span aria-hidden="true">↗</span></article></div></div>
+    </section>
+    <section class="chapter chapter-manifesto" id="manifesto" aria-labelledby="manifesto-title"><div class="manifesto-inner"><span class="eyebrow reveal"><i></i> 04 / A NOTE FROM THE STUDIO</span><p class="manifesto-kicker reveal">WE ARE NOT HERE TO MAKE MORE OF THE SAME.</p><h2 id="manifesto-title" class="reveal">The future belongs<br />to those who dare<br />to <em>imagine it.</em></h2><p class="manifesto-caption reveal">Lazarus Dev is an independent creative engineering studio — deliberately small, relentlessly curious, and committed to work that endures.</p></div><div class="manifesto-watermark" aria-hidden="true">LD.</div></section>
+    <footer class="footer" id="contact"><div class="footer-top"><span>05 / BEGIN AGAIN</span><span>THE NEXT WORLD COULD BE YOURS.</span></div><div class="footer-main"><p>HAVE SOMETHING IMPOSSIBLE IN MIND?</p><button class="footer-cta" data-open-brief>Let's make<br /><em>it real.</em><span aria-hidden="true">↗</span></button></div><div class="footer-bottom"><span>© <span id="year"></span> LAZARUS DEV.</span><span>INDEPENDENT BY DESIGN.</span><a href="#origin">BACK TO THE BEGINNING ↑</a></div></footer>
+  </main>
+  <div class="scene-index" id="scene-index" aria-hidden="true"><span>THE ARRIVAL</span><span class="scene-index-rule"></span><span id="scene-num">00 / 05</span></div>
+  <div class="ambient-controls"><button id="motion-toggle" type="button" aria-label="Pause environmental motion" aria-pressed="false"><span class="motion-dot"></span><span id="motion-label">MOTION ON</span></button></div>
+  <dialog id="project-dialog" class="detail-dialog"><button class="dialog-close" type="button" aria-label="Close details" data-close-dialog>✕</button><span class="eyebrow"><i></i> STUDIO EXPLORATION</span><div class="dialog-number" id="detail-number">01</div><h2 id="detail-title">THE ATRIUM</h2><p id="detail-description"></p><p class="dialog-footnote">This is an illustrative concept, not a completed client commission.</p><button class="dialog-action" data-close-dialog>RETURN TO THE WORLDS <span>↗</span></button></dialog>
+  <dialog id="brief-dialog" class="detail-dialog brief-dialog"><button class="dialog-close" type="button" aria-label="Close project brief" data-close-dialog>✕</button><span class="eyebrow"><i></i> COLLABORATION / OPEN BRIEF</span><h2>Tell us what<br /><em>you imagine.</em></h2><p class="brief-explainer">Shape an initial project brief. This prototype copies your details locally; it does not submit or transmit them to a server.</p><form id="brief-form"><label>Your name or studio<input required name="name" maxlength="100" placeholder="How should we address you?" /></label><label>Project type<select name="type" required><option value="">Choose a direction</option><option>Creative website</option><option>Digital product</option><option>Immersive / WebGL experience</option><option>Something else entirely</option></select></label><label>The idea<textarea required name="idea" rows="4" maxlength="2000" placeholder="Describe the world you want to create..."></textarea></label><button class="dialog-action" type="submit">COPY PROJECT BRIEF <span>↗</span></button><p id="brief-feedback" aria-live="polite"></p></form></dialog>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
