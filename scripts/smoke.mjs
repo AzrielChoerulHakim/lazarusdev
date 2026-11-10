@@ -45,6 +45,12 @@ try {
     });
     if (state.asset !== 'scanned') throw new Error(`${name}: expected licensed scan, got ${state.asset}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
     if (state.rendered !== 'ready') throw new Error(`${name}: WebGL did not finish drawing a frame`);
+    await page.waitForFunction(
+      () => ['photographic','procedural'].includes(document.documentElement.dataset.sceneMaterial),
+      null, {timeout:30000}
+    );
+    const stoneState = await page.evaluate(() => document.documentElement.dataset.sceneMaterial);
+    if (stoneState !== 'photographic') throw new Error(`${name}: verified sandstone maps did not load: ${stoneState}`);
     if (!state.gl || state.pixels < width * height * .6) throw new Error(`${name}: Three.js renderer did not initialize: ${JSON.stringify(state)}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
     await page.screenshot({ path: `screenshots/${name}-hero.png`, animations: 'disabled' });
     await page.locator('#passage').scrollIntoViewIfNeeded();
