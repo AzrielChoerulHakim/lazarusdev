@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { loadScannedOracle } from './sculpture.js';
+import { enhanceEnvironment } from './environment.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -254,7 +256,7 @@ function addAtmosphere(scene, stone) {
     rock.rotation.y = rand() * Math.PI;
     scene.add(rock);
   }
-  return { moon, dust };
+  return { moon, dust, sea };
 }
 
 const CAMERA_KEYS = [
@@ -286,7 +288,8 @@ export function createWorld(canvas) {
   renderer.setClearColor(THREE_BG);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.36;
+  renderer.toneMappingExposure = 1.28;
+  renderer.localClippingEnabled = true;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const scene = new THREE.Scene();
@@ -321,18 +324,32 @@ export function createWorld(canvas) {
   const islandB = floatingIsland(stone, -2.5, .25, -23.5, 1.25);
   const islandC = floatingIsland(stone, 6.9, 1.9, -28, 1.72);
   scene.add(islandA, islandB, islandC);
-  const { moon, dust } = addAtmosphere(scene, stone);
+  const { moon, dust, sea } = addAtmosphere(scene, stone);
+  const atmosphere = enhanceEnvironment(scene, { sea });
   const ribbonA = ribbon(-3.0, 5.5, .52, 1.18, .71, 0xb44231);
   const ribbonB = ribbon(-4.0, 5.4, -1.80, .95, .77, 0x9e382c);
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
+  let scannedOracle = null;
+  let isDisposed = false;
+  document.documentElement.dataset.sceneAsset = 'loading';
+  document.documentElement.dataset.webgl = 'loading';
+  loadScannedOracle({
+    scene,
+    fallback: statue,
+    onStatus: status => { if (!isDisposed) document.documentElement.dataset.sceneAsset = status; },
+  }).then(value => { if (!isDisposed) scannedOracle = value; else value?.dispose(); }).catch(error => {
+    console.warn('PBR sculpture loading failed; procedural fallback is still visible.', error);
+    document.documentElement.dataset.sceneAsset = 'fallback';
+  });
   let pausedByTab = document.hidden, elapsed = 0, last = performance.now(), raf = 0;
   const lookSmooth = new THREE.Vector3(0, 0, -5);
   const viewport = () => {
     const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
     const compact = w < 700;
-    const dpr = Math.min(window.devicePixelRatio || 1, compact ? 1.25 : 1.65);
+    const dpr = Math.min(window.devicePixelRatio || 1, compact ? 1.2 : 1.55);
+    renderer.shadowMap.enabled = !compact;
     renderer.setPixelRatio(dpr);
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
@@ -361,12 +378,15 @@ export function createWorld(canvas) {
     lookSmooth.lerp(current.look, 1 - Math.pow(.0004, dt));
     camera.lookAt(lookSmooth);
     statue.rotation.y = -.20 + (motion ? .014 * Math.sin(elapsed * .26) : 0);
+    scannedOracle?.update(dt, progress, motion);
+    atmosphere.update(dt, camera, motion);
     moon.rotation.y = elapsed * .009;
     dust.rotation.y = elapsed * .003;
     islandA.position.y = -.4 + (motion ? Math.sin(elapsed * .35) * .09 : 0);
     islandB.position.y = .25 + (motion ? Math.cos(elapsed * .30) * .10 : 0);
     if (motion || elapsed === 0) { ribbonA.update(elapsed); ribbonB.update(elapsed + 1.9); }
     renderer.render(scene, camera);
+    if (document.documentElement.dataset.webgl !== 'ready') document.documentElement.dataset.webgl = 'ready';
   };
   render(performance.now());
   return {
@@ -374,7 +394,10 @@ export function createWorld(canvas) {
     setPointer(x, y) { pointer = { x, y }; },
     setMotion(value) { motion = !reducedMotion && value; },
     dispose() {
+      isDisposed = true;
       cancelAnimationFrame(raf);
+      scannedOracle?.dispose();
+      atmosphere.dispose();
       window.removeEventListener('resize', onResize);
       document.removeEventListener('visibilitychange', onVisibility);
       canvas.removeEventListener('webglcontextlost', onContextLost);
