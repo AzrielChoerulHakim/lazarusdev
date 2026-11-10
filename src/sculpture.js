@@ -34,7 +34,7 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
 
   // Normalize the scanned asset's real-world 51.5cm height to a monumental
   // ~5-unit sculpt: its PBR material and facial topology remain untouched.
-  const factor = 5.05 / size.y;
+  const factor = 6.75 / size.y;
   model.scale.setScalar(factor);
   model.position.set(-center.x * factor, -center.y * factor, -center.z * factor);
   model.updateMatrixWorld(true);
@@ -47,12 +47,12 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
 
   const anchor = new THREE.Group();
   anchor.name = 'The Rupture — scanned marble figure';
-  anchor.position.set(2.35, .63, -1.55);
+  anchor.position.set(2.7, .55, -1.35);
   anchor.rotation.y = -.18;
   anchor.rotation.z = -.045;
   anchor.add(upper, lower);
 
-  const cutY = anchor.position.y + .19;
+  const cutY = anchor.position.y + 1.06;
   // Keep a 0.2 world-unit gap, centered across the eye/nose region.
   // Clipping planes are in world space and track the figure's moving halves.
   const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .11));
@@ -69,7 +69,10 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
         m.clippingPlanes = [plane];
         m.clipShadows = true;
         m.side = THREE.DoubleSide;
-        if (m.roughness != null) m.roughness = Math.max(.79, m.roughness);
+        if (m.roughness != null) m.roughness = Math.max(.83, m.roughness);
+        if (m.color) m.color.multiply(new THREE.Color(0xe8dbc7));
+        if (m.normalScale) m.normalScale.multiplyScalar(1.07);
+        if ('envMapIntensity' in m) m.envMapIntensity = .65;
         if ('metalness' in m) m.metalness = Math.min(.03, m.metalness);
         m.needsUpdate = true;
         return m;
@@ -87,7 +90,7 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
     const a = t * Math.PI * 2 + .2;
     const radius = .76 + Math.sin(i * 1.33) * .18;
     const mesh = new THREE.Mesh(new THREE.DodecahedronGeometry(.035 + (i % 3) * .026, 0), chipStone);
-    mesh.position.set(Math.cos(a) * radius, .18 + Math.cos(i * 2.1) * .07, .78 + Math.sin(a) * .2);
+    mesh.position.set(Math.cos(a) * radius, 1.07 + Math.cos(i * 2.1) * .09, .89 + Math.sin(a) * .25);
     mesh.rotation.set(a, i, -a * .4);
     mesh.castShadow = true;
     chips.add(mesh);
