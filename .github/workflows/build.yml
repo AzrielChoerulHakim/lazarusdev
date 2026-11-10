@@ -1,4 +1,4 @@
-name: Build verification
+name: Build and browser verification
 on:
   push:
     branches: [main]
@@ -20,5 +20,25 @@ jobs:
         run: |
           node --check src/main.js
           node --check src/world.js
+          node --check scripts/smoke.mjs
       - name: Production build
         run: npm run build
+      - name: Install browser harness
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Exercise WebGL and responsive UI
+        run: |
+          npm run dev -- --port 4173 --strictPort > /tmp/lazarus-vite.log 2>&1 &
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/smoke.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webgl-smoke-screenshots
+          path: screenshots/
+          if-no-files-found: ignore
