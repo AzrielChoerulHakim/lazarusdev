@@ -25,7 +25,8 @@ try {
       const el=document.getElementById(section);
       scrollTo({top: el.offsetTop + innerHeight*extra, behavior:'instant'});
     },item);
-    await page.waitForTimeout(1700);
+    await page.waitForFunction(() => document.documentElement.dataset.webgl === 'ready',null,{timeout:15000});
+    await page.waitForTimeout(item.width > 800 ? 3800 : 1700);
     if(errors.length)throw Error(item.name+': '+errors.join('; '));
     await page.screenshot({path:`${dir}/${item.name}.jpg`,type:'jpeg',quality:72,animations:'disabled'});
     console.log(item.name+' captured with CC0 PBR mesh');
