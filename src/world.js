@@ -313,9 +313,9 @@ function addAtmosphere(scene, stone) {
 const CAMERA_KEYS = [
   { t: 0, p: [0, .15, 9.3], look: [.35, .05, -3.3] },
   { t: .17, p: [-.35, .24, 7.5], look: [-.75, .10, -5.5] },
-  { t: .32, p: [-1.2, .15, 3.8], look: [-1.8, -.15, -7] },
-  { t: .50, p: [-2.12, .07, -1.8], look: [-2.15, -.10, -13] },
-  { t: .65, p: [-2.28, .08, -8.0], look: [-.55, .05, -17] },
+  { t: .32, p: [-1.55, .24, 4.1], look: [-3.0, -.18, -7.5] },
+  { t: .50, p: [-2.38, .13, -.5], look: [-3.05, -.33, -9.5] },
+  { t: .65, p: [-3.09, .05, -8.35], look: [-1.25, .05, -17] },
   { t: .78, p: [-1.9, 1.15, -10.8], look: [.3, .25, -21] },
   { t: 1, p: [1.1, 1.4, -12.7], look: [.5, 0, -23] },
 ];
@@ -372,7 +372,7 @@ export function createWorld(canvas) {
   rim.position.set(2.5, 2.3, -2.3);
   scene.add(rim);
   const gateLight = new THREE.PointLight(0x8caead, 45, 12, 1.5);
-  gateLight.position.set(-2.05, 0, -7.4);
+  gateLight.position.set(-3.05, -.6, -7.25);
   scene.add(gateLight);
 
   const stone = makeStoneMaterials(marbleTexture());
@@ -380,7 +380,7 @@ export function createWorld(canvas) {
   const proceduralNormal = stone[0].normalMap;
   const statue = makeBust(stone);
   scene.add(statue);
-  const threshold = portal(stone, -2.15, -.28, -7.5, 1.30, true);
+  const threshold = portal(stone, -3.05, -.75, -7.5, 1.11, true);
   threshold.rotation.y = .12;
   scene.add(threshold);
   const portalVeil = attachPortalVeil(threshold);
@@ -446,7 +446,13 @@ export function createWorld(canvas) {
     if (motion) elapsed += dt;
     const current = keyframe(progress);
     const mobile = window.innerWidth < 700;
-    if (mobile) { current.p.x += .35; current.p.z += 1.25; current.look.x += .20; }
+    if (mobile) {
+      const heroFocus = 1 - smooth(.05, .33, progress);
+      current.p.x += .12 + heroFocus * 1.35;
+      current.p.z += 1.5;
+      current.look.x += heroFocus * 1.72;
+      current.look.y += heroFocus * .23;
+    }
     if (motion) { current.p.x += pointer.x * .13; current.p.y += pointer.y * .10; }
     camera.position.lerp(current.p, 1 - Math.pow(.0006, dt));
     lookSmooth.lerp(current.look, 1 - Math.pow(.0004, dt));
