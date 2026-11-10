@@ -319,6 +319,11 @@ export function createWorld(canvas) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.28;
   renderer.localClippingEnabled = true;
+  const gl = renderer.getContext();
+  const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+  const gpuName = debugInfo ? String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)) : String(gl.getParameter(gl.RENDERER));
+  const softwareRenderer = /swiftshader|llvmpipe|software/i.test(gpuName) || navigator.webdriver === true;
+  document.documentElement.dataset.renderTier = softwareRenderer ? 'software' : 'hardware';
   const pmrem = new THREE.PMREMGenerator(renderer);
   const roomEnvironment = new RoomEnvironment();
   const reflectedLight = pmrem.fromScene(roomEnvironment, .04).texture;
@@ -385,8 +390,8 @@ export function createWorld(canvas) {
   const viewport = () => {
     const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
     const compact = w < 700;
-    const dpr = Math.min(window.devicePixelRatio || 1, compact ? 1.2 : 1.55);
-    renderer.shadowMap.enabled = !compact;
+    const dpr = Math.min(window.devicePixelRatio || 1, softwareRenderer ? .85 : compact ? 1.2 : 1.55);
+    renderer.shadowMap.enabled = !compact && !softwareRenderer;
     renderer.setPixelRatio(dpr);
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
@@ -425,6 +430,10 @@ export function createWorld(canvas) {
     if (motion || elapsed === 0) { ribbonA.update(elapsed); ribbonB.update(elapsed + 1.9); }
     renderer.render(scene, camera);
     if (document.documentElement.dataset.webgl !== 'ready') document.documentElement.dataset.webgl = 'ready';
+    if (document.documentElement.dataset.renderFrames !== 'complete') {
+      document.documentElement.dataset.renderFrames = 'complete';
+      document.documentElement.dataset.renderTriangles = String(renderer.info.render.triangles);
+    }
   };
   render(performance.now());
   return {
