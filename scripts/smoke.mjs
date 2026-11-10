@@ -27,13 +27,29 @@ try {
     } catch (err) {
       throw new Error(`${name}: timed out waiting for Three.js: ${warnings.join(' | ')} | ${errors.join(' | ')} | ${err.message}`);
     }
+    await page.waitForFunction(
+      () => ['scanned', 'fallback'].includes(document.documentElement.dataset.sceneAsset),
+      null,
+      { timeout: 30000 }
+    );
     const state = await page.evaluate(() => {
       const canvas = document.querySelector('#world');
       const gl = canvas.getContext('webgl2');
-      return { gl: !!gl, pixels: canvas.width * canvas.height, webglVersion: gl?.getParameter(gl.VERSION) };
+      return {
+        gl: !!gl,
+        pixels: canvas.width * canvas.height,
+        webglVersion: gl?.getParameter(gl.VERSION),
+        asset: document.documentElement.dataset.sceneAsset,
+        rendered: document.documentElement.dataset.webgl,
+      };
     });
+    if (state.asset !== 'scanned') throw new Error(`${name}: expected licensed scan, got ${state.asset}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
+    if (state.rendered !== 'ready') throw new Error(`${name}: WebGL did not finish drawing a frame`);
     if (!state.gl || state.pixels < width * height * .6) throw new Error(`${name}: Three.js renderer did not initialize: ${JSON.stringify(state)}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
     await page.screenshot({ path: `screenshots/${name}-hero.png`, animations: 'disabled' });
+    await page.locator('#passage').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: `screenshots/${name}-portal.png`, animations: 'disabled' });
     await page.locator('#worlds').scrollIntoViewIfNeeded();
     await page.waitForTimeout(700);
     await page.screenshot({ path: `screenshots/${name}-worlds.png`, animations: 'disabled' });
@@ -46,7 +62,7 @@ try {
       await page.locator('#mobile-nav a[href="#practice"]').click();
     }
     if (errors.length) throw new Error(`${name}: browser errors: ${errors.join(' | ')}`);
-    console.log(`${name} PASS — ${state.webglVersion} — ${state.pixels} pixels, navigation + dialogs operational`);
+    console.log(`${name} PASS — ${state.webglVersion} — scanned bust loaded, ${state.pixels} framebuffer pixels, portal, navigation + dialogs operational`);
     await page.close();
   }
 } finally {
