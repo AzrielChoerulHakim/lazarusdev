@@ -20,8 +20,20 @@ function updateScroll() {
   progressEl.style.width = `${progress * 100}%`;
   const passageTop = chapters[1].offsetTop;
   const galleryTop = chapters[2].offsetTop;
-  const travel = Math.max(galleryTop + innerHeight * .22 - passageTop * .1, 1);
-  const worldProgress = Math.max(0, Math.min(1, scrollY / travel));
+  const practiceTop = chapters[3].offsetTop;
+  const clamp01 = x => Math.max(0, Math.min(1, x));
+  const smoothstep = x => { const t = clamp01(x); return t * t * (3 - 2 * t); };
+  // The camera is synchronized to the narrative's actual section boundaries.
+  // Hero retains the sculpt, passage spends time inside the stone gateway,
+  // and the gallery inherits a view into the world beyond it.
+  let worldProgress;
+  if (scrollY < passageTop) {
+    worldProgress = .27 * smoothstep(scrollY / Math.max(passageTop, 1));
+  } else if (scrollY < galleryTop) {
+    worldProgress = .27 + .45 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
+  } else {
+    worldProgress = .72 + .28 * smoothstep((scrollY - galleryTop) / Math.max(practiceTop - galleryTop, 1));
+  }
   if (world) world.setProgress(prefersReduced.matches ? .04 : worldProgress);
   let current = 0;
   for (let i = 0; i < chapters.length; i++) if (scrollY + innerHeight * .55 >= chapters[i].offsetTop) current = i;
