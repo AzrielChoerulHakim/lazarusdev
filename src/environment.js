@@ -62,21 +62,52 @@ const WATER_FRAGMENT = `
   uniform vec3 uEye;
   varying vec2 vUv;
   varying vec3 vPosition;
-  float wave(vec2 p){return sin(p.x*.24+sin(p.y*.13))*.5+sin(p.y*.6-p.x*.38)*.25;}
-  void main(){
-    vec2 p=vPosition.xz;
-    float wa=wave(p+vec2(uTime*.20,-uTime*.18));
-    float wb=wave(p*2.17+vec2(-uTime*.12,uTime*.3));
-    float sparkle=pow(max(0.,sin(p.x*.75+wa*3.)*cos(p.y*.33+wb*3.)),15.);
-    vec3 dark=vec3(.025,.107,.119);
-    vec3 teal=vec3(.105,.185,.183);
-    vec3 color=mix(dark,teal,.45+.23*wa+.12*wb);
-    float viewDistance=length(uEye-vPosition);
-    float grazing=pow(1.-abs(normalize(uEye-vPosition).y),3.);
-    color+=vec3(.12,.15,.145)*grazing;
-    color+=vec3(.42,.25,.13)*sparkle*.17;
-    color=mix(color,vec3(.042,.099,.108),smoothstep(10.,65.,viewDistance)*.64);
-    gl_FragColor=vec4(color,.96);
+
+  float wave(vec2 p) {
+    return sin(p.x*.27+sin(p.y*.16))*.5
+         + sin(p.y*.63-p.x*.38)*.24
+         + sin(p.x*.92+p.y*.52)*.09;
+  }
+  void main() {
+    vec2 p = vPosition.xz;
+    vec2 wind = vec2(uTime*.20,-uTime*.17);
+    float swell = wave(p+wind);
+    float ripples = wave(p*2.1-wind*.7);
+    vec3 view = normalize(uEye-vPosition);
+
+    // Analytic multi-scale wave gradients form a physically plausible normal
+    // for grazing-angle reflection without a heavy reflection render pass.
+    float nx = .055*cos(p.x*.74+uTime*.34)
+             + .023*cos(p.x*1.9-p.y*.81-uTime*.48);
+    float nz = .051*sin(p.y*.83-uTime*.23)
+             + .019*sin(p.x*.75+p.y*1.6+uTime*.29);
+    vec3 normal = normalize(vec3(-nx,1.,-nz));
+    float fresnel = pow(1.-clamp(dot(normal,view),0.,1.),3.0);
+
+    vec3 depthColor = vec3(.018,.081,.093);
+    vec3 surfaceColor = vec3(.080,.144,.145);
+    vec3 surface = mix(depthColor,surfaceColor,
+        clamp(.53+swell*.19+ripples*.065,0.,1.));
+    // Real sea reflects horizon illumination at grazing angles.
+    vec3 skyReflection = vec3(.30,.338,.316);
+    surface = mix(surface,skyReflection,fresnel*.47);
+
+    // Broad, low-energy warm glints instead of sharp repeated sparkle noise.
+    vec3 sunDirection = normalize(vec3(-.43,.79,.45));
+    vec3 reflectedSun = reflect(-sunDirection,normal);
+    float spec = pow(max(0.,dot(reflectedSun,view)),40.);
+    surface += vec3(.49,.35,.22)*spec*.24;
+    float glitter = pow(max(0.,sin(p.x*.69+uTime*.31)
+                   * cos(p.y*1.22-uTime*.28)),19.);
+    surface += vec3(.18,.15,.11)*glitter*.065;
+
+    float dist = length(uEye-vPosition);
+    // Distant water merges toward photographic horizon rather than ending
+    // in a hard teal seam under the photographed sky.
+    float horizonHaze = smoothstep(16.,85.,dist);
+    vec3 haze = vec3(.235,.294,.293);
+    surface = mix(surface,haze,horizonHaze*.75);
+    gl_FragColor = vec4(surface,.975);
   }
 `;
 function generateCloudTexture() {
