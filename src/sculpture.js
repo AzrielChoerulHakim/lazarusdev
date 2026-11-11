@@ -46,9 +46,36 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
   anchor.add(model);
 
   const materials = [];
+  const fingerprints = new Set();
+  const duplicateMeshes = [];
+  const meshSummary = [];
   let count = 0;
   model.traverse(object => {
-    if (!object.isMesh) return;
+    if (!object.isMesh || !object.geometry?.attributes?.position) return;
+    // One GLB root can still contain physically coincident mesh nodes. Detect
+    // only true geometric duplicates (same indexed topology, vertex samples
+    // and world transform), not legitimately distinct eyes / marble fragments.
+    object.updateWorldMatrix(true, false);
+    const positions = object.geometry.attributes.position;
+    const indices = object.geometry.index;
+    const samples = [...new Set([0, Math.floor(positions.count / 5),
+      Math.floor(positions.count / 2), Math.floor(positions.count * .81),
+      positions.count - 1])];
+    const signature = [
+      positions.count, indices?.count || 0,
+      ...samples.flatMap(i => [
+        positions.getX(i).toFixed(5),
+        positions.getY(i).toFixed(5),
+        positions.getZ(i).toFixed(5),
+      ]),
+      ...object.matrixWorld.elements.map(v => v.toFixed(5)),
+    ].join('/');
+    if (fingerprints.has(signature)) {
+      duplicateMeshes.push(object);
+      return;
+    }
+    fingerprints.add(signature);
+    meshSummary.push({ name: object.name || 'unnamed', vertices: positions.count });
     count++;
     object.castShadow = true;
     object.receiveShadow = true;
@@ -67,7 +94,11 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
     });
     object.material = Array.isArray(object.material) ? shaded : shaded[0];
   });
+  // Remove redundant nodes from the loaded GLB itself, rather than drawing
+  // both and merely setting one opacity to zero (which can still overdraw).
+  for (const duplicate of duplicateMeshes) duplicate.parent?.remove(duplicate);
   scene.add(anchor);
+  document.documentElement.dataset.statueDuplicatesRemoved = String(duplicateMeshes.length);
   document.documentElement.dataset.fracture = 'single-scan';
   document.documentElement.dataset.statueMode = 'single-scan';
   document.documentElement.dataset.statueMeshes = String(count);
@@ -75,6 +106,8 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
   return {
     object: anchor,
     meshCount: count,
+    duplicatesRemoved: duplicateMeshes.length,
+    meshSummary,
     // Keep this monument stable in world space. An animated stone figure was
     // the source of visible jitter against fixed editorial text.
     update() {},
