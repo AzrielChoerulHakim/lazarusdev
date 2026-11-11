@@ -342,7 +342,7 @@ function addAtmosphere(scene, stone) {
   scene.add(sea);
   for (let i = 0; i < 22; i++) {
     const rock = stoneMesh(new THREE.DodecahedronGeometry(.28 + rand() * .83, 0), stone[i % 3]);
-    rock.position.set((rand() - .5) * 27, -3.1 + rand() * .3, -2 - rand() * 29);
+    rock.position.set((rand() - .5) * 27, -3.45 - rand() * .18, -2 - rand() * 29);
     rock.scale.set(1, .33 + rand() * .5, 1);
     rock.rotation.y = rand() * Math.PI;
     scene.add(rock);
@@ -547,6 +547,9 @@ export function createWorld(canvas) {
     portalVeil?.update(dt, progress, motion);
     moon.rotation.y = elapsed * .009;
     dust.rotation.y = elapsed * .003;
+    islandA.visible = progress > .42;
+    islandB.visible = progress > .57;
+    islandC.visible = progress > .62;
     islandA.position.y = -.4 + (motion ? Math.sin(elapsed * .35) * .09 : 0);
     islandB.position.y = .25 + (motion ? Math.cos(elapsed * .30) * .10 : 0);
     if (motion || elapsed === 0) { ribbonA.update(elapsed); ribbonB.update(elapsed + 1.9); }
