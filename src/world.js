@@ -135,7 +135,11 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   const group = new THREE.Group();
   group.name = 'One continuous ancient ashlar gateway';
   const inner = 1.03, outer = 1.48;
-  const courseCount = 7, pierHeight = 2.69, courseHeight = pierHeight / courseCount;
+  const pierHeight = 2.69;
+  // Bonded, individually quarried lifts: the previous seven equal-height
+  // courses looked like a repeating game asset. These still sum to 2.69m.
+  const courseHeights = [.43, .37, .40, .36, .40, .34, .39];
+  const courseCount = courseHeights.length;
 
   for (const side of [-1,1]) {
     const px = side * 1.255;
@@ -147,11 +151,14 @@ function portal(stone, x, y, z, size = 1, glow = false) {
     const core = stoneMesh(weatheredBlock(.49,2.66,.81,31+side),stone[1]);
     core.position.set(px,-1.345,-.025);
     group.add(core);
+    let courseBottom = -pierHeight;
     for(let row=0;row<courseCount;row++){
-      const h=courseHeight-.0045;
+      const height = courseHeights[row];
+      const h=height-.0045;
       const offset=(Math.sin(row*2.8+side*1.35)*.0045);
       const block=stoneMesh(weatheredBlock(.545,h,.99,12+row*1.7+side),stone[(row+side+12)%7===0?1:0]);
-      block.position.set(px+offset,-2.69+(row+.5)*courseHeight,.015);
+      block.position.set(px+offset,courseBottom+height*.5,.015);
+      courseBottom += height;
       block.rotation.y=Math.sin(row*2.3+side)*.003;
       // Every quarried course needs its own part of the original photographic
       // texture; seven identical texture patches read as stacked wooden tiles.
