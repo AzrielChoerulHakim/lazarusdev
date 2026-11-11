@@ -37,11 +37,16 @@ jobs:
             sleep 2
           done
           node scripts/visual-review.mjs
+      - name: Encode image previews for visual inspection
+        run: |
+          for scene in hero-desktop passage-desktop worlds-desktop hero-mobile passage-mobile; do
+            base64 -w0 "docs/qa/${scene}.jpg" > "docs/qa/${scene}.b64.txt"
+          done
       - name: Publish visual review images to isolated branch
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/qa/*.jpg
+          git add docs/qa/*.jpg docs/qa/*.b64.txt
           git commit -m 'qa: capture actual WebGL scene on desktop and mobile'
           short_sha=${GITHUB_SHA:0:10}
           git push origin HEAD:refs/heads/visual-qa-${short_sha}
