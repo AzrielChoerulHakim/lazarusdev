@@ -122,6 +122,10 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       if (!object.isMesh) return;
       object.castShadow = true;
       object.receiveShadow = true;
+      // The scanned asset is rebased and cloned beneath moving parents.
+      // Some GPU/browser combinations cull its original local-space bounds;
+      // the bust is the hero focal point, so it must never disappear.
+      object.frustumCulled = false;
       const originals = Array.isArray(object.material) ? object.material : [object.material];
       const clipped = originals.map(material => {
         const m = material.clone();
