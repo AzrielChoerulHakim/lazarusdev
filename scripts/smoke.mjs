@@ -68,7 +68,10 @@ try {
     if (state.rig.statueMode !== 'single-scan'
        || state.rig.scanRootCount !== 1
        || state.rig.syntheticBustCount !== 0
-       || state.rig.statueMeshCount < 1) {
+       || state.rig.statueMeshCount < 1
+       || !Array.isArray(state.rig.statueMeshes)
+       || state.rig.statueMeshes.length !== state.rig.statueMeshCount
+       || !Number.isInteger(state.rig.statueDuplicatesRemoved)) {
       throw new Error(`${name}: overlapping statue geometry: ${JSON.stringify(state.rig)}`);
     }
     await page.waitForFunction(
@@ -101,6 +104,24 @@ try {
         throw new Error(`${name}: scroll transition stalls at ${JSON.stringify(scrollCheck)}`);
       if(Math.abs(after.target-after.worldTarget)>.005)
         throw new Error(`${name}: scroll/camera desynchronized at ${JSON.stringify(scrollCheck)}`);
+    }
+    // Sticky copy must remain stationary as the gate moves past it. Check
+    // two different native scroll positions (not a forced CSS animation).
+    const stickyDrift = await page.evaluate(async () => {
+      const passage = document.querySelector('#passage');
+      const copy = passage.querySelector('.passage-copy');
+      const root = passage.offsetTop;
+      scrollTo({ top: root + 190, behavior: 'instant' });
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const first = copy.getBoundingClientRect().top;
+      scrollTo({ top: root + 270, behavior: 'instant' });
+      await new Promise(resolve => requestAnimationFrame(resolve));
+      const second = copy.getBoundingClientRect().top;
+      scrollTo({ top: 0, behavior: 'instant' });
+      return { first, second };
+    });
+    if (Math.abs(stickyDrift.first - stickyDrift.second) > 2) {
+      throw new Error(`${name}: passage headline jitters with native scroll: ${JSON.stringify(stickyDrift)}`);
     }
     await page.waitForTimeout(240);
     await page.screenshot({ path: `screenshots/${name}-hero.png`, animations: 'disabled' });
