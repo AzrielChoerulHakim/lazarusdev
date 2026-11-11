@@ -21,7 +21,9 @@ function limestoneAlbedo(source) {
   const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
   for(let i=0;i<pixels.data.length;i+=4){
     const l=(.2126*pixels.data[i]+.7152*pixels.data[i+1]+.0722*pixels.data[i+2])/255;
-    const mineral=Math.max(.51,Math.min(.96,.80+(l-.50)*.52));
+    // Retain the licensed stone photograph's mineral veins and real pitting:
+    // overly compressing the tonal range made every face a flat chalk slab.
+    const mineral=Math.max(.44,Math.min(.93,.74+(l-.50)*.78));
     // Cool-cream travertine; key lighting supplies natural warm highlights.
     const value=mineral*255;
     pixels.data[i]=value;
@@ -57,13 +59,16 @@ export async function loadSandstoneMaterials(materials, onStatus = () => {}) {
     materials.forEach((material, index) => {
       material.map = neutralDiffuse;
       material.normalMap = normal;
-      material.normalScale.set(.52, .52);
+      material.normalScale.set(.68, .68);
       material.roughnessMap = roughness;
-      material.roughness = .94;
+      material.roughness = .98;
       material.metalness = 0;
       // Most blocks are from the same neutral limestone bed, with only
       // occasional weathered darker courses.
-      const tints = [0xeee9dd, 0xd4cbbe, 0xa49c8d];
+      // The previous near-white tint was washed out by the key light and
+      // made the temple resemble plaster. Stone is warm-gray limestone with
+      // naturally darker, water-exposed blocks.
+      const tints = [0xc8c0b1, 0xb3aa99, 0x888073];
       material.color.setHex(tints[index] || tints[0]);
       material.needsUpdate = true;
     });
