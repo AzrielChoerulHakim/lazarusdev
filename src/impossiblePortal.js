@@ -222,8 +222,11 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     windowMaterial.uniforms.uViewport.value.copy(screen);
     const compact=window.innerWidth<700;
     const ratio=software?.40:compact?.62:.73;
-    const width=Math.max(200,Math.min(compact?580:1120,Math.round(screen.x*ratio)));
-    const height=Math.max(200,Math.min(compact?900:900,Math.round(screen.y*ratio)));
+    // Preserve exact camera aspect ratio when limiting GPU render-target size.
+    // Otherwise a wide-screen desert gets distorted inside the gateway.
+    const scale=Math.min(ratio,(compact?580:1120)/screen.x,900/screen.y);
+    const width=Math.max(128,Math.round(screen.x*scale));
+    const height=Math.max(128,Math.round(screen.y*scale));
     const resolution=width+'x'+height;
     if(resolution!==lastResolution) {
       target.setSize(width,height);
