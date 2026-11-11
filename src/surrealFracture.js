@@ -123,14 +123,18 @@ function sectionOutline(data, height) {
   return hull.map(p => ({ x: cx + (p.x - cx) * .958, z: cz + (p.z - cz) * .958 }));
 }
 
-function makeCap(outline, height, material, rimMaterial, resources) {
+function makeCap(outline, height, material, rimMaterial, resources, facingUp = true) {
   if (!outline) return null;
   const shape = new THREE.Shape();
-  outline.forEach((p, i) => i ? shape.lineTo(p.x, p.z) : shape.moveTo(p.x, p.z));
+  // Facing-up/down cut surfaces have opposite normals but retain the same
+  // X/Z contour. Mirroring the shape coordinate prevents reversed rock edges.
+  outline.forEach((p, i) => i
+    ? shape.lineTo(p.x, facingUp ? -p.z : p.z)
+    : shape.moveTo(p.x, facingUp ? -p.z : p.z));
   shape.closePath();
   const geometry = new THREE.ShapeGeometry(shape);
   const surface = new THREE.Mesh(geometry, material);
-  surface.rotation.x = Math.PI / 2;
+  surface.rotation.x = facingUp ? -Math.PI / 2 : Math.PI / 2;
   surface.position.y = height;
   surface.receiveShadow = true;
   surface.renderOrder = 1;
@@ -189,13 +193,39 @@ export function createImpossibleFracture(model, anchor) {
   const outlines = CUTS.map(y => sectionOutline(data, y));
   const resources = [];
   const sections = [];
+  // Fresh-cut marble is porous and somewhat darker than polished exterior,
+  // but never a pitch-black disc. A photographed bust needs mineral grain in
+  // the cut itself: tiny strata and pores, with slight diffuse bounce light.
+  const cutCanvas = document.createElement('canvas');
+  cutCanvas.width = cutCanvas.height = 128;
+  const cutContext = cutCanvas.getContext('2d');
+  const cutPixels = cutContext.createImageData(128, 128);
+  let grainSeed = 7127349;
+  for (let y = 0; y < 128; y++) for (let x = 0; x < 128; x++) {
+    grainSeed = (Math.imul(grainSeed, 1664525) + 1013904223) >>> 0;
+    const grain = (grainSeed / 4294967296 - .5) * 35;
+    const stratum = Math.sin(y * .17 + Math.sin(x * .047) * 1.9) * 11
+      + Math.sin(x * .21 + y * .09) * 5;
+    const chalk = Math.max(135, Math.min(246, 209 + grain + stratum));
+    const j = (y * 128 + x) * 4;
+    cutPixels.data[j] = chalk;
+    cutPixels.data[j + 1] = chalk * .967;
+    cutPixels.data[j + 2] = chalk * .925;
+    cutPixels.data[j + 3] = 255;
+  }
+  cutContext.putImageData(cutPixels, 0, 0);
+  const cutMap = new THREE.CanvasTexture(cutCanvas);
+  cutMap.colorSpace = THREE.SRGBColorSpace;
+  cutMap.wrapS = cutMap.wrapT = THREE.RepeatWrapping;
+  cutMap.repeat.set(.55, .55);
   const darkStone = new THREE.MeshStandardMaterial({
-    color: 0x51473e, roughness: 1, metalness: 0, side: THREE.DoubleSide,
+    color: 0xd3c8b8, map: cutMap, roughness: 1, metalness: 0,
+    emissive: 0x766451, emissiveIntensity: .25, side: THREE.DoubleSide,
   });
   const rimStone = new THREE.LineBasicMaterial({
-    color: 0xc5b5a1, opacity: .36, transparent: true, depthWrite: false,
+    color: 0xc5b5a1, opacity: .21, transparent: true, depthWrite: false,
   });
-  resources.push(darkStone, rimStone);
+  resources.push(cutMap, darkStone, rimStone);
 
   for (let regionIndex = 0; regionIndex < REGIONS.length; regionIndex++) {
     const region = REGIONS[regionIndex];
@@ -230,11 +260,11 @@ export function createImpossibleFracture(model, anchor) {
     }
     piece.add(copy);
     if (regionIndex < CUTS.length) {
-      const cap = makeCap(outlines[regionIndex], CUTS[regionIndex] - .006, darkStone, rimStone, resources);
+      const cap = makeCap(outlines[regionIndex], CUTS[regionIndex] - .006, darkStone, rimStone, resources, true);
       if (cap) piece.add(cap);
     }
     if (regionIndex > 0) {
-      const cap = makeCap(outlines[regionIndex - 1], CUTS[regionIndex - 1] + .006, darkStone, rimStone, resources);
+      const cap = makeCap(outlines[regionIndex - 1], CUTS[regionIndex - 1] + .006, darkStone, rimStone, resources, false);
       if (cap) piece.add(cap);
     }
     anchor.add(piece);
@@ -265,9 +295,9 @@ export function createImpossibleFracture(model, anchor) {
     const separation = .90 + .10 * clamp(progress / .20, 0, 1);
     const middle = sections[1].piece;
     const crown = sections[2].piece;
-    middle.position.set(.052, .20 * separation + Math.sin(time * .43) * .022, .085);
+    middle.position.set(.052, .16 * separation + Math.sin(time * .43) * .013, .072);
     middle.rotation.set(.004, -.019 + Math.sin(time * .21) * .007, .011);
-    crown.position.set(-.085, .52 * separation + Math.sin(time * .32 + 1.1) * .043, -.035);
+    crown.position.set(-.085, .36 * separation + Math.sin(time * .32 + 1.1) * .024, -.035);
     crown.rotation.set(-.008, .036 + Math.sin(time * .18) * .009, -.020);
     sections.forEach(updatePlanes);
   };
