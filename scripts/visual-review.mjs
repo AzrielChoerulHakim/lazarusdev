@@ -30,6 +30,16 @@ try {
     if(errors.length)throw Error(item.name+': '+errors.join('; '));
     await page.screenshot({path:`${dir}/${item.name}.jpg`,type:'jpeg',quality:72,animations:'disabled'});
     const status=await page.evaluate(()=>({renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial,projection:window.__lazarusDebug?.(),scrollY:scrollY}));
+    const projection = status.projection;
+    if (!projection || projection.camera.some(v => !Number.isFinite(v) || Math.abs(v) > 90)) {
+      throw Error(item.name + ': runaway / nonfinite camera: ' + JSON.stringify(projection));
+    }
+    if (item.section === 'origin' && !projection.statue.visible) {
+      throw Error(item.name + ': scanned sculpture is outside the hero camera');
+    }
+    if (item.section === 'passage' && !projection.portal.visible) {
+      throw Error(item.name + ': portal is outside the threshold camera');
+    }
     console.log(item.name+' captured with '+JSON.stringify(status));
     await page.close();
   }
