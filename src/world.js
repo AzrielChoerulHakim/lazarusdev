@@ -252,64 +252,6 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   group.traverse(object => { if (object.isMesh) object.frustumCulled = false; });
   return group;
 }
-function ribbon(xStart, xEnd, y, z, width, color) {
-  // Eight longitudinal subdivisions let the cloth fold across its WIDTH,
-  // rather than behaving like a flat strip between two animated edges.
-  const steps = 170, across = 18, stride = across + 1;
-  const positions = new Float32Array((steps + 1) * stride * 3);
-  const uvs = new Float32Array((steps + 1) * stride * 2);
-  const colors = new Float32Array((steps + 1) * stride * 3);
-  const indices = [];
-  for (let i = 0; i <= steps; i++) {
-    for(let j = 0; j <= across; j++) {
-      const t = i / steps, v = j / across;
-      const n = i * stride + j;
-      uvs[n*2] = t; uvs[n*2+1] = v;
-      const shade = .88 + .09 * (1 - Math.abs(v * 2 - 1)) + .018 * Math.sin(t * 27 + v * 9);
-      colors[n*3] = shade;
-      colors[n*3+1] = shade * .94;
-      colors[n*3+2] = shade * .9;
-      if (i < steps && j < across) {
-        const q = i * stride + j;
-        indices.push(q, q + stride, q + 1, q + 1, q + stride, q + stride + 1);
-      }
-    }
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  geometry.setIndex(indices);
-  const material = new THREE.MeshPhysicalMaterial({
-    color, vertexColors: true, side: THREE.DoubleSide, roughness: .83,
-    metalness: 0, sheen: .81, sheenColor: new THREE.Color(0x702920),
-    sheenRoughness: .89, clearcoat: 0,
-  });
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.frustumCulled = false;
-  mesh.castShadow = true;
-  return { mesh, update(time) {
-    for (let i = 0; i <= steps; i++) {
-      const t = i / steps;
-      const x = mix(xStart, xEnd, t);
-      const wind = Math.sin(t * Math.PI * 2.3 + time * .27) * (.14 + .22 * Math.sin(t * Math.PI));
-      const centerY = y + Math.sin(t * Math.PI * 1.65 + .28) * .55 + wind;
-      const centerZ = z + .18 * Math.sin(t * 8.8 + time * .25) - .18 * Math.cos(t * 3.9);
-      const taper = Math.pow(Math.sin(Math.PI * t), .65);
-      const w = width * (.12 + .88 * taper);
-      const pitch = t * 8.5 + time * .22;
-      for(let j = 0; j <= across; j++) {
-        const v = j / across * 2 - 1, p = (i * stride + j) * 3;
-        const fold = (.035 + .055 * taper) * Math.sin(t * 26 + v * 9.6 - time * .61);
-        positions[p] = x + fold * v * .14;
-        positions[p+1] = centerY + v * w * .5 * Math.cos(pitch) + fold;
-        positions[p+2] = centerZ + v * w * .5 * Math.sin(pitch) + fold * .95;
-      }
-    }
-    geometry.attributes.position.needsUpdate = true;
-    geometry.computeVertexNormals();
-  } };
-}
 function floatingIsland(stone, x, y, z, scale) {
   const g = new THREE.Group();
   const slab = stoneMesh(new THREE.CylinderGeometry(1.4, .86, .34, 9), stone[1]);
@@ -453,14 +395,17 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
+  // The crimson fabric belongs to the statue, not the portal. Its world-space
+  // path begins behind the marble, spills around the right profile, and falls.
+  // Crucially, the passage remains architecturally legible on both breakpoints.
   const ribbonA = createSilkRibbon([
-    [2.5, 1.3, -3.35], [3.8,1.45,-3.7], [5.0,.9,-2.6],
-    [6.4,.35,-1.15], [7.8,.55,-.4], [9.2,.18,1.2],
-  ], { width: 1.45, phase: .45, color: 0xb13e31 });
+    [3.9, 1.65, -3.65], [5.25,1.20,-2.75], [6.35,.20,-1.32],
+    [7.65,-.62,-.42], [8.75,-.46,.70], [10.2,-1.35,1.45],
+  ], { width: .87, phase: .60, color: 0xa7372c });
   const ribbonB = createSilkRibbon([
-    [-2.5,-1.95,-2.7], [.7,-2.5,-2.4], [2.9,-2.9,-1.9],
-    [4.8,-3.1,-2.35], [6.8,-2.75,-2.55], [8.9,-2.3,-2.5],
-  ], { width: .92, phase: 2.2, color: 0x973426 });
+    [2.7,-3.00,-3.65], [3.62,-3.25,-4.10], [4.65,-2.95,-4.30],
+    [5.35,-2.45,-3.55], [6.30,-2.80,-3.05], [7.55,-3.55,-2.00],
+  ], { width: .48, phase: 2.2, color: 0x852b24 });
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
