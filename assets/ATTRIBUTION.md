@@ -35,3 +35,15 @@ reference painting.
 The portal geometry, sky, seawater and ribbons are Lazarus Dev's original
 procedural 3D and shaders, while the stone *surface maps* are the licensed
 Poly Haven photography. The sculpt and stone texture remain CC0 when reused.
+
+
+## Earth's Moon — NASA CGI Moon Kit (LROC/LOLA)
+
+- **Source:** NASA Scientific Visualization Studio — https://svs.gsfc.nasa.gov/4720/
+- **Credits:** NASA SVS / Ernie Wright; LROC camera team and LOLA instrument team
+- **Use:** 2025 lunar color map `lroc_color_2k.jpg`; topography `ldem_3_8bit.jpg`
+- **License:** Public domain (U.S. government imagery)
+- **Acquisition:** `python scripts/fetch_nasa_moon.py`
+- **Local files:** `assets/moon/lroc_color_2k.jpg` and `assets/moon/ldem_3_8bit.jpg`
+
+The moon is rendered as real 3D geometry with the color mosaic and height map; lighting, geometry depth and scale are artistic approximations, not a scientific reconstruction.
