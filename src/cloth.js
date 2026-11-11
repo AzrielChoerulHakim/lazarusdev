@@ -31,7 +31,7 @@ export function createSilkRibbon(points, options = {}) {
   const curve = new THREE.CatmullRomCurve3(
     points.map(p => new THREE.Vector3(...p)), false, 'centripetal', .35
   );
-  const along = 128, across = 20, cols = across + 1;
+  const along = 176, across = 28, cols = across + 1;
   const positions = new Float32Array((along + 1) * cols * 3);
   const uv = new Float32Array((along + 1) * cols * 2);
   const colors = new Float32Array((along + 1) * cols * 3);
@@ -65,11 +65,13 @@ export function createSilkRibbon(points, options = {}) {
     color: options.color ?? 0xac3c30,
     vertexColors: true,
     side: THREE.DoubleSide,
-    roughness: .72,
+    roughness: .59,
     metalness: 0,
     sheen: 1,
     sheenColor: new THREE.Color(0xe17b65),
-    sheenRoughness: .49,
+    sheenRoughness: .36,
+    specularIntensity: .78,
+    specularColor: new THREE.Color(0xf6c3b0),
     clearcoat: 0,
     normalMap: weave,
     normalScale: new THREE.Vector2(.11,.11),
@@ -99,19 +101,19 @@ export function createSilkRibbon(points, options = {}) {
       if (side.lengthSq() < .0001) side.set(0,0,1);
       normal.crossVectors(side,tangent).normalize();
       const weight = envelope(t);
-      const breeze = Math.sin(8 * t - .5 * time + phase) * .09 * weight;
+      const breeze = Math.sin(8 * t - .5 * time + phase) * .065 * weight;
       const drape = Math.sin(t * Math.PI * 1.6 + phase) * .11 * weight;
       center.y += breeze + drape;
       center.z += Math.sin(11*t + .27*time + phase) * .08 * weight;
-      const twist = Math.sin(t * 5.2 + phase + time * .12) * .21;
+      const twist = Math.sin(t * 5.2 + phase + time * .12) * .18;
       const s = Math.sin(twist), c = Math.cos(twist);
       const w = width * (.16 + .84 * weight);
       for (let j = 0; j <= across; j++) {
         const v = j / across * 2 - 1;
         const k = (i * cols + j) * 3;
-        const flutter = .036 * weight
+        const flutter = .027 * weight
           * Math.sin(3 * Math.PI * v + 12.5 * t - time * .53 + phase);
-        const curl = .052 * weight * Math.pow(Math.abs(v),3)
+        const curl = .047 * weight * Math.pow(Math.abs(v),3)
           * Math.sin(t * 5.4 - time * .20 + phase);
         const horizontal = v * .5 * w * s + flutter + curl;
         const vertical = v * .5 * w * c;
