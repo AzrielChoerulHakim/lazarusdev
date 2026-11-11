@@ -158,22 +158,19 @@ portalButton.addEventListener('click', () => {
       portalButton.removeAttribute('aria-busy');
       portalBusy = false;
     };
-    const onTransitionEnd = e => {
-      if (e.target === portalLayer && e.propertyName === 'opacity') restore();
-    };
-    const originalRestore = restore;
-    // A browser may skip transitionend after screenshots, tab changes or
-    // accessibility motion changes. Never leave the portal action disabled.
+    // A browser can skip transitionend when frames are throttled or motion
+    // preferences change. The button must always become usable again.
     let restored = false;
-    function restoreOnce() {
+    const restoreOnce = () => {
       if (restored) return;
       restored = true;
       portalLayer.removeEventListener('transitionend', onTransitionEnd);
-      originalRestore();
-    }
-    portalLayer.addEventListener('transitionend', e => {
+      restore();
+    };
+    const onTransitionEnd = e => {
       if (e.target === portalLayer && e.propertyName === 'opacity') restoreOnce();
-    }, { once: true });
+    };
+    portalLayer.addEventListener('transitionend', onTransitionEnd);
     setTimeout(restoreOnce, 1150);
   };
   const started = world.enterPortal(
