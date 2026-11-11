@@ -363,7 +363,13 @@ export function createWorld(canvas) {
   let qualityScale = 1;
   let perfFrames = 0, perfSeconds = 0, slowWindows = 0, fastWindows = 0;
   let viewportWidth = 0, viewportHeight = 0, baseDpr = 1;
-  const lookSmooth = new THREE.Vector3(0, 0, -5);
+  // The previous renderer began at camera (0,0,0) and eased toward a distant
+  // hero pose, producing an obvious opening-scene jump before the visitor
+  // touched the page. Initialize the physically correct pose immediately.
+  const initialCamera=keyframe(0);
+  camera.position.copy(initialCamera.p);
+  const lookSmooth=initialCamera.look.clone();
+  camera.lookAt(lookSmooth);
   const viewport = () => {
     const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
     const compact = w < 700;
@@ -383,7 +389,16 @@ export function createWorld(canvas) {
     camera.updateProjectionMatrix();
   };
   viewport();
-  const onResize = () => viewport();
+  let lastViewportWidth=window.innerWidth;
+  let lastViewportHeight=window.innerHeight;
+  const onResize = () => {
+    const w=window.innerWidth, h=window.innerHeight;
+    // Mobile URL bars resize the visual viewport while a finger is scrolling.
+    // Do not change projection matrix, WebGL backing size, or shadows mid-swipe.
+    if(w<700 && Math.abs(w-lastViewportWidth)<3 && Math.abs(h-lastViewportHeight)<155)return;
+    lastViewportWidth=w;lastViewportHeight=h;
+    viewport();
+  };
   window.addEventListener('resize', onResize, { passive: true });
   const onVisibility = () => { pausedByTab = document.hidden; last = performance.now(); };
   document.addEventListener('visibilitychange', onVisibility);
@@ -441,8 +456,10 @@ export function createWorld(canvas) {
         finish?.();
       }
     } else {
-      progress = mix(progress, targetProgress, 1 - Math.exp(-dt * 6.3));
-      if (Math.abs(targetProgress - progress) < .00005) progress = targetProgress;
+      // One damped stage only: camera pose smooths the native scroll.
+      // Damping progress AND camera previously doubled the lag and made the
+      // start of each scroll gesture look stuck, then abruptly catch up.
+      progress = targetProgress;
     }
     const current = keyframe(progress);
     const mobile = window.innerWidth < 700;
@@ -453,15 +470,16 @@ export function createWorld(canvas) {
       current.look.x += heroFocus * 1.72;
       current.look.y += heroFocus * .23;
     }
-    if (motion) { current.p.x += pointer.x * .13; current.p.y += pointer.y * .10; }
+    // Parallax is kept subtle, and disappears during a guided portal flight.
+    if (motion && !portalFlight) { current.p.x += pointer.x * .065; current.p.y += pointer.y * .045; }
     if (!Number.isFinite(camera.position.lengthSq()) || camera.position.distanceTo(current.p) > 90) {
       camera.position.copy(current.p);
       lookSmooth.copy(current.look);
     }
     // Framerate-independent exponential camera damping, with a slightly
     // tighter response during the intentional through-the-gate flight.
-    const positionRate = portalFlight ? 11.5 : 8.2;
-    const lookRate = portalFlight ? 12.5 : 9.0;
+    const positionRate = portalFlight ? 12.0 : 8.0;
+    const lookRate = portalFlight ? 12.0 : 8.0;
     camera.position.lerp(current.p, 1 - Math.exp(-dt * positionRate));
     lookSmooth.lerp(current.look, 1 - Math.exp(-dt * lookRate));
     camera.lookAt(lookSmooth);
