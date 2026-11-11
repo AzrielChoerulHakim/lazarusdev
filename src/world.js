@@ -249,7 +249,7 @@ function portal(stone, x, y, z, size = 1, glow = false) {
 function ribbon(xStart, xEnd, y, z, width, color) {
   // Eight longitudinal subdivisions let the cloth fold across its WIDTH,
   // rather than behaving like a flat strip between two animated edges.
-  const steps = 112, across = 8, stride = across + 1;
+  const steps = 170, across = 18, stride = across + 1;
   const positions = new Float32Array((steps + 1) * stride * 3);
   const uvs = new Float32Array((steps + 1) * stride * 2);
   const colors = new Float32Array((steps + 1) * stride * 3);
@@ -259,7 +259,7 @@ function ribbon(xStart, xEnd, y, z, width, color) {
       const t = i / steps, v = j / across;
       const n = i * stride + j;
       uvs[n*2] = t; uvs[n*2+1] = v;
-      const shade = .76 + .22 * (1 - Math.abs(v * 2 - 1)) + .08 * Math.sin(t * 27 + v * 9);
+      const shade = .88 + .09 * (1 - Math.abs(v * 2 - 1)) + .018 * Math.sin(t * 27 + v * 9);
       colors[n*3] = shade;
       colors[n*3+1] = shade * .94;
       colors[n*3+2] = shade * .9;
@@ -275,8 +275,8 @@ function ribbon(xStart, xEnd, y, z, width, color) {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   geometry.setIndex(indices);
   const material = new THREE.MeshPhysicalMaterial({
-    color, vertexColors: true, side: THREE.DoubleSide, roughness: .96,
-    metalness: 0, sheen: .68, sheenColor: new THREE.Color(0x702920),
+    color, vertexColors: true, side: THREE.DoubleSide, roughness: .83,
+    metalness: 0, sheen: .81, sheenColor: new THREE.Color(0x702920),
     sheenRoughness: .89, clearcoat: 0,
   });
   const mesh = new THREE.Mesh(geometry, material);
@@ -323,8 +323,8 @@ function floatingIsland(stone, x, y, z, scale) {
 }
 function addAtmosphere(scene, stone) {
   const moonMat = new THREE.MeshStandardMaterial({ color: 0x9f9784, roughness: 1, metalness: 0, map: stone[1].map });
-  const moon = new THREE.Mesh(new THREE.SphereGeometry(2.25, 48, 36), moonMat);
-  moon.position.set(-1.8, 3.1, -18.5);
+  const moon = new THREE.Mesh(new THREE.SphereGeometry(1.72, 48, 36), moonMat);
+  moon.position.set(6.9, 2.8, -27.0);
   scene.add(moon);
   const dustG = new THREE.BufferGeometry();
   const pts = new Float32Array(350 * 3);
@@ -348,13 +348,16 @@ function addAtmosphere(scene, stone) {
 }
 
 const CAMERA_KEYS = [
-  { t: 0, p: [0, .15, 9.3], look: [.35, .05, -3.3] },
-  { t: .17, p: [-.35, .24, 7.5], look: [-.75, .10, -5.5] },
-  { t: .32, p: [-1.55, .24, 4.1], look: [-3.0, -.18, -7.5] },
-  { t: .50, p: [-2.38, .13, -.5], look: [-3.05, -.33, -9.5] },
-  { t: .65, p: [-3.09, .05, -8.35], look: [-1.25, .05, -17] },
-  { t: .78, p: [-1.9, 1.15, -10.8], look: [.3, .25, -21] },
-  { t: 1, p: [1.1, 1.4, -12.7], look: [.5, 0, -23] },
+  // A deliberate cinema path, not a linear pan into empty sky.
+  // Hero: face dominates the right. Passage: portal becomes the subject.
+  // Final act: camera physically crosses the arched stone threshold.
+  { t: 0, p: [0, .15, 9.3], look: [1.2, .55, -3.3] },
+  { t: .17, p: [-.25, .20, 7.8], look: [-1.7, .0, -6.0] },
+  { t: .32, p: [-1.25, .20, 4.6], look: [-3.05, -.35, -7.5] },
+  { t: .50, p: [-2.45, .25, .0], look: [-3.05, -.50, -7.5] },
+  { t: .65, p: [-3.0, .15, -4.8], look: [-3.05, -.40, -11.0] },
+  { t: .78, p: [-3.05, .12, -9.5], look: [-1.2, .10, -19.0] },
+  { t: 1, p: [.5, 1.0, -12.5], look: [.2, .10, -23.0] },
 ];
 function keyframe(t) {
   let i = 0;
@@ -439,8 +442,8 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
-  const ribbonA = ribbon(.45, 7.5, .8, -.38, .49, 0x943528);
-  const ribbonB = ribbon(-.85, 8.2, -2.35, -3.15, .38, 0x78281f);
+  const ribbonA = ribbon(.75, 8.4, -.08, .84, .69, 0x9c3a2d);
+  const ribbonB = ribbon(-.85, 8.7, -2.45, -2.65, .53, 0x823128);
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
