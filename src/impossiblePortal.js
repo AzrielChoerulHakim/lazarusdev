@@ -35,6 +35,16 @@ function buildDesert(scene, tracked) {
   const sun = new THREE.DirectionalLight(0xffd5a0, 3.35);
   sun.position.set(-18, 29, 13);
   sun.target.position.set(0, -2, -16);
+  // The photographed-looking desert needs genuine raking shadows.
+  // An intentionally modest shadow atlas works on mid-range hardware;
+  // the renderer automatically skips this pass on low-power phones.
+  sun.castShadow=true;
+  sun.shadow.mapSize.set(512,512);
+  Object.assign(sun.shadow.camera,{
+    left:-36,right:36,top:36,bottom:-36,near:1,far:100
+  });
+  sun.shadow.bias=-.0003;
+  sun.shadow.normalBias=.035;
   scene.add(sun, sun.target);
 
   const canvas=document.createElement('canvas');
@@ -233,6 +243,9 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
       lastResolution=resolution;
       lastPose='';
     }
+    // Outside the world crossing, stop rendering the second scene when
+    // neither its window nor the full-screen desert is visible.
+    if(!windowMesh.visible&&blend<.002)return;
     frame++;
     const pose=[
       ...secondCamera.position.toArray(),
