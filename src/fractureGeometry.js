@@ -12,7 +12,7 @@ import * as THREE from 'three';
 
 const bins = 144;
 const v0 = new THREE.Vector3(), v1 = new THREE.Vector3(), v2 = new THREE.Vector3();
-const e0 = new THREE.Vector3(), e1 = new THREE.Vector3();
+
 
 function intersects(a, b, y) {
   const d = b.y - a.y;
@@ -22,15 +22,17 @@ function intersects(a, b, y) {
   return [a.x + (b.x - a.x) * t, a.z + (b.z - a.z) * t];
 }
 
-function collectIntersection(model, y) {
+function collectIntersection(model, y, anchor) {
   const points = [];
   model.updateMatrixWorld(true);
+  anchor.updateWorldMatrix(true, false);
+  const toAnchor = new THREE.Matrix4().copy(anchor.matrixWorld).invert();
   model.traverse(mesh => {
     if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
     const position = mesh.geometry.attributes.position;
     const index = mesh.geometry.index;
     const triangles = index ? index.count / 3 : position.count / 3;
-    const matrix = mesh.matrixWorld;
+    const matrix = new THREE.Matrix4().multiplyMatrices(toAnchor, mesh.matrixWorld);
 
     for (let i = 0; i < triangles; i++) {
       const ai = index ? index.getX(i * 3) : i * 3;
@@ -63,9 +65,13 @@ function boundary(points) {
   if (points.length < 24) return null;
   // More robust than averaging every triangle intersection: head/neck mesh
   // density is uneven. The median of the bounds is stable across topology.
-  const xs = points.map(p => p[0]), zs = points.map(p => p[1]);
-  const x0 = (Math.min(...xs) + Math.max(...xs)) * .5;
-  const z0 = (Math.min(...zs) + Math.max(...zs)) * .5;
+  let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
+  for (const [x, z] of points) {
+    minX = Math.min(minX, x); maxX = Math.max(maxX, x);
+    minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z);
+  }
+  const x0 = (minX + maxX) * .5;
+  const z0 = (minZ + maxZ) * .5;
   const r = new Float32Array(bins);
   for (const p of points) {
     const angle = (Math.atan2(p[1] - z0, p[0] - x0) + Math.PI * 2) % (Math.PI * 2);
@@ -103,7 +109,7 @@ function noise(x, z) {
  * fragment's upper face. This matches the existing GPU fracture shader.
  */
 export function makeScannedFractureCap(model, cutY, direction, anchor) {
-  const cloud = collectIntersection(model, cutY);
+  const cloud = collectIntersection(model, cutY, anchor);
   const outline = boundary(cloud);
   if (!outline) {
     console.warn('No valid scan contour at fracture plane', cutY);
