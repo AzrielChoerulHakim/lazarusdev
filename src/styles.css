@@ -51,3 +51,12 @@ main{position:relative;z-index:2}.chapter{position:relative;isolation:isolate;pa
 @media(max-width:560px){.chapter-passage{min-height:172svh;display:block;padding-bottom:85px;text-align:left}.chapter-passage .passage-copy{position:sticky;top:105px;width:100%}.passage-notation{margin-top:22px}.portal-enter{margin-top:20px;font-size:9px;gap:25px;padding:13px 0}}
 @media(max-height:690px){.chapter-passage .passage-copy{top:92px}.passage-copy h2{font-size:clamp(55px,7.2vw,105px)}.passage-copy .eyebrow{margin-bottom:22px}.passage-notation{margin-top:18px}.portal-enter{margin-top:10px}}
 @media(prefers-reduced-motion:reduce){#portal-transition{display:none}.chapter-passage{min-height:108svh}.chapter-passage .passage-copy{position:relative;top:auto}}
+
+/* Keep the portal CTA above the fold once the sculpture has left frame. */
+@media(min-width:801px){
+  .chapter-passage .passage-copy{top:clamp(101px,14vh,137px)}
+  .passage-copy .eyebrow{margin-bottom:26px}
+  .passage-copy>p{margin-top:24px}
+  .passage-notation{margin-top:35px}
+  .portal-enter{margin-top:18px}
+}

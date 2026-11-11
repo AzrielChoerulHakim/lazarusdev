@@ -30,9 +30,9 @@ function updateScroll() {
   // and the gallery inherits a view into the world beyond it.
   let worldProgress;
   if (scrollY < passageTop) {
-    worldProgress = .22 * smoothstep(scrollY / Math.max(passageTop, 1));
+    worldProgress = .38 * smoothstep(scrollY / Math.max(passageTop, 1));
   } else if (scrollY < galleryTop) {
-    worldProgress = .22 + .60 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
+    worldProgress = .38 + .44 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
   } else {
     worldProgress = .82 + .18 * smoothstep((scrollY - galleryTop) / Math.max(practiceTop - galleryTop, 1));
   }
