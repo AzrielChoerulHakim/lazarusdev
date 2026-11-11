@@ -14,7 +14,6 @@ const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const mix = (a, b, t) => a + (b - a) * t;
 const smooth = (a, b, t) => { const p = clamp((t - a) / (b - a)); return p * p * (3 - 2 * p); };
-const rand = (() => { let seed = 37021; return () => { seed = (1664525 * seed + 1013904223) >>> 0; return seed / 4294967296; }; })();
 
 function marbleTexture() {
   const canvas = document.createElement('canvas');
@@ -82,77 +81,6 @@ function stoneMesh(geometry, material, shadow = true) {
   mesh.receiveShadow = true;
   return mesh;
 }
-function ellipse(group, material, scale, position, segments = 32) {
-  const mesh = stoneMesh(new THREE.SphereGeometry(1, segments, Math.floor(segments * .75)), material);
-  mesh.scale.set(...scale);
-  mesh.position.set(...position);
-  group.add(mesh);
-  return mesh;
-}
-
-function makeBust(stone) {
-  const bust = new THREE.Group();
-  bust.name = 'Fragmented marble oracle';
-  const upperTheta = 1.67, lowerTheta = 1.92;
-  const main = stoneMesh(new THREE.SphereGeometry(1, 76, 48, 0, Math.PI * 2, 0, upperTheta), stone[0]);
-  main.scale.set(1.07, 1.52, .84);
-  bust.add(main);
-  const jaw = stoneMesh(new THREE.SphereGeometry(1, 76, 32, 0, Math.PI * 2, lowerTheta, Math.PI - lowerTheta), stone[1]);
-  jaw.scale.set(1.07, 1.52, .84);
-  jaw.position.set(.13, -.06, .05);
-  jaw.rotation.z = -.075;
-  bust.add(jaw);
-  const capTop = stoneMesh(new THREE.CylinderGeometry(Math.sin(upperTheta), Math.sin(upperTheta), .11, 56), stone[1]);
-  capTop.scale.set(1.07, 1, .84);
-  capTop.position.y = Math.cos(upperTheta) * 1.52 - .055;
-  bust.add(capTop);
-  const capJaw = stoneMesh(new THREE.CylinderGeometry(Math.sin(lowerTheta), Math.sin(lowerTheta), .1, 56), stone[2]);
-  capJaw.scale.set(1.07, 1, .84);
-  capJaw.position.set(.13, Math.cos(lowerTheta) * 1.52 - .01, .05);
-  capJaw.rotation.z = -.075;
-  bust.add(capJaw);
-
-  const eyeShade = new THREE.MeshStandardMaterial({ color: 0x252a26, roughness: 1 });
-  for (const side of [-1, 1]) {
-    const x = side * .47;
-    ellipse(bust, stone[1], [.43, .12, .13], [x, .50, .72]);
-    ellipse(bust, eyeShade, [.29, .051, .042], [x, .35, .837]);
-    ellipse(bust, stone[0], [.31, .085, .095], [x, .30, .83]);
-    ellipse(bust, stone[0], [.26, .26, .13], [side * .61, -.03, .66]);
-  }
-  ellipse(bust, stone[0], [.145, .53, .22], [.01, .13, .835]);
-  ellipse(bust, stone[1], [.24, .14, .23], [.025, -.27, .885]);
-  ellipse(bust, stone[2], [.09, .049, .08], [-.145, -.335, 1.01]);
-  ellipse(bust, stone[2], [.09, .049, .08], [.195, -.335, 1.01]);
-  ellipse(bust, stone[1], [.39, .073, .14], [.16, -.71, .755]);
-  ellipse(bust, eyeShade, [.34, .024, .05], [.16, -.775, .85]);
-  ellipse(bust, stone[0], [.34, .066, .12], [.16, -.84, .77]);
-  ellipse(bust, stone[1], [.32, .14, .14], [.16, -1.03, .64]);
-  for (let i = 0; i < 18; i++) {
-    const a = (i / 17) * Math.PI * 1.04;
-    const x = Math.cos(a) * .97;
-    const y = 1.12 + .27 * Math.sin(a);
-    const z = Math.sin(a) * .2 + (i % 3) * .025;
-    const curl = stoneMesh(new THREE.IcosahedronGeometry(.18 + rand() * .12, 1), stone[i % 3]);
-    curl.position.set(x, y, z);
-    curl.rotation.set(rand(), rand(), rand());
-    curl.scale.set(1, 1.3, 1.2);
-    bust.add(curl);
-  }
-  const neck = stoneMesh(new THREE.CylinderGeometry(.57, .70, 1.18, 11), stone[1]);
-  neck.position.set(.18, -1.86, -.15);
-  neck.rotation.z = -.11;
-  bust.add(neck);
-  const collar = stoneMesh(new THREE.CylinderGeometry(.95, 1.13, .32, 12), stone[2]);
-  collar.position.set(.1, -2.5, -.15);
-  bust.add(collar);
-  bust.rotation.y = -.20;
-  bust.rotation.z = -.07;
-  bust.position.set(2.38, .72, -1.5);
-  bust.scale.setScalar(1.42);
-  return bust;
-}
-
 function weatheredBlock(w, h, d, salt = 0) {
   // Subtle sculpted curvature and chipped corners catch grazing sunlight.
   // Plain perfect cubes are the strongest visual cue that the world is synthetic.
@@ -199,59 +127,69 @@ function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
 }
 function portal(stone, x, y, z, size = 1, glow = false) {
   const group = new THREE.Group();
+  group.name = 'One continuous ancient ashlar gateway';
   const inner = 1.03, outer = 1.48;
-  for (const side of [-1, 1]) {
-    const pillar = stoneMesh(weatheredBlock(.47, 2.7, .76, 2 + side), stone[side === 1 ? 1 : 0]);
-    pillar.position.set(side * 1.255, -1.35, 0);
-    group.add(pillar);
-    const base = stoneMesh(weatheredBlock(.71, .22, .90, 5 + side), stone[1]);
-    base.position.set(side * 1.255, -2.63, 0);
-    group.add(base);
-    const capital = stoneMesh(weatheredBlock(.62, .24, .88, 6 + side), stone[0]);
-    capital.position.set(side * 1.255, .07, 0);
-    group.add(capital);
-    for (let j = 0; j < 3; j++) {
-      const striation = stoneMesh(new THREE.BoxGeometry(.026, 2.1, .025), stone[2], false);
-      striation.position.set(side * 1.255 + (j - 1) * .105, -1.35, .388);
-      group.add(striation);
+  const courseCount = 7, pierHeight = 2.69, courseHeight = pierHeight / courseCount;
+
+  for (const side of [-1,1]) {
+    const px = side * 1.255;
+    // Actual bonded courses: each face is a separate weathered piece of
+    // masonry with tiny shadow-producing joints. This replaces the previous
+    // perfect rectangular pier with a cylinder drawn on its surface.
+    const core = stoneMesh(weatheredBlock(.49,2.66,.81,31+side),stone[2]);
+    core.position.set(px,-1.345,-.025);
+    group.add(core);
+    for(let row=0;row<courseCount;row++){
+      const h=courseHeight-.013;
+      const offset=(Math.sin(row*2.8+side*1.35)*.009);
+      const block=stoneMesh(weatheredBlock(.545,h,.99,12+row*1.7+side),stone[(row+side+12)%7===0?1:0]);
+      block.position.set(px+offset,-2.69+(row+.5)*courseHeight,.015);
+      block.rotation.y=Math.sin(row*2.3+side)*.005;
+      group.add(block);
     }
+    // Simple, heavy Romanesque capital and plinth with real relief.
+    const plinth=stoneMesh(weatheredBlock(.77,.19,1.15,35+side),stone[1]);
+    plinth.position.set(px,-2.66,.015);
+    group.add(plinth);
+    const impost=stoneMesh(weatheredBlock(.75,.17,1.13,42+side),stone[1]);
+    impost.position.set(px,.075,-.008);
+    group.add(impost);
+    const impostLip=stoneMesh(weatheredBlock(.68,.075,1.09,45+side),stone[0]);
+    impostLip.position.set(px,.195,-.008);
+    group.add(impostLip);
   }
-  const count = 13;
-  for (let i = 0; i < count; i++) {
-    const a0 = i * Math.PI / count + .006, a1 = (i + 1) * Math.PI / count - .006;
-    // Avoid the alternating dark/light voussoir pattern of a game prop.
-    // Most stones belong to one quarry; age varies subtly across courses.
-    group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 5 === 0 ? 1 : 0]));
+
+  const count=15;
+  for(let i=0;i<count;i++){
+    const a0=i*Math.PI/count+.007;
+    const a1=(i+1)*Math.PI/count-.007;
+    // The central voussoir is the real keystone. No fake rectangular
+    // crown balancing on top of the ring.
+    const keystone=i===Math.floor(count/2);
+    const exterior=keystone?outer+.075:outer;
+    const wedge=archWedge(a0,a1,exterior,inner,.99,stone[keystone?1:i%7===2?1:0]);
+    wedge.name=keystone?'Single load-bearing keystone':`Ashlar voussoir ${i+1}`;
+    group.add(wedge);
   }
-  // Recessed arch grooves, voussoir rhythm and side chamfers create
-  // specular breaks and real shadow edges rather than a cardboard silhouette.
-  const ridge = stoneMesh(new THREE.TorusGeometry(1.255, .026, 6, 96, Math.PI), stone[2], false);
-  ridge.position.set(0, 0, .422);
-  group.add(ridge);
-  const innerRidge = stoneMesh(new THREE.TorusGeometry(1.06, .017, 5, 96, Math.PI), stone[1], false);
-  innerRidge.position.set(0, 0, .424);
-  group.add(innerRidge);
-  const crown = stoneMesh(weatheredBlock(.36, .25, .9, 12), stone[0]);
-  crown.position.y = outer + .06;
-  group.add(crown);
-  if (glow) {
-    const haloMat = new THREE.MeshBasicMaterial({ color: 0x7caaa1, transparent: true, opacity: .18, depthWrite: false, side: THREE.DoubleSide });
-    const shape = new THREE.Shape();
-    shape.moveTo(-inner, -2.5);
-    shape.lineTo(-inner, 0);
-    for (let i = 0; i <= 20; i++) { const a = Math.PI - i * Math.PI / 20; shape.lineTo(Math.cos(a) * inner, Math.sin(a) * inner); }
-    shape.lineTo(inner, -2.5);
-    shape.closePath();
-    const membrane = new THREE.Mesh(new THREE.ShapeGeometry(shape), haloMat);
-    membrane.position.z = -.46;
-    membrane.name = 'Portal light volume';
+  // There is genuinely nothing filling the passage except fine airborne
+  // haze. The back of each solid voussoir is visible during a camera fly-through.
+  if(glow){
+    const glass=new THREE.MeshBasicMaterial({color:0x9bb5a1,transparent:true,opacity:.055,depthWrite:false,side:THREE.DoubleSide});
+    const aperture=new THREE.Shape();
+    aperture.moveTo(-inner,-2.5);aperture.lineTo(-inner,0);
+    for(let i=0;i<=32;i++){
+      const a=Math.PI-i*Math.PI/32;
+      aperture.lineTo(Math.cos(a)*inner,Math.sin(a)*inner);
+    }
+    aperture.lineTo(inner,-2.5);aperture.closePath();
+    const membrane=new THREE.Mesh(new THREE.ShapeGeometry(aperture),glass);
+    membrane.position.z=-.55;
+    membrane.name='Portal light volume';
     group.add(membrane);
   }
-  group.position.set(x, y, z);
+  group.position.set(x,y,z);
   group.scale.setScalar(size);
-  // These are small, fixed-count meshes; retain them while entering the portal.
-  // Recalculated extruded bounding volumes can be conservative in narrow views.
-  group.traverse(object => { if (object.isMesh) object.frustumCulled = false; });
+  group.traverse(obj=>{if(obj.isMesh)obj.frustumCulled=false});
   return group;
 }
 function addAtmosphere(scene, stone) {
@@ -364,8 +302,9 @@ export function createWorld(canvas) {
   const stone = makeStoneMaterials(marbleTexture());
   const proceduralColor = stone[0].map;
   const proceduralNormal = stone[0].normalMap;
-  const statue = makeBust(stone);
-  scene.add(statue);
+  // No synthetic fallback is ever placed over the photographic scan.
+  // A failed network load leaves the landscape intact, never a low-poly head.
+  const statue = null;
   const threshold = portal(stone, -3.05, .52, -7.5, 1.42, true);
   threshold.rotation.y = .12;
   scene.add(threshold);
@@ -396,8 +335,7 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
-  // The original red spline ribbons intersected the oracle's cheeks and
-  // appeared to be additional sculpture geometry. Remove both entirely.
+  // No ribbons, primitive busts, doubled scans or decorative geometry overlap the face.
   let progress = 0, targetProgress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
   let portalFlight = null;
   let scannedOracle = null;
@@ -414,11 +352,10 @@ export function createWorld(canvas) {
   document.documentElement.dataset.webgl = 'loading';
   loadScannedOracle({
     scene,
-    fallback: statue,
     onStatus: status => { if (!isDisposed) document.documentElement.dataset.sceneAsset = status; },
   }).then(value => { if (!isDisposed) scannedOracle = value; else value?.dispose(); }).catch(error => {
-    console.warn('PBR sculpture loading failed; procedural fallback is still visible.', error);
-    document.documentElement.dataset.sceneAsset = 'fallback';
+    console.warn('Photographic marble scan failed; the editorial page remains usable.', error);
+    document.documentElement.dataset.sceneAsset = 'unavailable';
   });
   let pausedByTab = document.hidden, elapsed = 0, last = performance.now(), raf = 0;
   // Dynamic resolution scaling prevents expensive PBR assets from making
@@ -528,7 +465,6 @@ export function createWorld(canvas) {
     camera.position.lerp(current.p, 1 - Math.exp(-dt * positionRate));
     lookSmooth.lerp(current.look, 1 - Math.exp(-dt * lookRate));
     camera.lookAt(lookSmooth);
-    statue.rotation.y = -.20 + (motion ? .014 * Math.sin(elapsed * .26) : 0);
     scannedOracle?.update(dt, progress, motion);
     atmosphere.update(dt, camera, motion);
     portalVeil?.update(dt, progress, motion);
@@ -547,6 +483,7 @@ export function createWorld(canvas) {
     debug() {
       camera.updateMatrixWorld(true);
       const coords = obj => {
+        if (!obj) return {position:null,ndc:null,visible:false};
         const p = obj.getWorldPosition(new THREE.Vector3());
         const projected = p.clone().project(camera);
         return {
@@ -562,7 +499,9 @@ export function createWorld(canvas) {
         worldObjects: scene.children.length,
         camera: camera.position.toArray().map(v => +v.toFixed(2)),
         lookingAt: lookSmooth.toArray().map(v => +v.toFixed(2)),
-        statue: coords(scannedOracle?.object || statue),
+        statue: coords(scannedOracle?.object),
+        statueMode: document.documentElement.dataset.statueMode,
+        statueMeshCount: scannedOracle?.meshCount ?? 0,
         portal: coords(threshold),
         renderTriangles: renderer.info.render.triangles,
         canvas: [canvas.width, canvas.height],
