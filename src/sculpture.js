@@ -1,14 +1,13 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createImpossibleFracture } from './surrealFracture.js';
 
 const SCULPT_ASSET = new URL('../assets/models/marble_bust_01.glb', import.meta.url).href;
 const loader = new GLTFLoader();
 
-// One actual museum-quality 3D scan. Previously the scene contained a primitive
-// fallback bust PLUS two full copies of the scan with independent clipping
-// shaders. Even with the fallback hidden, the split layers could read as two
-// overlapping faces (especially during upload/compilation on mobile GPUs).
-// A single object is more credible and has no z-fighting or duplicated eyes.
+// A single museum-quality photographic GLB scan is the source of all fragments.
+// The fracture module partitions its real triangles into exclusive spatial
+// bands, so no duplicate faces or primitive mannequin are ever visible.
 export async function loadScannedOracle({ scene, onStatus = () => {} }) {
   let asset;
   try {
@@ -97,10 +96,13 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
   // Remove redundant nodes from the loaded GLB itself, rather than drawing
   // both and merely setting one opacity to zero (which can still overdraw).
   for (const duplicate of duplicateMeshes) duplicate.parent?.remove(duplicate);
+  // Preserve the photographed face, normals and UVs while physically
+  // separating the real marble into suspended, non-overlapping sections.
+  const fracture = createImpossibleFracture(model, anchor);
   scene.add(anchor);
   document.documentElement.dataset.statueDuplicatesRemoved = String(duplicateMeshes.length);
-  document.documentElement.dataset.fracture = 'single-scan';
-  document.documentElement.dataset.statueMode = 'single-scan';
+  document.documentElement.dataset.fracture = fracture ? 'three-levitating-sections' : 'single-scan';
+  document.documentElement.dataset.statueMode = fracture ? 'impossible-marble' : 'single-scan';
   document.documentElement.dataset.statueMeshes = String(count);
   onStatus('scanned');
   return {
@@ -108,11 +110,12 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
     meshCount: count,
     duplicatesRemoved: duplicateMeshes.length,
     meshSummary,
-    // Keep this monument stable in world space. An animated stone figure was
-    // the source of visible jitter against fixed editorial text.
-    update() {},
+    // Slow independent fragments; the sculpture's world anchor and the
+    // editorial page remain completely stable during scroll.
+    update(dt, progress, motion) { fracture?.update(dt, progress, motion); },
     dispose() {
       scene.remove(anchor);
+      fracture?.dispose();
       for (const material of materials) material.dispose();
       // Mesh geometry/textures belong to this one GLTF and will be disposed by
       // the scene owner's general resource teardown if still attached.
