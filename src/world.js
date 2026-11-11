@@ -244,6 +244,9 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   }
   group.position.set(x, y, z);
   group.scale.setScalar(size);
+  // These are small, fixed-count meshes; retain them while entering the portal.
+  // Recalculated extruded bounding volumes can be conservative in narrow views.
+  group.traverse(object => { if (object.isMesh) object.frustumCulled = false; });
   return group;
 }
 function ribbon(xStart, xEnd, y, z, width, color) {
