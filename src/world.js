@@ -325,9 +325,9 @@ function floatingIsland(stone, x, y, z, scale) {
   return g;
 }
 function addAtmosphere(scene, stone) {
-  const moonMat = new THREE.MeshStandardMaterial({ color: 0x9f9784, roughness: 1, metalness: 0, map: stone[1].map });
+  const moonMat = new THREE.MeshStandardMaterial({ color: 0xcfc6b1, roughness: 1, metalness: 0, map: stone[1].map, emissive: 0xc2b49b, emissiveIntensity: .55 });
   const moon = new THREE.Mesh(new THREE.SphereGeometry(1.72, 48, 36), moonMat);
-  moon.position.set(6.9, 2.8, -27.0);
+  moon.position.set(.6, 4.35, -30.0);
   scene.add(moon);
   const dustG = new THREE.BufferGeometry();
   const pts = new Float32Array(350 * 3);
@@ -445,7 +445,7 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
-  const ribbonA = ribbon(.75, 8.4, -.08, .84, .69, 0x9c3a2d);
+  const ribbonA = ribbon(.75, 8.4, -.08, .84, .76, 0x9c3a2d);
   const ribbonB = ribbon(-.85, 8.7, -2.45, -2.65, .53, 0x823128);
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
