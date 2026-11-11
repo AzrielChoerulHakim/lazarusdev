@@ -18,9 +18,9 @@ The website works both as a Vite build and directly from GitHub Pages source (us
 ## The world
 
 - **CC0 artist-modelled bust:** a real 3D marble sculpture by Rico Cilliers (Poly Haven), with embedded glTF PBR maps. Two independently clipped instances create a surreal gap across the face. The original procedural bust remains a loading/failure fallback.
-- **Weathered architectural surfaces:** three local photographic sandstone PBR maps (diffuse/normal/roughness), CC0 by Dimitrios Savva, on original procedural masonry.
-- **Lighting:** image-based physical illumination, aged golden-hour directional light, responsive portal light and shadow quality tiers.
-- **Atmosphere:** animated multi-octave procedural clouds, layered mist sprites, responsive water shader, moon, carved arches and hovering rocky architecture.
+- **Weathered architectural surfaces:** three local photographic sandstone PBR maps (diffuse/normal/roughness), CC0 by Dimitrios Savva, on original procedural masonry. Fine abrasions follow column curvature, and small instanced limestone grains settle across the portal foundation.
+- **Lighting:** coordinated HDRI and upper-left golden-hour key, gentle cool photographic fill, sculptural rim light and targeted portal glow; bias-corrected high-resolution soft shadows on capable GPUs.
+- **Atmosphere:** hundreds of depth-tested, softly shaded 3D limestone motes (including fine sediment falling through the scanned fracture), subdued distance haze, procedural clouds, a responsive water shader with subtle contact occlusion beneath the portal foundations, moon and carved stone architecture.
 - **Motion:** multi-subdivision folded cloth geometry, a portal shader, scroll-following camera paths with separate mobile framing and restrained pointer parallax.
 - **Editorial website:** selected worlds (clearly marked concepts), capabilities, manifesto, accessible navigation, dialogs, and a local-only project brief builder.
 
