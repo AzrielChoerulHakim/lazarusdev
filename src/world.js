@@ -399,13 +399,14 @@ export function createWorld(canvas) {
   // path begins behind the marble, spills around the right profile, and falls.
   // Crucially, the passage remains architecturally legible on both breakpoints.
   const ribbonA = createSilkRibbon([
-    // Emerging from the fissure, the fabric traces a rising S-curve to the
-    // upper-right corner. Its changing depth lets stone naturally occlude the
-    // anchored end rather than looking like a red bar glued to the face.
-    [3.23,.13,-3.42], [3.64,.15,-1.96], [4.54,.29,-.30],
-    [5.71,.72,.56], [6.81,1.51,1.52], [7.94,2.85,2.34],
-    [8.44,4.24,2.73], [7.95,5.72,2.50], [7.21,6.76,2.21],
-  ], { width: 1.04, phase: .54, color: 0xac3b2f });
+    // Emerge from the ruptured face, rise in front of the cheek and then
+    // curl BEHIND the head. Bring the roll inside the camera frustum; a long
+    // straight run toward x=10 previously read like a horizontal red bar.
+    [3.23,.13,-3.42], [3.62,.15,-1.96], [4.55,.31,-.28],
+    [5.68,.86,.65], [5.98,1.92,-.68], [5.44,3.03,-2.46],
+    [4.94,4.24,-3.05], [5.50,5.50,-2.72],
+    [6.52,6.45,-2.17], [7.82,6.93,-1.76],
+  ], { width: 1.13, phase: .54, color: 0xac3b2f });
   const ribbonB = createSilkRibbon([
     [2.7,-3.00,-3.65], [3.62,-3.25,-4.10], [4.65,-2.95,-4.30],
     [5.35,-2.45,-3.55], [6.30,-2.80,-3.05], [7.55,-3.55,-2.00],
