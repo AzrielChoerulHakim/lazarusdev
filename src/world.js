@@ -492,7 +492,9 @@ export function createWorld(canvas) {
     // Damped scroll coordinates smooth mouse wheels, touchpad momentum and
     // finger scrolling without rewriting native scroll / accessibility.
     if (portalFlight) {
-      portalFlight.elapsed += dt;
+      // Use wall time: SwiftShader may draw only a few frames per second.
+      // A camera journey must not last longer just because the GPU is slow.
+      portalFlight.elapsed = Math.max(0, (frameNow - portalFlight.startedAt) / 1000);
       const flightT = clamp(portalFlight.elapsed / 2.15);
       progress = mix(portalFlight.start, .82, smooth(0, 1, flightT));
       portalFlight.onProgress?.(flightT);
@@ -575,7 +577,7 @@ export function createWorld(canvas) {
       if (portalFlight) return false;
       if (reducedMotion) { onEntered?.(); return true; }
       portalFlight = {
-        elapsed: 0, start: Math.max(.21, progress),
+        elapsed: 0, startedAt: performance.now(), start: Math.max(.21, progress),
         onProgress, onEntered,
       };
       return true;
