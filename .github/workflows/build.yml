@@ -25,6 +25,8 @@ jobs:
           node --check src/stoneMaterials.js
           node --check src/portalFx.js
           node --check scripts/smoke.mjs
+          node --check scripts/pages-smoke.mjs
+          node --check src/photographicSky.js
       - name: Production build
         run: npm run build
       - name: Install browser harness
@@ -39,6 +41,16 @@ jobs:
             sleep 2
           done
           node scripts/smoke.mjs
+      - name: Validate GitHub Pages without Vite bundling
+        run: |
+          mkdir -p /tmp/lazarus-pages
+          ln -s "$GITHUB_WORKSPACE" /tmp/lazarus-pages/lazarusdev
+          python3 -m http.server 4174 --bind 127.0.0.1 -d /tmp/lazarus-pages > /tmp/lazarus-pages.log 2>&1 &
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4174/lazarusdev/ >/dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/pages-smoke.mjs
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
