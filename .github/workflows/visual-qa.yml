@@ -10,6 +10,7 @@ on:
       - src/photographicSky.js
       - src/styles.css
       - src/sculpture.js
+      - src/fractureGeometry.js
       - src/environment.js
       - src/stoneMaterials.js
       - src/portalFx.js
