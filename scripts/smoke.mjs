@@ -60,6 +60,34 @@ try {
     await page.locator('#passage').scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
     await page.screenshot({ path: `screenshots/${name}-portal.png`, animations: 'disabled' });
+    // Verify the visitor can actually cross the Three.js threshold and land
+    // in the next semantic section, without a full page reload.
+    await page.locator('#portal-enter').click();
+    try {
+      await page.waitForFunction(() =>
+        location.hash === '#worlds'
+        && !document.querySelector('#portal-enter').disabled
+        && !window.__lazarusDebug?.().portalFlying,
+        null, { timeout: 15000 }
+      );
+    } catch (error) {
+      const failureState = await page.evaluate(() => ({
+        hash: location.hash,
+        buttonDisabled: document.querySelector('#portal-enter').disabled,
+        overlayOpacity: getComputedStyle(document.querySelector('#portal-transition')).opacity,
+        debug: window.__lazarusDebug?.(),
+      }));
+      throw new Error(`${name}: portal flight did not finish: ${JSON.stringify(failureState)}; ${error.message}`);
+    }
+    const landed = await page.evaluate(() => ({
+      section: location.hash,
+      scrollY: window.scrollY,
+      top: document.querySelector('#worlds').offsetTop,
+      depth: window.__lazarusDebug?.().camera?.[2],
+    }));
+    if (Math.abs(landed.scrollY - landed.top) > 4 || !Number.isFinite(landed.depth)) {
+      throw new Error(`${name}: portal flight handoff missed section: ${JSON.stringify(landed)}`);
+    }
     await page.locator('#worlds').scrollIntoViewIfNeeded();
     await page.waitForTimeout(700);
     await page.screenshot({ path: `screenshots/${name}-worlds.png`, animations: 'disabled' });

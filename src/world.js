@@ -6,7 +6,6 @@ import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { installLunarSurface } from './lunarSurface.js';
 import { enrichPortal } from './architecturalDetails.js';
-import { createSilkRibbon } from './cloth.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 import { createAtmosphericMotes } from './atmosphericParticles.js';
@@ -220,7 +219,9 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   const count = 13;
   for (let i = 0; i < count; i++) {
     const a0 = i * Math.PI / count + .006, a1 = (i + 1) * Math.PI / count - .006;
-    group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 3]));
+    // Avoid the alternating dark/light voussoir pattern of a game prop.
+    // Most stones belong to one quarry; age varies subtly across courses.
+    group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 5 === 0 ? 1 : 0]));
   }
   // Recessed arch grooves, voussoir rhythm and side chamfers create
   // specular breaks and real shadow edges rather than a cardboard silhouette.
@@ -253,23 +254,6 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   group.traverse(object => { if (object.isMesh) object.frustumCulled = false; });
   return group;
 }
-function floatingIsland(stone, x, y, z, scale) {
-  const g = new THREE.Group();
-  const slab = stoneMesh(new THREE.CylinderGeometry(1.4, .86, .34, 9), stone[1]);
-  slab.position.y = -.35;
-  g.add(slab);
-  for (let i = 0; i < 6; i++) {
-    const a = rand() * Math.PI * 2, r = rand() * .95;
-    const rock = stoneMesh(new THREE.DodecahedronGeometry(.25 + rand() * .27, 0), stone[i % 3]);
-    rock.position.set(Math.cos(a) * r, -.60 - rand() * .4, Math.sin(a) * r);
-    g.add(rock);
-  }
-  const door = portal(stone, 0, .20, 0, .47);
-  g.add(door);
-  g.position.set(x, y, z);
-  g.scale.setScalar(scale);
-  return g;
-}
 function addAtmosphere(scene, stone) {
   const moonMat = new THREE.MeshStandardMaterial({ color: 0xcfc6b1, roughness: 1, metalness: 0, map: stone[1].map, emissive: 0xc2b49b, emissiveIntensity: .55 });
   const moon = new THREE.Mesh(new THREE.SphereGeometry(1.72, 48, 36), moonMat);
@@ -287,25 +271,40 @@ function addAtmosphere(scene, stone) {
 }
 
 const CAMERA_KEYS = [
-  // A deliberate cinema path, not a linear pan into empty sky.
-  // Hero: face dominates the right. Passage: portal becomes the subject.
-  // Final act: camera physically crosses the arched stone threshold.
-  { t: 0, p: [0, .15, 9.3], look: [1.2, .55, -3.3] },
-  { t: .17, p: [-.25, .20, 7.8], look: [-1.7, .0, -6.0] },
-  { t: .32, p: [-1.25, .20, 4.6], look: [-3.05, -.35, -7.5] },
-  { t: .50, p: [-2.45, .25, .0], look: [-3.05, -.50, -7.5] },
-  { t: .65, p: [-3.0, .15, -4.8], look: [-3.05, -.40, -11.0] },
-  { t: .78, p: [-3.05, .12, -9.5], look: [-1.2, .10, -19.0] },
-  { t: 1, p: [.5, 1.0, -12.5], look: [.2, .10, -23.0] },
+  // The figure lives on the right, the gateway stays on the left; once the
+  // figure clears frame, the route travels through the actual stone aperture.
+  // Continuous cubic-Hermite tangents eliminate every stop/start at keyframes.
+  { t: 0,   p: [0, .15, 9.3],    look: [1.2, .55, -3.3] },
+  { t: .16, p: [-.20, .20, 7.8], look: [-1.35, .05, -5.4] },
+  { t: .30, p: [-1.18, .20, 4.6],look: [-3.05, -.20, -7.5] },
+  { t: .46, p: [-2.35, .23, .1], look: [-3.05, -.42, -7.5] },
+  { t: .60, p: [-2.93, .17, -4.8],look: [-3.05, -.35, -10] },
+  { t: .70, p: [-3.045, .12, -7.12],look: [-3.06, -.25, -14] },
+  { t: .82, p: [-3.06, .13, -11.0],look: [-2.1, .10, -19] },
+  { t: 1, p: [.30, .92, -12.8],look: [.2, .12, -23.0] },
 ];
+function sampleCoordinate(field, component, aIndex, u) {
+  const bIndex = aIndex + 1;
+  const a = CAMERA_KEYS[aIndex], b = CAMERA_KEYS[bIndex];
+  const previous = CAMERA_KEYS[Math.max(0, aIndex - 1)];
+  const following = CAMERA_KEYS[Math.min(CAMERA_KEYS.length - 1, bIndex + 1)];
+  const span = b.t - a.t;
+  const m0 = (b[field][component] - previous[field][component]) / (b.t - previous.t);
+  const m1 = (following[field][component] - a[field][component]) / (following.t - a.t);
+  const u2 = u * u, u3 = u2 * u;
+  return (2*u3 - 3*u2 + 1) * a[field][component]
+       + (u3 - 2*u2 + u) * span * m0
+       + (-2*u3 + 3*u2) * b[field][component]
+       + (u3 - u2) * span * m1;
+}
 function keyframe(t) {
   let i = 0;
   while (i < CAMERA_KEYS.length - 2 && CAMERA_KEYS[i + 1].t < t) i++;
   const a = CAMERA_KEYS[i], b = CAMERA_KEYS[i + 1];
-  const n = smooth(a.t, b.t, t);
+  const u = clamp((t - a.t) / (b.t - a.t));
   return {
-    p: new THREE.Vector3(...a.p.map((v, j) => mix(v, b.p[j], n))),
-    look: new THREE.Vector3(...a.look.map((v, j) => mix(v, b.look[j], n))),
+    p: new THREE.Vector3(...[0, 1, 2].map(j => sampleCoordinate('p', j, i, u))),
+    look: new THREE.Vector3(...[0, 1, 2].map(j => sampleCoordinate('look', j, i, u))),
   };
 }
 
@@ -372,12 +371,9 @@ export function createWorld(canvas) {
   scene.add(threshold);
   const portalMasonry = enrichPortal(threshold,stone);
   const portalVeil = attachPortalVeil(threshold);
-  const sideRuins = [portal(stone, -7.2, -.7, -12, 1.05), portal(stone, 5.3, -.3, -17, .88), portal(stone, -5.8, -.85, -23, .9)];
-  sideRuins.forEach((g, i) => { g.rotation.y = (i - 1) * .23; scene.add(g); });
-  const islandA = floatingIsland(stone, 2.7, -.4, -16, 1.5);
-  const islandB = floatingIsland(stone, -2.5, .25, -23.5, 1.25);
-  const islandC = floatingIsland(stone, 6.9, 1.9, -28, 1.72);
-  scene.add(islandA, islandB, islandC);
+  // One deliberate portal and one photographed sculpture: decorative
+  // duplicate arches, hovering islands and faceted rocks obscured the scan.
+  // Keeping the distance uncluttered also makes the threshold readable.
   const { moon, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
   const motes = createAtmosphericMotes(scene);
@@ -400,25 +396,10 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
-  // The crimson fabric belongs to the statue, not the portal. Its world-space
-  // path begins behind the marble, spills around the right profile, and falls.
-  // Crucially, the passage remains architecturally legible on both breakpoints.
-  const ribbonA = createSilkRibbon([
-    // Emerge from the ruptured face, rise in front of the cheek and then
-    // curl BEHIND the head. Bring the roll inside the camera frustum; a long
-    // straight run toward x=10 previously read like a horizontal red bar.
-    [3.23,.13,-3.42], [3.62,.15,-1.96], [4.55,.31,-.28],
-    [5.68,.86,.65], [5.98,1.92,-.68], [5.44,3.03,-2.46],
-    [4.94,4.24,-3.05], [5.50,5.50,-2.72],
-    [6.52,6.45,-2.17], [7.82,6.93,-1.76],
-  ], { width: 1.13, phase: .54, color: 0xac3b2f });
-  const ribbonB = createSilkRibbon([
-    [2.7,-3.00,-3.65], [3.62,-3.25,-4.10], [4.65,-2.95,-4.30],
-    [5.35,-2.45,-3.55], [6.30,-2.80,-3.05], [7.55,-3.55,-2.00],
-  ], { width: .48, phase: 2.2, color: 0x852b24 });
-  scene.add(ribbonA.mesh, ribbonB.mesh);
-
-  let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
+  // The original red spline ribbons intersected the oracle's cheeks and
+  // appeared to be additional sculpture geometry. Remove both entirely.
+  let progress = 0, targetProgress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
+  let portalFlight = null;
   let scannedOracle = null;
   let sandstone = null;
   let isDisposed = false;
@@ -508,6 +489,24 @@ export function createWorld(canvas) {
         perfFrames = 0; perfSeconds = 0;
       }
     }
+    // Damped scroll coordinates smooth mouse wheels, touchpad momentum and
+    // finger scrolling without rewriting native scroll / accessibility.
+    if (portalFlight) {
+      // Use wall time: SwiftShader may draw only a few frames per second.
+      // A camera journey must not last longer just because the GPU is slow.
+      portalFlight.elapsed = Math.max(0, (frameNow - portalFlight.startedAt) / 1000);
+      const flightT = clamp(portalFlight.elapsed / 2.15);
+      progress = mix(portalFlight.start, .82, smooth(0, 1, flightT));
+      portalFlight.onProgress?.(flightT);
+      if (portalFlight.elapsed >= 2.42) {
+        const finish = portalFlight.onEntered;
+        portalFlight = null;
+        finish?.();
+      }
+    } else {
+      progress = mix(progress, targetProgress, 1 - Math.exp(-dt * 6.3));
+      if (Math.abs(targetProgress - progress) < .00005) progress = targetProgress;
+    }
     const current = keyframe(progress);
     const mobile = window.innerWidth < 700;
     if (mobile) {
@@ -522,8 +521,12 @@ export function createWorld(canvas) {
       camera.position.copy(current.p);
       lookSmooth.copy(current.look);
     }
-    camera.position.lerp(current.p, 1 - Math.pow(.0006, dt));
-    lookSmooth.lerp(current.look, 1 - Math.pow(.0004, dt));
+    // Framerate-independent exponential camera damping, with a slightly
+    // tighter response during the intentional through-the-gate flight.
+    const positionRate = portalFlight ? 11.5 : 8.2;
+    const lookRate = portalFlight ? 12.5 : 9.0;
+    camera.position.lerp(current.p, 1 - Math.exp(-dt * positionRate));
+    lookSmooth.lerp(current.look, 1 - Math.exp(-dt * lookRate));
     camera.lookAt(lookSmooth);
     statue.rotation.y = -.20 + (motion ? .014 * Math.sin(elapsed * .26) : 0);
     scannedOracle?.update(dt, progress, motion);
@@ -532,12 +535,6 @@ export function createWorld(canvas) {
     if (lunar) lunar.update(dt, motion);
     else moon.rotation.y = elapsed * .009;
     motes.update(dt, motion, renderer.getPixelRatio());
-    islandA.visible = progress > .42;
-    islandB.visible = progress > .57;
-    islandC.visible = progress > .62;
-    islandA.position.y = -.4 + (motion ? Math.sin(elapsed * .35) * .09 : 0);
-    islandB.position.y = .25 + (motion ? Math.cos(elapsed * .30) * .10 : 0);
-    if (motion || elapsed === 0) { ribbonA.update(elapsed); ribbonB.update(elapsed + 1.9); }
     renderer.render(scene, camera);
     if (document.documentElement.dataset.webgl !== 'ready') document.documentElement.dataset.webgl = 'ready';
     if (document.documentElement.dataset.renderFrames !== 'complete') {
@@ -560,6 +557,9 @@ export function createWorld(canvas) {
       };
       return {
         progress: +progress.toFixed(3),
+        targetProgress: +targetProgress.toFixed(3),
+        portalFlying: Boolean(portalFlight),
+        worldObjects: scene.children.length,
         camera: camera.position.toArray().map(v => +v.toFixed(2)),
         lookingAt: lookSmooth.toArray().map(v => +v.toFixed(2)),
         statue: coords(scannedOracle?.object || statue),
@@ -572,7 +572,16 @@ export function createWorld(canvas) {
         shadowEnabled: renderer.shadowMap.enabled,
       };
     },
-    setProgress(value) { progress = clamp(value); },
+    setProgress(value) { targetProgress = clamp(value); },
+    enterPortal(onProgress, onEntered) {
+      if (portalFlight) return false;
+      if (reducedMotion) { onEntered?.(); return true; }
+      portalFlight = {
+        elapsed: 0, startedAt: performance.now(), start: Math.max(.21, progress),
+        onProgress, onEntered,
+      };
+      return true;
+    },
     setPointer(x, y) { pointer = { x, y }; },
     setMotion(value) { motion = !reducedMotion && value; },
     dispose() {
@@ -582,8 +591,6 @@ export function createWorld(canvas) {
       sandstone?.dispose();
       portalVeil?.dispose();
       portalMasonry?.dispose();
-      ribbonA.dispose();
-      ribbonB.dispose();
       atmosphere.dispose();
       motes.dispose();
       lunar?.dispose();
