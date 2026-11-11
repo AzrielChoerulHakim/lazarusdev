@@ -9,6 +9,7 @@ import { enrichPortal } from './architecturalDetails.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 import { createAtmosphericMotes } from './atmosphericParticles.js';
+import { createImpossiblePortal } from './impossiblePortal.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -334,6 +335,9 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
   scene.add(threshold);
   const portalMasonry = enrichPortal(threshold,stone);
   const portalVeil = attachPortalVeil(threshold);
+  // A separately illuminated desert is projected perspective-correctly
+  // into the stone aperture; it takes over only when the real camera enters.
+  const otherReality = createImpossiblePortal({ renderer, camera, threshold });
   // One deliberate portal and one photographed sculpture: decorative
   // duplicate arches, hovering islands and faceted rocks obscured the scan.
   // Keeping the distance uncluttered also makes the threshold readable.
@@ -527,7 +531,9 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
     if (lunar) lunar.update(dt, motion);
     else moon.rotation.y = elapsed * .009;
     motes.update(dt, motion, renderer.getPixelRatio());
+    otherReality.update(progress, softwareRenderer);
     renderer.render(scene, camera);
+    otherReality.composite();
     if (document.documentElement.dataset.webgl !== 'ready') document.documentElement.dataset.webgl = 'ready';
     if (document.documentElement.dataset.renderFrames !== 'complete') {
       document.documentElement.dataset.renderFrames = 'complete';
@@ -569,6 +575,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
         dustMotes: motes.count,
         keyLight: key.position.toArray().map(v => +v.toFixed(2)),
         shadowEnabled: renderer.shadowMap.enabled,
+        impossiblePortal: otherReality.debug(),
       };
     },
     setProgress(value) { targetProgress = clamp(value); },
@@ -589,6 +596,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
       scannedOracle?.dispose();
       sandstone?.dispose();
       portalVeil?.dispose();
+      otherReality.dispose();
       portalMasonry?.dispose();
       atmosphere.dispose();
       motes.dispose();
