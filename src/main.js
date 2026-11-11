@@ -58,6 +58,9 @@ function updateScroll() {
   document.querySelector('.scene-index').style.color=current===3?'#2c3f3b':'';
 }
 function onScroll() {
+  // Update the camera target directly from the native scroll event. Only
+  // DOM progress furniture waits for RAF; no extra frame of perceived lag.
+  world?.setProgress(prefersReduced.matches ? .04 : worldProgressForScroll(Math.max(0,scrollY)));
   if (!tickQueued) {
     tickQueued=true;
     requestAnimationFrame(updateScroll);
