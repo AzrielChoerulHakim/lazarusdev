@@ -219,13 +219,18 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     ].join('\n'),
     // Fade into the actual water below the sill and let the ancient masonry
     // retain its original depth, rather than projecting an opaque rectangle.
-    depthWrite:false,depthTest:true,side:THREE.DoubleSide,
+    // It is an impossible dimensional window, not a reflection on the
+    // ocean. The foreground water's depth may not erase the landscape
+    // inside the arch; the geometry and feathered rim still provide its
+    // physical silhouette.
+    depthWrite:false,depthTest:false,side:THREE.DoubleSide,
     transparent:true,toneMapped:false,fog:false
   });
   const windowMesh=new THREE.Mesh(makeAperture(),windowMaterial);
   windowMesh.position.z=-.575;
   windowMesh.frustumCulled=false;
   windowMesh.name='Live perspective-correct opening into the impossible desert';
+  windowMesh.renderOrder = .35;
   threshold.add(windowMesh);
   tracked.push(windowMesh.geometry,windowMaterial);
   const light=new THREE.PointLight(0xffbd83,1.35,7,2);
