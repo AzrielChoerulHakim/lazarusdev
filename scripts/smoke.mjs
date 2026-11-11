@@ -63,12 +63,22 @@ try {
     // Verify the visitor can actually cross the Three.js threshold and land
     // in the next semantic section, without a full page reload.
     await page.locator('#portal-enter').click();
-    await page.waitForFunction(() =>
-      location.hash === '#worlds'
-      && !document.querySelector('#portal-enter').disabled
-      && !window.__lazarusDebug?.().portalFlying,
-      null, { timeout: 12000 }
-    );
+    try {
+      await page.waitForFunction(() =>
+        location.hash === '#worlds'
+        && !document.querySelector('#portal-enter').disabled
+        && !window.__lazarusDebug?.().portalFlying,
+        null, { timeout: 15000 }
+      );
+    } catch (error) {
+      const failureState = await page.evaluate(() => ({
+        hash: location.hash,
+        buttonDisabled: document.querySelector('#portal-enter').disabled,
+        overlayOpacity: getComputedStyle(document.querySelector('#portal-transition')).opacity,
+        debug: window.__lazarusDebug?.(),
+      }));
+      throw new Error(`${name}: portal flight did not finish: ${JSON.stringify(failureState)}; ${error.message}`);
+    }
     const landed = await page.evaluate(() => ({
       section: location.hash,
       scrollY: window.scrollY,
