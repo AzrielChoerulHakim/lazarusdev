@@ -17,6 +17,7 @@ try {
     && document.documentElement.dataset.sceneAsset === 'scanned'
     && document.documentElement.dataset.sceneMaterial === 'photographic'
     && document.documentElement.dataset.photoSky === 'photographic'
+    && document.documentElement.dataset.lunarAsset === 'nasa'
   , null, { timeout: 45000 });
   const state = await page.evaluate(() => ({
     canvasSize: document.querySelector('#world').width * document.querySelector('#world').height,
