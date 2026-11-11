@@ -108,6 +108,7 @@ export async function loadScannedOracle({ scene, onStatus = () => {} }) {
   return {
     object: anchor,
     meshCount: count,
+    fragmentCount: fracture?.fragmentCount ?? 0,
     duplicatesRemoved: duplicateMeshes.length,
     meshSummary,
     // Slow independent fragments; the sculpture's world anchor and the
