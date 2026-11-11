@@ -80,3 +80,13 @@ main{position:relative;z-index:2}.chapter{position:relative;isolation:isolate;pa
   .grain{opacity:.045;mix-blend-mode:normal}
   .atmosphere{mix-blend-mode:normal}
 }
+
+/* STAGE 02 — crossing the limestone gateway changes the actual WebGL world.
+   Lift the nocturnal photography-grade scrim only while the new sunlit
+   reality fills the viewport. All editorial content remains untouched. */
+#webgl-wrap::after,.atmosphere{transition:opacity .65s ease}
+html[data-portal-state="inside"] #webgl-wrap::after{opacity:.10}
+html[data-portal-state="inside"] .atmosphere{opacity:.12}
+@media(prefers-reduced-motion:reduce){
+  #webgl-wrap::after,.atmosphere{transition:none}
+}
