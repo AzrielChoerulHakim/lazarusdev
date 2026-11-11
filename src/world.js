@@ -5,6 +5,8 @@ import { attachPortalVeil } from './portalFx.js';
 import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { installLunarSurface } from './lunarSurface.js';
+import { enrichPortal } from './architecturalDetails.js';
+import { createSilkRibbon } from './cloth.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 
@@ -341,13 +343,9 @@ function addAtmosphere(scene, stone) {
   sea.position.y = -3.25;
   sea.receiveShadow = true;
   scene.add(sea);
-  for (let i = 0; i < 22; i++) {
-    const rock = stoneMesh(new THREE.DodecahedronGeometry(.28 + rand() * .83, 0), stone[i % 3]);
-    rock.position.set((rand() - .5) * 27, -3.45 - rand() * .18, -2 - rand() * 29);
-    rock.scale.set(1, .33 + rand() * .5, 1);
-    rock.rotation.y = rand() * Math.PI;
-    scene.add(rock);
-  }
+  // Deliberately exclude scattered low-poly dodecahedrons.
+  // A calm sea and a single monumental carved gateway read more believably
+  // than arbitrary floating 'game rocks'.
   return { moon, dust, sea };
 }
 
@@ -424,9 +422,10 @@ export function createWorld(canvas) {
   const proceduralNormal = stone[0].normalMap;
   const statue = makeBust(stone);
   scene.add(statue);
-  const threshold = portal(stone, -3.05, -.75, -7.5, 1.11, true);
+  const threshold = portal(stone, -3.05, .52, -7.5, 1.42, true);
   threshold.rotation.y = .12;
   scene.add(threshold);
+  const portalMasonry = enrichPortal(threshold,stone);
   const portalVeil = attachPortalVeil(threshold);
   const sideRuins = [portal(stone, -7.2, -.7, -12, 1.05), portal(stone, 5.3, -.3, -17, .88), portal(stone, -5.8, -.85, -23, .9)];
   sideRuins.forEach((g, i) => { g.rotation.y = (i - 1) * .23; scene.add(g); });
@@ -454,8 +453,14 @@ export function createWorld(canvas) {
   } }).then(resource => {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
-  const ribbonA = ribbon(.75, 8.4, -.08, .84, .76, 0x9c3a2d);
-  const ribbonB = ribbon(-.85, 8.7, -2.45, -2.65, .53, 0x823128);
+  const ribbonA = createSilkRibbon([
+    [2.5, 1.3, -3.35], [3.8,1.45,-3.7], [5.0,.9,-2.6],
+    [6.4,.35,-1.15], [7.8,.55,-.4], [9.2,.18,1.2],
+  ], { width: 1.45, phase: .45, color: 0xb13e31 });
+  const ribbonB = createSilkRibbon([
+    [-2.5,-1.95,-2.7], [.7,-2.5,-2.4], [2.9,-2.9,-1.9],
+    [4.8,-3.1,-2.35], [6.8,-2.75,-2.55], [8.9,-2.3,-2.5],
+  ], { width: .92, phase: 2.2, color: 0x973426 });
   scene.add(ribbonA.mesh, ribbonB.mesh);
 
   let progress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
@@ -613,6 +618,9 @@ export function createWorld(canvas) {
       scannedOracle?.dispose();
       sandstone?.dispose();
       portalVeil?.dispose();
+      portalMasonry?.dispose();
+      ribbonA.dispose();
+      ribbonB.dispose();
       atmosphere.dispose();
       lunar?.dispose();
       photographicSky?.dispose();
