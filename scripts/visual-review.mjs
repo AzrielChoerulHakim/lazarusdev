@@ -14,6 +14,7 @@ try {
   const scenes = [
     { name:'hero-desktop', width:1440,height:900, section:'origin', extra:0 },
     { name:'passage-desktop', width:1440,height:900, section:'passage', extra:.06 },
+    { name:'crossing-desktop', width:1440,height:900, section:'passage', extra:1.60 },
     { name:'worlds-desktop', width:1440,height:900, section:'worlds', extra:.03 },
     { name:'hero-mobile', width:390,height:844, section:'origin', extra:0 },
     { name:'passage-mobile', width:390,height:844, section:'passage', extra:.04 },
@@ -40,6 +41,12 @@ try {
     }
     if (item.section === 'origin' && !projection.statue.visible) {
       throw Error(item.name + ': scanned sculpture is outside the hero camera');
+    }
+    if (item.name === 'crossing-desktop' && projection.impossiblePortal.transitionBlend < .55) {
+      throw Error('Crossing screenshot never revealed the sunlit second world: ' + JSON.stringify(projection.impossiblePortal));
+    }
+    if (item.section === 'worlds' && projection.impossiblePortal.transitionBlend < .85) {
+      throw Error('Gallery lost the second reality immediately after the crossing: ' + JSON.stringify(projection.impossiblePortal));
     }
     if (item.section === 'passage' && !projection.portal.visible) {
       throw Error(item.name + ': portal is outside the threshold camera');
