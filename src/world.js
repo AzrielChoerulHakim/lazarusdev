@@ -4,6 +4,7 @@ import { enhanceEnvironment } from './environment.js';
 import { attachPortalVeil } from './portalFx.js';
 import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { installLunarSurface } from './lunarSurface.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 
@@ -435,6 +436,14 @@ export function createWorld(canvas) {
   scene.add(islandA, islandB, islandC);
   const { moon, dust, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
+  let lunar = null;
+  document.documentElement.dataset.lunarAsset = 'loading';
+  installLunarSurface({
+    scene, placeholder: moon,
+    onStatus(status) { if (!isDisposed) document.documentElement.dataset.lunarAsset = status; },
+  }).then(resource => {
+    if (isDisposed) resource?.dispose(); else lunar = resource;
+  });
   let photographicSky = null;
   document.documentElement.dataset.photoSky = 'loading';
   installPhotographicSky({ scene, onLoaded(ok) {
@@ -555,7 +564,8 @@ export function createWorld(canvas) {
     scannedOracle?.update(dt, progress, motion);
     atmosphere.update(dt, camera, motion);
     portalVeil?.update(dt, progress, motion);
-    moon.rotation.y = elapsed * .009;
+    if (lunar) lunar.update(dt, motion);
+    else moon.rotation.y = elapsed * .009;
     dust.rotation.y = elapsed * .003;
     islandA.visible = progress > .42;
     islandB.visible = progress > .57;
@@ -604,6 +614,7 @@ export function createWorld(canvas) {
       sandstone?.dispose();
       portalVeil?.dispose();
       atmosphere.dispose();
+      lunar?.dispose();
       photographicSky?.dispose();
       reflectedLight.dispose();
       proceduralColor.dispose();
