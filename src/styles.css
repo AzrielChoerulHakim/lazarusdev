@@ -68,3 +68,15 @@ main{position:relative;z-index:2}.chapter{position:relative;isolation:isolate;pa
 @media(max-width:560px){
   .chapter-passage{overscroll-behavior:contain}
 }
+
+/* Scene text is optically fixed while WebGL travels. Revealing the sticky
+   headline by translating each glyph block made the beginning of the passage
+   look as if the whole section were vibrating against the camera motion. */
+.chapter-passage .reveal{transform:none;transition:opacity .62s cubic-bezier(.25,.65,.3,1)}
+.chapter-passage .reveal.visible{transform:none}
+@media(max-width:700px){
+  /* On touch devices pointer-driven parallax and expensive full-screen blend
+     overlays should not compete with native composited scrolling. */
+  .grain{opacity:.045;mix-blend-mode:normal}
+  .atmosphere{mix-blend-mode:normal}
+}
