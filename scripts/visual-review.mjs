@@ -48,7 +48,7 @@ try {
     if (item.section === 'worlds' && projection.impossiblePortal.transitionBlend < .85) {
       throw Error('Gallery lost the second reality immediately after the crossing: ' + JSON.stringify(projection.impossiblePortal));
     }
-    if (item.section === 'passage' && !projection.portal.visible) {
+    if (item.name.startsWith('passage-') && !projection.portal.visible) {
       throw Error(item.name + ': portal is outside the threshold camera');
     }
     console.log(item.name+' captured with '+JSON.stringify(status));
