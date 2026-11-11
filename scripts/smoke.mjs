@@ -3,6 +3,9 @@ import { mkdir } from 'node:fs/promises';
 
 const url = 'http://127.0.0.1:4173';
 const browser = await chromium.launch({
+  // GitHub-hosted Ubuntu already ships Google Chrome. Using it avoids a
+  // second 300 MB Playwright-browser download that can stall visual CI.
+  ...(process.env.CI ? {channel:'chrome'} : {}),
   headless: true,
   args: ['--no-sandbox', '--enable-webgl', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
 });
