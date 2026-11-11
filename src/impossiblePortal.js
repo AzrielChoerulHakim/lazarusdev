@@ -35,7 +35,8 @@ function buildDesert(scene, tracked) {
   scene.fog = new THREE.FogExp2(0xe0b08b, .009);
   scene.add(new THREE.HemisphereLight(0xffe5c0, 0x825c49, 1.85));
   const sun = new THREE.DirectionalLight(0xffd5a0, 3.35);
-  sun.position.set(-18, 29, 13);
+  // Low late-afternoon light: sunset and real directional shadows agree.
+  sun.position.set(-12, 8, -54);
   sun.target.position.set(0, -2, -16);
   // The photographed-looking desert needs genuine raking shadows.
   // An intentionally modest shadow atlas works on mid-range hardware;
@@ -79,8 +80,10 @@ function buildDesert(scene, tracked) {
   scene.add(sand);
   tracked.push(texture,g,sandMat);
 
-  const pale=new THREE.MeshStandardMaterial({color:0xdab591,roughness:.96});
-  const aged=new THREE.MeshStandardMaterial({color:0xa17f66,roughness:1});
+  // Reuse the sand's mineral photography as diffuse grain for the buried
+  // ashlar. The old untextured steps read as flat orange rectangles.
+  const pale=new THREE.MeshStandardMaterial({map:texture,color:0xf3e8d5,roughness:.98});
+  const aged=new THREE.MeshStandardMaterial({map:texture,color:0xb8a48d,roughness:1});
   tracked.push(pale,aged);
   const block=(w,h,d,x,y,z,mat,rotation=0)=>{
     // Minute edge wear catches grazing sun without synthetic glossy bevels.
@@ -98,6 +101,13 @@ function buildDesert(scene, tracked) {
     }
     pos.needsUpdate=true;
     geo.computeVertexNormals();
+    // The sand texture repeats 18 times over the dunes, but no more than
+    // ~1.3 times over an individual limestone block.
+    const uv=geo.attributes.uv;
+    for(let i=0;i<uv.count;i++){
+      uv.setXY(i,uv.getX(i)*.071+(x+10)*.003,uv.getY(i)*.071+(z+60)*.002);
+    }
+    uv.needsUpdate=true;
     const mesh=new THREE.Mesh(geo,mat);
     mesh.position.set(x,y,z);mesh.rotation.y=rotation;
     mesh.castShadow=true;mesh.receiveShadow=true;
@@ -135,7 +145,7 @@ function buildDesert(scene, tracked) {
       'void main(){',
       'vec3 d=normalize(vDir);',
       'vec3 c=mix(vec3(.91,.56,.37),vec3(.40,.62,.69),smoothstep(-.22,.84,d.y));',
-      'vec3 solar=normalize(vec3(-.39,.68,.63));',
+      'vec3 solar=normalize(vec3(-.29,.24,-.93));',
       'float facing=max(0.,dot(d,solar));',
       'float h=pow(facing,19.);',
       'float sun=pow(facing,1400.);',
@@ -198,14 +208,19 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
       'float side=1.018-abs(vPoint.x);',
       'float roof=vPoint.y>0.?1.018-length(vPoint):100.;',
       'float edge=max(0.,min(min(side,roof),vPoint.y+2.50));',
-      'col+=vec3(.13,.063,.02)*(1.-smoothstep(.005,.11,edge));',
-      'gl_FragColor=vec4(col,1.);',
+      'col+=vec3(.035,.024,.011)*(1.-smoothstep(.005,.10,edge));',
+      'float lip=smoothstep(.003,.063,edge);',
+      'float buried=smoothstep(-2.48,-1.91,vPoint.y);',
+      'float alpha=lip*buried;',
+      'gl_FragColor=vec4(col,alpha);',
       '#include <tonemapping_fragment>',
       '#include <colorspace_fragment>',
       '}'
     ].join('\n'),
-    depthWrite:true,depthTest:true,side:THREE.DoubleSide,
-    transparent:false,toneMapped:false,fog:false
+    // Fade into the actual water below the sill and let the ancient masonry
+    // retain its original depth, rather than projecting an opaque rectangle.
+    depthWrite:false,depthTest:true,side:THREE.DoubleSide,
+    transparent:true,toneMapped:false,fog:false
   });
   const windowMesh=new THREE.Mesh(makeAperture(),windowMaterial);
   windowMesh.position.z=-.575;
