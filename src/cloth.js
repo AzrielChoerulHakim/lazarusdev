@@ -105,15 +105,18 @@ export function createSilkRibbon(points, options = {}) {
       const drape = Math.sin(t * Math.PI * 1.6 + phase) * .11 * weight;
       center.y += breeze + drape;
       center.z += Math.sin(11*t + .27*time + phase) * .08 * weight;
-      const twist = Math.sin(t * 5.2 + phase + time * .12) * .18;
+      // The long flag gradually rolls around its path as gravity pulls it;
+      // a small constant roll never read as three-dimensional fabric.
+      const twist = Math.sin(t * 6.8 + phase + time * .15) * .37
+        + Math.sin(t * 2.9 + phase * .45) * .17;
       const s = Math.sin(twist), c = Math.cos(twist);
       const w = width * (.16 + .84 * weight);
       for (let j = 0; j <= across; j++) {
         const v = j / across * 2 - 1;
         const k = (i * cols + j) * 3;
-        const flutter = .027 * weight
+        const flutter = (.018 + .055 * t) * weight
           * Math.sin(3 * Math.PI * v + 12.5 * t - time * .53 + phase);
-        const curl = .047 * weight * Math.pow(Math.abs(v),3)
+        const curl = .082 * weight * Math.pow(Math.abs(v),3)
           * Math.sin(t * 5.4 - time * .20 + phase);
         const horizontal = v * .5 * w * s + flutter + curl;
         const vertical = v * .5 * w * c;
