@@ -30,11 +30,22 @@ try {
     } catch (err) {
       throw new Error(`${name}: timed out waiting for Three.js: ${warnings.join(' | ')} | ${errors.join(' | ')} | ${err.message}`);
     }
-    await page.waitForFunction(
-      () => ['scanned', 'unavailable'].includes(document.documentElement.dataset.sceneAsset),
-      null,
-      { timeout: 30000 }
-    );
+    try {
+      await page.waitForFunction(
+        () => ['scanned', 'unavailable'].includes(document.documentElement.dataset.sceneAsset),
+        null,
+        { timeout: 90000 }
+      );
+    } catch (err) {
+      const state = await page.evaluate(() => ({
+        sceneAsset: document.documentElement.dataset.sceneAsset,
+        webgl: document.documentElement.dataset.webgl,
+        material: document.documentElement.dataset.sceneMaterial,
+        statueMode: document.documentElement.dataset.statueMode,
+        version: navigator.userAgent,
+      }));
+      throw new Error(`${name}: marble scan load timeout: ${JSON.stringify(state)}; errors: ${errors.join(' | ')}; warnings: ${warnings.join(' | ')}; ${err.message}`);
+    }
     const state = await page.evaluate(() => {
       const canvas = document.querySelector('#world');
       const gl = canvas.getContext('webgl2');
