@@ -87,7 +87,10 @@ function stoneMesh(geometry, material, shadow = true) {
 function weatheredBlock(w, h, d, salt = 0) {
   // Subtle sculpted curvature and chipped corners catch grazing sunlight.
   // Plain perfect cubes are the strongest visual cue that the world is synthetic.
-  const geo = new RoundedBoxGeometry(w, h, d, 3, Math.min(.017, w * .05, h * .05, d * .05));
+  // Quarried limestone has shallow, irregular relief across its whole face,
+  // not a perfectly smooth six-sided box with noise only along the silhouette.
+  // Seven subdivisions produce real grazing-light micro shadows on masonry.
+  const geo = new RoundedBoxGeometry(w, h, d, 7, Math.min(.017, w * .05, h * .05, d * .05));
   const p = geo.attributes.position, n = geo.attributes.normal;
   for (let i = 0; i < p.count; i++) {
     const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
@@ -256,7 +259,7 @@ function keyframe(t) {
   };
 }
 
-export function createWorld(canvas) {
+export function createWorld(canvas, { initialProgress = 0 } = {}) {
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer;
   try {
@@ -346,7 +349,7 @@ export function createWorld(canvas) {
     if (isDisposed) resource?.dispose(); else photographicSky = resource;
   });
   // No ribbons, primitive busts, doubled scans or decorative geometry overlap the face.
-  let progress = 0, targetProgress = 0, pointer = { x: 0, y: 0 }, motion = !reducedMotion;
+  let progress = clamp(initialProgress), targetProgress = clamp(initialProgress), pointer = { x: 0, y: 0 }, motion = !reducedMotion;
   let portalFlight = null;
   let scannedOracle = null;
   let sandstone = null;
@@ -376,14 +379,23 @@ export function createWorld(canvas) {
   // The previous renderer began at camera (0,0,0) and eased toward a distant
   // hero pose, producing an obvious opening-scene jump before the visitor
   // touched the page. Initialize the physically correct pose immediately.
-  const initialCamera=keyframe(0);
+  const initialCamera=keyframe(progress);
+  if (window.innerWidth < 700) {
+    const heroFocus = 1 - smooth(.05, .33, progress);
+    initialCamera.p.x += .12 + heroFocus * 1.35;
+    initialCamera.p.z += 1.5;
+    initialCamera.look.x += heroFocus * 1.72;
+    initialCamera.look.y += heroFocus * .23;
+  }
   camera.position.copy(initialCamera.p);
   const lookSmooth=initialCamera.look.clone();
   camera.lookAt(lookSmooth);
   const viewport = () => {
     const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
     const compact = w < 700;
-    baseDpr = Math.min(window.devicePixelRatio || 1, softwareRenderer ? .85 : compact ? 1.2 : 1.55);
+    const lowPower = (navigator.deviceMemory || 8) <= 4;
+    baseDpr = Math.min(window.devicePixelRatio || 1,
+      softwareRenderer ? .85 : compact ? (lowPower ? 1.05 : 1.17) : (lowPower ? 1.25 : 1.45));
     const dpr = Math.max(.55, baseDpr * qualityScale);
     viewportWidth = w; viewportHeight = h;
     // Preserve real depth/contact shadows on high-memory phones; less capable
@@ -424,19 +436,24 @@ export function createWorld(canvas) {
     // A negative delta makes the exponential damping alpha negative, causing
     // the camera to exponentially shoot millions of world units away.
     const frameNow = performance.now();
-    const dt = Math.max(0, Math.min((frameNow - last) / 1000, .05));
+    const frameDelta = Math.max(0, (frameNow - last) / 1000);
+    // Frame time must match the elapsed real time. Capping at 50 ms caused
+    // the cinematic pose to lag multiple seconds behind scroll on mobile
+    // devices drawing fewer than 20 frames per second.
+    const dt = Math.min(frameDelta, .22);
     last = frameNow;
     if (motion) elapsed += dt;
-    // Evaluate sustained frame time only while visible and moving. Long tab
-    // stalls and reduced-motion mode are excluded from quality decisions.
-    if (motion && dt > 0 && dt < .049) {
-      perfFrames++; perfSeconds += dt;
-      if (perfSeconds >= 3.0) {
+    // Crucially: count genuinely slow frames. The old dt < .049 filter
+    // excluded every frame below ~20fps, preventing resolution reduction on
+    // precisely the machines where the scroll would judder.
+    if (motion && frameDelta > 0 && frameDelta < .5) {
+      perfFrames++; perfSeconds += frameDelta;
+      if (perfSeconds >= 1.8) {
         const fps = perfFrames / perfSeconds;
         const target = window.innerWidth < 700 ? 29 : 42;
         slowWindows = fps < target ? slowWindows + 1 : 0;
         fastWindows = fps > target + 16 ? fastWindows + 1 : 0;
-        if (slowWindows >= 2 && qualityScale > .58) {
+        if (slowWindows >= 1 && qualityScale > .58) {
           qualityScale = Math.max(.58, qualityScale - .12);
           renderer.setPixelRatio(Math.max(.55, baseDpr * qualityScale));
           renderer.setSize(viewportWidth, viewportHeight, false);
@@ -486,10 +503,10 @@ export function createWorld(canvas) {
       camera.position.copy(current.p);
       lookSmooth.copy(current.look);
     }
-    // Framerate-independent exponential camera damping, with a slightly
-    // tighter response during the intentional through-the-gate flight.
-    const positionRate = portalFlight ? 12.0 : 8.0;
-    const lookRate = portalFlight ? 12.0 : 8.0;
+    // One spring, measured in real seconds. The flight is kept a little
+    // tighter; ordinary scroll remains eased without sticking on slow GPUs.
+    const positionRate = portalFlight ? 13.0 : 10.2;
+    const lookRate = portalFlight ? 13.0 : 10.2;
     camera.position.lerp(current.p, 1 - Math.exp(-dt * positionRate));
     lookSmooth.lerp(current.look, 1 - Math.exp(-dt * lookRate));
     camera.lookAt(lookSmooth);
@@ -530,6 +547,8 @@ export function createWorld(canvas) {
         statue: coords(scannedOracle?.object),
         statueMode: document.documentElement.dataset.statueMode,
         statueMeshCount: scannedOracle?.meshCount ?? 0,
+        statueDuplicatesRemoved: scannedOracle?.duplicatesRemoved ?? 0,
+        statueMeshes: scannedOracle?.meshSummary ?? [],
         scanRootCount: scene.children.filter(o=>o.name==='The Oracle — single photographic marble scan').length,
         syntheticBustCount: scene.children.filter(o=>o.name==='Fragmented marble oracle').length,
         portal: coords(threshold),
