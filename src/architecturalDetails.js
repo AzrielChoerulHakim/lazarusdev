@@ -109,20 +109,27 @@ export function enrichPortal(gate, stone) {
   }
   // Multiple profiled archivolts create actual stone depth and catch
   // directional light, replacing two perfect thin rings.
-  detail.add(archivolt(1.382,.061,aged,.461));
-  detail.add(archivolt(1.305,.023,deep,.51));
-  detail.add(archivolt(1.145,.053,pale,.48));
-  detail.add(archivolt(1.060,.016,deep,.493));
+  // Two carved stone edges, not four superimposed decorative rings.
+  // The inset return on the back wall gives the opening perceptible depth
+  // as the camera crosses the threshold.
+  detail.add(archivolt(1.382,.043,aged,.423));
+  detail.add(archivolt(1.070,.029,pale,.421));
+  detail.add(archivolt(1.095,.034,deep,-.408));
+  for (const side of [-1,1]) {
+    // A recessed inner jamb, with a natural black occlusion strip. Its
+    // volume is intentionally behind the front voussoir / shaft surfaces.
+    detail.add(block(.075,2.39,.64,deep,side*1.064,-1.32,-.045,.013));
+    detail.add(block(.092,2.34,.07,aged,side*1.112,-1.33,-.357,.015));
+  }
 
   // Heavy keystone and upper weathered cornice; never close the central hole.
-  detail.add(block(.46,.29,.88,pale,0,1.52,.04,.028));
-  detail.add(block(.77,.095,1.04,aged,0,1.71,.015,.018));
+  detail.add(block(.39,.27,.89,pale,0,1.51,.03,.027));
+  detail.add(block(.69,.078,.97,aged,0,1.68,.015,.018));
 
-  // Semi-submerged foundation / treads: positioned so the enlarged gate
-  // meets the ocean plane at approximately y=-3.245 world-space.
-  detail.add(block(3.65,.15,1.16,aged,0,-2.745,.15,.045));
-  detail.add(block(3.25,.08,.83,pale,0,-2.64,.31,.025));
-  detail.add(block(3.45,.085,.43,deep,0,-2.735,.94,.026));
+  // A heavy, almost entirely submerged stylobate anchors the gateway
+  // to the water. Remove the previously floating third ledge.
+  detail.add(block(3.55,.15,1.14,aged,0,-2.745,.12,.044));
+  detail.add(block(3.20,.085,.78,pale,0,-2.64,.20,.025));
 
   // Dislodged mineral grit collects at the top of the half-submerged
   // stylobate. One instanced draw call adds tiny irregular silhouette details
