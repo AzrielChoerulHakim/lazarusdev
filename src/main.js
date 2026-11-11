@@ -8,6 +8,8 @@ const menuToggle = $('#menu-toggle');
 const mobileNav = $('#mobile-nav');
 const motionButton = $('#motion-toggle');
 const motionLabel = $('#motion-label');
+const portalButton = $('#portal-enter');
+const portalLayer = $('#portal-transition');
 const chapters = ['origin', 'passage', 'worlds', 'practice', 'manifesto', 'contact'].map(id => document.getElementById(id));
 let world = null;
 let motionEnabled = !prefersReduced.matches;
@@ -28,11 +30,11 @@ function updateScroll() {
   // and the gallery inherits a view into the world beyond it.
   let worldProgress;
   if (scrollY < passageTop) {
-    worldProgress = .27 * smoothstep(scrollY / Math.max(passageTop, 1));
+    worldProgress = .22 * smoothstep(scrollY / Math.max(passageTop, 1));
   } else if (scrollY < galleryTop) {
-    worldProgress = .27 + .45 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
+    worldProgress = .22 + .60 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
   } else {
-    worldProgress = .72 + .28 * smoothstep((scrollY - galleryTop) / Math.max(practiceTop - galleryTop, 1));
+    worldProgress = .82 + .18 * smoothstep((scrollY - galleryTop) / Math.max(practiceTop - galleryTop, 1));
   }
   if (world) world.setProgress(prefersReduced.matches ? .04 : worldProgress);
   let current = 0;
@@ -120,6 +122,55 @@ addEventListener('pointermove', e => {
   if (!pointerQueued) requestAnimationFrame(() => { pointerQueued = false; world?.setPointer(pointerX, -pointerY); });
   pointerQueued = true;
 }, { passive: true });
+
+// A guided, real camera passage, not a CSS zoom imitation. The destination
+// is updated only after the camera crosses the modeled stone opening.
+let portalBusy = false;
+portalButton.addEventListener('click', () => {
+  if (portalBusy) return;
+  if (!world || prefersReduced.matches) {
+    window.location.hash = 'worlds';
+    return;
+  }
+  portalBusy = true;
+  portalButton.disabled = true;
+  portalButton.setAttribute('aria-busy', 'true');
+  portalLayer.classList.add('is-active');
+  portalLayer.classList.remove('is-exiting');
+  portalLayer.style.opacity = '0';
+
+  const finish = () => {
+    // Reaching the threshold is the only point where navigation jumps. The
+    // bone-colored light briefly hides the cut, then reveals Selected Worlds.
+    portalLayer.style.opacity = '1';
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo({ top: chapters[2].offsetTop, behavior: 'instant' });
+    history.replaceState(null, '', '#worlds');
+    updateScroll();
+    document.documentElement.style.scrollBehavior = '';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      portalLayer.classList.add('is-exiting');
+      portalLayer.style.opacity = '0';
+    }));
+    const restore = () => {
+      portalLayer.classList.remove('is-active', 'is-exiting');
+      portalButton.disabled = false;
+      portalButton.removeAttribute('aria-busy');
+      portalBusy = false;
+    };
+    portalLayer.addEventListener('transitionend', restore, { once: true });
+  };
+  const started = world.enterPortal(
+    t => { portalLayer.style.opacity = String(Math.max(0, Math.min(1, (t - .69) / .30)) ** 1.5); },
+    finish,
+  );
+  if (!started) {
+    portalBusy = false;
+    portalButton.disabled = false;
+    portalButton.removeAttribute('aria-busy');
+    portalLayer.classList.remove('is-active');
+  }
+});
 
 const canvas = $('#world');
 try {
