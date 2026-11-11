@@ -399,9 +399,12 @@ export function createWorld(canvas) {
   // path begins behind the marble, spills around the right profile, and falls.
   // Crucially, the passage remains architecturally legible on both breakpoints.
   const ribbonA = createSilkRibbon([
-    [3.9, 1.65, -3.65], [5.25,1.20,-2.75], [6.35,.20,-1.32],
-    [7.65,-.62,-.42], [8.75,-.46,.70], [10.2,-1.35,1.45],
-  ], { width: .87, phase: .60, color: 0xa7372c });
+    // The fabric now emerges from *inside* the opened scan, then unfurls in
+    // front of the right cheek. Nearby marble naturally occludes the start.
+    [3.25,.13,-3.35], [3.62,.12,-1.92], [4.10,.15,-.25],
+    [5.52,.19,1.18], [6.73,-.31,1.75], [8.18,-.83,2.58],
+    [9.57,-.38,3.16], [10.84,-1.21,3.62],
+  ], { width: .73, phase: .60, color: 0xab3b30 });
   const ribbonB = createSilkRibbon([
     [2.7,-3.00,-3.65], [3.62,-3.25,-4.10], [4.65,-2.95,-4.30],
     [5.35,-2.45,-3.55], [6.30,-2.80,-3.05], [7.55,-3.55,-2.00],
