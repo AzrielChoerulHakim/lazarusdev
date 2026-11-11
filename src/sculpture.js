@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { makeScannedFractureCap } from './fractureGeometry.js';
 
 const SCULPT_ASSET = new URL('../assets/models/marble_bust_01.glb', import.meta.url).href;
 const modelLoader = new GLTFLoader();
@@ -172,6 +173,21 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   attachClippedMaterial(upper, upperPlane, true);
   attachClippedMaterial(lower, lowerPlane, false);
 
+  // Generate the actual exposed rock surface from triangle intersections
+  // of the licensed 3D scan. Unlike the previous ellipses, the contour now
+  // follows the shape of the face/neck and carries real normal lighting.
+  let capUpper = null, capLower = null;
+  try {
+    capUpper = makeScannedFractureCap(model, 1.17, +1, anchor);
+    capLower = makeScannedFractureCap(lowerCopy, .95, -1, anchor);
+    if (capUpper) upper.add(capUpper);
+    if (capLower) lower.add(capLower);
+  } catch (error) {
+    console.warn('Scan-derived fracture caps unavailable; preserving irregular GPU cut.', error);
+  }
+  const fractureStatus = capUpper && capLower ? 'scan-caps' : 'shader-only';
+  document.documentElement.dataset.fracture = fractureStatus;
+
   const chips = new THREE.Group();
   const chipStone = new THREE.MeshStandardMaterial({ color: 0xb9a98f, roughness: 1, metalness: 0, flatShading: true });
   for (let i = 0; i < 11; i++) {
@@ -222,6 +238,11 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
         mats.forEach(m => m.dispose());
       }));
       chipStone.dispose();
+      for (const cap of [capUpper, capLower]) {
+        if (!cap) continue;
+        cap.geometry.dispose();
+        cap.material.dispose();
+      }
       [upperRim, lowerRim].forEach(o => { o.geometry.dispose(); o.material.dispose(); });
       chips.children.forEach(o => o.geometry.dispose());
     },
