@@ -54,6 +54,7 @@ try {
         pixels: canvas.width * canvas.height,
         webglVersion: gl?.getParameter(gl.VERSION),
         asset: document.documentElement.dataset.sceneAsset,
+        fracture: document.documentElement.dataset.fracture,
         rendered: document.documentElement.dataset.webgl,
         dust: document.documentElement.dataset.atmosphericMotes,
         rig: window.__lazarusDebug?.(),
@@ -77,7 +78,7 @@ try {
     }
     // One licensed scan is divided into EXCLUSIVE triangle bands to create
     // the surreal levitation. Three fragments are not three superposed busts.
-    if (document.documentElement.dataset.fracture !== 'three-levitating-sections'
+    if (state.fracture !== 'three-levitating-sections'
       || state.rig.impossiblePortal?.otherWorldObjects < 20
       || state.rig.impossiblePortal?.desertResolution?.[0] < 128) {
       throw new Error(`${name}: portal/fracture stage not initialized: ${JSON.stringify(state.rig)}`);
