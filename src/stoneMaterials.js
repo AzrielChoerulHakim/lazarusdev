@@ -22,18 +22,20 @@ export async function loadSandstoneMaterials(materials, onStatus = () => {}) {
     for (const texture of [diffuse,normal,roughness]) {
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
-      texture.anisotropy = 2;
-      texture.repeat.set(.92, .92);
+      texture.anisotropy = 4;
+      texture.repeat.set(1.18, 1.18);
       texture.needsUpdate = true;
     }
     materials.forEach((material, index) => {
       material.map = diffuse;
       material.normalMap = normal;
-      material.normalScale.set(.48, .48);
+      material.normalScale.set(.44, .44);
       material.roughnessMap = roughness;
-      material.roughness = .99;
+      material.roughness = .91;
       material.metalness = 0;
-      const tints = [0xf4e6d0, 0xc8b79d, 0x948875];
+      // Chalky limestone / aged travertine. The earlier ochre palette made
+      // the mineral grain look like polished wood across the long piers.
+      const tints = [0xded7c8, 0xbeb5a7, 0x888173];
       material.color.setHex(tints[index] || tints[0]);
       material.needsUpdate = true;
     });
