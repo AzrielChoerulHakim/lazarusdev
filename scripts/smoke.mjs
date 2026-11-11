@@ -28,7 +28,7 @@ try {
       throw new Error(`${name}: timed out waiting for Three.js: ${warnings.join(' | ')} | ${errors.join(' | ')} | ${err.message}`);
     }
     await page.waitForFunction(
-      () => ['scanned', 'fallback'].includes(document.documentElement.dataset.sceneAsset),
+      () => ['scanned', 'unavailable'].includes(document.documentElement.dataset.sceneAsset),
       null,
       { timeout: 30000 }
     );
@@ -49,6 +49,14 @@ try {
     if (state.rendered !== 'ready') throw new Error(`${name}: WebGL did not finish drawing a frame`);
     if (state.dust !== 'ready' || !state.rig || state.rig.dustMotes < 200) throw new Error(`${name}: physical dust system did not initialize: ${JSON.stringify(state.rig)}`);
     if (state.rig.keyLight?.[0] >= 0) throw new Error(`${name}: upper-left physical key light is misaligned`);
+    // Regression for the overlaid statue: the licensed asset MUST be the
+    // scene's sole bust; no hidden primitive or second scan is permissible.
+    if (state.rig.statueMode !== 'single-scan'
+       || state.rig.scanRootCount !== 1
+       || state.rig.syntheticBustCount !== 0
+       || state.rig.statueMeshCount < 1) {
+      throw new Error(`${name}: overlapping statue geometry: ${JSON.stringify(state.rig)}`);
+    }
     await page.waitForFunction(
       () => ['photographic','procedural'].includes(document.documentElement.dataset.sceneMaterial),
       null, {timeout:30000}
@@ -56,6 +64,29 @@ try {
     const stoneState = await page.evaluate(() => document.documentElement.dataset.sceneMaterial);
     if (stoneState !== 'photographic') throw new Error(`${name}: verified sandstone maps did not load: ${stoneState}`);
     if (!state.gl || state.pixels < width * height * .6) throw new Error(`${name}: Three.js renderer did not initialize: ${JSON.stringify(state)}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
+    // Native scroll must drive the camera immediately, in one continuous
+    // direction, without repeated easing plateaus at section boundaries.
+    const scrollCheck=await page.evaluate(async () => {
+      const y0=document.getElementById('passage').offsetTop;
+      const samples=[];
+      for(const part of [0,.06,.15,.28,.42,.64,.83]){
+        scrollTo({top:y0*part,behavior:'instant'});
+        await new Promise(resolve=>requestAnimationFrame(resolve));
+        const target=window.__lazarusScrollDebug().progress;
+        const rig=window.__lazarusDebug();
+        samples.push({part,target,worldTarget:rig.targetProgress});
+      }
+      scrollTo({top:0,behavior:'instant'});
+      return samples;
+    });
+    for(let i=1;i<scrollCheck.length;i++){
+      const before=scrollCheck[i-1],after=scrollCheck[i];
+      if(after.target <= before.target + .008)
+        throw new Error(`${name}: scroll transition stalls at ${JSON.stringify(scrollCheck)}`);
+      if(Math.abs(after.target-after.worldTarget)>.005)
+        throw new Error(`${name}: scroll/camera desynchronized at ${JSON.stringify(scrollCheck)}`);
+    }
+    await page.waitForTimeout(240);
     await page.screenshot({ path: `screenshots/${name}-hero.png`, animations: 'disabled' });
     await page.locator('#passage').scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
