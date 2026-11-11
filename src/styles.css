@@ -45,6 +45,7 @@ main{position:relative;z-index:2}.chapter{position:relative;isolation:isolate;pa
 .portal-enter:hover>span{transform:translateX(8px)}
 .portal-enter:disabled{cursor:default;opacity:.35}
 #portal-transition{position:fixed;z-index:95;inset:-1px;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 46%,#fbefd4 0%,#e5ceb0 24%,#997d65 62%,#243733 115%);will-change:opacity;transition:opacity .58s cubic-bezier(.22,1,.36,1)}
+#portal-transition.is-active:not(.is-exiting){transition:none}
 #portal-transition.is-exiting{transition-duration:.88s}
 @media(max-width:800px){.chapter-passage{min-height:165svh;padding-bottom:80px}.chapter-passage .passage-copy{top:105px}}
 @media(max-width:560px){.chapter-passage{min-height:172svh;display:block;padding-bottom:85px;text-align:left}.chapter-passage .passage-copy{position:sticky;top:105px;width:100%}.passage-notation{margin-top:22px}.portal-enter{margin-top:20px;font-size:9px;gap:25px;padding:13px 0}}
