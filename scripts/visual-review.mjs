@@ -20,7 +20,7 @@ try {
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
     await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
-    await page.waitForFunction(()=>document.documentElement.dataset.sceneAsset==='scanned' && document.documentElement.dataset.sceneMaterial==='photographic',null,{timeout:30000});
+    await page.waitForFunction(()=>document.documentElement.dataset.sceneAsset==='scanned' && document.documentElement.dataset.sceneMaterial==='photographic' && document.documentElement.dataset.lunarAsset==='nasa',null,{timeout:30000});
     await page.evaluate(({section,extra})=>{
       const el=document.getElementById(section);
       scrollTo({top: el.offsetTop + innerHeight*extra, behavior:'instant'});
@@ -29,7 +29,7 @@ try {
     await page.waitForTimeout(item.width > 800 ? 4800 : 2200);
     if(errors.length)throw Error(item.name+': '+errors.join('; '));
     await page.screenshot({path:`${dir}/${item.name}.jpg`,type:'jpeg',quality:72,animations:'disabled'});
-    const status=await page.evaluate(()=>({renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial,projection:window.__lazarusDebug?.(),scrollY:scrollY}));
+    const status=await page.evaluate(()=>({renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial,lunar:document.documentElement.dataset.lunarAsset,projection:window.__lazarusDebug?.(),scrollY:scrollY}));
     const projection = status.projection;
     if (!projection || projection.camera.some(v => !Number.isFinite(v) || Math.abs(v) > 90)) {
       throw Error(item.name + ': runaway / nonfinite camera: ' + JSON.stringify(projection));
