@@ -219,7 +219,9 @@ function portal(stone, x, y, z, size = 1, glow = false) {
   const count = 13;
   for (let i = 0; i < count; i++) {
     const a0 = i * Math.PI / count + .006, a1 = (i + 1) * Math.PI / count - .006;
-    group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 3]));
+    // Avoid the alternating dark/light voussoir pattern of a game prop.
+    // Most stones belong to one quarry; age varies subtly across courses.
+    group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 5 === 0 ? 1 : 0]));
   }
   // Recessed arch grooves, voussoir rhythm and side chamfers create
   // specular breaks and real shadow edges rather than a cardboard silhouette.
