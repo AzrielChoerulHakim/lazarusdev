@@ -3,6 +3,9 @@ import { chromium } from 'playwright';
 // GitHub Pages serves repository source, not the Vite bundle. This test
 // catches bad import-map aliases, missing assets and incorrect subpath URLs.
 const browser = await chromium.launch({
+  // GitHub-hosted Ubuntu already ships Google Chrome. Using it avoids a
+  // second 300 MB Playwright-browser download that can stall visual CI.
+  ...(process.env.CI ? {channel:'chrome'} : {}),
   headless: true,
   args: ['--no-sandbox', '--enable-webgl', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
 });
