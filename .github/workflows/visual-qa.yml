@@ -6,6 +6,8 @@ on:
       - .github/workflows/visual-qa.yml
       - scripts/visual-review.mjs
       - src/world.js
+      - src/main.js
+      - src/photographicSky.js
       - src/styles.css
       - src/sculpture.js
       - src/environment.js
