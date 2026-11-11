@@ -102,16 +102,20 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
 
   const anchor = new THREE.Group();
   anchor.name = 'The Rupture — scanned marble figure';
-  anchor.position.set(2.7, .55, -1.35);
-  anchor.rotation.y = -.18;
+  // The reference is a monumental face emerging from an impossible landscape,
+  // not a small museum bust on a pedestal. The base is intentionally below the
+  // horizon while the face fills the right side of a desktop viewport.
+  anchor.position.set(3.72, -1.58, -1.28);
+  anchor.scale.setScalar(1.56);
+  anchor.rotation.y = -.13;
   anchor.rotation.z = -.045;
   anchor.add(upper, lower);
 
-  const cutY = anchor.position.y + 1.06;
+  const cutY = anchor.position.y + 1.06 * anchor.scale.y;
   // Keep a 0.2 world-unit gap, centered across the eye/nose region.
   // Clipping planes are in world space and track the figure's moving halves.
-  const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .11));
-  const lowerPlane = new THREE.Plane(axis.clone().negate(), cutY - .11);
+  const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .11 * anchor.scale.y));
+  const lowerPlane = new THREE.Plane(axis.clone().negate(), cutY - .11 * anchor.scale.y);
 
   function attachClippedMaterial(part, plane) {
     part.traverse(object => {
@@ -168,8 +172,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       lower.position.set(.035 + reveal * .11, -.075 - reveal * .10, .025);
       upper.rotation.z = reveal * -.016;
       lower.rotation.z = reveal * .023;
-      upperPlane.constant = -(cutY + .11 + upper.position.y);
-      lowerPlane.constant = cutY - .11 + lower.position.y;
+      upperPlane.constant = -(cutY + (.11 + upper.position.y) * anchor.scale.y);
+      lowerPlane.constant = cutY + (-.11 + lower.position.y) * anchor.scale.y;
       chips.rotation.y = breath * .014;
       chips.position.x = reveal * .04;
     },
