@@ -47,7 +47,6 @@ function updateScroll() {
   const y = Math.max(0,scrollY);
   const progress=clamp01(y/Math.max(1,bounds.pageHeight-bounds.height));
   progressEl.style.transform = `scaleX(${progress})`;
-  world?.setProgress(prefersReduced.matches ? .04 : worldProgressForScroll(y));
   let current=0;
   for(let i=0;i<bounds.positions.length;i++) {
     if(y+bounds.height*.55>=bounds.positions[i])current=i;
@@ -150,7 +149,10 @@ prefersReduced.addEventListener('change', e => { setMotion(!e.matches); onScroll
 let pointerQueued = false;
 let pointerX = 0, pointerY = 0;
 addEventListener('pointermove', e => {
-  if (!world || !motionEnabled) return;
+  // Touch pointers move with the user's finger while scrolling. Feeding that
+  // into camera parallax used to make the statue shake against the sections.
+  if (!world || !motionEnabled || e.pointerType !== 'mouse'
+      || !matchMedia('(hover: hover)').matches) return;
   pointerX = (e.clientX / innerWidth - .5) * 2;
   pointerY = (e.clientY / innerHeight - .5) * 2;
   if (!pointerQueued) requestAnimationFrame(() => { pointerQueued = false; world?.setPointer(pointerX, -pointerY); });
