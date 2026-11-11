@@ -90,3 +90,23 @@ html[data-portal-state="inside"] .atmosphere{opacity:.12}
 @media(prefers-reduced-motion:reduce){
   #webgl-wrap::after,.atmosphere{transition:none}
 }
+
+/* A genuine world change needs visual continuity. The desert remains visible
+   through the first gallery beats, then settles into the dark editorial floor.
+   The ink veil is strong beneath captions; typography never sits unprotected
+   over high-contrast terrain. */
+.chapter-worlds{
+  background:linear-gradient(180deg,
+    rgba(7,20,24,.19) 0%,
+    rgba(7,18,21,.70) 23%,
+    rgba(7,18,21,.88) 48%,
+    rgba(7,18,21,.96) 87%);
+}
+.chapter-worlds::before{
+  content:'';position:absolute;z-index:-1;pointer-events:none;
+  left:0;right:0;top:0;height:42vh;
+  background:radial-gradient(ellipse at 55% 0%,rgba(207,139,91,.12),transparent 69%);
+}
+@media(prefers-reduced-motion:reduce){
+  .chapter-worlds{background:linear-gradient(180deg,rgba(7,20,24,.52),rgba(7,18,21,.94) 43%)}
+}
