@@ -4,6 +4,7 @@ import { enhanceEnvironment } from './environment.js';
 import { attachPortalVeil } from './portalFx.js';
 import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 
 const THREE_BG = 0x081a1d;
@@ -149,6 +150,24 @@ function makeBust(stone) {
   return bust;
 }
 
+function weatheredBlock(w, h, d, salt = 0) {
+  // Subtle sculpted curvature and chipped corners catch grazing sunlight.
+  // Plain perfect cubes are the strongest visual cue that the world is synthetic.
+  const geo = new RoundedBoxGeometry(w, h, d, 4, Math.min(.055, w * .09, h * .09, d * .09));
+  const p = geo.attributes.position, n = geo.attributes.normal;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+    const rough = Math.sin(x * 38.3 + y * 9.7 + z * 4.7 + salt) * .45
+      + Math.sin(y * 30.2 + z * 14.8 - salt * 1.7) * .35
+      + Math.sin(x * 71.2 - z * 22.1 + salt * .7) * .20;
+    const deform = rough * Math.min(.018, w * .025);
+    p.setXYZ(i, x + n.getX(i) * deform, y + n.getY(i) * deform, z + n.getZ(i) * deform);
+  }
+  p.needsUpdate = true;
+  geo.computeVertexNormals();
+  return geo;
+}
+
 function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
   const shape = new THREE.Shape();
   const steps = 7;
@@ -164,19 +183,28 @@ function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
   shape.closePath();
   const geo = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: .035, bevelSize: .022, bevelSegments: 1, steps: 1, curveSegments: 3 });
   geo.translate(0, 0, -depth / 2);
+  const p = geo.attributes.position, n = geo.attributes.normal;
+  for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
+    const erosion = Math.sin(x*39 + y*31 + z*10) * .008
+      + Math.cos(y*47 - x*24) * .005;
+    p.setXYZ(i, x + n.getX(i)*erosion, y+n.getY(i)*erosion, z+n.getZ(i)*erosion);
+  }
+  p.needsUpdate = true;
+  geo.computeVertexNormals();
   return stoneMesh(geo, mat);
 }
 function portal(stone, x, y, z, size = 1, glow = false) {
   const group = new THREE.Group();
   const inner = 1.03, outer = 1.48;
   for (const side of [-1, 1]) {
-    const pillar = stoneMesh(new THREE.BoxGeometry(.47, 2.7, .76), stone[side === 1 ? 1 : 0]);
+    const pillar = stoneMesh(weatheredBlock(.47, 2.7, .76, 2 + side), stone[side === 1 ? 1 : 0]);
     pillar.position.set(side * 1.255, -1.35, 0);
     group.add(pillar);
-    const base = stoneMesh(new THREE.BoxGeometry(.71, .22, .90), stone[1]);
+    const base = stoneMesh(weatheredBlock(.71, .22, .90, 5 + side), stone[1]);
     base.position.set(side * 1.255, -2.63, 0);
     group.add(base);
-    const capital = stoneMesh(new THREE.BoxGeometry(.62, .24, .88), stone[0]);
+    const capital = stoneMesh(weatheredBlock(.62, .24, .88, 6 + side), stone[0]);
     capital.position.set(side * 1.255, .07, 0);
     group.add(capital);
     for (let j = 0; j < 3; j++) {
@@ -190,7 +218,15 @@ function portal(stone, x, y, z, size = 1, glow = false) {
     const a0 = i * Math.PI / count + .006, a1 = (i + 1) * Math.PI / count - .006;
     group.add(archWedge(a0, a1, outer, inner, .75, stone[i % 3]));
   }
-  const crown = stoneMesh(new THREE.BoxGeometry(.36, .25, .9), stone[0]);
+  // Recessed arch grooves, voussoir rhythm and side chamfers create
+  // specular breaks and real shadow edges rather than a cardboard silhouette.
+  const ridge = stoneMesh(new THREE.TorusGeometry(1.255, .026, 6, 96, Math.PI), stone[2], false);
+  ridge.position.set(0, 0, .422);
+  group.add(ridge);
+  const innerRidge = stoneMesh(new THREE.TorusGeometry(1.06, .017, 5, 96, Math.PI), stone[1], false);
+  innerRidge.position.set(0, 0, .424);
+  group.add(innerRidge);
+  const crown = stoneMesh(weatheredBlock(.36, .25, .9, 12), stone[0]);
   crown.position.y = outer + .06;
   group.add(crown);
   if (glow) {
