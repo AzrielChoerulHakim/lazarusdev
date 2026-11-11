@@ -152,6 +152,9 @@ export function enhanceEnvironment(scene, { sea }) {
   scene.add(haze);
   let time=0;
   return {
+    usePhotographicSky(enabled) {
+      sky.visible = !enabled;
+    },
     update(dt, camera, animate) {
       if(animate)time+=dt;
       skyMaterial.uniforms.uTime.value=time;
