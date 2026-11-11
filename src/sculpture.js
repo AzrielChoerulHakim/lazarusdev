@@ -97,6 +97,11 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   // rather than showing raw triangle clipping with an unnaturally flat edge.
   const upperRim = fractureRim(1.18, -1, .7);
   const lowerRim = fractureRim(.94, 1, 1.4);
+  // The physical rims are retained as an optional art-direction layer, but
+  // disabled until a true mesh boolean cut matches the scan silhouette.
+  // The previous loose ring looked like a synthetic beige bar across the face.
+  upperRim.visible = false;
+  lowerRim.visible = false;
   upper.add(upperRim);
   lower.add(lowerRim);
 
@@ -158,6 +163,7 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
     mesh.castShadow = true;
     chips.add(mesh);
   }
+  chips.visible = false; // Floating polyhedral chips read as visual noise rather than damaged marble.
   anchor.add(chips);
   scene.add(anchor);
   fallback.visible = false;
@@ -172,8 +178,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       const r = Math.max(0, Math.min(1, scrollProgress));
       const reveal = Math.sin(Math.min(r * 2.8, 1) * Math.PI / 2);
       const breath = ambient ? Math.sin(time * .23) : 0;
-      upper.position.set(-.035 - reveal * .05, .075 + reveal * .13 + breath * .008, .01);
-      lower.position.set(.035 + reveal * .11, -.075 - reveal * .10, .025);
+      upper.position.set(-.018 - reveal * .035, .04 + reveal * .055 + breath * .006, .01);
+      lower.position.set(.018 + reveal * .045, -.04 - reveal * .045, .02);
       upper.rotation.z = reveal * -.016;
       lower.rotation.z = reveal * .023;
       upperPlane.constant = -(cutY + (.11 + upper.position.y) * anchor.scale.y);
