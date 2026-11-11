@@ -520,6 +520,8 @@ export function createWorld(canvas) {
         statue: coords(scannedOracle?.object),
         statueMode: document.documentElement.dataset.statueMode,
         statueMeshCount: scannedOracle?.meshCount ?? 0,
+        scanRootCount: scene.children.filter(o=>o.name==='The Oracle — single photographic marble scan').length,
+        syntheticBustCount: scene.children.filter(o=>o.name==='Fragmented marble oracle').length,
         portal: coords(threshold),
         renderTriangles: renderer.info.render.triangles,
         canvas: [canvas.width, canvas.height],
