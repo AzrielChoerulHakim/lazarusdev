@@ -158,7 +158,23 @@ portalButton.addEventListener('click', () => {
       portalButton.removeAttribute('aria-busy');
       portalBusy = false;
     };
-    portalLayer.addEventListener('transitionend', restore, { once: true });
+    const onTransitionEnd = e => {
+      if (e.target === portalLayer && e.propertyName === 'opacity') restore();
+    };
+    const originalRestore = restore;
+    // A browser may skip transitionend after screenshots, tab changes or
+    // accessibility motion changes. Never leave the portal action disabled.
+    let restored = false;
+    function restoreOnce() {
+      if (restored) return;
+      restored = true;
+      portalLayer.removeEventListener('transitionend', onTransitionEnd);
+      originalRestore();
+    }
+    portalLayer.addEventListener('transitionend', e => {
+      if (e.target === portalLayer && e.propertyName === 'opacity') restoreOnce();
+    }, { once: true });
+    setTimeout(restoreOnce, 1150);
   };
   const started = world.enterPortal(
     t => { portalLayer.style.opacity = String(Math.max(0, Math.min(1, (t - .69) / .30)) ** 1.5); },
