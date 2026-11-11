@@ -418,11 +418,18 @@ export function createWorld(canvas) {
     document.documentElement.dataset.sceneAsset = 'fallback';
   });
   let pausedByTab = document.hidden, elapsed = 0, last = performance.now(), raf = 0;
+  // Dynamic resolution scaling prevents expensive PBR assets from making
+  // mid-range mobile GPUs unusable. A hysteresis window avoids DPR flicker.
+  let qualityScale = 1;
+  let perfFrames = 0, perfSeconds = 0, slowWindows = 0, fastWindows = 0;
+  let viewportWidth = 0, viewportHeight = 0, baseDpr = 1;
   const lookSmooth = new THREE.Vector3(0, 0, -5);
   const viewport = () => {
     const w = Math.max(1, window.innerWidth), h = Math.max(1, window.innerHeight);
     const compact = w < 700;
-    const dpr = Math.min(window.devicePixelRatio || 1, softwareRenderer ? .85 : compact ? 1.2 : 1.55);
+    baseDpr = Math.min(window.devicePixelRatio || 1, softwareRenderer ? .85 : compact ? 1.2 : 1.55);
+    const dpr = Math.max(.55, baseDpr * qualityScale);
+    viewportWidth = w; viewportHeight = h;
     renderer.shadowMap.enabled = !compact && !softwareRenderer;
     renderer.setPixelRatio(dpr);
     renderer.setSize(w, h, false);
@@ -444,6 +451,30 @@ export function createWorld(canvas) {
     if (pausedByTab) return;
     const dt = Math.min((now - last) / 1000, .05); last = now;
     if (motion) elapsed += dt;
+    // Evaluate sustained frame time only while visible and moving. Long tab
+    // stalls and reduced-motion mode are excluded from quality decisions.
+    if (motion && dt > 0 && dt < .049) {
+      perfFrames++; perfSeconds += dt;
+      if (perfSeconds >= 3.0) {
+        const fps = perfFrames / perfSeconds;
+        const target = window.innerWidth < 700 ? 29 : 42;
+        slowWindows = fps < target ? slowWindows + 1 : 0;
+        fastWindows = fps > target + 16 ? fastWindows + 1 : 0;
+        if (slowWindows >= 2 && qualityScale > .58) {
+          qualityScale = Math.max(.58, qualityScale - .12);
+          renderer.setPixelRatio(Math.max(.55, baseDpr * qualityScale));
+          renderer.setSize(viewportWidth, viewportHeight, false);
+          slowWindows = 0;
+        } else if (fastWindows >= 4 && qualityScale < 1) {
+          qualityScale = Math.min(1, qualityScale + .08);
+          renderer.setPixelRatio(Math.max(.55, baseDpr * qualityScale));
+          renderer.setSize(viewportWidth, viewportHeight, false);
+          fastWindows = 0;
+        }
+        document.documentElement.dataset.qualityScale = qualityScale.toFixed(2);
+        perfFrames = 0; perfSeconds = 0;
+      }
+    }
     const current = keyframe(progress);
     const mobile = window.innerWidth < 700;
     if (mobile) {
