@@ -87,7 +87,7 @@ function stoneMesh(geometry, material, shadow = true) {
 function weatheredBlock(w, h, d, salt = 0) {
   // Subtle sculpted curvature and chipped corners catch grazing sunlight.
   // Plain perfect cubes are the strongest visual cue that the world is synthetic.
-  const geo = new RoundedBoxGeometry(w, h, d, 4, Math.min(.055, w * .09, h * .09, d * .09));
+  const geo = new RoundedBoxGeometry(w, h, d, 3, Math.min(.017, w * .05, h * .05, d * .05));
   const p = geo.attributes.position, n = geo.attributes.normal;
   for (let i = 0; i < p.count; i++) {
     const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
@@ -115,7 +115,7 @@ function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
     shape.lineTo(Math.cos(a) * rInner, Math.sin(a) * rInner);
   }
   shape.closePath();
-  const geo = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: .035, bevelSize: .022, bevelSegments: 1, steps: 1, curveSegments: 3 });
+  const geo = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: .015, bevelSize: .013, bevelSegments: 1, steps: 1, curveSegments: 3 });
   geo.translate(0, 0, -depth / 2);
   const p = geo.attributes.position, n = geo.attributes.normal;
   for (let i = 0; i < p.count; i++) {
@@ -143,11 +143,18 @@ function portal(stone, x, y, z, size = 1, glow = false) {
     core.position.set(px,-1.345,-.025);
     group.add(core);
     for(let row=0;row<courseCount;row++){
-      const h=courseHeight-.013;
-      const offset=(Math.sin(row*2.8+side*1.35)*.009);
+      const h=courseHeight-.0045;
+      const offset=(Math.sin(row*2.8+side*1.35)*.0045);
       const block=stoneMesh(weatheredBlock(.545,h,.99,12+row*1.7+side),stone[(row+side+12)%7===0?1:0]);
       block.position.set(px+offset,-2.69+(row+.5)*courseHeight,.015);
-      block.rotation.y=Math.sin(row*2.3+side)*.005;
+      block.rotation.y=Math.sin(row*2.3+side)*.003;
+      // Every quarried course needs its own part of the original photographic
+      // texture; seven identical texture patches read as stacked wooden tiles.
+      const uv=block.geometry.attributes.uv;
+      const du=.13*row+(side>0?.29:.07);
+      const dv=.11*((row*3)%7)+.04*side;
+      for(let k=0;k<uv.count;k++) uv.setXY(k,uv.getX(k)*.91+du,uv.getY(k)*.91+dv);
+      uv.needsUpdate=true;
       group.add(block);
     }
     // Simple, heavy Romanesque capital and plinth with real relief.
