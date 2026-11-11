@@ -159,10 +159,10 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
               if (uRuptureDirection * (vRuptureWorld.y - uRuptureCut - fracture) < 0.0) discard;`);
         };
         m.side = THREE.DoubleSide;
-        if (m.roughness != null) m.roughness = Math.max(.83, m.roughness);
-        if (m.color) m.color.multiply(new THREE.Color(0xe8dbc7));
-        if (m.normalScale) m.normalScale.multiplyScalar(1.07);
-        if ('envMapIntensity' in m) m.envMapIntensity = .65;
+        if (m.roughness != null) m.roughness = Math.max(.74, Math.min(.94, m.roughness));
+        if (m.color) m.color.multiply(new THREE.Color(0xf0e7da));
+        if (m.normalScale) m.normalScale.multiplyScalar(.97);
+        if ('envMapIntensity' in m) m.envMapIntensity = .86;
         if ('metalness' in m) m.metalness = Math.min(.03, m.metalness);
         m.needsUpdate = true;
         return m;
