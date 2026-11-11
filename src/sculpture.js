@@ -8,6 +8,55 @@ const axis = new THREE.Vector3(0, 1, 0);
 // The source model is a CC0 sculpt by Rico Cilliers (Poly Haven).
 // Clones share geometry and PBR textures; the two world-space clipping planes
 // carve the bust into impossible displaced upper/lower halves without baking it.
+
+function fractureRim(level, normalDirection, variant) {
+  // A physically shaded, irregular cross-section at the two sides of the
+  // displaced stone face. The open center is intentional: the photographed
+  // atmosphere should remain visible through the impossible rupture.
+  const segments = 72, rings = 4;
+  const vertices = [], colors = [], indices = [];
+  for (let r = 0; r < rings; r++) {
+    const depth = r / (rings - 1);
+    const radius = 1 - depth * .205;
+    for (let i = 0; i < segments; i++) {
+      const a = i / segments * Math.PI * 2;
+      const edge = Math.sin(a * 13 + variant) * .035
+                 + Math.sin(a * 29 - variant * .7) * .014
+                 + Math.cos(a * 7 + .5) * .026;
+      const rr = radius + edge * (1 - depth * .4);
+      const yy = level + normalDirection * (
+        depth * .085 + Math.sin(a * 17 + variant) * .018
+        + Math.cos(a * 33 - variant) * .008
+      );
+      vertices.push(Math.cos(a) * 1.51 * rr, yy, Math.sin(a) * 1.07 * rr + .12);
+      const shade = .79 + Math.sin(a * 19 + depth * 9) * .085 - depth * .19;
+      colors.push(shade * 1.00, shade * .90, shade * .73);
+    }
+  }
+  for (let r = 0; r < rings - 1; r++) {
+    for (let i = 0; i < segments; i++) {
+      const j = (i + 1) % segments;
+      const a = r * segments + i, b = r * segments + j;
+      const d = (r + 1) * segments + i, e = (r + 1) * segments + j;
+      indices.push(a, b, d, b, e, d);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xd0bba0, vertexColors: true, roughness: 1, metalness: 0,
+    side: THREE.DoubleSide, flatShading: true,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.castShadow = true;
+  mesh.receiveShadow = true;
+  mesh.name = normalDirection > 0 ? 'Exposed upper limestone fracture' : 'Exposed lower limestone fracture';
+  return mesh;
+}
+
 export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }) {
   let asset;
   try {
@@ -44,6 +93,12 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   const lowerCopy = model.clone(true);
   upper.add(model);
   lower.add(lowerCopy);
+  // Recessed fractured rims catch real HDR light and keep the rupture hollow,
+  // rather than showing raw triangle clipping with an unnaturally flat edge.
+  const upperRim = fractureRim(1.18, -1, .7);
+  const lowerRim = fractureRim(.94, 1, 1.4);
+  upper.add(upperRim);
+  lower.add(lowerRim);
 
   const anchor = new THREE.Group();
   anchor.name = 'The Rupture — scanned marble figure';
@@ -113,8 +168,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       lower.position.set(.035 + reveal * .11, -.075 - reveal * .10, .025);
       upper.rotation.z = reveal * -.016;
       lower.rotation.z = reveal * .023;
-      upperPlane.constant = -(cutY + .11);
-      lowerPlane.constant = cutY - .11;
+      upperPlane.constant = -(cutY + .11 + upper.position.y);
+      lowerPlane.constant = cutY - .11 + lower.position.y;
       chips.rotation.y = breath * .014;
       chips.position.x = reveal * .04;
     },
@@ -126,6 +181,7 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
         mats.forEach(m => m.dispose());
       }));
       chipStone.dispose();
+      [upperRim, lowerRim].forEach(o => { o.geometry.dispose(); o.material.dispose(); });
       chips.children.forEach(o => o.geometry.dispose());
     },
   };
