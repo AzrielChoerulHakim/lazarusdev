@@ -50,18 +50,23 @@ function stoneCracks() {
     for (let i = 0; i < 13; i++) {
       let x = side * 1.255 + (random() - .5) * .34;
       let y = -2.38 + random() * 2.27;
-      const z = .405;
+      const surfaceZ = xx => {
+        const offset = xx - side * 1.255;
+        // Conform scratches to the front of the cylindrical fluted shaft.
+        return .215 + Math.sqrt(Math.max(.0001, .235 * .235 - offset * offset)) + .009;
+      };
       for (let j = 0; j < 4; j++) {
-        let dx = (random() - .48) * .058;
-        let dy = (.018 + random() * .07) * (random() > .5 ? 1 : -1);
-        lines.push(x,y,z,x+dx,y+dy,z);
-        x += dx; y += dy;
+        const dx = (random() - .48) * .058;
+        const dy = (.018 + random() * .07) * (random() > .5 ? 1 : -1);
+        const nextX = x + dx, nextY = y + dy;
+        lines.push(x, y, surfaceZ(x), nextX, nextY, surfaceZ(nextX));
+        x = nextX; y = nextY;
       }
     }
   }
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(lines,3));
-  const material = new THREE.LineBasicMaterial({ color: 0x4d483b, transparent: true, opacity: .29, depthWrite: false });
+  const material = new THREE.LineBasicMaterial({ color: 0x423d35, transparent: true, opacity: .25, depthWrite: false });
   const mesh = new THREE.LineSegments(geometry,material);
   mesh.renderOrder = 3;
   return mesh;
@@ -119,6 +124,28 @@ export function enrichPortal(gate, stone) {
   detail.add(block(3.25,.08,.83,pale,0,-2.64,.31,.025));
   detail.add(block(3.45,.085,.43,deep,0,-2.735,.94,.026));
 
+  // Dislodged mineral grit collects at the top of the half-submerged
+  // stylobate. One instanced draw call adds tiny irregular silhouette details
+  // without a field of artificial floating low-poly stones.
+  const gritGeometry = new THREE.IcosahedronGeometry(1, 0);
+  const grit = new THREE.InstancedMesh(gritGeometry, aged, 46);
+  grit.name = 'Settled limestone grains on portal foundation';
+  const dummy = new THREE.Object3D();
+  let seed = 845713;
+  const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
+  for (let i = 0; i < grit.count; i++) {
+    const side = i % 2 ? 1 : -1;
+    dummy.position.set(side * (1.02 + random() * .51), -2.57 + random() * .025, .37 + random() * .32);
+    dummy.rotation.set(random() * 3, random() * 3, random() * 3);
+    const radius = .008 + Math.pow(random(), 2) * .027;
+    dummy.scale.set(radius * (1.25 + random()), radius * .54, radius);
+    dummy.updateMatrix();
+    grit.setMatrixAt(i, dummy.matrix);
+  }
+  grit.instanceMatrix.needsUpdate = true;
+  grit.receiveShadow = true;
+  grit.frustumCulled = false;
+  detail.add(grit);
   detail.add(stoneCracks());
   return {
     object: detail,

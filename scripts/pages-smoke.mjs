@@ -18,12 +18,14 @@ try {
     && document.documentElement.dataset.sceneMaterial === 'photographic'
     && document.documentElement.dataset.photoSky === 'photographic'
     && document.documentElement.dataset.lunarAsset === 'nasa'
+    && document.documentElement.dataset.atmosphericMotes === 'ready'
   , null, { timeout: 45000 });
   const state = await page.evaluate(() => ({
     canvasSize: document.querySelector('#world').width * document.querySelector('#world').height,
     scanned: document.documentElement.dataset.sceneAsset,
     sky: document.documentElement.dataset.photoSky,
     stone: document.documentElement.dataset.sceneMaterial,
+    dust: document.documentElement.dataset.atmosphericMotes,
   }));
   if (errors.length || state.canvasSize < 100000) {
     throw new Error('Static GitHub Pages failed: ' + JSON.stringify({ errors, state }));

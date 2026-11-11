@@ -144,7 +144,7 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
       positions.push(x, cutY + crack + depth, z);
       const grain = Math.sin(x * 17.1 + z * 12.5 + t * 7.3) * .06;
       // Exposed stone core is more ochre/porous than the polished exterior.
-      const shade = Math.max(.30, Math.min(.77, .64 - t * .23 + grain));
+      const shade = Math.max(.43, Math.min(.85, .75 - t * .18 + grain));
       colors.push(shade, shade * .91, shade * .78);
       uvs.push(x * .4 + .5, z * .4 + .5);
       if (layer < layers) {
@@ -164,8 +164,8 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   const material = new THREE.MeshStandardMaterial({
-    color: 0xc8b69e, vertexColors: true, side: THREE.DoubleSide,
-    roughness: .99, metalness: 0, flatShading: true,
+    color: 0xd5c5ac, vertexColors: true, side: THREE.DoubleSide,
+    roughness: .95, metalness: 0, flatShading: true,
     polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
   });
   const cap = new THREE.Mesh(geometry, material);

@@ -31,6 +31,7 @@ jobs:
           node --check src/lunarSurface.js
           node --check src/architecturalDetails.js
           node --check src/cloth.js
+          node --check src/atmosphericParticles.js
       - name: Production build
         run: npm run build
       - name: Install browser harness

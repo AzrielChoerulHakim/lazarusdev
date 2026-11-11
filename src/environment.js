@@ -92,8 +92,22 @@ const WATER_FRAGMENT = `
     vec3 skyReflection = vec3(.30,.338,.316);
     surface = mix(surface,skyReflection,fresnel*.47);
 
-    // Broad, low-energy warm glints instead of sharp repeated sparkle noise.
-    vec3 sunDirection = normalize(vec3(-.43,.79,.45));
+    // The principal carved gate enters the water at two distinct feet.
+    // A broad, soft occlusion footprint and barely visible lapping rings
+    // connect it to the surface; the water shader cannot receive shadow maps.
+    vec2 footLeft = p - vec2(-4.83,-7.35);
+    vec2 footRight = p - vec2(-1.27,-7.35);
+    float contactLeft = exp(-dot(footLeft * vec2(1.55,1.05), footLeft * vec2(1.55,1.05)));
+    float contactRight = exp(-dot(footRight * vec2(1.55,1.05), footRight * vec2(1.55,1.05)));
+    float stoneContact = max(contactLeft,contactRight);
+    surface *= 1.0 - .25 * stoneContact;
+    float nearFoot = min(length(footLeft),length(footRight));
+    float waterLap = sin(nearFoot * 11.5 - uTime * .78)
+                   * exp(-nearFoot * 1.32) * .010;
+    surface += vec3(.71,.77,.72) * waterLap;
+
+    // Match the water's sun glints to the upper-left sculptural key light.
+    vec3 sunDirection = normalize(vec3(-.32,.62,.71));
     vec3 reflectedSun = reflect(-sunDirection,normal);
     float spec = pow(max(0.,dot(reflectedSun,view)),40.);
     surface += vec3(.49,.35,.22)*spec*.24;
@@ -171,7 +185,7 @@ export function enhanceEnvironment(scene, { sea }) {
     const mat=new THREE.SpriteMaterial({
       map:vaporTexture,
       color:i%3===0?0xd9c9aa:0xa9b3aa,
-      transparent:true, opacity:.28+(i%4)*.08,
+      transparent:true, opacity:.16+(i%4)*.055,
       depthWrite:false, fog:true,
     });
     const sprite=new THREE.Sprite(mat);
