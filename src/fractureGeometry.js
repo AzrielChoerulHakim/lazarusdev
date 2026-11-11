@@ -24,8 +24,8 @@ function intersects(a, b, y) {
 
 function collectIntersection(model, y, anchor) {
   const points = [];
+  anchor.updateMatrixWorld(true);
   model.updateMatrixWorld(true);
-  anchor.updateWorldMatrix(true, false);
   const toAnchor = new THREE.Matrix4().copy(anchor.matrixWorld).invert();
   model.traverse(mesh => {
     if (!mesh.isMesh || !mesh.geometry?.attributes?.position) return;
