@@ -21,6 +21,7 @@ jobs:
           node --check src/main.js
           node --check src/world.js
           node --check src/sculpture.js
+          node --check src/fractureGeometry.js
           node --check src/environment.js
           node --check src/stoneMaterials.js
           node --check src/portalFx.js
