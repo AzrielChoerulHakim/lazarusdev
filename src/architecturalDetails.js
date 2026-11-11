@@ -20,7 +20,7 @@ function fluteGeometry(radius, height, flutes = 16) {
   for (let i = 0; i < position.count; i++) {
     const x = position.getX(i), y = position.getY(i), z = position.getZ(i);
     const theta = Math.atan2(z, x);
-    const lip = Math.pow(Math.sin(Math.PI * (y / height + .5)), .55);
+    const lip = Math.pow(Math.max(0, Math.sin(Math.PI * Math.min(1, Math.max(0, y / height + .5)))), .55);
     const groove = (Math.cos(theta * flutes) + 1) * .5;
     const shrink = 1 - .065 * groove * lip;
     position.setXYZ(i, x * shrink, y, z * shrink);
