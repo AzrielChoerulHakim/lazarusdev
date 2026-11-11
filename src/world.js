@@ -4,6 +4,7 @@ import { enhanceEnvironment } from './environment.js';
 import { attachPortalVeil } from './portalFx.js';
 import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { installPhotographicSky } from './photographicSky.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -339,7 +340,7 @@ export function createWorld(canvas) {
   renderer.setClearColor(THREE_BG);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.28;
+  renderer.toneMappingExposure = 1.06;
   renderer.localClippingEnabled = true;
   const gl = renderer.getContext();
   const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
@@ -359,19 +360,19 @@ export function createWorld(canvas) {
   scene.environment = reflectedLight;
   scene.environmentIntensity = .56;
   const camera = new THREE.PerspectiveCamera(43, 1, .1, 130);
-  const hemisphere = new THREE.HemisphereLight(0xb7d5c8, 0x33261e, 2.0);
+  const hemisphere = new THREE.HemisphereLight(0xc6d8da, 0x3b302b, 1.25);
   scene.add(hemisphere);
-  const key = new THREE.DirectionalLight(0xffe0b3, 3.1);
+  const key = new THREE.DirectionalLight(0xffead1, 3.8);
   key.position.set(5.2, 8.2, 7.4);
   key.castShadow = true;
   key.shadow.mapSize.set(1024, 1024);
   Object.assign(key.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: .5, far: 43 });
   key.shadow.bias = -.001;
   scene.add(key);
-  const rim = new THREE.PointLight(0xde654a, 45, 18, 1.6);
+  const rim = new THREE.PointLight(0xc9684d, 14, 18, 1.7);
   rim.position.set(2.5, 2.3, -2.3);
   scene.add(rim);
-  const gateLight = new THREE.PointLight(0x8caead, 45, 12, 1.5);
+  const gateLight = new THREE.PointLight(0x9cbfc0, 17, 12, 1.5);
   gateLight.position.set(-3.05, -.6, -7.25);
   scene.add(gateLight);
 
@@ -392,6 +393,16 @@ export function createWorld(canvas) {
   scene.add(islandA, islandB, islandC);
   const { moon, dust, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
+  let photographicSky = null;
+  document.documentElement.dataset.photoSky = 'loading';
+  installPhotographicSky({ scene, onLoaded(ok) {
+    if (!isDisposed) {
+      atmosphere.usePhotographicSky(ok);
+      document.documentElement.dataset.photoSky = ok ? 'photographic' : 'procedural';
+    }
+  } }).then(resource => {
+    if (isDisposed) resource?.dispose(); else photographicSky = resource;
+  });
   const ribbonA = ribbon(.45, 7.5, .8, -.38, .49, 0x943528);
   const ribbonB = ribbon(-.85, 8.2, -2.35, -3.15, .38, 0x78281f);
   scene.add(ribbonA.mesh, ribbonB.mesh);
@@ -516,6 +527,7 @@ export function createWorld(canvas) {
       sandstone?.dispose();
       portalVeil?.dispose();
       atmosphere.dispose();
+      photographicSky?.dispose();
       reflectedLight.dispose();
       proceduralColor.dispose();
       proceduralNormal.dispose();
