@@ -29,7 +29,7 @@ try {
     await page.waitForTimeout(item.width > 800 ? 4800 : 2200);
     if(errors.length)throw Error(item.name+': '+errors.join('; '));
     await page.screenshot({path:`${dir}/${item.name}.jpg`,type:'jpeg',quality:72,animations:'disabled'});
-    const status=await page.evaluate(()=>({renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial}));
+    const status=await page.evaluate(()=>({renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial,projection:window.__lazarusDebug?.(),scrollY:scrollY}));
     console.log(item.name+' captured with '+JSON.stringify(status));
     await page.close();
   }
