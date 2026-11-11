@@ -502,7 +502,13 @@ export function createWorld(canvas) {
   const render = now => {
     raf = requestAnimationFrame(render);
     if (pausedByTab) return;
-    const dt = Math.min((now - last) / 1000, .05); last = now;
+    // Chrome/SwiftShader can report an RAF timestamp older than a recent
+    // performance.now() sample (especially after a tab or screenshot pause).
+    // A negative delta makes the exponential damping alpha negative, causing
+    // the camera to exponentially shoot millions of world units away.
+    const frameNow = performance.now();
+    const dt = Math.max(0, Math.min((frameNow - last) / 1000, .05));
+    last = frameNow;
     if (motion) elapsed += dt;
     // Evaluate sustained frame time only while visible and moving. Long tab
     // stalls and reduced-motion mode are excluded from quality decisions.
@@ -538,6 +544,10 @@ export function createWorld(canvas) {
       current.look.y += heroFocus * .23;
     }
     if (motion) { current.p.x += pointer.x * .13; current.p.y += pointer.y * .10; }
+    if (!Number.isFinite(camera.position.lengthSq()) || camera.position.distanceTo(current.p) > 90) {
+      camera.position.copy(current.p);
+      lookSmooth.copy(current.look);
+    }
     camera.position.lerp(current.p, 1 - Math.pow(.0006, dt));
     lookSmooth.lerp(current.look, 1 - Math.pow(.0004, dt));
     camera.lookAt(lookSmooth);
