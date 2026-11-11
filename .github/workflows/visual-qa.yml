@@ -13,6 +13,9 @@ on:
       - src/environment.js
       - src/stoneMaterials.js
       - src/portalFx.js
+      - src/lunarSurface.js
+      - src/architecturalDetails.js
+      - src/cloth.js
   workflow_dispatch:
 permissions:
   contents: write
