@@ -116,7 +116,9 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
     return null;
   }
   const { x0, z0, radii } = outline;
-  const layers = 7;
+  // Preserve the impossible open-air fissure: only model the visible shell
+  // of exposed marble, not a filled disc that seals the entire face.
+  const layers = 5;
   const positions = [], colors = [], uvs = [], indices = [];
   const world = new THREE.Vector3();
   anchor.updateWorldMatrix(true, false);
@@ -125,7 +127,7 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
 
   for (let layer = 0; layer <= layers; layer++) {
     const t = layer / layers;
-    const radiusFraction = 1 - t * .97;
+    const radiusFraction = 1 - t * .19;
     for (let j = 0; j < bins; j++) {
       const a = j / bins * Math.PI * 2;
       const rugged = Math.sin(a * 17.3 + phi) * .020 + Math.sin(a * 39.7 - phi) * .007;
@@ -138,11 +140,11 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
         + Math.sin(x * 37.7 - z * 27.3) * .009;
       const ridges = (.06 * Math.sin(t * 16.0 + a * 19.0)
         + .03 * Math.cos(t * 29.0 - a * 37.0)) * Math.sin(t * Math.PI);
-      const depth = direction * (.015 + t * .09 + ridges + micro * (1 - t));
+      const depth = direction * (.008 + t * .075 + ridges * .55 + micro * (1 - t));
       positions.push(x, cutY + crack + depth, z);
       const grain = Math.sin(x * 17.1 + z * 12.5 + t * 7.3) * .06;
       // Exposed stone core is more ochre/porous than the polished exterior.
-      const shade = Math.max(.46, Math.min(.96, .83 - t * .18 + grain));
+      const shade = Math.max(.30, Math.min(.77, .64 - t * .23 + grain));
       colors.push(shade, shade * .91, shade * .78);
       uvs.push(x * .4 + .5, z * .4 + .5);
       if (layer < layers) {
@@ -162,7 +164,7 @@ export function makeScannedFractureCap(model, cutY, direction, anchor) {
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   const material = new THREE.MeshStandardMaterial({
-    color: 0xe4d3ba, vertexColors: true, side: THREE.DoubleSide,
+    color: 0xc8b69e, vertexColors: true, side: THREE.DoubleSide,
     roughness: .99, metalness: 0, flatShading: true,
     polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
   });
