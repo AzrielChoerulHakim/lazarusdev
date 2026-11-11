@@ -7,6 +7,33 @@ const FILES = {
 };
 const loader = new THREE.TextureLoader();
 
+// Convert the authentic sandstone photograph to a softly neutral limestone
+// albedo, while preserving all its microscopic mineral grain. The raw quarry
+// photograph has strong ochre streaks which looked like wood in long pillars.
+// The real photographed normal/roughness maps are retained, not replaced.
+function limestoneAlbedo(source) {
+  const image=source.image;
+  const canvas=document.createElement('canvas');
+  canvas.width=image.naturalWidth||image.width;
+  canvas.height=image.naturalHeight||image.height;
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  ctx.drawImage(image,0,0,canvas.width,canvas.height);
+  const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
+  for(let i=0;i<pixels.data.length;i+=4){
+    const l=(.2126*pixels.data[i]+.7152*pixels.data[i+1]+.0722*pixels.data[i+2])/255;
+    const mineral=Math.max(.51,Math.min(.96,.80+(l-.50)*.52));
+    // Cool-cream travertine; key lighting supplies natural warm highlights.
+    const value=mineral*255;
+    pixels.data[i]=value;
+    pixels.data[i+1]=value*.982;
+    pixels.data[i+2]=value*.947;
+  }
+  ctx.putImageData(pixels,0,0);
+  const texture=new THREE.CanvasTexture(canvas);
+  texture.colorSpace=THREE.SRGBColorSpace;
+  return texture;
+}
+
 // Replace lightweight procedural stone with licensed physical maps after the
 // first render. This maintains a usable experience on slow connections.
 export async function loadSandstoneMaterials(materials, onStatus = () => {}) {
@@ -17,9 +44,10 @@ export async function loadSandstoneMaterials(materials, onStatus = () => {}) {
       loader.loadAsync(FILES.normal),
       loader.loadAsync(FILES.roughness),
     ]);
-    maps = { diffuse, normal, roughness };
-    diffuse.colorSpace = THREE.SRGBColorSpace;
-    for (const texture of [diffuse,normal,roughness]) {
+    const neutralDiffuse=limestoneAlbedo(diffuse);
+    diffuse.dispose();
+    maps = { diffuse:neutralDiffuse, normal, roughness };
+    for (const texture of [neutralDiffuse,normal,roughness]) {
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
       texture.anisotropy = 4;
@@ -27,15 +55,15 @@ export async function loadSandstoneMaterials(materials, onStatus = () => {}) {
       texture.needsUpdate = true;
     }
     materials.forEach((material, index) => {
-      material.map = diffuse;
+      material.map = neutralDiffuse;
       material.normalMap = normal;
-      material.normalScale.set(.44, .44);
+      material.normalScale.set(.52, .52);
       material.roughnessMap = roughness;
-      material.roughness = .91;
+      material.roughness = .94;
       material.metalness = 0;
-      // Chalky limestone / aged travertine. The earlier ochre palette made
-      // the mineral grain look like polished wood across the long piers.
-      const tints = [0xded7c8, 0xbeb5a7, 0x888173];
+      // Most blocks are from the same neutral limestone bed, with only
+      // occasional weathered darker courses.
+      const tints = [0xeee9dd, 0xd4cbbe, 0xa49c8d];
       material.color.setHex(tints[index] || tints[0]);
       material.needsUpdate = true;
     });
