@@ -14,6 +14,9 @@ const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 const mix = (a, b, t) => a + (b - a) * t;
 const smooth = (a, b, t) => { const p = clamp((t - a) / (b - a)); return p * p * (3 - 2 * p); };
+// Seeded noise is still needed for the sandstone's procedural fallback maps.
+// It is unrelated to the removed low-poly statue.
+const rand = (() => { let seed = 37021; return () => { seed = (Math.imul(1664525,seed) + 1013904223) >>> 0; return seed / 4294967296; }; })();
 
 function marbleTexture() {
   const canvas = document.createElement('canvas');
