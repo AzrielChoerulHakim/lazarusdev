@@ -85,7 +85,9 @@ try {
       const samples=[];
       for(const part of [0,.06,.15,.28,.42,.64,.83]){
         scrollTo({top:y0*part,behavior:'instant'});
-        await new Promise(resolve=>requestAnimationFrame(resolve));
+        // Scroll events and render callbacks can arrive on adjacent frames
+        // under headless Chrome; inspect after both have had a chance to run.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
         const target=window.__lazarusScrollDebug().progress;
         const rig=window.__lazarusDebug();
         samples.push({part,target,worldTarget:rig.targetProgress});
