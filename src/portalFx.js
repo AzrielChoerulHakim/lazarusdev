@@ -41,40 +41,30 @@ export function attachPortalVeil(portal, options = {}) {
         float flow=noise(st*5.+vec2(uTime*.018,-uTime*.025));
         float shimmer=sin(st.y*20.-uTime*.65+sin(st.x*11.)*2.)*.5+.5;
         float core=1.-smoothstep(.02,.85,abs(st.x-.5));
-        vec3 sea=vec3(.11,.29,.28), sand=vec3(.58,.50,.36);
-        vec3 color=mix(sea,sand,.20+flow*.16+shimmer*.13);
-        float threshold=smoothstep(.15,.42,uTravel)*(1.-smoothstep(.57,.83,uTravel));
-        float alpha=(.07+.15*core+.13*flow+.06*shimmer) + threshold*.19;
-        alpha*=smoothstep(0.,.12,st.y);
+        // Thin, optically quiet mineral haze instead of a solid cyan
+        // sci-fi screen. The landscape remains visible through the arch.
+        vec3 cool=vec3(.19,.23,.22), limestone=vec3(.49,.45,.38);
+        vec3 color=mix(cool,limestone,.24+flow*.12+shimmer*.06);
+        float crossing=smoothstep(.45,.69,uTravel)*(1.-smoothstep(.77,.87,uTravel));
+        float alpha=(.018+.052*core+.042*flow+.015*shimmer) + crossing*.08;
+        alpha*=smoothstep(0.,.17,st.y);
         gl_FragColor=vec4(color,alpha);
       }
     `,
   });
   membrane.material = material;
   membrane.renderOrder = 1;
-  const trim = new THREE.Group();
-  const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xbacbb6, transparent: true, opacity: .14, depthWrite: false });
-  const top = new THREE.Mesh(new THREE.TorusGeometry(1.09, .015, 4, 46, Math.PI), lineMaterial);
-  top.position.z = -.03;
-  trim.add(top);
-  for (const x of [-1.09,1.09]) {
-    const leg = new THREE.Mesh(new THREE.BoxGeometry(.015,2.5,.015),lineMaterial);
-    leg.position.set(x,-1.25,-.03);
-    trim.add(leg);
-  }
-  portal.add(trim);
   let time=0;
   return {
     update(dt, progress, animate) {
       if(animate)time+=dt;
       material.uniforms.uTime.value=time;
       material.uniforms.uTravel.value=progress;
-      lineMaterial.opacity=.10+.11*Math.sin(Math.PI*Math.min(1,progress));
+
     },
     dispose() {
       material.dispose();
-      lineMaterial.dispose();
-      trim.traverse(object=>object.geometry?.dispose());
+
     },
   };
 }
