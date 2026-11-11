@@ -19,7 +19,7 @@ export async function installPhotographicSky({ scene, onLoaded = () => {} }) {
     photo.colorSpace = THREE.SRGBColorSpace;
     hdr.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = photo;
-    scene.backgroundIntensity = .90;
+    scene.backgroundIntensity = .73;
     scene.backgroundRotation.set(0, 1.32, 0);
     scene.environment = hdr;
     scene.environmentRotation.set(0, 1.32, 0);
