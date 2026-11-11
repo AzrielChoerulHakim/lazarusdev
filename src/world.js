@@ -564,6 +564,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
         statue: coords(scannedOracle?.object),
         statueMode: document.documentElement.dataset.statueMode,
         statueMeshCount: scannedOracle?.meshCount ?? 0,
+        statueFragments: scannedOracle?.fragmentCount ?? 0,
         statueDuplicatesRemoved: scannedOracle?.duplicatesRemoved ?? 0,
         statueMeshes: scannedOracle?.meshSummary ?? [],
         scanRootCount: scene.children.filter(o=>o.name==='The Oracle — single photographic marble scan').length,
