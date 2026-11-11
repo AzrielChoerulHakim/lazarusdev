@@ -122,7 +122,12 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .11 * anchor.scale.y));
   const lowerPlane = new THREE.Plane(axis.clone().negate(), cutY - .11 * anchor.scale.y);
 
-  function attachClippedMaterial(part, plane) {
+  // Shaded, irregular world-space fracture rather than the dead-straight
+  // horizontal cut of two stock clipping planes. A permissive clipping plane
+  // still provides GPU/shadow culling; the actual crack edge is resolved in
+  // the surface shader, so it inherits the scan's photographic PBR detail.
+  const fractureUniforms = [];
+  function attachClippedMaterial(part, plane, isUpper) {
     part.traverse(object => {
       if (!object.isMesh) return;
       object.castShadow = true;
@@ -136,6 +141,22 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
         const m = material.clone();
         m.clippingPlanes = [plane];
         m.clipShadows = true;
+        const cutUniform = { value: cutY };
+        fractureUniforms.push({ cutUniform, isUpper });
+        m.onBeforeCompile = shader => {
+          shader.uniforms.uRuptureCut = cutUniform;
+          shader.uniforms.uRuptureDirection = { value: isUpper ? 1.0 : -1.0 };
+          shader.vertexShader = shader.vertexShader
+            .replace('#include <common>', '#include <common>\n varying vec3 vRuptureWorld;')
+            .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\n vRuptureWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+          shader.fragmentShader = shader.fragmentShader
+            .replace('#include <common>', '#include <common>\n varying vec3 vRuptureWorld;\n uniform float uRuptureCut;\n uniform float uRuptureDirection;')
+            .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+              float fracture = 0.065 * sin(vRuptureWorld.x * 4.05 + sin(vRuptureWorld.z * 3.1) * .7)
+                  + 0.027 * sin(vRuptureWorld.x * 10.3 - vRuptureWorld.z * 7.2)
+                  + 0.010 * sin(vRuptureWorld.x * 23.1 + vRuptureWorld.z * 19.3);
+              if (uRuptureDirection * (vRuptureWorld.y - uRuptureCut - fracture) < 0.0) discard;`);
+        };
         m.side = THREE.DoubleSide;
         if (m.roughness != null) m.roughness = Math.max(.83, m.roughness);
         if (m.color) m.color.multiply(new THREE.Color(0xe8dbc7));
@@ -148,8 +169,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       object.material = Array.isArray(object.material) ? clipped : clipped[0];
     });
   }
-  attachClippedMaterial(upper, upperPlane);
-  attachClippedMaterial(lower, lowerPlane);
+  attachClippedMaterial(upper, upperPlane, true);
+  attachClippedMaterial(lower, lowerPlane, false);
 
   const chips = new THREE.Group();
   const chipStone = new THREE.MeshStandardMaterial({ color: 0xb9a98f, roughness: 1, metalness: 0, flatShading: true });
@@ -182,8 +203,14 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       lower.position.set(.018 + reveal * .045, -.04 - reveal * .045, .02);
       upper.rotation.z = reveal * -.016;
       lower.rotation.z = reveal * .023;
-      upperPlane.constant = -(cutY + (.11 + upper.position.y) * anchor.scale.y);
-      lowerPlane.constant = cutY + (-.11 + lower.position.y) * anchor.scale.y;
+      const topCut = cutY + (.11 + upper.position.y) * anchor.scale.y;
+      const bottomCut = cutY + (-.11 + lower.position.y) * anchor.scale.y;
+      // Permit a 14cm fringe for the irregular shader edge.
+      upperPlane.constant = -(topCut - .14);
+      lowerPlane.constant = bottomCut + .14;
+      for (const { cutUniform, isUpper } of fractureUniforms) {
+        cutUniform.value = isUpper ? topCut : bottomCut;
+      }
       chips.rotation.y = breath * .014;
       chips.position.x = reveal * .04;
     },
