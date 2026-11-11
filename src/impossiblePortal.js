@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 
 // Stage 02. A second 3D environment is seen only through the actual gate,
 // using a screen-projected live render, and then becomes the whole landscape
@@ -21,11 +22,12 @@ function makeAperture() {
 }
 
 function terrain(x,z) {
-  const dunes = Math.sin(x*.095 + z*.052)*.52
-    + Math.cos(z*.084 - x*.049)*.62
-    + Math.sin(x*.31 + Math.cos(z*.11))* .12;
-  const passage = ease(2,10,Math.abs(x));
-  return -3.16 + dunes * (.26 + passage*.65);
+  // Broad, varied wind-formed dunes; the stone road is compacted but not flat.
+  const dunes = Math.sin(x*.073 + z*.052 + Math.cos(z*.027))*.55
+    + Math.cos(z*.064 - x*.091)*.50
+    + Math.sin(x*.22 + Math.cos(z*.11))*.15;
+  const passage = ease(2.5,12,Math.abs(x));
+  return -3.16 + dunes * (.20 + passage*.63);
 }
 
 function buildDesert(scene, tracked) {
@@ -81,17 +83,36 @@ function buildDesert(scene, tracked) {
   const aged=new THREE.MeshStandardMaterial({color:0xa17f66,roughness:1});
   tracked.push(pale,aged);
   const block=(w,h,d,x,y,z,mat,rotation=0)=>{
-    const geo=new THREE.BoxGeometry(w,h,d);
+    // Minute edge wear catches grazing sun without synthetic glossy bevels.
+    const bevel=Math.min(.021,w*.042,h*.13,d*.038);
+    const geo=new RoundedBoxGeometry(w,h,d,3,bevel);
+    const pos=geo.attributes.position, normal=geo.attributes.normal;
+    const salt=x*1.7+z*.53+y*.82;
+    for(let vertex=0;vertex<pos.count;vertex++){
+      const px=pos.getX(vertex),py=pos.getY(vertex),pz=pos.getZ(vertex);
+      const rough=Math.sin(px*21.3+py*7.4+pz*19.1+salt)*.49
+        +Math.sin(pz*15.8-px*12.3+py*9.4-salt)*.36;
+      const erosion=rough*.011;
+      pos.setXYZ(vertex,px+normal.getX(vertex)*erosion,
+        py+normal.getY(vertex)*erosion,pz+normal.getZ(vertex)*erosion);
+    }
+    pos.needsUpdate=true;
+    geo.computeVertexNormals();
     const mesh=new THREE.Mesh(geo,mat);
     mesh.position.set(x,y,z);mesh.rotation.y=rotation;
     mesh.castShadow=true;mesh.receiveShadow=true;
     scene.add(mesh);tracked.push(geo);return mesh;
   };
-  // Sand-buried limestone stairs end somewhere beyond the horizon.
+  // A sand-buried causeway; every stone meets the actual terrain.
+  // The old rising stairs floated increasingly far above the ground.
   for(let i=0;i<18;i++) {
-    const z=-5-i*1.5;
-    block(3.6+i*.11,.14,1.65,0,terrain(0,z)+.12+i*.065,z,
-      i%5===0?aged:pale);
+    const z=-5-i*1.52;
+    const x=Math.sin(i*1.41)*.055;
+    const w=3.34+i*.075+(i%4===0?.10:0);
+    const h=.16-(i%4)*.013;
+    const burial=i>10?Math.min(.085,(i-10)*.009):.014;
+    block(w,h,1.63,x,terrain(x,z)+h*.5-burial,z,
+      i%6===0?aged:pale,Math.sin(i*.84)*.005);
   }
   for(let i=0;i<8;i++) {
     const z=-11-i*5.5;
@@ -114,9 +135,14 @@ function buildDesert(scene, tracked) {
       'void main(){',
       'vec3 d=normalize(vDir);',
       'vec3 c=mix(vec3(.91,.56,.37),vec3(.40,.62,.69),smoothstep(-.22,.84,d.y));',
-      'float h=pow(max(0.,dot(d,normalize(vec3(.25,.26,-1.)))),18.);',
-      'float sun=pow(max(0.,dot(d,normalize(vec3(.25,.26,-1.)))),950.);',
-      'c+=vec3(.94,.48,.18)*h*.72+vec3(1.,.88,.59)*sun*1.6;',
+      'vec3 solar=normalize(vec3(-.39,.68,.63));',
+      'float facing=max(0.,dot(d,solar));',
+      'float h=pow(facing,19.);',
+      'float sun=pow(facing,1400.);',
+      'float veil=sin(d.x*8.3+d.z*3.4)*sin(d.z*10.1-d.y*4.8);',
+      'float cloud=smoothstep(.38,.85,veil*.12+.48)*smoothstep(.02,.72,d.y);',
+      'c=mix(c,c*vec3(.91,.92,.91),cloud*.17);',
+      'c+=vec3(.84,.50,.26)*h*.52+vec3(1.,.89,.68)*sun*1.42;',
       'gl_FragColor=vec4(c,1.);',
       '#include <tonemapping_fragment>',
       '#include <colorspace_fragment>',
@@ -222,7 +248,9 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     secondCamera.updateProjectionMatrix();
     sky.position.copy(secondCamera.position);
 
-    blend=ease(.695,.805,progress)*(1-ease(.90,.995,progress));
+    // Stay in the new reality for most of Selected Worlds; fade only
+    // when the visitor continues toward the studio/practice sections.
+    blend=ease(.695,.805,progress)*(1-ease(.95,1.0,progress));
     coverMat.opacity=blend;
     windowMesh.visible=progress<.80;
     light.intensity=1.35*(1-ease(.75,.85,progress));
