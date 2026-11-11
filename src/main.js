@@ -222,7 +222,11 @@ portalButton.addEventListener('click', () => {
 const canvas = $('#world');
 try {
   const { createWorld } = await import('./world.js');
-  world = createWorld(canvas);
+  // Browser back/forward and a deep link may start below the hero; construct
+  // the real camera there instead of rendering at t=0 then leaping forward.
+  world = createWorld(canvas, {
+    initialProgress: prefersReduced.matches ? .04 : worldProgressForScroll(Math.max(0, scrollY)),
+  });
   if (!world) canvas.style.display = 'none';
   else {
     window.__lazarusDebug = () => world?.debug();
