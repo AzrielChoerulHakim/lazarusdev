@@ -142,7 +142,9 @@ function portal(stone, x, y, z, size = 1, glow = false) {
     // Actual bonded courses: each face is a separate weathered piece of
     // masonry with tiny shadow-producing joints. This replaces the previous
     // perfect rectangular pier with a cylinder drawn on its surface.
-    const core = stoneMesh(weatheredBlock(.49,2.66,.81,31+side),stone[2]);
+    // Mortar backing is recessed dark limestone, not a near-black central
+    // pole showing through all seven courses.
+    const core = stoneMesh(weatheredBlock(.49,2.66,.81,31+side),stone[1]);
     core.position.set(px,-1.345,-.025);
     group.add(core);
     for(let row=0;row<courseCount;row++){
@@ -308,8 +310,10 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
   const rim = new THREE.PointLight(0xc77a57, 5.2, 16, 2);
   rim.position.set(5.7, 3.65, -3.85);
   scene.add(rim);
-  const gateLight = new THREE.PointLight(0x9bbdb8, 6.3, 9.5, 2);
-  gateLight.position.set(-3.05, -.30, -7.15);
+  // A restrained bounce from the sky inside the stone passage. The old
+  // bright cyan source made limestone look translucent and game-like.
+  const gateLight = new THREE.PointLight(0xb4b7aa, 1.9, 9.5, 2);
+  gateLight.position.set(-3.05, -.30, -8.05);
   scene.add(gateLight);
 
   const stone = makeStoneMaterials(marbleTexture());
