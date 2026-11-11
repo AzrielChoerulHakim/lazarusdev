@@ -3,6 +3,9 @@ import { mkdir } from 'node:fs/promises';
 
 const url = 'http://127.0.0.1:4173';
 const browser = await chromium.launch({
+  // GitHub-hosted Ubuntu already ships Google Chrome. Using it avoids a
+  // second 300 MB Playwright-browser download that can stall visual CI.
+  ...(process.env.CI ? {channel:'chrome'} : {}),
   headless: true,
   args: ['--no-sandbox', '--enable-webgl', '--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
 });
@@ -27,11 +30,22 @@ try {
     } catch (err) {
       throw new Error(`${name}: timed out waiting for Three.js: ${warnings.join(' | ')} | ${errors.join(' | ')} | ${err.message}`);
     }
-    await page.waitForFunction(
-      () => ['scanned', 'unavailable'].includes(document.documentElement.dataset.sceneAsset),
-      null,
-      { timeout: 30000 }
-    );
+    try {
+      await page.waitForFunction(
+        () => ['scanned', 'unavailable'].includes(document.documentElement.dataset.sceneAsset),
+        null,
+        { timeout: 90000 }
+      );
+    } catch (err) {
+      const state = await page.evaluate(() => ({
+        sceneAsset: document.documentElement.dataset.sceneAsset,
+        webgl: document.documentElement.dataset.webgl,
+        material: document.documentElement.dataset.sceneMaterial,
+        statueMode: document.documentElement.dataset.statueMode,
+        version: navigator.userAgent,
+      }));
+      throw new Error(`${name}: marble scan load timeout: ${JSON.stringify(state)}; errors: ${errors.join(' | ')}; warnings: ${warnings.join(' | ')}; ${err.message}`);
+    }
     const state = await page.evaluate(() => {
       const canvas = document.querySelector('#world');
       const gl = canvas.getContext('webgl2');
@@ -71,7 +85,9 @@ try {
       const samples=[];
       for(const part of [0,.06,.15,.28,.42,.64,.83]){
         scrollTo({top:y0*part,behavior:'instant'});
-        await new Promise(resolve=>requestAnimationFrame(resolve));
+        // Scroll events and render callbacks can arrive on adjacent frames
+        // under headless Chrome; inspect after both have had a chance to run.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
         const target=window.__lazarusScrollDebug().progress;
         const rig=window.__lazarusDebug();
         samples.push({part,target,worldTarget:rig.targetProgress});

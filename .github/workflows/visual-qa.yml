@@ -34,7 +34,7 @@ jobs:
       - name: Install browser
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1
-          npx playwright install --with-deps chromium
+          google-chrome --version
       - name: Render real WebGL scene
         run: |
           npm run dev -- --port 4173 --strictPort >/tmp/vite-visual.log 2>&1 &
