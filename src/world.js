@@ -556,6 +556,28 @@ export function createWorld(canvas) {
   };
   render(performance.now());
   return {
+    debug() {
+      camera.updateMatrixWorld(true);
+      const coords = obj => {
+        const p = obj.getWorldPosition(new THREE.Vector3());
+        const projected = p.clone().project(camera);
+        return {
+          position: p.toArray().map(v => +v.toFixed(2)),
+          ndc: projected.toArray().map(v => +v.toFixed(2)),
+          visible: Math.abs(projected.x) < 1.3 && Math.abs(projected.y) < 1.3 && projected.z < 1,
+        };
+      };
+      return {
+        progress: +progress.toFixed(3),
+        camera: camera.position.toArray().map(v => +v.toFixed(2)),
+        lookingAt: lookSmooth.toArray().map(v => +v.toFixed(2)),
+        statue: coords(scannedOracle?.object || statue),
+        portal: coords(threshold),
+        renderTriangles: renderer.info.render.triangles,
+        canvas: [canvas.width, canvas.height],
+        sky: document.documentElement.dataset.photoSky,
+      };
+    },
     setProgress(value) { progress = clamp(value); },
     setPointer(x, y) { pointer = { x, y }; },
     setMotion(value) { motion = !reducedMotion && value; },
