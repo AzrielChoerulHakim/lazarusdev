@@ -126,7 +126,11 @@ try {
   const { createWorld } = await import('./world.js');
   world = createWorld(canvas);
   if (!world) canvas.style.display = 'none';
-  else { setMotion(motionEnabled); updateScroll(); }
+  else {
+    window.__lazarusDebug = () => world?.debug();
+    setMotion(motionEnabled);
+    updateScroll();
+  }
 } catch (error) {
   console.warn('3D enhancement unavailable; retaining the editorial experience.', error);
   canvas.style.display = 'none';
