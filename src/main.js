@@ -15,39 +15,70 @@ let world = null;
 let motionEnabled = !prefersReduced.matches;
 let tickQueued = false;
 
+// Scroll is the single source of truth. The previous three smoothstep curves
+// stopped the camera's velocity at EVERY section boundary; compounded with a
+// second camera lerp and global CSS smooth scrolling, it felt like the page
+// grabbed the wheel and then jolted forward.
+let bounds = null;
+let previousWidth = innerWidth;
+let previousHeight = innerHeight;
+function measureChapters() {
+  bounds = {
+    passage: chapters[1].offsetTop,
+    worlds: chapters[2].offsetTop,
+    practice: chapters[3].offsetTop,
+    positions: chapters.map(el => el.offsetTop),
+    pageHeight: Math.max(1,document.documentElement.scrollHeight),
+    height: Math.max(1,innerHeight),
+  };
+}
+measureChapters();
+const clamp01 = x => Math.max(0, Math.min(1, x));
+function worldProgressForScroll(y) {
+  if (!bounds) measureChapters();
+  // Linear, continuous travel; the Hermite camera spline provides its own
+  // smooth change of direction, without repeated stop-start easing.
+  if (y <= bounds.passage) return .46 * clamp01(y / Math.max(1,bounds.passage));
+  if (y <= bounds.worlds) return .46 + .36 * clamp01((y-bounds.passage)/Math.max(1,bounds.worlds-bounds.passage));
+  return .82 + .18 * clamp01((y-bounds.worlds)/Math.max(1,bounds.practice-bounds.worlds));
+}
 function updateScroll() {
   tickQueued = false;
-  const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-  const progress = Math.min(1, Math.max(0, scrollY / max));
-  progressEl.style.width = `${progress * 100}%`;
-  const passageTop = chapters[1].offsetTop;
-  const galleryTop = chapters[2].offsetTop;
-  const practiceTop = chapters[3].offsetTop;
-  const clamp01 = x => Math.max(0, Math.min(1, x));
-  const smoothstep = x => { const t = clamp01(x); return t * t * (3 - 2 * t); };
-  // The camera is synchronized to the narrative's actual section boundaries.
-  // Hero retains the sculpt, passage spends time inside the stone gateway,
-  // and the gallery inherits a view into the world beyond it.
-  let worldProgress;
-  if (scrollY < passageTop) {
-    worldProgress = .46 * smoothstep(scrollY / Math.max(passageTop, 1));
-  } else if (scrollY < galleryTop) {
-    worldProgress = .46 + .36 * smoothstep((scrollY - passageTop) / Math.max(galleryTop - passageTop, 1));
-  } else {
-    worldProgress = .82 + .18 * smoothstep((scrollY - galleryTop) / Math.max(practiceTop - galleryTop, 1));
+  const y = Math.max(0,scrollY);
+  const progress=clamp01(y/Math.max(1,bounds.pageHeight-bounds.height));
+  progressEl.style.transform = `scaleX(${progress})`;
+  world?.setProgress(prefersReduced.matches ? .04 : worldProgressForScroll(y));
+  let current=0;
+  for(let i=0;i<bounds.positions.length;i++) {
+    if(y+bounds.height*.55>=bounds.positions[i])current=i;
   }
-  if (world) world.setProgress(prefersReduced.matches ? .04 : worldProgress);
-  let current = 0;
-  for (let i = 0; i < chapters.length; i++) if (scrollY + innerHeight * .55 >= chapters[i].offsetTop) current = i;
-  const labels = ['THE ARRIVAL', 'THE THRESHOLD', 'THE WORLDS', 'THE PRACTICE', 'THE MANIFESTO', 'BEGIN AGAIN'];
-  sceneLabel.textContent = `${String(current).padStart(2, '0')} / 05`;
-  sceneTitle.textContent = labels[current];
-  const showDark = current >= 3 && current <= 3;
-  document.querySelector('.scene-index').style.color = showDark ? '#2c3f3b' : '';
+  const labels=['THE ARRIVAL','THE THRESHOLD','THE WORLDS','THE PRACTICE','THE MANIFESTO','BEGIN AGAIN'];
+  sceneLabel.textContent=`${String(current).padStart(2,'0')} / 05`;
+  sceneTitle.textContent=labels[current];
+  document.querySelector('.scene-index').style.color=current===3?'#2c3f3b':'';
 }
-function onScroll() { if (!tickQueued) { tickQueued = true; requestAnimationFrame(updateScroll); } }
-addEventListener('scroll', onScroll, { passive: true });
-addEventListener('resize', onScroll, { passive: true });
+function onScroll() {
+  if (!tickQueued) {
+    tickQueued=true;
+    requestAnimationFrame(updateScroll);
+  }
+}
+function onLayoutChange() {
+  // Mobile browser bars change innerHeight while the visitor scrolls. Treat
+  // those small height-only "resizes" as browser chrome, not as a scene edit.
+  // This prevents the scroll->camera mapping from oscillating mid-gesture.
+  const changeWidth=Math.abs(innerWidth-previousWidth);
+  const changeHeight=Math.abs(innerHeight-previousHeight);
+  if(changeWidth<3 && innerWidth<700 && changeHeight<155)return;
+  previousWidth=innerWidth;previousHeight=innerHeight;
+  measureChapters();onScroll();
+}
+addEventListener('scroll',onScroll,{passive:true});
+addEventListener('resize',onLayoutChange,{passive:true});
+addEventListener('orientationchange',()=>{measureChapters();onScroll()},{passive:true});
+addEventListener('load',()=>{measureChapters();onScroll()},{once:true});
+document.fonts?.ready?.then(()=>{measureChapters();onScroll()});
+window.__lazarusScrollDebug=()=>({y:scrollY,progress:worldProgressForScroll(Math.max(0,scrollY)),bounds});
 updateScroll();
 
 const observer = new IntersectionObserver(entries => {
