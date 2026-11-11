@@ -9,6 +9,7 @@ import { enrichPortal } from './architecturalDetails.js';
 import { createSilkRibbon } from './cloth.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
+import { createAtmosphericMotes } from './atmosphericParticles.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -274,12 +275,6 @@ function addAtmosphere(scene, stone) {
   const moon = new THREE.Mesh(new THREE.SphereGeometry(1.72, 48, 36), moonMat);
   moon.position.set(.6, 4.35, -30.0);
   scene.add(moon);
-  const dustG = new THREE.BufferGeometry();
-  const pts = new Float32Array(350 * 3);
-  for (let i = 0; i < 350; i++) pts.set([(rand() - .5) * 44, (rand() - .4) * 20, -rand() * 35 - 1], i * 3);
-  dustG.setAttribute('position', new THREE.BufferAttribute(pts, 3));
-  const dust = new THREE.Points(dustG, new THREE.PointsMaterial({ color: 0xc6b89b, size: .023, transparent: true, opacity: .64, sizeAttenuation: true, depthWrite: false }));
-  scene.add(dust);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(260, 260, 1, 1), new THREE.MeshStandardMaterial({ color: 0x1a3940, roughness: .24, metalness: .43, transparent: true, opacity: .86 }));
   sea.rotation.x = -Math.PI / 2;
   sea.position.y = -3.25;
@@ -288,7 +283,7 @@ function addAtmosphere(scene, stone) {
   // Deliberately exclude scattered low-poly dodecahedrons.
   // A calm sea and a single monumental carved gateway read more believably
   // than arbitrary floating 'game rocks'.
-  return { moon, dust, sea };
+  return { moon, sea };
 }
 
 const CAMERA_KEYS = [
@@ -341,22 +336,30 @@ export function createWorld(canvas) {
   scene.background = new THREE.Color(THREE_BG);
   scene.fog = new THREE.FogExp2(0x0a1b1f, .022);
   scene.environment = reflectedLight;
-  scene.environmentIntensity = .56;
+  scene.environmentIntensity = .64;
   const camera = new THREE.PerspectiveCamera(43, 1, .1, 130);
-  const hemisphere = new THREE.HemisphereLight(0xc6d8da, 0x3b302b, 1.25);
+  // A single upper-left golden key establishes the shadows on sculpture and
+  // masonry. The cooler fill lifts occluded features without double shadows.
+  // Small practical lights belong to the portal/figure, not to the whole sky.
+  const hemisphere = new THREE.HemisphereLight(0xbcced0, 0x39312c, .96);
   scene.add(hemisphere);
-  const key = new THREE.DirectionalLight(0xffead1, 3.8);
-  key.position.set(5.2, 8.2, 7.4);
+  const key = new THREE.DirectionalLight(0xffe1bc, 3.05);
+  key.position.set(-6.2, 10.4, 7.6);
+  key.target.position.set(-.5, -.55, -5.1);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
-  Object.assign(key.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: .5, far: 43 });
-  key.shadow.bias = -.001;
-  scene.add(key);
-  const rim = new THREE.PointLight(0xc9684d, 14, 18, 1.7);
-  rim.position.set(2.5, 2.3, -2.3);
+  key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -12.5, right: 12.5, top: 12.5, bottom: -12.5, near: .5, far: 50 });
+  key.shadow.bias = -.00032;
+  key.shadow.normalBias = .027;
+  scene.add(key, key.target);
+  const fill = new THREE.DirectionalLight(0x9dbbc0, .53);
+  fill.position.set(8.5, 3.8, 5.4);
+  scene.add(fill);
+  const rim = new THREE.PointLight(0xc77a57, 5.2, 16, 2);
+  rim.position.set(5.7, 3.65, -3.85);
   scene.add(rim);
-  const gateLight = new THREE.PointLight(0x9cbfc0, 17, 12, 1.5);
-  gateLight.position.set(-3.05, -.6, -7.25);
+  const gateLight = new THREE.PointLight(0x9bbdb8, 6.3, 9.5, 2);
+  gateLight.position.set(-3.05, -.30, -7.15);
   scene.add(gateLight);
 
   const stone = makeStoneMaterials(marbleTexture());
@@ -375,8 +378,10 @@ export function createWorld(canvas) {
   const islandB = floatingIsland(stone, -2.5, .25, -23.5, 1.25);
   const islandC = floatingIsland(stone, 6.9, 1.9, -28, 1.72);
   scene.add(islandA, islandB, islandC);
-  const { moon, dust, sea } = addAtmosphere(scene, stone);
+  const { moon, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
+  const motes = createAtmosphericMotes(scene);
+  document.documentElement.dataset.atmosphericMotes = 'ready';
   let lunar = null;
   document.documentElement.dataset.lunarAsset = 'loading';
   installLunarSurface({
@@ -447,7 +452,12 @@ export function createWorld(canvas) {
     baseDpr = Math.min(window.devicePixelRatio || 1, softwareRenderer ? .85 : compact ? 1.2 : 1.55);
     const dpr = Math.max(.55, baseDpr * qualityScale);
     viewportWidth = w; viewportHeight = h;
-    renderer.shadowMap.enabled = !compact && !softwareRenderer;
+    // Preserve real depth/contact shadows on high-memory phones; less capable
+    // mobiles keep the PBR light rig but skip the additional shadow pass.
+    const mobileShadows = (navigator.deviceMemory || 0) >= 6 && (navigator.hardwareConcurrency || 0) >= 6;
+    renderer.shadowMap.enabled = !softwareRenderer && (!compact || mobileShadows);
+    key.shadow.mapSize.set(compact ? 1024 : 2048, compact ? 1024 : 2048);
+    motes.setCompact(compact);
     renderer.setPixelRatio(dpr);
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
@@ -521,7 +531,7 @@ export function createWorld(canvas) {
     portalVeil?.update(dt, progress, motion);
     if (lunar) lunar.update(dt, motion);
     else moon.rotation.y = elapsed * .009;
-    dust.rotation.y = elapsed * .003;
+    motes.update(dt, motion, renderer.getPixelRatio());
     islandA.visible = progress > .42;
     islandB.visible = progress > .57;
     islandC.visible = progress > .62;
@@ -557,6 +567,9 @@ export function createWorld(canvas) {
         renderTriangles: renderer.info.render.triangles,
         canvas: [canvas.width, canvas.height],
         sky: document.documentElement.dataset.photoSky,
+        dustMotes: motes.count,
+        keyLight: key.position.toArray().map(v => +v.toFixed(2)),
+        shadowEnabled: renderer.shadowMap.enabled,
       };
     },
     setProgress(value) { progress = clamp(value); },
@@ -572,6 +585,7 @@ export function createWorld(canvas) {
       ribbonA.dispose();
       ribbonB.dispose();
       atmosphere.dispose();
+      motes.dispose();
       lunar?.dispose();
       photographicSky?.dispose();
       reflectedLight.dispose();
