@@ -41,10 +41,14 @@ try {
         webglVersion: gl?.getParameter(gl.VERSION),
         asset: document.documentElement.dataset.sceneAsset,
         rendered: document.documentElement.dataset.webgl,
+        dust: document.documentElement.dataset.atmosphericMotes,
+        rig: window.__lazarusDebug?.(),
       };
     });
     if (state.asset !== 'scanned') throw new Error(`${name}: expected licensed scan, got ${state.asset}; warnings=${warnings.join(' | ')}; errors=${errors.join(' | ')}`);
     if (state.rendered !== 'ready') throw new Error(`${name}: WebGL did not finish drawing a frame`);
+    if (state.dust !== 'ready' || !state.rig || state.rig.dustMotes < 200) throw new Error(`${name}: physical dust system did not initialize: ${JSON.stringify(state.rig)}`);
+    if (state.rig.keyLight?.[0] >= 0) throw new Error(`${name}: upper-left physical key light is misaligned`);
     await page.waitForFunction(
       () => ['photographic','procedural'].includes(document.documentElement.dataset.sceneMaterial),
       null, {timeout:30000}
