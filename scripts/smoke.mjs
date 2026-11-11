@@ -65,7 +65,8 @@ try {
     if (state.rig.keyLight?.[0] >= 0) throw new Error(`${name}: upper-left physical key light is misaligned`);
     // Regression for the overlaid statue: the licensed asset MUST be the
     // scene's sole bust; no hidden primitive or second scan is permissible.
-    if (state.rig.statueMode !== 'single-scan'
+    if (state.rig.statueMode !== 'impossible-marble'
+       || state.rig.statueFragments !== 3
        || state.rig.scanRootCount !== 1
        || state.rig.syntheticBustCount !== 0
        || state.rig.statueMeshCount < 1
@@ -73,6 +74,13 @@ try {
        || state.rig.statueMeshes.length !== state.rig.statueMeshCount
        || !Number.isInteger(state.rig.statueDuplicatesRemoved)) {
       throw new Error(`${name}: overlapping statue geometry: ${JSON.stringify(state.rig)}`);
+    }
+    // One licensed scan is divided into EXCLUSIVE triangle bands to create
+    // the surreal levitation. Three fragments are not three superposed busts.
+    if (document.documentElement.dataset.fracture !== 'three-levitating-sections'
+      || state.rig.impossiblePortal?.otherWorldObjects < 20
+      || state.rig.impossiblePortal?.desertResolution?.[0] < 128) {
+      throw new Error(`${name}: portal/fracture stage not initialized: ${JSON.stringify(state.rig)}`);
     }
     await page.waitForFunction(
       () => ['photographic','procedural'].includes(document.documentElement.dataset.sceneMaterial),
