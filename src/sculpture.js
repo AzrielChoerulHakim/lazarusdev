@@ -120,8 +120,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   const cutY = anchor.position.y + 1.06 * anchor.scale.y;
   // Keep a 0.2 world-unit gap, centered across the eye/nose region.
   // Clipping planes are in world space and track the figure's moving halves.
-  const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .11 * anchor.scale.y));
-  const lowerPlane = new THREE.Plane(axis.clone().negate(), cutY - .11 * anchor.scale.y);
+  const upperPlane = new THREE.Plane(axis.clone(), -(cutY + .16 * anchor.scale.y));
+  const lowerPlane = new THREE.Plane(axis.clone().negate(), cutY - .16 * anchor.scale.y);
 
   // Shaded, irregular world-space fracture rather than the dead-straight
   // horizontal cut of two stock clipping planes. A permissive clipping plane
@@ -178,8 +178,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
   // follows the shape of the face/neck and carries real normal lighting.
   let capUpper = null, capLower = null;
   try {
-    capUpper = makeScannedFractureCap(model, 1.17, +1, anchor);
-    capLower = makeScannedFractureCap(lowerCopy, .95, -1, anchor);
+    capUpper = makeScannedFractureCap(model, 1.22, +1, anchor);
+    capLower = makeScannedFractureCap(lowerCopy, .90, -1, anchor);
     if (capUpper) upper.add(capUpper);
     if (capLower) lower.add(capLower);
   } catch (error) {
@@ -219,8 +219,8 @@ export async function loadScannedOracle({ scene, fallback, onStatus = () => {} }
       lower.position.set(.018 + reveal * .045, -.04 - reveal * .045, .02);
       upper.rotation.z = reveal * -.016;
       lower.rotation.z = reveal * .023;
-      const topCut = cutY + (.11 + upper.position.y) * anchor.scale.y;
-      const bottomCut = cutY + (-.11 + lower.position.y) * anchor.scale.y;
+      const topCut = cutY + (.16 + upper.position.y) * anchor.scale.y;
+      const bottomCut = cutY + (-.16 + lower.position.y) * anchor.scale.y;
       // Permit a 14cm fringe for the irregular shader edge.
       upperPlane.constant = -(topCut - .14);
       lowerPlane.constant = bottomCut + .14;
