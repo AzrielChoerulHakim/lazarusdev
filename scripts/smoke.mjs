@@ -57,6 +57,7 @@ try {
         fracture: document.documentElement.dataset.fracture,
         rendered: document.documentElement.dataset.webgl,
         dust: document.documentElement.dataset.atmosphericMotes,
+        surrealGateway: document.documentElement.dataset.surrealGateway,
         rig: window.__lazarusDebug?.(),
       };
     });
@@ -82,6 +83,14 @@ try {
       || state.rig.impossiblePortal?.otherWorldObjects < 20
       || state.rig.impossiblePortal?.desertResolution?.[0] < 128) {
       throw new Error(`${name}: portal/fracture stage not initialized: ${JSON.stringify(state.rig)}`);
+    }
+    // The new architectural surrealism must be real geometry, not a CSS
+    // overlay, and may not replace the single licensed marble sculpture.
+    if (state.surrealGateway !== 'liquefied'
+      || state.rig.gatewayLiquefaction?.actualMeltingMeshes !== 7
+      || state.rig.gatewayLiquefaction?.levitatingStoneDroplets !== 22
+      || state.rig.gatewayLiquefaction?.openingIntact !== true) {
+      throw new Error(`${name}: actual melting gateway geometry missing: ${JSON.stringify(state.rig)}`);
     }
     await page.waitForFunction(
       () => ['photographic','procedural'].includes(document.documentElement.dataset.sceneMaterial),
