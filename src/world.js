@@ -1,15 +1,13 @@
 import * as THREE from 'three';
 import { loadScannedOracle } from './sculpture.js';
 import { enhanceEnvironment } from './environment.js';
-import { attachPortalVeil } from './portalFx.js';
 import { loadSandstoneMaterials } from './stoneMaterials.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { installLunarSurface } from './lunarSurface.js';
-import { enrichPortal } from './architecturalDetails.js';
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { installPhotographicSky } from './photographicSky.js';
 import { createAtmosphericMotes } from './atmosphericParticles.js';
 import { createImpossiblePortal } from './impossiblePortal.js';
+import { createMeltingGateway, createDreamRelics } from './surrealLandscape.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -79,155 +77,16 @@ function makeStoneMaterials(texture) {
     color:config.color, roughness:config.roughness, metalness:0
   }));
 }
-function stoneMesh(geometry, material, shadow = true) {
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.castShadow = shadow;
-  mesh.receiveShadow = true;
-  return mesh;
-}
-function weatheredBlock(w, h, d, salt = 0) {
-  // Subtle sculpted curvature and chipped corners catch grazing sunlight.
-  // Plain perfect cubes are the strongest visual cue that the world is synthetic.
-  // Quarried limestone has shallow, irregular relief across its whole face,
-  // not a perfectly smooth six-sided box with noise only along the silhouette.
-  // Seven subdivisions produce real grazing-light micro shadows on masonry.
-  const geo = new RoundedBoxGeometry(w, h, d, 7, Math.min(.017, w * .05, h * .05, d * .05));
-  const p = geo.attributes.position, n = geo.attributes.normal;
-  for (let i = 0; i < p.count; i++) {
-    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    const rough = Math.sin(x * 38.3 + y * 9.7 + z * 4.7 + salt) * .45
-      + Math.sin(y * 30.2 + z * 14.8 - salt * 1.7) * .35
-      + Math.sin(x * 71.2 - z * 22.1 + salt * .7) * .20;
-    const deform = rough * Math.min(.018, w * .025);
-    p.setXYZ(i, x + n.getX(i) * deform, y + n.getY(i) * deform, z + n.getZ(i) * deform);
-  }
-  p.needsUpdate = true;
-  geo.computeVertexNormals();
-  return geo;
-}
-
-function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
-  const shape = new THREE.Shape();
-  const steps = 7;
-  for (let j = 0; j <= steps; j++) {
-    const a = mix(theta0, theta1, j / steps);
-    const x = Math.cos(a) * rOuter, y = Math.sin(a) * rOuter;
-    if (j === 0) shape.moveTo(x, y); else shape.lineTo(x, y);
-  }
-  for (let j = steps; j >= 0; j--) {
-    const a = mix(theta0, theta1, j / steps);
-    shape.lineTo(Math.cos(a) * rInner, Math.sin(a) * rInner);
-  }
-  shape.closePath();
-  const geo = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: .015, bevelSize: .013, bevelSegments: 1, steps: 1, curveSegments: 3 });
-  geo.translate(0, 0, -depth / 2);
-  const p = geo.attributes.position, n = geo.attributes.normal;
-  for (let i = 0; i < p.count; i++) {
-    const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
-    const erosion = Math.sin(x*39 + y*31 + z*10) * .008
-      + Math.cos(y*47 - x*24) * .005;
-    p.setXYZ(i, x + n.getX(i)*erosion, y+n.getY(i)*erosion, z+n.getZ(i)*erosion);
-  }
-  p.needsUpdate = true;
-  geo.computeVertexNormals();
-  return stoneMesh(geo, mat);
-}
-function portal(stone, x, y, z, size = 1, glow = false) {
-  const group = new THREE.Group();
-  group.name = 'One continuous ancient ashlar gateway';
-  const inner = 1.03, outer = 1.48;
-  const pierHeight = 2.69;
-  // Bonded, individually quarried lifts: the previous seven equal-height
-  // courses looked like a repeating game asset. These still sum to 2.69m.
-  const courseHeights = [.43, .37, .40, .36, .40, .34, .39];
-  const courseCount = courseHeights.length;
-
-  for (const side of [-1,1]) {
-    const px = side * 1.255;
-    // Actual bonded courses: each face is a separate weathered piece of
-    // masonry with tiny shadow-producing joints. This replaces the previous
-    // perfect rectangular pier with a cylinder drawn on its surface.
-    // Mortar backing is recessed dark limestone, not a near-black central
-    // pole showing through all seven courses.
-    const core = stoneMesh(weatheredBlock(.49,2.66,.81,31+side),stone[1]);
-    core.position.set(px,-1.345,-.025);
-    group.add(core);
-    let courseBottom = -pierHeight;
-    for(let row=0;row<courseCount;row++){
-      const height = courseHeights[row];
-      const h=height-.0045;
-      const offset=(Math.sin(row*2.8+side*1.35)*.0045);
-      const block=stoneMesh(weatheredBlock(.545,h,.99,12+row*1.7+side),stone[(row+side+12)%7===0?1:0]);
-      block.position.set(px+offset,courseBottom+height*.5,.015);
-      courseBottom += height;
-      block.rotation.y=Math.sin(row*2.3+side)*.003;
-      // Every quarried course needs its own part of the original photographic
-      // texture; seven identical texture patches read as stacked wooden tiles.
-      const uv=block.geometry.attributes.uv;
-      const du=.13*row+(side>0?.29:.07);
-      const dv=.11*((row*3)%7)+.04*side;
-      for(let k=0;k<uv.count;k++) uv.setXY(k,uv.getX(k)*.91+du,uv.getY(k)*.91+dv);
-      uv.needsUpdate=true;
-      group.add(block);
-    }
-    // Simple, heavy Romanesque capital and plinth with real relief.
-    const plinth=stoneMesh(weatheredBlock(.77,.19,1.15,35+side),stone[1]);
-    plinth.position.set(px,-2.66,.015);
-    group.add(plinth);
-    const impost=stoneMesh(weatheredBlock(.75,.17,1.13,42+side),stone[1]);
-    impost.position.set(px,.075,-.008);
-    group.add(impost);
-    const impostLip=stoneMesh(weatheredBlock(.68,.075,1.09,45+side),stone[0]);
-    impostLip.position.set(px,.195,-.008);
-    group.add(impostLip);
-  }
-
-  const count=15;
-  for(let i=0;i<count;i++){
-    const a0=i*Math.PI/count+.007;
-    const a1=(i+1)*Math.PI/count-.007;
-    // The central voussoir is the real keystone. No fake rectangular
-    // crown balancing on top of the ring.
-    const keystone=i===Math.floor(count/2);
-    const exterior=keystone?outer+.075:outer;
-    const wedge=archWedge(a0,a1,exterior,inner,.99,stone[keystone?1:i%7===2?1:0]);
-    wedge.name=keystone?'Single load-bearing keystone':`Ashlar voussoir ${i+1}`;
-    group.add(wedge);
-  }
-  // There is genuinely nothing filling the passage except fine airborne
-  // haze. The back of each solid voussoir is visible during a camera fly-through.
-  if(glow){
-    const glass=new THREE.MeshBasicMaterial({color:0x9bb5a1,transparent:true,opacity:.055,depthWrite:false,side:THREE.DoubleSide});
-    const aperture=new THREE.Shape();
-    aperture.moveTo(-inner,-2.5);aperture.lineTo(-inner,0);
-    for(let i=0;i<=32;i++){
-      const a=Math.PI-i*Math.PI/32;
-      aperture.lineTo(Math.cos(a)*inner,Math.sin(a)*inner);
-    }
-    aperture.lineTo(inner,-2.5);aperture.closePath();
-    const membrane=new THREE.Mesh(new THREE.ShapeGeometry(aperture),glass);
-    membrane.position.z=-.55;
-    membrane.name='Portal light volume';
-    group.add(membrane);
-  }
-  group.position.set(x,y,z);
-  group.scale.setScalar(size);
-  group.traverse(obj=>{if(obj.isMesh)obj.frustumCulled=false});
-  return group;
-}
 function addAtmosphere(scene, stone) {
   const moonMat = new THREE.MeshStandardMaterial({ color: 0xcfc6b1, roughness: 1, metalness: 0, map: stone[1].map, emissive: 0xc2b49b, emissiveIntensity: .55 });
   const moon = new THREE.Mesh(new THREE.SphereGeometry(1.72, 48, 36), moonMat);
-  moon.position.set(.6, 4.35, -30.0);
+  moon.position.set(.2, 6.7, -27.0);
   scene.add(moon);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(260, 260, 1, 1), new THREE.MeshStandardMaterial({ color: 0x1a3940, roughness: .24, metalness: .43, transparent: true, opacity: .86 }));
   sea.rotation.x = -Math.PI / 2;
   sea.position.y = -3.25;
   sea.receiveShadow = true;
   scene.add(sea);
-  // Deliberately exclude scattered low-poly dodecahedrons.
-  // A calm sea and a single monumental carved gateway read more believably
-  // than arbitrary floating 'game rocks'.
   return { moon, sea };
 }
 
@@ -329,18 +188,12 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
   const proceduralNormal = stone[0].normalMap;
   // No synthetic fallback is ever placed over the photographic scan.
   // A failed network load leaves the landscape intact, never a low-poly head.
-  const statue = null;
-  const threshold = portal(stone, -3.05, .52, -7.5, 1.42, true);
-  threshold.rotation.y = .12;
+  const meltingGate = createMeltingGateway(stone);
+  const threshold = meltingGate.object;
   scene.add(threshold);
-  const portalMasonry = enrichPortal(threshold,stone);
-  const portalVeil = attachPortalVeil(threshold);
-  // A separately illuminated desert is projected perspective-correctly
-  // into the stone aperture; it takes over only when the real camera enters.
+  const dreamRelics = createDreamRelics(scene, stone);
   const otherReality = createImpossiblePortal({ renderer, camera, threshold });
-  // One deliberate portal and one photographed sculpture: decorative
-  // duplicate arches, hovering islands and faceted rocks obscured the scan.
-  // Keeping the distance uncluttered also makes the threshold readable.
+  document.documentElement.dataset.surrealWorld = 'liquid-stone';
   const { moon, sea } = addAtmosphere(scene, stone);
   const atmosphere = enhanceEnvironment(scene, { sea });
   const motes = createAtmosphericMotes(scene);
@@ -527,11 +380,12 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
     camera.lookAt(lookSmooth);
     scannedOracle?.update(dt, progress, motion);
     atmosphere.update(dt, camera, motion);
-    portalVeil?.update(dt, progress, motion);
+    meltingGate.update(dt, motion);
+    dreamRelics.update(dt, motion);
     if (lunar) lunar.update(dt, motion);
     else moon.rotation.y = elapsed * .009;
     motes.update(dt, motion, renderer.getPixelRatio());
-    otherReality.update(progress, softwareRenderer);
+    otherReality.update(progress, softwareRenderer, dt, motion);
     renderer.render(scene, camera);
     otherReality.composite();
     if (document.documentElement.dataset.webgl !== 'ready') document.documentElement.dataset.webgl = 'ready';
@@ -577,6 +431,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
         keyLight: key.position.toArray().map(v => +v.toFixed(2)),
         shadowEnabled: renderer.shadowMap.enabled,
         impossiblePortal: otherReality.debug(),
+        surrealWorld: { ...meltingGate.debug(), ...dreamRelics.debug(), lunar: lunar?.debug?.() },
       };
     },
     setProgress(value) { targetProgress = clamp(value); },
@@ -596,9 +451,10 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
       cancelAnimationFrame(raf);
       scannedOracle?.dispose();
       sandstone?.dispose();
-      portalVeil?.dispose();
+      meltingGate.dispose();
+      dreamRelics.dispose();
       otherReality.dispose();
-      portalMasonry?.dispose();
+
       atmosphere.dispose();
       motes.dispose();
       lunar?.dispose();

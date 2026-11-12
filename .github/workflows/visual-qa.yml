@@ -1,11 +1,12 @@
 name: Visual QA snapshots
 on:
   push:
-    branches: [main]
+    branches: [main, 'surreal/melting-world']
     paths:
       - .github/workflows/visual-qa.yml
       - scripts/visual-review.mjs
       - src/world.js
+      - src/surrealLandscape.js
       - src/main.js
       - src/photographicSky.js
       - src/styles.css

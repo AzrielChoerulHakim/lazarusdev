@@ -20,8 +20,9 @@ export async function installLunarSurface({ scene, placeholder, onStatus = () =>
     albedo.anisotropy = 4;
     // The low-resolution elevation map supplies subtle visible crater relief,
     // not exaggerated mountain peaks seen in generic sci-fi moon renders.
-    const radius = 1.72;
-    const geometry = new THREE.SphereGeometry(radius, 120, 80);
+    const radius = 2.05;
+    const topGeometry = new THREE.SphereGeometry(radius, 80, 40, 0, Math.PI * 2, 0, Math.PI / 2 - .075);
+    const lowerGeometry = new THREE.SphereGeometry(radius, 80, 40, 0, Math.PI * 2, Math.PI / 2 + .075, Math.PI / 2 - .075);
     const material = new THREE.MeshStandardMaterial({
       map: albedo,
       displacementMap: height,
@@ -36,13 +37,35 @@ export async function installLunarSurface({ scene, placeholder, onStatus = () =>
       emissiveIntensity: .11,
       fog: false,
     });
-    const moon = new THREE.Mesh(geometry, material);
-    moon.name = 'NASA Lunar Reconnaissance Orbiter moon';
+    const moon = new THREE.Group();
+    moon.name = 'The Hollow Moon — two suspended lunar hemispheres';
     moon.position.copy(placeholder.position);
-    moon.rotation.y = -.12;
-    moon.castShadow = false;
-    moon.receiveShadow = true;
+    moon.rotation.set(.12, -.12, -.20);
     moon.frustumCulled = false;
+    const upper = new THREE.Mesh(topGeometry, material);
+    const lower = new THREE.Mesh(lowerGeometry, material);
+    upper.position.y = .34;
+    lower.position.y = -.34;
+    moon.add(upper, lower);
+    // Solid dark cut faces make the gap physically readable from oblique
+    // viewpoints. These are exclusive hemispheres, never overlapping moons.
+    const cutMaterial = new THREE.MeshStandardMaterial({color:0x3e3b33,roughness:.94,side:THREE.DoubleSide});
+    const cutGeometry = new THREE.CircleGeometry(radius * Math.cos(.075), 80);
+    for (const sign of [-1, 1]) {
+      const cut = new THREE.Mesh(cutGeometry, cutMaterial);
+      cut.rotation.x = Math.PI / 2;
+      cut.position.y = sign * radius * Math.sin(.075);
+      (sign > 0 ? upper : lower).add(cut);
+    }
+    const orbitMaterial = new THREE.MeshStandardMaterial({color:0xc9985e,roughness:.4,metalness:.56});
+    const orbitGeometry = new THREE.TorusGeometry(2.63,.022,8,128);
+    const orbit = new THREE.Mesh(orbitGeometry,orbitMaterial);
+    orbit.rotation.set(1.24, .15, -.24);
+    moon.add(orbit);
+    const coreGeometry = new THREE.SphereGeometry(.19,24,16);
+    const core = new THREE.Mesh(coreGeometry,orbitMaterial);
+    core.position.z = .35;
+    moon.add(core);
     // A subtle distant glow is not a surface texture; avoid bright game-like bloom.
     const glowCanvas = document.createElement('canvas');
     glowCanvas.width = glowCanvas.height = 128;
@@ -61,16 +84,31 @@ export async function installLunarSurface({ scene, placeholder, onStatus = () =>
     });
     const glow = new THREE.Sprite(glowMaterial);
     glow.position.copy(moon.position);
-    glow.scale.set(4.9,4.9,1);
+    glow.scale.set(6.1,6.1,1);
     scene.add(moon,glow);
     placeholder.visible = false;
     onStatus('nasa');
+    let time = 0;
+    document.documentElement.dataset.lunarForm = 'hollow-hemispheres';
     return {
       object: moon,
-      update(dt, active) { if (active) moon.rotation.y += Math.min(dt,.05) * .002; },
+      update(dt, active) {
+        if (active) time += Math.min(dt,.06);
+        upper.position.y = .34 + Math.sin(time * .19) * .09;
+        lower.position.y = -upper.position.y;
+        orbit.rotation.z = -.24 + Math.sin(time * .11) * .12;
+        moon.rotation.y = -.12 + time * .002;
+      },
+      debug: () => ({hemispheres:2,gap:+(upper.position.y*2).toFixed(3)}),
       dispose() {
         scene.remove(moon,glow);
-        geometry.dispose();
+        topGeometry.dispose();
+        lowerGeometry.dispose();
+        cutGeometry.dispose();
+        coreGeometry.dispose();
+        orbitGeometry.dispose();
+        cutMaterial.dispose();
+        orbitMaterial.dispose();
         material.dispose();
         albedo.dispose();
         height.dispose();

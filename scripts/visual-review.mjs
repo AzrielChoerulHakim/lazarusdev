@@ -23,6 +23,7 @@ try {
     const page=await browser.newPage({viewport:{width:item.width,height:item.height}, deviceScaleFactor:1});
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
+    page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
     await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
     await page.waitForFunction(()=>document.documentElement.dataset.sceneAsset==='scanned' && document.documentElement.dataset.sceneMaterial==='photographic' && document.documentElement.dataset.lunarAsset==='nasa',null,{timeout:30000});
     await page.evaluate(({section,extra})=>{
@@ -36,6 +37,11 @@ try {
     const status=await page.evaluate(()=>({fracture:document.documentElement.dataset.fracture,renderer:document.documentElement.dataset.renderTier,scan:document.documentElement.dataset.sceneAsset,stone:document.documentElement.dataset.sceneMaterial,lunar:document.documentElement.dataset.lunarAsset,projection:window.__lazarusDebug?.(),scrollY:scrollY}));
     if (status.fracture !== 'three-levitating-sections' || status.projection.statueFragments !== 3 || status.projection.scanRootCount !== 1 || status.projection.syntheticBustCount !== 0) throw Error(item.name + ': exclusive three-piece scan is missing or duplicated: ' + JSON.stringify(status.projection));
     const projection = status.projection;
+    if (projection.surrealWorld?.flowingPendants !== 5
+      || projection.surrealWorld?.stairTreads !== 26
+      || projection.surrealWorld?.lunar?.hemispheres !== 2) {
+      throw Error(item.name + ': surreal landscape did not finish loading: ' + JSON.stringify(projection.surrealWorld));
+    }
     if (!projection || projection.camera.some(v => !Number.isFinite(v) || Math.abs(v) > 90)) {
       throw Error(item.name + ': runaway / nonfinite camera: ' + JSON.stringify(projection));
     }

@@ -1,25 +1,12 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { makeMeltedAperture, createDreamRelics } from './surrealLandscape.js';
 
 // Stage 02. A second 3D environment is seen only through the actual gate,
 // using a screen-projected live render, and then becomes the whole landscape
 // once the camera physically crosses the plane of the opening.
 const saturate = v => Math.max(0, Math.min(1, v));
 const ease = (a, b, x) => { const t = saturate((x-a)/(b-a)); return t*t*(3-2*t); };
-
-function makeAperture() {
-  const r = 1.018;
-  const shape = new THREE.Shape();
-  shape.moveTo(-r, -2.50);
-  shape.lineTo(-r, 0);
-  for(let i=0;i<=72;i++) {
-    const theta = Math.PI * (1-i/72);
-    shape.lineTo(Math.cos(theta)*r, Math.sin(theta)*r);
-  }
-  shape.lineTo(r, -2.50);
-  shape.closePath();
-  return new THREE.ShapeGeometry(shape);
-}
 
 function terrain(x,z) {
   // Broad, varied wind-formed dunes; the stone road is compacted but not flat.
@@ -113,16 +100,19 @@ function buildDesert(scene, tracked) {
     mesh.castShadow=true;mesh.receiveShadow=true;
     scene.add(mesh);tracked.push(geo);return mesh;
   };
-  // A sand-buried causeway; every stone meets the actual terrain.
-  // The old rising stairs floated increasingly far above the ground.
+  // The path begins in the sand, then gives up gravity as it approaches
+  // the eclipse. Visitors discover the broken ascent through the liquid arch.
   for(let i=0;i<18;i++) {
     const z=-5-i*1.52;
     const x=Math.sin(i*1.41)*.055;
     const w=3.34+i*.075+(i%4===0?.10:0);
     const h=.16-(i%4)*.013;
     const burial=i>10?Math.min(.085,(i-10)*.009):.014;
-    block(w,h,1.63,x,terrain(x,z)+h*.5-burial,z,
-      i%6===0?aged:pale,Math.sin(i*.84)*.005);
+    const lift = Math.max(0, i - 5);
+    const step = block(w, h, 1.27, x + Math.sin(lift * .19) * lift * .11,
+      terrain(x,z) + h*.5 - burial + lift * .51, z,
+      i%6===0 ? aged : pale, Math.sin(i*.84)*.005 + lift*.026);
+    step.rotation.z = Math.sin(lift * .31) * lift * .012;
   }
   for(let i=0;i<8;i++) {
     const z=-11-i*5.5;
@@ -130,7 +120,10 @@ function buildDesert(scene, tracked) {
     const h=3.5+i*.28;
     const y=terrain(x,z);
     block(.84,h,.86,x,y+h/2,z,i%3===0?aged:pale,-.09+i*.04);
-    block(1.3,.19,1.28,x,y+h,z,aged);
+    // Capital separated from its own column, with a real empty joint.
+    block(1.3,.24,1.28,x,y+h+.53,z,aged);
+    const cap = block(.84,.67,.86,x,y+h+1.36,z,pale);
+    cap.rotation.z = (i%2 ? 1 : -1) * .15;
   }
   for(const [x,z,h,r] of [[-19,-41,10,-.13],[23,-53,14,.24]]) {
     const m=block(3.6,h,3.3,x,terrain(x,z)+h*.42,z,aged,r);
@@ -179,13 +172,31 @@ function buildDesert(scene, tracked) {
   const dustMat=new THREE.PointsMaterial({color:0xffe6b9,size:.06,transparent:true,opacity:.44,depthWrite:false});
   scene.add(new THREE.Points(dustGeo,dustMat));
   tracked.push(dustGeo,dustMat);
-  return sky;
+  const relics = createDreamRelics(scene, null, { interior: true });
+  // An eclipsed, hollow celestial instrument hangs above the rising path.
+  const eclipse = new THREE.Group();
+  eclipse.name = 'An eclipse with an empty centre';
+  eclipse.position.set(-.3, 7.3, -38);
+  const ringMat = new THREE.MeshStandardMaterial({color:0xe8c894, roughness:.47, metalness:.23});
+  const ringGeo = new THREE.TorusGeometry(4.25, .14, 12, 96);
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.set(.12, -.21, .18);
+  eclipse.add(ring);
+  const diskMat = new THREE.MeshStandardMaterial({color:0x16272b, roughness:.9, metalness:.06});
+  const diskGeo = new THREE.SphereGeometry(3.62, 48, 32);
+  const disk = new THREE.Mesh(diskGeo, diskMat);
+  disk.scale.set(1,1,.21);
+  disk.position.set(.32,.45,-.7);
+  eclipse.add(disk);
+  scene.add(eclipse);
+  tracked.push(ringMat, ringGeo, diskMat, diskGeo, {dispose:()=>relics.dispose()});
+  return { sky, relics };
 }
 
 export function createImpossiblePortal({renderer,camera,threshold}) {
   const tracked=[];
   const desert=new THREE.Scene();
-  const sky=buildDesert(desert,tracked);
+  const { sky, relics }=buildDesert(desert,tracked);
   const secondCamera=new THREE.PerspectiveCamera(camera.fov,camera.aspect,.07,240);
   const target=new THREE.WebGLRenderTarget(512,512,{
     depthBuffer:true,stencilBuffer:false,
@@ -205,13 +216,7 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
       'void main(){',
       'vec2 uv=clamp(gl_FragCoord.xy/uViewport,vec2(0.),vec2(1.));',
       'vec3 col=texture2D(uDesert,uv).rgb;',
-      'float side=1.018-abs(vPoint.x);',
-      'float roof=vPoint.y>0.?1.018-length(vPoint):100.;',
-      'float edge=max(0.,min(min(side,roof),vPoint.y+2.50));',
-      'col+=vec3(.035,.024,.011)*(1.-smoothstep(.005,.10,edge));',
-      'float lip=smoothstep(.003,.063,edge);',
-      'float buried=smoothstep(-2.48,-1.91,vPoint.y);',
-      'float alpha=lip*buried;',
+      'float alpha=smoothstep(-2.70,-2.20,vPoint.y);',
       'gl_FragColor=vec4(col,alpha);',
       '#include <tonemapping_fragment>',
       '#include <colorspace_fragment>',
@@ -223,10 +228,10 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     // ocean. The foreground water's depth may not erase the landscape
     // inside the arch; the geometry and feathered rim still provide its
     // physical silhouette.
-    depthWrite:false,depthTest:false,side:THREE.DoubleSide,
+    depthWrite:false,depthTest:true,side:THREE.DoubleSide,
     transparent:true,toneMapped:false,fog:false
   });
-  const windowMesh=new THREE.Mesh(makeAperture(),windowMaterial);
+  const windowMesh=new THREE.Mesh(makeMeltedAperture(),windowMaterial);
   windowMesh.position.z=-.575;
   windowMesh.frustumCulled=false;
   windowMesh.name='Live perspective-correct opening into the impossible desert';
@@ -257,7 +262,8 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
   let frame=0;
   let blend=0;
 
-  function renderSecondWorld(progress,software=false){
+  function renderSecondWorld(progress,software=false,dt=0,active=false){
+    relics.update(dt, active);
     threshold.updateWorldMatrix(true,false);
     secondCamera.position.copy(threshold.worldToLocal(origin.copy(camera.position)));
     threshold.getWorldQuaternion(inverse);
@@ -300,7 +306,7 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
       ...secondCamera.quaternion.toArray(),secondCamera.aspect,secondCamera.fov
     ].map(x=>x.toFixed(3)).join(',');
     // A still camera needs no extra draw every RAF.
-    if(lastPose===pose&&frame%12!==0)return;
+    if(lastPose===pose&&(!active || frame%(software?8:2)!==0))return;
     lastPose=pose;
     const original=renderer.getRenderTarget();
     renderer.setRenderTarget(target);
@@ -320,6 +326,7 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     composite,
     debug:()=>({
       otherWorldObjects:desert.children.length,
+      dreamRelics:relics.debug(),
       windowVisible:windowMesh.visible,
       desertResolution:[target.width,target.height],
       transitionBlend:+blend.toFixed(3),
