@@ -10,6 +10,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { installPhotographicSky } from './photographicSky.js';
 import { createAtmosphericMotes } from './atmosphericParticles.js';
 import { createImpossiblePortal } from './impossiblePortal.js';
+import { createLiquefiedGateway } from './liquefiedGateway.js';
 
 const THREE_BG = 0x081a1d;
 const clamp = (v, min = 0, max = 1) => Math.min(max, Math.max(min, v));
@@ -334,6 +335,10 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
   threshold.rotation.y = .12;
   scene.add(threshold);
   const portalMasonry = enrichPortal(threshold,stone);
+  // The existing arch softens into genuine 3D stone flows; the photographed
+  // sculpture and the portal's real opening remain untouched.
+  const liquefiedGateway = createLiquefiedGateway(threshold, stone);
+  document.documentElement.dataset.surrealGateway = 'liquefied';
   const portalVeil = attachPortalVeil(threshold);
   // A separately illuminated desert is projected perspective-correctly
   // into the stone aperture; it takes over only when the real camera enters.
@@ -528,6 +533,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
     scannedOracle?.update(dt, progress, motion);
     atmosphere.update(dt, camera, motion);
     portalVeil?.update(dt, progress, motion);
+    liquefiedGateway.update(dt, progress, motion);
     if (lunar) lunar.update(dt, motion);
     else moon.rotation.y = elapsed * .009;
     motes.update(dt, motion, renderer.getPixelRatio());
@@ -577,6 +583,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
         keyLight: key.position.toArray().map(v => +v.toFixed(2)),
         shadowEnabled: renderer.shadowMap.enabled,
         impossiblePortal: otherReality.debug(),
+        gatewayLiquefaction: liquefiedGateway.debug(),
       };
     },
     setProgress(value) { targetProgress = clamp(value); },
@@ -599,6 +606,7 @@ export function createWorld(canvas, { initialProgress = 0 } = {}) {
       portalVeil?.dispose();
       otherReality.dispose();
       portalMasonry?.dispose();
+      liquefiedGateway.dispose();
       atmosphere.dispose();
       motes.dispose();
       lunar?.dispose();
