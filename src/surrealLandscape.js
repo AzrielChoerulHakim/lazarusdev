@@ -39,17 +39,38 @@ function solid(geometry, material) {
 function dropGeometry(length, radius) {
   // A narrow liquid neck opening into a heavy rounded pendant. Bottom-to-top
   // lathe profile gives continuous, properly lit volume rather than a cone.
-  return new THREE.LatheGeometry([
-    new THREE.Vector2(0, -length),
-    new THREE.Vector2(radius * .43, -length + radius * .12),
-    new THREE.Vector2(radius * .72, -length + radius * .48),
-    new THREE.Vector2(radius * .63, -length + radius * .94),
-    new THREE.Vector2(radius * .25, -length * .65),
-    new THREE.Vector2(radius * .31, -length * .34),
-    new THREE.Vector2(radius * .60, -length * .12),
-    new THREE.Vector2(radius * 1.25, .045),
-    new THREE.Vector2(0, .085),
-  ], 20);
+  const profile = [];
+  for (let i = 0; i <= 56; i++) {
+    const u = i / 56;
+    const bulb = .70 * Math.exp(-Math.pow((u - .105) / .085, 2));
+    const neck = .19 + .94 * Math.pow(u, 4);
+    profile.push(new THREE.Vector2(radius * (bulb + neck) * ease(0, .045, u), -length * (1 - u)));
+  }
+  profile.push(new THREE.Vector2(0, .075));
+  return new THREE.LatheGeometry(profile, 24);
+}
+
+function liquidStoneMap() {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  const pixels = ctx.createImageData(256, 256);
+  for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) {
+    const bend = Math.sin(y * .024) * 2.6 + Math.sin(y * .071) * .48;
+    const vein = Math.pow(Math.max(0, Math.sin(x * .051 + y * .014 + bend)), 18);
+    const grain = Math.sin(x * 71.3 + y * 19.7) * Math.cos(y * 37.2 - x * 6.1);
+    const v = 235 - vein * 15 + grain * 2.5;
+    const i = (y * 256 + x) * 4;
+    pixels.data[i] = v;
+    pixels.data[i + 1] = v * .975;
+    pixels.data[i + 2] = v * .92;
+    pixels.data[i + 3] = 255;
+  }
+  ctx.putImageData(pixels, 0, 0);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
 }
 
 export function createMeltingGateway(stone) {
@@ -58,9 +79,10 @@ export function createMeltingGateway(stone) {
   group.position.set(-3.05, .52, -7.5);
   group.scale.setScalar(1.42);
   group.rotation.y = .12;
+  const mineralMap = liquidStoneMap();
   const material = new THREE.MeshPhysicalMaterial({
-    color: 0xded0b0, map: stone[0].map,
-    roughness: .38, metalness: .12,
+    color: 0xe5d9c2, map: mineralMap,
+    roughness: .31, metalness: .08,
     clearcoat: .42, clearcoatRoughness: .30,
     envMapIntensity: .82,
   });
@@ -145,6 +167,7 @@ export function createMeltingGateway(stone) {
       group.traverse(o => { if (o.geometry) geometries.add(o.geometry); });
       geometries.forEach(g => g.dispose());
       material.dispose();
+      mineralMap.dispose();
     },
   };
 }

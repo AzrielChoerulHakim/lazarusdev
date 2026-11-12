@@ -224,10 +224,8 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     ].join('\n'),
     // Fade into the actual water below the sill and let the ancient masonry
     // retain its original depth, rather than projecting an opaque rectangle.
-    // It is an impossible dimensional window, not a reflection on the
-    // ocean. The foreground water's depth may not erase the landscape
-    // inside the arch; the geometry and feathered rim still provide its
-    // physical silhouette.
+    // Depth-test against the liquid frame and hanging stone, so its drips
+    // genuinely occlude the second world. The lower edge fades into the sea.
     depthWrite:false,depthTest:true,side:THREE.DoubleSide,
     transparent:true,toneMapped:false,fog:false
   });
@@ -285,12 +283,14 @@ export function createImpossiblePortal({renderer,camera,threshold}) {
     renderer.getDrawingBufferSize(screen);
     windowMaterial.uniforms.uViewport.value.copy(screen);
     const compact=window.innerWidth<700;
-    const ratio=software?.40:compact?.62:.73;
+    const ratio=software?.76:compact?.88:.94;
     // Preserve exact camera aspect ratio when limiting GPU render-target size.
     // Otherwise a wide-screen desert gets distorted inside the gateway.
     const scale=Math.min(ratio,(compact?580:1120)/screen.x,900/screen.y);
-    const width=Math.max(128,Math.round(screen.x*scale));
-    const height=Math.max(128,Math.round(screen.y*scale));
+    // Keep the view sharp as the gateway fills the viewport, even after the
+    // main renderer lowers DPR. The second scene uses a throttled draw pass.
+    const width=Math.max(compact?320:640,Math.round(screen.x*scale));
+    const height=Math.max(128,Math.round(width*screen.y/screen.x));
     const resolution=width+'x'+height;
     if(resolution!==lastResolution) {
       target.setSize(width,height);

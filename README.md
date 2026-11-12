@@ -17,11 +17,12 @@ The website works both as a Vite build and directly from GitHub Pages source (us
 
 ## The world
 
-- **CC0 artist-modelled bust:** a real 3D marble sculpture by Rico Cilliers (Poly Haven), with embedded glTF PBR maps. Two independently clipped instances create a surreal gap across the face. The original procedural bust remains a loading/failure fallback.
-- **Weathered architectural surfaces:** three local photographic sandstone PBR maps (diffuse/normal/roughness), CC0 by Dimitrios Savva, on original procedural masonry. Fine abrasions follow column curvature, and small instanced limestone grains settle across the portal foundation.
-- **Lighting:** coordinated HDRI and upper-left golden-hour key, gentle cool photographic fill, sculptural rim light and targeted portal glow; bias-corrected high-resolution soft shadows on capable GPUs.
-- **Atmosphere:** hundreds of depth-tested, softly shaded 3D limestone motes (including fine sediment falling through the scanned fracture), subdued distance haze, procedural clouds, a responsive water shader with subtle contact occlusion beneath the portal foundations, moon and carved stone architecture.
-- **Motion:** multi-subdivision folded cloth geometry, a portal shader, scroll-following camera paths with separate mobile framing and restrained pointer parallax.
+- **The Oracle:** the original CC0 marble scan by Rico Cilliers (Poly Haven), separated into three exclusive, suspended sections. The photographed face, material and positioning are preserved.
+- **The Soft Threshold:** an asymmetrical, continuous stone gateway with rounded liquid pendants, slowly stretching drips, suspended droplets and pooled feet. The opening shares the frame's deformation and respects its depth.
+- **Impossible architecture:** twenty-six unsupported stone treads curl upward into a vermilion Möbius band. Instancing keeps the staircase economical to draw.
+- **The Hollow Moon:** the existing NASA lunar maps now cover two separated hemispheres, with solid cut faces, an empty central interval and a fine brass orbit.
+- **The other reality:** a live, perspective-correct landscape inside the gateway. Its causeway rises out of the sand toward an eclipse, column capitals levitate, and a second stairway twists through the sky. The camera can travel through the opening.
+- **Lighting and motion:** HDRI, sculptural warm key and cool fill, atmospheric motes and water. All new ambient motion respects the motion toggle and reduced-motion preference.
 - **Editorial website:** selected worlds (clearly marked concepts), capabilities, manifesto, accessible navigation, dialogs, and a local-only project brief builder.
 
 **Attribution and exact SHA-256 hashes:** [assets/ATTRIBUTION.md](assets/ATTRIBUTION.md).
