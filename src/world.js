@@ -127,7 +127,21 @@ function archWedge(theta0, theta1, rOuter, rInner, depth, mat) {
     const x = p.getX(i), y = p.getY(i), z = p.getZ(i);
     const erosion = Math.sin(x*39 + y*31 + z*10) * .008
       + Math.cos(y*47 - x*24) * .005;
-    p.setXYZ(i, x + n.getX(i)*erosion, y+n.getY(i)*erosion, z+n.getZ(i)*erosion);
+    // The right-hand voussoirs have softened under impossible gravity.
+    // Displace only the OUTER radius: the inner edge remains an exact arch,
+    // so the other world, passage silhouette and camera flight remain valid.
+    // Applying one continuous field across wedge boundaries keeps joints
+    // aligned instead of making individual masonry blocks look misplaced.
+    const theta = Math.atan2(y, x);
+    const radius = Math.hypot(x, y);
+    const crownInfluence = smooth(.12, .44, theta) * (1 - smooth(1.03, 1.43, theta));
+    const outerInfluence = smooth(rInner + .07, rOuter - .025, radius);
+    const liquid = crownInfluence * outerInfluence;
+    const sag = liquid * (.085 + .080 * (.5 + .5 * Math.sin(x * 5.2 + z * 2.1)));
+    p.setXYZ(i,
+      x + n.getX(i) * erosion + liquid * .050,
+      y + n.getY(i) * erosion - sag,
+      z + n.getZ(i) * erosion + Math.sign(z) * liquid * .025);
   }
   p.needsUpdate = true;
   geo.computeVertexNormals();
