@@ -87,6 +87,13 @@ main{position:relative;z-index:2}.chapter{position:relative;isolation:isolate;pa
 #webgl-wrap::after,.atmosphere{transition:opacity .65s ease}
 html[data-portal-state="inside"] #webgl-wrap::after{opacity:.10}
 html[data-portal-state="inside"] .atmosphere{opacity:.12}
+/* The liquid limestone is brighter than the old masonry. Keep the passage
+   copy readable while leaving the open portal and its depth unobscured. */
+@media(min-width:801px){
+  html[data-portal-state="threshold"] #webgl-wrap::after{
+    background:linear-gradient(90deg,rgba(6,19,22,.08),transparent 39%,rgba(6,19,22,.48) 76%,rgba(6,19,22,.67)),linear-gradient(0deg,rgba(6,19,22,.42),transparent 30%);
+  }
+}
 @media(prefers-reduced-motion:reduce){
   #webgl-wrap::after,.atmosphere{transition:none}
 }

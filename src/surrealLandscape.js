@@ -8,8 +8,8 @@ const ease = (a, b, x) => THREE.MathUtils.smoothstep(x, a, b);
 export function meltPoint(x, y) {
   const high = ease(-2.7, 1.5, y);
   return new THREE.Vector2(
-    x + .22 * Math.sin((y + 2.7) * 1.18) + high * .13,
-    y - .39 * Math.exp(-Math.pow((x - .53) / .61, 2)) * ease(-.1, .9, y)
+    x + .29 * Math.sin((y + 2.7) * 1.18) + high * .13,
+    y - .50 * Math.exp(-Math.pow((x - .53) / .61, 2)) * ease(-.1, .9, y)
       + .085 * Math.sin(x * 2.1) * high,
   );
 }
@@ -59,7 +59,7 @@ function liquidStoneMap() {
     const bend = Math.sin(y * .024) * 2.6 + Math.sin(y * .071) * .48;
     const vein = Math.pow(Math.max(0, Math.sin(x * .051 + y * .014 + bend)), 18);
     const grain = Math.sin(x * 71.3 + y * 19.7) * Math.cos(y * 37.2 - x * 6.1);
-    const v = 235 - vein * 15 + grain * 2.5;
+    const v = 235 - vein * 25 + grain * 3;
     const i = (y * 256 + x) * 4;
     pixels.data[i] = v;
     pixels.data[i + 1] = v * .975;
@@ -81,9 +81,9 @@ export function createMeltingGateway(stone) {
   group.rotation.y = .12;
   const mineralMap = liquidStoneMap();
   const material = new THREE.MeshPhysicalMaterial({
-    color: 0xe5d9c2, map: mineralMap,
-    roughness: .31, metalness: .08,
-    clearcoat: .42, clearcoatRoughness: .30,
+    color: 0xcdbb9a, map: mineralMap,
+    roughness: .42, metalness: .08,
+    clearcoat: .28, clearcoatRoughness: .30,
     envMapIntensity: .82,
   });
   // A single continuous silhouette, softened like wax. There are no straight
@@ -115,22 +115,24 @@ export function createMeltingGateway(stone) {
   group.add(solid(geometry, material));
 
   const pendants = [];
-  for (const [x, length, radius, depth] of [
-    [-.88, .70, .16, .40], [-.58, 1.08, .14, .38],
-    [-.17, .38, .10, .43], [.34, .84, .17, .41], [.80, 1.28, .14, .39],
+  for (const [x, length, radius] of [
+    [-.88, .70, .16], [-.58, 1.08, .14],
+    [-.17, .38, .10], [.34, .84, .17], [.80, 1.28, .14],
   ]) {
-    const root = meltPoint(x, Math.sqrt(1.025 ** 2 - x ** 2) + .10);
+    const root = meltPoint(x, Math.sqrt(1.025 ** 2 - x ** 2) + .21);
     const drip = solid(dropGeometry(length, radius), material);
-    drip.position.set(root.x, root.y, depth);
+    // Bury the attachment inside the stone. An exposed top cap would read
+    // as a separate hanging ornament instead of the frame itself liquefying.
+    drip.position.set(root.x, root.y, .23);
     group.add(drip);
     pendants.push(drip);
   }
   // Long streams run down the outside into lobed puddles. Their silhouette
   // is asymmetrical: one side falls, the other pulls back upward.
-  for (const [x, y, length, radius] of [[-1.48, -.25, 2.22, .18], [1.48, .12, 2.54, .22], [1.24, -1.1, 1.33, .12]]) {
+  for (const [x, y, length, radius] of [[-1.35, -.25, 2.22, .18], [1.34, .12, 2.54, .22], [1.24, -1.1, 1.33, .12]]) {
     const p = meltPoint(x, y);
     const drip = solid(dropGeometry(length, radius), material);
-    drip.position.set(p.x, p.y, .40);
+    drip.position.set(p.x, p.y, .27);
     group.add(drip);
   }
   const sphere = new THREE.SphereGeometry(1, 24, 16);
