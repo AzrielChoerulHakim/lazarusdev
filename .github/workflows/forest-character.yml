@@ -1,0 +1,59 @@
+name: Forest Stage 05 — Paperkeeper character bible QA
+on:
+  push:
+    branches:
+      - main
+      - feature/forest-storybook
+    paths:
+      - storybook/character-lab/**
+      - storybook/assets/characters/**
+      - scripts/forest_character_*
+      - .github/workflows/forest-character.yml
+      - docs/forest/05-character-bible.md
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  character-bible:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare Pillow image QA
+        run: |
+          python3 -m venv /tmp/forest-character-venv
+          /tmp/forest-character-venv/bin/pip install 'Pillow>=10,<13'
+      - name: Audit all 13 RGBA character assets and source boards
+        run: /tmp/forest-character-venv/bin/python scripts/forest_character_audit.py
+      - name: Validate JavaScript and preserve Stage 03 root build
+        run: |
+          npm install --no-audit --no-fund
+          node --check storybook/character-lab/character.js
+          node --check scripts/forest_character_smoke.mjs
+          npm run build
+      - name: Install Playwright browser harness
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Test character laboratory as GitHub Pages nested route
+        run: |
+          mkdir -p /tmp/forest-character-mirror
+          ln -s "$GITHUB_WORKSPACE" /tmp/forest-character-mirror/lazarusdev
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-character-mirror > /tmp/forest-character-server.log 2>&1 &
+          for i in {1..35}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/storybook/character-lab/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_character_smoke.mjs
+      - name: Upload reference screenshots and asset manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage05-paperkeeper-character-qa
+          path: |
+            screenshots/forest-character/
+            storybook/assets/characters/manifest.json
+            docs/forest/05-character-bible.md
+          if-no-files-found: ignore

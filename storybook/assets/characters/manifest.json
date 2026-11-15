@@ -1,0 +1,297 @@
+{
+  "schema": "lazarus-character-bible-v1",
+  "version": "1.0.0",
+  "master": "The Forest Between Pages V2",
+  "status": "art-directed V1 candidate; editorial approval required before stage06 assets",
+  "asset_count": 13,
+  "rights": "Original AI-assisted concept images generated for Lazarus Dev; avoid claims of physical hand drawing.",
+  "source_details": [
+    {
+      "file": "paperkeeper-turnaround-source.webp",
+      "origin": "ImageGen-created turnaround sheet, 2026-11-15",
+      "masterboard_crop": false
+    },
+    {
+      "file": "paperkeeper-actions-source.webp",
+      "origin": "ImageGen-created action and character-sheet, 2026-11-15",
+      "masterboard_crop": false,
+      "note": "Only roundbird and moth exported; other extraneous mascot sketches explicitly rejected."
+    }
+  ],
+  "assets": [
+    {
+      "name": "paperkeeper.front.webp",
+      "role": "turnaround",
+      "pose": "front",
+      "path": "storybook/assets/characters/paperkeeper.front.webp",
+      "width": 421,
+      "height": 658,
+      "bytes": 63402,
+      "sha256": "ae26eb6cf0290c86f75e963ad0d0e21c2376ff3d81d8a33da179029cc123a1bb",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-turnaround-source.webp",
+      "source_box_xyxy": [
+        0,
+        90,
+        438,
+        808
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.three-quarter.webp",
+      "role": "turnaround",
+      "pose": "three-quarter",
+      "path": "storybook/assets/characters/paperkeeper.three-quarter.webp",
+      "width": 426,
+      "height": 656,
+      "bytes": 61016,
+      "sha256": "d5318e71162ce5ef0700e194574729d1863bf889714dcaa8d7ec27be0bb3018e",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-turnaround-source.webp",
+      "source_box_xyxy": [
+        442,
+        90,
+        897,
+        808
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.profile.webp",
+      "role": "turnaround",
+      "pose": "profile",
+      "path": "storybook/assets/characters/paperkeeper.profile.webp",
+      "width": 393,
+      "height": 648,
+      "bytes": 55230,
+      "sha256": "616d9a52618d86920a13c703129a13096117adca4e9b05706eb8a670b0ff94c1",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-turnaround-source.webp",
+      "source_box_xyxy": [
+        899,
+        90,
+        1321,
+        808
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.back.webp",
+      "role": "turnaround",
+      "pose": "back",
+      "path": "storybook/assets/characters/paperkeeper.back.webp",
+      "width": 431,
+      "height": 661,
+      "bytes": 64426,
+      "sha256": "c79dc987c50f0276fb563549ffab37a671b26535f12860b32978fdc60f2b1200",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-turnaround-source.webp",
+      "source_box_xyxy": [
+        1320,
+        90,
+        1774,
+        808
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.walk-a.webp",
+      "role": "action",
+      "pose": "walk-a",
+      "path": "storybook/assets/characters/paperkeeper.walk-a.webp",
+      "width": 84,
+      "height": 95,
+      "bytes": 2918,
+      "sha256": "c18785d950eeb33c1288f9b5f2a250cf62f3ac3705b30c5dcba3c9dcd9bfcc5a",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        595,
+        337,
+        684,
+        439
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.walk-b.webp",
+      "role": "action",
+      "pose": "walk-b",
+      "path": "storybook/assets/characters/paperkeeper.walk-b.webp",
+      "width": 69,
+      "height": 95,
+      "bytes": 2776,
+      "sha256": "a6a2e24b5cd2475ffc2dbde539f4da7451a2a23e36962fea0ba70ab17bbba3d6",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        695,
+        337,
+        784,
+        439
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.walk-c.webp",
+      "role": "action",
+      "pose": "walk-c",
+      "path": "storybook/assets/characters/paperkeeper.walk-c.webp",
+      "width": 64,
+      "height": 95,
+      "bytes": 2700,
+      "sha256": "2cc12d5925bde89cad077a3aa725e69c518ad86c7b390590c400729e384def9e",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        787,
+        337,
+        874,
+        439
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.read.webp",
+      "role": "action",
+      "pose": "read",
+      "path": "storybook/assets/characters/paperkeeper.read.webp",
+      "width": 86,
+      "height": 90,
+      "bytes": 3098,
+      "sha256": "83a15ba622c822a8292268b5321dc47b21ff464267e52f32979a32e5b34eeb96",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        1018,
+        337,
+        1106,
+        431
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper.rest.webp",
+      "role": "action",
+      "pose": "rest",
+      "path": "storybook/assets/characters/paperkeeper.rest.webp",
+      "width": 148,
+      "height": 85,
+      "bytes": 4522,
+      "sha256": "2a9a59924d17fbab1de0694d68046f938874a2b441678708eaf7cc3061c52864",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        1342,
+        339,
+        1490,
+        424
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "roundbird.idle.webp",
+      "role": "support",
+      "pose": "roundbird",
+      "path": "storybook/assets/characters/roundbird.idle.webp",
+      "width": 115,
+      "height": 76,
+      "bytes": 2640,
+      "sha256": "63fca6d06947af9206c8f0717d725d296c0d004a99038b1a70318e4deda12369",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        23,
+        483,
+        160,
+        577
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "moth.guide.webp",
+      "role": "support",
+      "pose": "moth",
+      "path": "storybook/assets/characters/moth.guide.webp",
+      "width": 145,
+      "height": 80,
+      "bytes": 3318,
+      "sha256": "5a6a4be9a8ce7f77a679e8308ac0b5c9794d06237e895e7d3a9cf99d7a4e4b88",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "paperkeeper-actions-source.webp",
+      "source_box_xyxy": [
+        168,
+        473,
+        316,
+        572
+      ],
+      "notes": "Digitally illustrated original character sheet, color-threshold silhouette matte; independently reusable RGBA WebP; not extracted from V2 masterboard."
+    },
+    {
+      "name": "paperkeeper-silhouette.webp",
+      "role": "qa-proof",
+      "pose": "four-angle-silhouette",
+      "path": "storybook/assets/characters/paperkeeper-silhouette.webp",
+      "width": 480,
+      "height": 218,
+      "bytes": 15398,
+      "sha256": "c3a5339f4d1d1e2604c8b4f871e18c68dd2beaa6115d0c18448eeda192557619",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "four exported turnaround WebP files",
+      "notes": "Derived visual test atlas, not artwork to crop into independent scene layers."
+    },
+    {
+      "name": "paperkeeper-small-scale.webp",
+      "role": "qa-proof",
+      "pose": "four-angle-miniature",
+      "path": "storybook/assets/characters/paperkeeper-small-scale.webp",
+      "width": 480,
+      "height": 218,
+      "bytes": 26834,
+      "sha256": "940786351f0de42108957baf31f5ffa794af82dc62a75470dddafbde4d72254e",
+      "alpha_minmax": [
+        0,
+        255
+      ],
+      "source": "four exported turnaround WebP files",
+      "notes": "Derived visual test atlas, not artwork to crop into independent scene layers."
+    }
+  ]
+}
