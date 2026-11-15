@@ -15,7 +15,9 @@
   <link rel="stylesheet" href="./src/storybook/styles/tokens.css">
   <link rel="stylesheet" href="./src/storybook/styles/chapters.css">
     <link rel="stylesheet" href="./src/storybook/styles/entrance.css">
+  <link rel="stylesheet" href="./src/storybook/styles/winding-path.css">
   <script type="module" src="./src/storybook/main.js"></script>
+  <script type="module" src="./src/storybook/path.js"></script>
 </head>
 <body class="forest-site">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -61,6 +63,31 @@
       <div class="chapter-inner">
         <div class="section-signature"><span class="section-counter">02 <span>/ 05</span></span><span class="section-name">THE WINDING PATH</span></div>
         <div class="section-intro path-intro"><div><p class="eyebrow" data-copy="winding-path.eyebrow">01 / THE PRACTICE</p><h2 id="winding-path-title" data-copy="winding-path.heading">Every detail<br><em>has a direction.</em></h2></div><p class="lead" data-copy="winding-path.lead">A memorable experience needs more than an unusual image. We shape the idea, design the interaction, and build the thing people actually use.</p></div>
+        
+        <figure class="path-map" data-path-map aria-labelledby="path-map-caption">
+          <div class="path-map-art" aria-hidden="true">
+            <picture>
+              <source media="(max-width: 670px)" srcset="./storybook/assets/winding-path/exports/winding-path-mobile.webp" type="image/webp">
+              <img class="path-map-backdrop" src="./storybook/assets/winding-path/exports/winding-path-desktop.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+            </picture>
+            <img class="path-map-paperkeeper" src="./storybook/assets/characters/paperkeeper.three-quarter.webp" alt="" width="426" height="656" loading="lazy" decoding="async">
+            <img class="path-map-moth" src="./storybook/assets/characters/moth.guide.webp" alt="" width="145" height="80" loading="lazy" decoding="async">
+            <svg class="path-ink path-ink--desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" preserveAspectRatio="none">
+              <path data-path-stroke d="M 84 908 C 288 821 430 743 609 655 S 814 568 838 486 S 1063 392 1127 339 S 1272 235 1440 194"/>
+              <path class="path-ink-gloss" data-path-stroke d="M 84 908 C 288 821 430 743 609 655 S 814 568 838 486 S 1063 392 1127 339 S 1272 235 1440 194"/>
+            </svg>
+            <svg class="path-ink path-ink--portrait" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 1248" preserveAspectRatio="none">
+              <path data-path-stroke d="M 145 1160 C 247 1054 160 929 326 831 S 493 636 418 548 S 510 393 456 296 S 529 172 681 147"/>
+              <path class="path-ink-gloss" data-path-stroke d="M 145 1160 C 247 1054 160 929 326 831 S 493 636 418 548 S 510 393 456 296 S 529 172 681 147"/>
+            </svg>
+          </div>
+          <figcaption class="path-map-caption" id="path-map-caption">
+            <span class="path-map-key"><span>FIELD MAP / THE WINDING PATH</span><span>Follow the line where an idea becomes something real.</span></span>
+            <button class="path-trace-toggle" data-path-trace-toggle type="button" aria-pressed="false" aria-controls="path-trace-status" hidden>Reveal the whole route</button>
+          </figcaption>
+          <p class="path-trace-readout" id="path-trace-status" role="status" aria-live="polite">A pencil route follows the page as you scroll. No part of this journey blocks navigation.</p>
+        </figure>
+
         <div class="path-body">
           <div class="path-services" aria-label="Our areas of practice">
             <div class="column-label"><span>WHAT WE MAKE</span><span>01—04</span></div>

@@ -1,0 +1,61 @@
+name: Forest Stage 07 — Winding Path artwork and functional QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/path.js
+      - src/storybook/styles/winding-path.css
+      - scripts/forest_path_audit.py
+      - scripts/forest_path_smoke.mjs
+      - storybook/assets/winding-path/**
+      - .github/workflows/forest-path.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  winding-path:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit illustration hashes, original source and semantic chapter content
+        run: |
+          python3 -m venv /tmp/forest-path-env
+          /tmp/forest-path-env/bin/pip install 'Pillow>=10,<13'
+          /tmp/forest-path-env/bin/python scripts/forest_path_audit.py
+      - name: Validate scripts and build both GitHub Pages routes
+        run: |
+          node --check src/storybook/path.js
+          node --check scripts/forest_path_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install real-browser test harness
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Audit 8 viewports x 2 compiled routes without taking screenshots
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/forest-stage07-mirror/lazarusdev reports
+          cp -a dist/. /tmp/forest-stage07-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-stage07-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-stage07-mirror > /tmp/forest-stage07-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_path_smoke.mjs | tee reports/forest-stage07-browser-qa.log
+      - name: Upload manifest and test logs only (no screenshots)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage07-manifest-and-qa
+          path: |
+            storybook/assets/winding-path/manifest.json
+            reports/forest-stage07-browser-qa.log
+          if-no-files-found: ignore

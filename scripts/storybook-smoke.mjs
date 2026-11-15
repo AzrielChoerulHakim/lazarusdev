@@ -26,7 +26,7 @@ const browser = await chromium.launch({
   headless: true,
   args: ['--no-sandbox'],
 });
-await mkdir('screenshots/storybook', { recursive: true });
+// No screenshot directory or capture: functional QA only.
 
 const failures = [];
 let passed = 0;
@@ -139,14 +139,7 @@ try {
         check(audit.hasSkip, prefix + 'no skip link');
         check(audit.samples.every(x => x.ratio >= 4.5), prefix + 'text contrast failure ' + JSON.stringify(audit.samples));
 
-        if (profile.name === 'desktop-1440' || profile.name === 'mobile-390') {
-          const name = route === '/lazarusdev/' ? 'root' : 'nested';
-          await page.screenshot({
-            path: 'screenshots/storybook/stage03-' + name + '-' + profile.name + '.png',
-            fullPage: true,
-            animations: 'disabled',
-          });
-        }
+        // Visual screenshots are intentionally not captured (studio policy).
 
         // Native interactive folios and anchored navigation must be usable.
         const concept = page.locator('.work-folio').first();

@@ -52,7 +52,7 @@ jobs:
             sleep 2
           done
           node scripts/storybook-smoke.mjs
-      - name: Upload screenshots and build artifacts
+      - name: Upload build artifacts without screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -60,5 +60,4 @@ jobs:
           path: |
             dist/
             dist-storybook/
-            screenshots/storybook/
           if-no-files-found: ignore

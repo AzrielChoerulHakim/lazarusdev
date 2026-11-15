@@ -1,0 +1,39 @@
+{
+  "schema": "lazarus-forest-path-v1",
+  "chapter": "02 — Winding Path",
+  "version": "1.0.0",
+  "artwork": "Original AI-assisted digital crayon/colored-pencil landscape generated specifically for Lazarus Dev, 2026-11-15.",
+  "source": "New 1536x1024 artwork. NOT sourced from V2 flattened masterboard.",
+  "mobile_provenance": "Purpose-composed portrait traversal via continuous serpentine pixel remapping of this new original painting. Not a separately generated painting, not a basic crop or collage. Re-evaluate mobile-native art at Stage14.",
+  "character": "Reuses unchanged Stage05 Paperkeeper and moth independent transparent assets.",
+  "animation": "One user-invoked SVG pencil-route reveal only. No automatic motion, scroll lock or parallax engine.",
+  "files": [
+    {
+      "path": "source/winding-path-crayon-source.webp",
+      "role": "source",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 701442,
+      "sha256": "eeee8465839cb78dff711a5973d2aa6ca4d60ab183f25df14c808fcf077a8733",
+      "mode": "RGB"
+    },
+    {
+      "path": "exports/winding-path-desktop.webp",
+      "role": "desktop",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 556590,
+      "sha256": "812859af49064831a5ea1586933318d439283eb26eec066990b2343b6353c9da",
+      "mode": "RGB"
+    },
+    {
+      "path": "exports/winding-path-mobile.webp",
+      "role": "mobile",
+      "width": 768,
+      "height": 1248,
+      "bytes": 274448,
+      "sha256": "be25aa62ca3f7865d93debfd8900459e6e299b2b6845de824bb28f66f7ca1a03",
+      "mode": "RGB"
+    }
+  ]
+}

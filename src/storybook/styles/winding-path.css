@@ -1,0 +1,45 @@
+/* Stage 07 — Winding Path. Original tactile illustration, semantic process text.
+ * Only this chapter. It is a map spread, NOT another hero/card template. */
+.chapter-path { background: var(--paper-mist); }
+.chapter-path .path-intro { padding-top: clamp(54px, 8vw, 103px); }
+.path-map { margin: clamp(43px, 5vw, 73px) 0 0; position: relative; isolation: isolate; }
+.path-map-art { position: relative; width: 100%; aspect-ratio: 3 / 2; overflow: hidden; background: #9fbb94; }
+.path-map-art picture, .path-map-art .path-map-backdrop { display: block; width: 100%; height: 100%; }
+.path-map-art .path-map-backdrop { display: block; object-fit: cover; object-position: center; }
+.path-map-paperkeeper { position: absolute; width: auto; height: clamp(145px, 21vw, 275px); max-width: 24%; left: 14%; bottom: 6%; pointer-events: none; filter: drop-shadow(2px 5px 3px rgba(39,56,41,.22)); }
+.path-map-moth { position: absolute; width: clamp(42px, 5vw, 81px); height: auto; top: 24%; left: 53%; pointer-events: none; filter: drop-shadow(1px 2px 2px rgba(39,56,41,.18)); }
+.path-ink { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.path-ink--portrait { display: none; }
+.path-ink path { fill: none; stroke: #fff9dc; stroke-width: 7; opacity: .85; stroke-linecap: round; stroke-linejoin: round; paint-order: stroke; filter: drop-shadow(1px 1px 1px rgba(65,53,25,.58)); }
+.path-ink path.path-ink-gloss { stroke: #e9a25f; stroke-width: 2.4; opacity: .9; filter: none; }
+.path-map-caption { display: flex; align-items: center; justify-content: space-between; gap: 18px; border-bottom: 1px solid var(--line); padding: 19px 0 20px; }
+.path-map-key { display: flex; flex-direction: column; gap: 4px; font: 700 .73rem/1.5 var(--font-ui); letter-spacing: .06em; color: var(--forest); }
+.path-map-key span:last-child { font: italic 400 clamp(1.04rem, 1.4vw, 1.2rem)/1.35 var(--font-reading); letter-spacing: normal; color: var(--ink); }
+.path-trace-toggle { min-height: 48px; min-width: 156px; padding: 10px 17px; border: 1px solid var(--forest); background: var(--paper); color: var(--forest); font: 700 .85rem/1.35 var(--font-ui); text-align: center; cursor: pointer; }
+.path-trace-toggle:hover { background: var(--forest); color: var(--paper); }
+.path-trace-toggle:focus-visible { outline: 3px solid var(--forest); outline-offset: 3px; }
+.path-trace-toggle[hidden] { display: none; }
+.path-trace-readout { margin: 12px 0 0; font: 400 .96rem/1.5 var(--font-reading); color: var(--ink); }
+.chapter-path .path-body { margin-top: clamp(62px, 8vw, 113px); }
+.chapter-path .path-note-inner { border: 0; border-top: 1.5px solid var(--forest); padding: 22px 0 0; min-height: 0; }
+.chapter-path .path-note-number { margin-bottom: clamp(38px, 8vw, 112px); text-align: right; }
+@media (min-width: 1441px) { .path-map { max-width: 1290px; margin-inline: auto; } }
+@media (max-width: 670px) {
+  .path-map { margin-top: 38px; }
+  .path-map-art { aspect-ratio: 8 / 13; }
+  .path-map-backdrop { object-position: center; }
+  .path-ink--desktop { display: none; }
+  .path-ink--portrait { display: block; }
+  .path-ink path { stroke-width: 5.4; }
+  .path-ink path.path-ink-gloss { stroke-width: 2; }
+  .path-map-paperkeeper { height: clamp(110px, 31vw, 168px); max-width: 34%; left: 11%; bottom: 8%; }
+  .path-map-moth { width: clamp(35px, 9vw, 58px); left: 48%; top: 35%; }
+  .path-map-caption { align-items: stretch; flex-direction: column; gap: 14px; padding-block: 15px 19px; }
+  .path-map-key { font-size: .69rem; }
+  .path-trace-toggle { width: 100%; }
+  .chapter-path .path-body { margin-top: 67px; }
+  .chapter-path .path-note-number { margin-bottom: 30px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .path-map, .path-ink path { animation: none !important; transition: none !important; }
+}

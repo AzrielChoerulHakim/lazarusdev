@@ -17,7 +17,7 @@ const profiles=[
   {id:'desktop-1440',w:1440,h:900},
   {id:'short-landscape',w:844,h:390},
 ];
-await mkdir('screenshots/forest-entrance',{recursive:true});
+// No screenshot capture; browser assertions remain active.
 const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let passed=0;
 try{
@@ -97,10 +97,7 @@ try{
         const overlapX=Math.max(0,Math.min(audit.text.right,audit.character.right)-Math.max(audit.text.x,audit.character.x));
         const overlapY=Math.max(0,Math.min(audit.text.bottom,audit.character.bottom)-Math.max(audit.text.y,audit.character.y));
         assert.ok(overlapX*overlapY<800,context+' Paperkeeper obstructs text ('+(overlapX*overlapY)+')');
-        if(p.id==='desktop-1440'||p.id==='mobile-390'||p.id==='narrow-320'||p.id==='short-landscape'){
-          const n=route==='/lazarusdev/'?'root':'nested';
-          await page.screenshot({path:'screenshots/forest-entrance/stage06-'+n+'-'+p.id+'.png',fullPage:true,animations:'disabled'});
-        }
+        // User preference: no automatic screenshots, regardless of viewport.
         // Skip anchor is a real link, not a simulated scroll scene.
         const primary=page.locator('#entrance .button-primary');
         await primary.click();

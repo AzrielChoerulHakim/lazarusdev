@@ -49,7 +49,7 @@ jobs:
             sleep 2
           done
           node scripts/forest_entrance_smoke.mjs
-      - name: Upload artwork, browser screenshots and manifest
+      - name: Upload artwork and manifest (no screenshots)
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -57,5 +57,4 @@ jobs:
           path: |
             storybook/assets/entrance/exports/
             storybook/assets/entrance/manifest.json
-            screenshots/forest-entrance/
           if-no-files-found: ignore
