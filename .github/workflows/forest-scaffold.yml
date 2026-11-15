@@ -1,4 +1,4 @@
-name: Forest Foundation — build and browser verification
+name: Forest Stage 03 — semantic UI and responsive audit
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
   contents: read
 
 jobs:
-  forest-foundation:
+  forest-storybook:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
@@ -23,23 +23,25 @@ jobs:
           node-version: '22'
       - name: Install frontend dependencies
         run: npm install --no-audit --no-fund
-      - name: Reject legacy 3D build artifacts
+      - name: Reject legacy 3D source and check JS
         run: |
           test ! -f src/world.js
           test ! -f src/sculpture.js
           test ! -d assets
           test ! -f scripts/smoke.mjs
-          test ! -e public/favicon.svg
           ! grep -q '"three"' package.json
-      - name: Build new root website
-        run: npm run build
-      - name: Build secondary storybook preview
-        run: npm run build:storybook
-      - name: Install browser harness
+          node --check src/storybook/main.js
+          node --check src/storybook/data/content.js
+          node --check scripts/storybook-smoke.mjs
+      - name: Build both GitHub Pages routes
+        run: |
+          npm run build
+          npm run build:storybook
+      - name: Browser harness
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1
           google-chrome --version
-      - name: Verify production-shaped subpath and live root experience
+      - name: Real browser audit, 8 viewports x 2 routes
         run: |
           mkdir -p /tmp/forest-mirror/lazarusdev
           cp -a dist/. /tmp/forest-mirror/lazarusdev/
@@ -49,13 +51,12 @@ jobs:
             if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
             sleep 2
           done
-          STORYBOOK_PREVIEW_URL=http://127.0.0.1:4186/lazarusdev/ node scripts/storybook-smoke.mjs
           node scripts/storybook-smoke.mjs
-      - name: Upload verified page and screenshots
+      - name: Upload screenshots and build artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: forest-main-foundation
+          name: forest-stage03-interface-audit
           path: |
             dist/
             dist-storybook/

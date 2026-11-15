@@ -1,13 +1,10 @@
-# Forest artwork — Stage 02 placeholder directory
+# Future forest artwork — not yet created
 
-The approved master design is **The Forest Between Pages V2**.
-This directory intentionally contains no illustration exports yet.
+Master: **The Forest Between Pages V2**.
 
-- Stage 02: isolated page, content source, static preview build only.
-- Stage 03: visual tokens and semantic UI shell.
-- Stage 04: artwork source/export rules and an independently authored test layer.
-- Stage 05: Paperkeeper character bible.
-- Stages 06–10: original scene assets.
+- Stage 03: editorial type, semantic content and responsive controls now implemented.
+- Stage 04: produce original, independently usable crayon backgrounds/foreground layers.
+- Stage 05: Paperkeeper and supporting character bible.
+- Stages 06–10: art-directed scene assets for five separate chapters.
 
-Do not crop the flattened masterboard into fake layers; do not add generic vector
-forest stand-ins. A real layered art pipeline and provenance are mandatory.
+**No production forest artwork is in this directory yet.** Layouts expose deliberate art mounts rather than borrowing generic vector mushrooms, fabricated textured cards or cropping the flattened master. Asset originality and consistent illustration craft are mandatory in later stages.

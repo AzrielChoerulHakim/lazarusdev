@@ -1,23 +1,20 @@
 # LAZARUS DEV — The Forest Between Pages
 
-The **main website** has been replaced with the existing Stage 02 forest-storybook foundation at the repository root.
-
 **Live:** https://azrielchoerulhakim.github.io/lazarusdev/
 
-**Current state:** this is an engineering/content foundation, **not** the approved finished illustrated master, a finished interactive five-chapter website, or a Stage 03 implementation. The original crayon layers, Paperkeeper and chapter interactions remain future work. No generic AI forest assets have been introduced as placeholders.
+The live root is now the **Stage 03 semantic storybook shell**: accessible, responsive typography and navigation across five mapped chapters. This is the design system / editorial foundation, **not the final illustrated book**. Original crayon forest assets, the Paperkeeper model bible, layered scenes, narrative animations and working project enquiry remain reserved for later stages.
 
-## Active source tree
+## Design authority
 
-- \`index.html\`: currently published root entry page.
-- \`src/storybook/main.js\`: mounts the five chapters' names from Stage 01 narrative data.
-- \`src/storybook/data/content.js\`: established content contract for the future chapters.
-- \`src/storybook/styles/scaffold.css\`: temporary, namespaced Stage 02 readable foundation.
-- \`storybook/index.html\`: same scaffold at a secondary nested URL.
-- \`vite.config.js\`: relative-base production build, suitable for deployment to \`/lazarusdev/\`.
-- \`vite.storybook.config.js\`: optional dedicated standalone Stage 02 artifact.
-- \`docs/forest/ART-DIRECTION-LOCK.md\`: binding Master Design V2 and anti-generic requirements.
-- \`docs/forest/01-content-map.md\`: editorial/narrative reference.
-- \`docs/forest/02-root-replacement.md\`: migration, deleted legacy systems, validation and rollback.
+- \`docs/forest/ART-DIRECTION-LOCK.md\` — approved Master Design V2 identity, colors and no-generic constraint.
+- \`docs/forest/01-content-map.md\` — five chapters and transparent concept-project claims.
+- \`docs/forest/03-design-system.md\` — Stage 03 UI tokens, responsive behavior, a11y audit, limitations.
+- \`src/storybook/styles/tokens.css\` — V2 core palette, type stack, global accessible controls.
+- \`src/storybook/styles/chapters.css\` — distinct editorial compositions of Entrance, Winding Path, Work Clearing, River Stories, and House on the Hill.
+- \`src/storybook/main.js\` — content contract, plain-text data sync, mobile nav and current-chapter state.
+- \`src/storybook/data/content.js\` — copy source; speculative projects labeled concepts.
+
+The normal GitHub Pages root \`index.html\` and nested \`storybook/index.html\` are equivalent standalone entrances, each using route-correct relative paths.
 
 ## Commands
 
@@ -30,15 +27,10 @@ npm run build:storybook
 npm run preview:storybook
 \`\`\`
 
-No Three.js/WebGL runtime or 3D asset dependency remains in the **active source tree**.
+## Quality gate
 
-## Important boundaries
+\`.github/workflows/forest-scaffold.yml\` builds both routes, verifies the legacy 3D stack is absent, runs Playwright across 320, 375, 390, 430, 768, 1024, 1440 and 844x390 short-landscape sizes, tests nav/focus/anchors/details/contrast/touch target and reduced motion, captures desktop/mobile screenshots and uploads the artifacts.
 
-This migration does NOT implement Stage 03 (visual design system), Stage 04 (artwork), Stage 05 (Paperkeeper bible) or later immersive chapters. The production site **currently shows a plainly labeled Stage 02 foundation**. New content should not falsely present studio concepts as completed client work. Contact submissions and journal publication are not implemented.
+**No claim of final art-direction approval:** stage 04+ must create independent original illustration assets rather than fake SVG mascots, stock graphics, general noise overlays or crops from the master image. A full production accessibility and performance audit remains for stage 15/16.
 
-## Recovery
-
-For disaster recovery only, the prior 3D experience remains accessible on the isolated historical ref:
-\`archive/3d-pre-storybook-2026-11-15\` at \`e5edde4d2b1b5a0345432cc8e472905b1364e9d4\`.
-
-This archived history is separate from the new live \`main\` tree; its code is **not loaded** by the current website.
+The former 3D project is not in the active code tree. Its historical source is retained separately on \`archive/3d-pre-storybook-2026-11-15\`, not included in the deployed site.
