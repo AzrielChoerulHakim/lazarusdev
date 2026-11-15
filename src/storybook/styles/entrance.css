@@ -1,0 +1,204 @@
+/* The Forest Between Pages — Stage 06 ONLY. Independently illustrated gateway.
+ * Live HTML retains every label, link and action even if art does not load.
+ * The non-generic crayon scene is a real illustration, never an SVG replacement. */
+.chapter-entrance {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: 780px;
+  background: var(--paper);
+}
+.entrance-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.entrance-canvas picture,
+.entrance-canvas .entrance-backdrop {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.entrance-canvas .entrance-backdrop {
+  object-fit: cover;
+  object-position: center 46%;
+}
+.chapter-entrance .page-edge,
+.chapter-entrance .hero-layout,
+.chapter-entrance .chapter-tail {
+  position: relative;
+  z-index: 1;
+}
+.chapter-entrance .page-edge {
+  max-width: 1350px;
+  padding-top: 22px;
+}
+.chapter-entrance .hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  gap: clamp(12px, 2vw, 34px);
+  min-height: clamp(690px, calc(100svh - 177px), 880px);
+  padding-block: clamp(70px, 7vw, 108px) 98px;
+  align-items: center;
+}
+.chapter-entrance .hero-copy {
+  z-index: 2;
+  min-width: 0;
+  align-self: center;
+}
+.chapter-entrance .hero-copy .eyebrow {
+  max-width: 48ch;
+  margin-bottom: clamp(18px, 2.3vw, 28px);
+  font-size: clamp(.75rem, .94vw, .87rem);
+  letter-spacing: .08em;
+}
+.chapter-entrance .hero-copy h1 {
+  max-width: 12.5ch;
+  color: var(--forest);
+  font-size: clamp(3.7rem, 5.45vw, 5.55rem);
+  line-height: 1.055;
+  letter-spacing: -.062em;
+  text-wrap: balance;
+}
+.chapter-entrance .hero-copy h1 em { color: var(--forest); }
+.chapter-entrance .hero-lead {
+  margin-top: clamp(19px,2.4vw,33px);
+  max-width: 36ch;
+  color: var(--ink);
+  font-size: clamp(1.075rem, 1.4vw, 1.3rem);
+  line-height: 1.58;
+}
+.chapter-entrance .action-row { margin-top: clamp(22px, 2.65vw, 34px); }
+.chapter-entrance .button-primary {
+  border-radius: 60% 48% 52% 48% / 12% 18% 17% 23%;
+  box-shadow: 2px 4px 0 rgba(39, 56, 41, .15);
+}
+.chapter-entrance .button-primary:hover { box-shadow: 1px 3px 0 rgba(39, 56, 41, .2); }
+.chapter-entrance .hero-footnote {
+  margin-top: clamp(29px, 4vw, 51px);
+  font-size: .82rem;
+}
+.entrance-stage {
+  z-index: 1;
+  position: relative;
+  margin: 0;
+  height: 100%;
+  min-height: 435px;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+.entrance-paperkeeper {
+  position: relative;
+  display: block;
+  height: clamp(230px, 22vw, 330px);
+  width: auto;
+  max-width: 40vw;
+  object-fit: contain;
+  object-position: bottom left;
+  margin-left: clamp(-80px, -4vw, -18px);
+  margin-bottom: clamp(-8px, 1vw, 22px);
+  filter: drop-shadow(1px 6px 2px rgba(48,66,43,.22));
+}
+.entrance-figcaption { position: absolute; width: 1px; height: 1px; overflow: hidden; white-space: nowrap; clip-path: inset(50%); }
+.chapter-entrance .chapter-tail {
+  min-height: 78px;
+  border-top: 1px solid rgba(36,79,59,.26);
+  font-size: .76rem;
+}
+.entrance-leaf-link {
+  display: inline-flex;
+  min-width: 58px;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  color: var(--forest);
+  border-radius: 50%;
+}
+.entrance-leaf-link img {
+  display: block;
+  width: 46px;
+  height: 48px;
+  object-fit: contain;
+  transform: rotate(-10deg);
+  transition: transform .2s ease;
+}
+.entrance-leaf-link:hover img, .entrance-leaf-link:focus-visible img { transform: translateY(4px) rotate(5deg); }
+.entrance-leaf-link:focus-visible { outline: 3px solid var(--forest); outline-offset: 3px; }
+.entrance-tail-caption { display: inline-flex; align-items: center; gap: 15px; }
+.entrance-tail-caption > span:last-child { opacity: .82; }
+.entrance-tail-index { font: italic 400 1.2rem/1 var(--font-display); }
+
+@media (min-width: 1600px) {
+  .entrance-canvas .entrance-backdrop { object-position: center 50%; }
+}
+@media (max-width: 1120px) and (min-width: 671px) {
+  .chapter-entrance .hero-layout { grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr); min-height: 685px; padding-block: 54px 70px; }
+  .chapter-entrance .hero-copy h1 { font-size: clamp(3.5rem, 6vw, 5rem); }
+  .entrance-paperkeeper { height: clamp(205px, 25vw, 285px); margin-left: clamp(-55px, -3vw, -10px); }
+}
+@media (max-width: 670px) {
+  .chapter-entrance { min-height: 1110px; }
+  .entrance-canvas .entrance-backdrop { object-fit: cover; object-position: center top; }
+  .chapter-entrance .page-edge { font-size: .64rem; padding-top: 18px; }
+  .chapter-entrance .hero-layout {
+    min-height: 1000px;
+    padding-top: clamp(56px, 8svh, 82px);
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  .chapter-entrance .hero-copy { flex: none; align-self: stretch; }
+  .chapter-entrance .hero-copy .eyebrow { font-size: .7rem; letter-spacing: .06em; margin-bottom: 18px; max-width: 31ch; }
+  .chapter-entrance .hero-copy h1 { font-size: clamp(2.8rem, 10.7vw, 4.55rem); line-height: 1.03; max-width: 12ch; letter-spacing: -.064em; }
+  .chapter-entrance .hero-lead { font-size: clamp(1.05rem,3.8vw,1.2rem); line-height: 1.5; max-width: 34ch; margin-top: 22px; }
+  .chapter-entrance .action-row { margin-top: 21px; gap: 13px 19px; }
+  .chapter-entrance .button-primary { min-height: 50px; padding-inline: 19px; }
+  .chapter-entrance .hero-footnote { margin-top: 24px; font-size: .76rem; }
+  .entrance-stage {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    min-height: 220px;
+    margin-top: 12px;
+    align-self: flex-end;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  .entrance-paperkeeper {
+    width: auto;
+    height: clamp(155px, 49vw, 228px);
+    max-width: 56vw;
+    margin-left: 0;
+    margin-bottom: clamp(24px, 12vw, 67px);
+  }
+  .chapter-entrance .chapter-tail {
+    position: relative;
+    min-height: 70px;
+    margin-top: -70px;
+    font-size: .68rem;
+  }
+  .entrance-leaf-link { width: 52px; height: 52px; min-width: 52px; min-height: 52px; }
+  .entrance-leaf-link img { width: 42px; height: 44px; }
+}
+@media (max-width: 390px) {
+  .chapter-entrance { min-height: 1090px; }
+  .chapter-entrance .hero-layout { min-height: 975px; padding-top: 48px; }
+  .chapter-entrance .hero-copy h1 { font-size: clamp(2.54rem, 11.1vw, 2.8rem); }
+  .chapter-entrance .action-row { align-items: flex-start; gap: 11px; }
+  .entrance-paperkeeper { height: 160px; margin-bottom: 52px; }
+  .chapter-entrance .page-edge { gap: 4px; }
+}
+@media (max-height: 460px) and (min-width: 671px) {
+  .chapter-entrance .hero-layout { min-height: 660px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entrance-leaf-link img { transition: none !important; transform: none !important; }
+}

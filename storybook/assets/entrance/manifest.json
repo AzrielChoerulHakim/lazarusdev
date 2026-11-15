@@ -1,0 +1,83 @@
+{
+  "schema": "lazarus-forest-entrance-v1",
+  "stage": "06",
+  "master": "The Forest Between Pages V2",
+  "masterboard_crop": false,
+  "source_type": "Two independently generated original digital crayon illustrations (desktop and portrait), not hand-painted or cropped from the master board",
+  "art_review": "CI technical PASS only; manual/editorial signoff required",
+  "character_from": "storybook/assets/characters/paperkeeper.three-quarter.webp",
+  "sources": [
+    {
+      "name": "entrance-gate-art-source.webp",
+      "path": "source/entrance-gate-art-source.webp",
+      "format": "WEBP",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 686832,
+      "sha256": "244e7da521d16d5943fe1c931b4db9bfcdae96416407127211310517ab6a3f2d",
+      "max_bytes": 1250000,
+      "license": "Original AI-assisted digital painting/cutout for Lazarus Dev; not masterboard-cropped"
+    },
+    {
+      "name": "entrance-portrait-art-source.webp",
+      "path": "source/entrance-portrait-art-source.webp",
+      "format": "WEBP",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "mode": "RGB",
+      "bytes": 490342,
+      "sha256": "b79eb78c65b6a1a4ad2473a8493982a93a79bef151259c3087faa5638cf9d205",
+      "max_bytes": 1250000,
+      "license": "Original AI-assisted digital painting/cutout for Lazarus Dev; not masterboard-cropped"
+    }
+  ],
+  "exports": [
+    {
+      "name": "entrance-desktop.webp",
+      "path": "exports/entrance-desktop.webp",
+      "format": "WEBP",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGB",
+      "bytes": 319778,
+      "sha256": "b2f3114ed393bbe6ac2f06c2ed6399bfc8b82bbadc4fa713ec70b6108df334ae",
+      "max_bytes": 500000,
+      "license": "Original AI-assisted digital painting/cutout for Lazarus Dev; not masterboard-cropped"
+    },
+    {
+      "name": "entrance-leaf-cue.webp",
+      "path": "exports/entrance-leaf-cue.webp",
+      "format": "WEBP",
+      "dimensions": [
+        138,
+        148
+      ],
+      "mode": "RGBA",
+      "bytes": 5570,
+      "sha256": "a074de403b7c1d6de5c16680e398248f1b9781519e690de66115b3ff3f9fd5da",
+      "max_bytes": 500000,
+      "license": "Original AI-assisted digital painting/cutout for Lazarus Dev; not masterboard-cropped"
+    },
+    {
+      "name": "entrance-mobile.webp",
+      "path": "exports/entrance-mobile.webp",
+      "format": "WEBP",
+      "dimensions": [
+        768,
+        1320
+      ],
+      "mode": "RGB",
+      "bytes": 214346,
+      "sha256": "89fff9455204983742b32be8bae72dc06ddaf4362f3f198999e8f3eaa328c907",
+      "max_bytes": 500000,
+      "license": "Original AI-assisted digital painting/cutout for Lazarus Dev; not masterboard-cropped"
+    }
+  ]
+}

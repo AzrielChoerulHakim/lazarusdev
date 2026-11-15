@@ -14,6 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./src/storybook/styles/tokens.css">
   <link rel="stylesheet" href="./src/storybook/styles/chapters.css">
+    <link rel="stylesheet" href="./src/storybook/styles/entrance.css">
   <script type="module" src="./src/storybook/main.js"></script>
 </head>
 <body class="forest-site">
@@ -34,6 +35,12 @@
 
   <main id="page-content">
     <section class="chapter chapter-entrance" id="entrance" data-chapter aria-labelledby="entrance-title">
+      <div class="entrance-canvas" aria-hidden="true">
+        <picture aria-hidden="true">
+          <source media="(max-width: 670px)" srcset="./storybook/assets/entrance/exports/entrance-mobile.webp" type="image/webp">
+          <img class="entrance-backdrop" src="./storybook/assets/entrance/exports/entrance-desktop.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high" loading="eager">
+        </picture>
+      </div>
       <div class="page-edge"><span>FIELD GUIDE TO THE UNEXPECTED</span><span>LAZARUS DEV / EST. 2026</span></div>
       <div class="chapter-inner hero-layout">
         <div class="hero-copy">
@@ -43,15 +50,13 @@
           <div class="action-row"><a class="button button-primary" href="#work-clearing">Explore the work <span aria-hidden="true">↗</span></a><a class="text-link" href="#winding-path">Follow the path <span aria-hidden="true">→</span></a></div>
           <div class="hero-footnote"><span class="mini-rule" aria-hidden="true"></span><span>Every world begins somewhere.</span></div>
         </div>
-        <figure class="art-reserve art-reserve-entrance">
-          <div class="art-reserve-top"><span>PLATE 01 — THE ENTRANCE</span><span>01 / 05</span></div>
-          <div class="art-reserve-space entrance-scene" aria-hidden="true"><img class="entrance-landscape" src="./storybook/assets/scenes/entrance/entrance-forest.desktop.webp" width="1280" height="853" alt="" decoding="async" fetchpriority="high"><img class="entrance-paperkeeper" src="./storybook/assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" alt="" decoding="async"></div>
-          <figcaption>Entrance illustration study: an original colored-pencil woodland gateway with the Paperkeeper. Full independent layered scene and mobile-specific composition remain under art-direction review.</figcaption>
+        <figure class="entrance-stage">
+          <img class="entrance-paperkeeper" src="./storybook/assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" decoding="async" loading="eager" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
+          <figcaption class="entrance-figcaption">A moss-covered stone arch opens into a forest path. Paperkeeper invites visitors to explore Lazarus Dev.</figcaption>
         </figure>
       </div>
-      <div class="chapter-tail"><span>THE PATH CONTINUES BELOW</span><a href="#winding-path" aria-label="Go to Approach">↓</a></div>
+      <div class="chapter-tail"><span class="entrance-tail-caption"><span class="entrance-tail-index">01 / 05</span><span>THE PATH CONTINUES BELOW</span></span><a class="entrance-leaf-link" href="#winding-path" aria-label="Continue into the forest, to Approach"><img src="./storybook/assets/entrance/exports/entrance-leaf-cue.webp" width="138" height="148" alt="" loading="eager" decoding="async"></a></div>
     </section>
-
     <section class="chapter chapter-path" id="winding-path" data-chapter aria-labelledby="winding-path-title">
       <div class="chapter-inner">
         <div class="section-signature"><span class="section-counter">02 <span>/ 05</span></span><span class="section-name">THE WINDING PATH</span></div>
