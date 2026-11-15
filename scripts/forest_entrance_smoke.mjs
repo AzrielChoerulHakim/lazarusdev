@@ -66,6 +66,7 @@ try{
             character:bounds('.entrance-paperkeeper'),
             cta:bounds('#entrance .button-primary'),
             leafBox:bounds('.entrance-leaf-link'),
+            tailIndex:{ height:bounds('.entrance-tail-index').height, whiteSpace:getComputedStyle(document.querySelector('.entrance-tail-index')).whiteSpace },
             pictureHidden:pic.getAttribute('alt')==='' && pic.parentElement.getAttribute('aria-hidden')==='true',
             personAlt:person.getAttribute('alt')||'',
           };
@@ -87,6 +88,10 @@ try{
         assert.ok(audit.personAlt.includes('Paperkeeper'),context+' meaningful hero alt');
         assert.ok(audit.cta.height>=44&&audit.cta.width>=44,context+' CTA touch target');
         assert.ok(audit.leafBox.height>=44&&audit.leafBox.width>=44,context+' leaf touch target');
+        if(p.w<=390){
+          assert.equal(audit.tailIndex.whiteSpace,'nowrap',context+' chapter index no-wrap');
+          assert.ok(audit.tailIndex.height<25,context+' chapter index must remain one line');
+        }
         // Character and text are two independent layers; their visible bounding
         // boxes may touch, but must not overlap significantly at any breakpoint.
         const overlapX=Math.max(0,Math.min(audit.text.right,audit.character.right)-Math.max(audit.text.x,audit.character.x));

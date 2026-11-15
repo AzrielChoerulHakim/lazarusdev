@@ -56,3 +56,13 @@ Technical proof of responsive illustration, assets and HTML usability is an engi
 ## Editorial disposition
 
 The actual rendered artwork is unique digital colored-pencil art, not a generic CSS/vector substitute. The independent background painting, Paperkeeper cutout and foreground leaf afford a real three-asset composition (two environmental planes are **not** claimed). Creative approval against the exact V2 master still requires human review of screenshots. 
+
+## Stage 06 art-direction decision — 15 November 2026
+
+The studio's implementation review compared the exact approved `master-board-v2.png` (SHA-256 `e6bd07a35e3a79b7cca5e2832b301aa2a2cbb13af46942eb2c95460358f85403`) with real browser screenshots at desktop 1440, portrait 390 and narrow portrait 320. This is an **editorial assessment**, not an automated originality certification or a claim of third-party human sign-off.
+
+**Decision: Accept the Entrance visual as the Stage 06 working art direction** on the authority of the locked V2 master, without requiring further end-user subjective screenshot approvals. The scene preserves the identifiable mossy stone arch and book-like woodland path, directional colored-pencil strokes, ochre/forest/blue accents, quiet paper-colored reading field, and the exact Stage 05 Paperkeeper character. The independently illustrated mobile image has its own portrait composition, not a desktop crop. No human traveler, AI chibi, invented mascots or baked-in raster headings were promoted. The single leaf remains a real keyboard-accessible anchor.
+
+**320px refinement:** chapter-index label must remain on one line instead of wrapping 01 / 05 vertically; the responsive test now asserts this. The character at small mobile widths deliberately remains small to give the illustrated forest a sense of scale, while the primary content remains HTML-first.
+
+**Scope:** Stage 06 consists of the independent environmental painting, Paperkeeper cutout and illustrated leaf cue. It is **not** a claim that true independent foreground/midground parallax sheets or final animated sprites have been produced. Those remain distinct later deliverables (especially Stages 11–12). Global chapter-to-chapter consistency and any final lettering refinements remain reviewable at Stage 17; none block publishing the isolated Chapter 01 artwork under this design decision.

@@ -195,6 +195,12 @@
   .chapter-entrance .action-row { align-items: flex-start; gap: 11px; }
   .entrance-paperkeeper { height: 160px; margin-bottom: 52px; }
   .chapter-entrance .page-edge { gap: 4px; }
+  /* Keep the chapter marker readable at the narrowest portrait width. */
+  .chapter-entrance .chapter-tail { gap: 8px; }
+  .chapter-entrance .entrance-tail-caption { gap: 7px; min-width: 0; }
+  .chapter-entrance .entrance-tail-index { white-space: nowrap; flex: none; font-size: 1.02rem; }
+  .chapter-entrance .entrance-tail-caption > span:last-child { white-space: nowrap; font-size: .57rem; letter-spacing: .02em; }
+  .chapter-entrance .entrance-leaf-link { flex: none; }
 }
 @media (max-height: 460px) and (min-width: 671px) {
   .chapter-entrance .hero-layout { min-height: 660px; }
