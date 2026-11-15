@@ -55,7 +55,7 @@ try {
         await page.evaluate(() => document.fonts?.ready);
         const audit = await page.evaluate(() => {
           const selectors = ['.hero-lead', '.chapter-path .lead', '.disclosure', '.folio-status',
-            '.river-pages .eyebrow', '.house-statement .lead', '.house-contact .house-status'];
+            '.river-notebook-head .eyebrow', '.house-statement .lead', '.house-contact .house-status'];
           const parseRGB = css => {
             const m = css.match(/rgba?\(([^)]+)\)/);
             if (!m) return null;
