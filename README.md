@@ -1,58 +1,44 @@
-# LAZARUS DEV — The Rupture
+# LAZARUS DEV — The Forest Between Pages
 
-A surrealist digital experience for an independent creative development studio. **Actual interactive WebGL**, not a video, iframe, or still-image parallax.
+The **main website** has been replaced with the existing Stage 02 forest-storybook foundation at the repository root.
 
 **Live:** https://azrielchoerulhakim.github.io/lazarusdev/
 
-## Get started
+**Current state:** this is an engineering/content foundation, **not** the approved finished illustrated master, a finished interactive five-chapter website, or a Stage 03 implementation. The original crayon layers, Paperkeeper and chapter interactions remain future work. No generic AI forest assets have been introduced as placeholders.
 
-```bash
+## Active source tree
+
+- \`index.html\`: currently published root entry page.
+- \`src/storybook/main.js\`: mounts the five chapters' names from Stage 01 narrative data.
+- \`src/storybook/data/content.js\`: established content contract for the future chapters.
+- \`src/storybook/styles/scaffold.css\`: temporary, namespaced Stage 02 readable foundation.
+- \`storybook/index.html\`: same scaffold at a secondary nested URL.
+- \`vite.config.js\`: relative-base production build, suitable for deployment to \`/lazarusdev/\`.
+- \`vite.storybook.config.js\`: optional dedicated standalone Stage 02 artifact.
+- \`docs/forest/ART-DIRECTION-LOCK.md\`: binding Master Design V2 and anti-generic requirements.
+- \`docs/forest/01-content-map.md\`: editorial/narrative reference.
+- \`docs/forest/02-root-replacement.md\`: migration, deleted legacy systems, validation and rollback.
+
+## Commands
+
+\`\`\`bash
 npm install
 npm run dev
 npm run build
 npm run preview
-```
+npm run build:storybook
+npm run preview:storybook
+\`\`\`
 
-The website works both as a Vite build and directly from GitHub Pages source (using a pinned Three.js import map). Set Vercel's framework to **Vite** and output directory to **dist** if connecting a Vercel project later.
+No Three.js/WebGL runtime or 3D asset dependency remains in the **active source tree**.
 
-## The world
+## Important boundaries
 
-- **CC0 artist-modelled bust:** a real 3D marble sculpture by Rico Cilliers (Poly Haven), with embedded glTF PBR maps. Two independently clipped instances create a surreal gap across the face. The original procedural bust remains a loading/failure fallback.
-- **Weathered architectural surfaces:** three local photographic sandstone PBR maps (diffuse/normal/roughness), CC0 by Dimitrios Savva, on original procedural masonry. Fine abrasions follow column curvature, and small instanced limestone grains settle across the portal foundation.
-- **Lighting:** coordinated HDRI and upper-left golden-hour key, gentle cool photographic fill, sculptural rim light and targeted portal glow; bias-corrected high-resolution soft shadows on capable GPUs.
-- **Atmosphere:** hundreds of depth-tested, softly shaded 3D limestone motes (including fine sediment falling through the scanned fracture), subdued distance haze, procedural clouds, a responsive water shader with subtle contact occlusion beneath the portal foundations, moon and carved stone architecture.
-- **Motion:** multi-subdivision folded cloth geometry, a portal shader, scroll-following camera paths with separate mobile framing and restrained pointer parallax.
-- **Editorial website:** selected worlds (clearly marked concepts), capabilities, manifesto, accessible navigation, dialogs, and a local-only project brief builder.
+This migration does NOT implement Stage 03 (visual design system), Stage 04 (artwork), Stage 05 (Paperkeeper bible) or later immersive chapters. The production site **currently shows a plainly labeled Stage 02 foundation**. New content should not falsely present studio concepts as completed client work. Contact submissions and journal publication are not implemented.
 
-**Attribution and exact SHA-256 hashes:** [assets/ATTRIBUTION.md](assets/ATTRIBUTION.md).
+## Recovery
 
-## Quality pipeline
+For disaster recovery only, the prior 3D experience remains accessible on the isolated historical ref:
+\`archive/3d-pre-storybook-2026-11-15\` at \`e5edde4d2b1b5a0345432cc8e472905b1364e9d4\`.
 
-```text
-GitHub push
-  ├── verify JS syntax + Vite production build
-  ├── Playwright WebGL 2 desktop/mobile: verify bust and sandstone actually load
-  ├── test navigation, project detail dialogs and portal scroll
-  ├── save screenshots to GitHub Actions artifacts
-  └── render isolated visual QA branch snapshots for art-direction review
-```
-
-Build and browser verification: [GitHub Actions](../../actions/workflows/build.yml).
-
-Visual snapshot workflow: [GitHub Actions](../../actions/workflows/visual-qa.yml).
-
-The snapshot screenshots live on separate `visual-qa-<commit>` branches rather than inflating the main production repository.
-
-## Performance and accessibility
-
-- Hardware/software renderer detection; software GPU disables dynamic shadows and reduces pixel ratio; mobile has an independent resolution budget.
-- `prefers-reduced-motion`, a working motion toggle, visibility-aware animation loop and a usable no-WebGL fallback.
-- Semantic headings, focus styles, accessible dialogs, keyboard-usable navigation, skip link and native brief validation.
-- Progressive GLB/PBR loading; the HTML experience remains available during downloads.
-
-## Remaining production requirements
-
-- The sample project cards are **fictional explorations**, not completed client commissions.
-- The brief dialog **does not send** data. Connect a verified studio contact channel or backend before taking client requests.
-- This CC0 marble sculpt is **not the exact head in the reference painting**. Matching that illustration exactly would require a custom sculpt and art-directed topology work.
-- Professional cross-browser physical-device profiling and visual sign-off are still recommended before marketing claims such as a guaranteed 60 FPS.
+This archived history is separate from the new live \`main\` tree; its code is **not loaded** by the current website.

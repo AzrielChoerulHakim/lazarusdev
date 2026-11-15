@@ -1,7 +1,7 @@
 {
-  "name": "lazarus-dev-surreal",
+  "name": "lazarus-dev-forest-storybook",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0-foundation",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -9,9 +9,6 @@
     "preview": "vite preview --host 0.0.0.0",
     "build:storybook": "vite build --config vite.storybook.config.js",
     "preview:storybook": "vite preview --config vite.storybook.config.js --host 0.0.0.0"
-  },
-  "dependencies": {
-    "three": "^0.180.0"
   },
   "devDependencies": {
     "vite": "^7.1.0"
