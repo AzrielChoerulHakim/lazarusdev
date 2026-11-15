@@ -1,0 +1,134 @@
+/* The Forest Between Pages — Stage 08 / Chapter 03 ONLY.
+   Artwork is a woodland installation of three hanging paper studies,
+   deliberately not a repeated CSS card component or another hero.
+   Text and destinations remain genuine HTML. */
+.chapter-clearing { background: #fff8ea; }
+.chapter-clearing .work-intro { padding-top: clamp(56px,7vw,105px); }
+.work-clearing-installation { margin: clamp(38px, 5.3vw, 76px) 0 0; }
+.work-clearing-world {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 3 / 2;
+  min-height: 420px;
+  overflow: hidden;
+  background: #d1d6af;
+}
+.work-clearing-woods { position: absolute; width: 100%; height: 100%; inset: 0; object-fit: cover; display: block; }
+.work-hangings {
+  position: absolute;
+  inset: 21% 9.4% auto 13.5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(8px, 1.4vw, 30px);
+  align-items: start;
+}
+.work-hanging {
+  position: relative;
+  display: block;
+  min-width: 0;
+  color: #244f3b;
+  scroll-margin-top: 85px;
+  transform-origin: 50% 0;
+  transition: transform .25s ease-out;
+}
+.work-hanging:nth-child(1) { transform: rotate(-3deg) translateY(24px); }
+.work-hanging:nth-child(2) { transform: rotate(2deg) translateY(4px); }
+.work-hanging:nth-child(3) { transform: rotate(-1.8deg) translateY(35px); }
+.work-hanging:hover:nth-child(1),.work-hanging:focus-visible:nth-child(1) {transform:rotate(-1deg) translateY(14px);}
+.work-hanging:hover:nth-child(2),.work-hanging:focus-visible:nth-child(2) {transform:rotate(0deg) translateY(-3px);}
+.work-hanging:hover:nth-child(3),.work-hanging:focus-visible:nth-child(3) {transform:rotate(-.4deg) translateY(24px);}
+.work-hanging > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 580 / 770;
+  object-fit: contain;
+  filter: drop-shadow(4px 8px 4px rgba(32,47,32,.29));
+}
+.work-hanging-label {
+  position: absolute;
+  left: 12%; right: 12%;
+  bottom: 8.9%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  color: #273829;
+  text-align: left;
+  line-height: 1.12;
+  pointer-events: none;
+}
+.work-hanging-title { font: 500 clamp(1.02rem,2.1vw,2rem)/1.13 var(--font-display); letter-spacing: -.035em; }
+.work-hanging-type { font: 700 clamp(.54rem,.91vw,.81rem)/1.25 var(--font-ui); letter-spacing: .015em; }
+.work-hanging:focus-visible { outline: 3px solid #244f3b; outline-offset: -4px; }
+.work-hanging[data-active="true"] .work-hanging-title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.work-clearing-paperkeeper {
+  position: absolute;
+  z-index: 1;
+  left: 2.4%; bottom: 2%;
+  height: clamp(96px,16vw,188px);
+  width: auto;
+  pointer-events: none;
+  filter: drop-shadow(2px 6px 3px rgba(24,48,30,.18));
+}
+.work-clearing-caption { display:flex; justify-content:space-between; gap: 12px 22px; padding: 17px 0 19px; border-bottom: 1px solid var(--line); color: var(--forest); }
+.work-clearing-caption > span:first-child { font: 700 .76rem/1.45 var(--font-ui); letter-spacing: .06em; }
+.work-clearing-caption > span:last-child { font: italic 400 clamp(1rem,1.4vw,1.15rem)/1.4 var(--font-reading); color: var(--ink); }
+.chapter-clearing .work-columns { margin-top: clamp(50px, 5.7vw, 87px); }
+.chapter-clearing .work-label { color: var(--forest); }
+.chapter-clearing .work-folio { scroll-margin-top: 94px; }
+.chapter-clearing .work-folio:target summary { border-left: 3px solid var(--forest); padding-left: 10px; }
+.chapter-clearing .folio-body { max-width: 790px; }
+.chapter-clearing .work-folio summary:focus-visible { outline-offset: -2px; }
+.chapter-clearing .folio-status { margin-top: 17px; }
+.work-clearing-afterword { max-width: 58ch; margin: clamp(28px,4vw,45px) 0 0 auto; border-top: 1px solid var(--line); padding-top: 17px; font: 400 .96rem/1.52 var(--font-reading); color: var(--ink); }
+
+@media (min-width: 1440px) {
+  .work-clearing-installation { max-width: 1240px; margin-left: auto; margin-right: auto; }
+}
+@media (max-width: 920px) {
+  /* Mobile is an illustrated field-album with native horizontal paging,
+     not a miniaturized three-column card wall. */
+  .work-clearing-world { aspect-ratio: auto; height: clamp(565px,80vw,680px); min-height: 0; }
+  .work-clearing-woods { object-fit: cover; object-position: 50% 45%; }
+  .work-hangings {
+    inset: 18% 0 auto;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 12% 16px;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 12%;
+    scrollbar-width: thin;
+    scrollbar-color: #244f3b #f7e9d6;
+    -webkit-overflow-scrolling: touch;
+  }
+  .work-hanging { flex: 0 0 min(48vw,270px); scroll-snap-align: center; }
+  .work-hanging:nth-child(1) { transform: rotate(-2deg) translateY(16px); }
+  .work-hanging:nth-child(2) { transform: rotate(1.4deg) translateY(6px); }
+  .work-hanging:nth-child(3) { transform: rotate(-1deg) translateY(19px); }
+  .work-hanging-title { font-size: clamp(1.14rem,2.8vw,1.46rem); }
+  .work-hanging-type { font-size: clamp(.62rem,1.5vw,.73rem); }
+  .work-clearing-paperkeeper { height: 125px; left: 4%; bottom: 1.8%; }
+  .work-clearing-caption { flex-direction: column; gap: 5px; }
+}
+@media (max-width: 670px) {
+  .work-clearing-installation { margin-top: 32px; }
+  .work-clearing-world { height: clamp(470px,133vw,600px); }
+  .work-clearing-woods { object-position: 50% 43%; }
+  .work-hangings { inset: 20% 0 auto; gap: clamp(10px,3vw,18px); padding-inline: 14%; scroll-padding-inline: 14%; }
+  .work-hanging { flex-basis: min(67vw,275px); }
+  .work-hanging-title { font-size: clamp(1.13rem,5vw,1.45rem); }
+  .work-hanging-type { font-size: clamp(.59rem,2.2vw,.74rem); }
+  .work-clearing-paperkeeper { height: clamp(80px,22vw,116px); left: 4%; bottom: 1%; }
+  .chapter-clearing .work-columns { margin-top: 52px; }
+  .chapter-clearing .work-folio:target summary { padding-left: 7px; }
+  .work-clearing-caption > span:first-child { font-size: .69rem; }
+  .work-clearing-caption > span:last-child { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .work-hanging { transition: none !important; }
+  .work-hanging:hover, .work-hanging:focus-visible { transform: none !important; }
+}

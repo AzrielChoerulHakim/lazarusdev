@@ -1,0 +1,55 @@
+{
+  "schema": "lazarus-work-clearing-v1",
+  "stage": 8,
+  "master": "The Forest Between Pages V2",
+  "source_provenance": "New image-generation-assisted clearing background, 2026-11-16; original independent procedural colored-pencil folio drawings built with Pillow; no pixels copied from locked V2 board, no client claims.",
+  "items": [
+    {
+      "path": "source/work-clearing-source.webp",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 535344,
+      "sha256": "15515473df2a1fe7695bd0b746fc9741070b22c2567e46e480bf81211f2063ea"
+    },
+    {
+      "path": "exports/work-clearing-woods.webp",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "bytes": 464254,
+      "sha256": "1da2ae01f6573d4a71865810bf56a042c8556a1cc114c46fdeb99630c928f977"
+    },
+    {
+      "path": "exports/folio-atrium.webp",
+      "width": 580,
+      "height": 770,
+      "mode": "RGBA",
+      "bytes": 114064,
+      "sha256": "e892b623d52421bc5b14b8bcae80be6950d2e7ad78253257050a119e3f0fe057"
+    },
+    {
+      "path": "exports/folio-oracle.webp",
+      "width": 580,
+      "height": 770,
+      "mode": "RGBA",
+      "bytes": 117930,
+      "sha256": "4c66eafd66628f2044f733adf09d711c2920163acbca95edd094b6fe68ead803"
+    },
+    {
+      "path": "exports/folio-archive.webp",
+      "width": 580,
+      "height": 770,
+      "mode": "RGBA",
+      "bytes": 104134,
+      "sha256": "3c9b5a578a51f45ee8b4db740f8f4668adbb9f1776def81f0a707c71cb21a5c8"
+    }
+  ],
+  "asset_role": {
+    "clearing_background": "independent illustrated world (not a parallax depth sheet)",
+    "folio_atrium": "original project-specific concept drawing",
+    "folio_oracle": "original project-specific concept drawing",
+    "folio_archive": "original project-specific concept drawing"
+  },
+  "user_content_disclosure": "All three work items are conceptual; no client work, testimonials or nonexistent external links are claimed."
+}
