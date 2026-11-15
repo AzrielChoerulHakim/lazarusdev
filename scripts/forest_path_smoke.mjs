@@ -71,6 +71,10 @@ try {
       const toggle=page.locator('#winding-path [data-path-trace-toggle]');
       await toggle.click();
       assert.equal(await toggle.getAttribute('aria-pressed'),'true',tag+' trace toggle on');
+      await page.waitForFunction(() => {
+        const line=document.querySelector('#winding-path svg.path-ink--desktop [data-path-stroke]');
+        return line && Math.abs(parseFloat(line.style.strokeDashoffset))<.01;
+      },{timeout:3500});
       const offset=await page.locator('#winding-path svg.path-ink--desktop [data-path-stroke]').first().evaluate(el=>parseFloat(el.style.strokeDashoffset));
       assert.ok(Math.abs(offset)<0.01,tag+' drawn route');
       await toggle.click();

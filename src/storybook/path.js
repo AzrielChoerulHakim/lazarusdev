@@ -34,7 +34,9 @@ if (map && toggle && readout) {
     readout.textContent = manual
       ? 'The entire illustrated path is visible. The journey does not restrict scrolling.'
       : 'The pencil route follows your natural scroll. You can still jump to any chapter.';
-    schedule();
+    // A direct click is an explicit user action: update in the same event,
+    // rather than waiting for the next animation frame.
+    paint();
   });
   addEventListener('scroll', schedule, {passive: true});
   addEventListener('resize', schedule, {passive: true});
