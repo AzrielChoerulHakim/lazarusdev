@@ -19,7 +19,10 @@ try{
   await page.waitForFunction(()=>document.body.dataset.characterLabReady==='true',{timeout:20000});
   const status=await page.evaluate(async()=>{
    const all=[...document.images];
-   await Promise.all(all.map(img=>img.decode().catch(e=>null)));
+   // Force eager loading before decode; offscreen lazy images can otherwise
+   // leave decode() pending indefinitely in headless Chromium.
+   for (const img of all) img.loading = 'eager';
+   await Promise.all(all.map(img=>img.decode().catch(() => null)));
    const canvas=document.createElement('canvas');canvas.width=canvas.height=1;
    const ctx=canvas.getContext('2d',{willReadFrequently:true});
    const image=document.querySelector('#selected-pose');ctx.drawImage(image,0,0);
