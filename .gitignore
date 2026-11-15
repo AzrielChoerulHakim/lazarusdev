@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-storybook/
 .vite/
 .DS_Store
 .env

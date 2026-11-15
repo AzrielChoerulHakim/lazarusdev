@@ -1,0 +1,62 @@
+name: Forest Stage 02 — isolated build and browser previews
+on:
+  push:
+    branches:
+      - feature/forest-storybook
+    paths:
+      - storybook/**
+      - src/storybook/**
+      - vite.storybook.config.js
+      - scripts/storybook-smoke.mjs
+      - package.json
+      - .github/workflows/forest-scaffold.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  forest-stage-02:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install existing project dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build legacy 3D website unchanged
+        run: npm run build
+      - name: Build independent forest storybook
+        run: npm run build:storybook
+      - name: Install browser test harness
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Browser smoke test for legacy 3D at root
+        run: |
+          npm run dev -- --port 4173 --strictPort > /tmp/lazarus-3d.log 2>&1 &
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/smoke.mjs
+      - name: Verify storybook static artifact under GitHub Pages-style base path
+        run: |
+          mkdir -p /tmp/forest-pages-mirror/lazarusdev
+          cp -a dist-storybook/. /tmp/forest-pages-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-pages-mirror > /tmp/forest-mirror.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/storybook/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/storybook-smoke.mjs
+      - name: Upload isolated built preview and actual browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage02-preview
+          path: |
+            dist-storybook/
+            screenshots/storybook/
+          if-no-files-found: ignore
