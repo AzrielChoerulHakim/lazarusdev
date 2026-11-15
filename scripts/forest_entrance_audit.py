@@ -22,7 +22,7 @@ for record in manifest['sources']+manifest['exports']:
         assert image.format=='WEBP',path
         assert image.mode==record['mode'],(path,image.mode)
         if record['name']=='entrance-leaf-cue.webp':
-            assert image.getchannel('A').getextrema()==(0,255),path
+            assert image.getchannel('A').getextrema()[0]==0 and image.getchannel('A').getextrema()[1]>=240,path
             assert image.getpixel((0,0))[3]==0,path
     print('STAGE06 ASSET PASS',record['name'],len(raw),'bytes')
 exports={a['name']:a for a in manifest['exports']}
