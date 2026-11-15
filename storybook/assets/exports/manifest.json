@@ -1,0 +1,93 @@
+{
+  "schema": "lazarus-forest-art-source-v1",
+  "stage": "04",
+  "master": "The Forest Between Pages V2",
+  "artistic_status": "TECHNICAL STUDY ONLY \u2014 final crayon artwork not approved",
+  "character_sheet": "not started (Stage 05)",
+  "assets": [
+    {
+      "filename": "forest-canopy.desktop.webp",
+      "path": "storybook/assets/exports/forest-canopy.desktop.webp",
+      "role": "parallax-foreground",
+      "interactive": false,
+      "resolution": [
+        1440,
+        780
+      ],
+      "format": "image/webp",
+      "alpha": true,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bounds": [
+        0,
+        0,
+        1440,
+        780
+      ],
+      "bytes": 204096,
+      "sha256": "a393991f862635d60c1059fbce8294e6f7062f3183242c7c8ddef7b33e0d8b90",
+      "masterboard_crop": false,
+      "source": "scripts/forest_asset_generator.py",
+      "provenance": "original deterministic illustration study with per-material directional marks; no external assets",
+      "license": "Original Lazarus Dev test study; not a third-party asset"
+    },
+    {
+      "filename": "forest-canopy.mobile.webp",
+      "path": "storybook/assets/exports/forest-canopy.mobile.webp",
+      "role": "parallax-foreground",
+      "interactive": false,
+      "resolution": [
+        760,
+        1040
+      ],
+      "format": "image/webp",
+      "alpha": true,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bounds": [
+        0,
+        0,
+        760,
+        1040
+      ],
+      "bytes": 132130,
+      "sha256": "31c31e686817597253d0905c55c8c29b46c5e6724927df13cb8177522e5cefce",
+      "masterboard_crop": false,
+      "source": "scripts/forest_asset_generator.py",
+      "provenance": "original deterministic illustration study with per-material directional marks; no external assets",
+      "license": "Original Lazarus Dev test study; not a third-party asset"
+    },
+    {
+      "filename": "crooked-wayfinder.cutout.webp",
+      "path": "storybook/assets/exports/crooked-wayfinder.cutout.webp",
+      "role": "interactive-cutout",
+      "interactive": true,
+      "resolution": [
+        520,
+        720
+      ],
+      "format": "image/webp",
+      "alpha": true,
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "bounds": [
+        85,
+        141,
+        434,
+        651
+      ],
+      "bytes": 25486,
+      "sha256": "c2ece58b4f62cd20939ca239d100b5d5b77eaa62e5b5184831e346786fa7afa0",
+      "masterboard_crop": false,
+      "source": "scripts/forest_asset_generator.py",
+      "provenance": "original deterministic illustration study with per-material directional marks; no external assets",
+      "license": "Original Lazarus Dev test study; not a third-party asset"
+    }
+  ]
+}
