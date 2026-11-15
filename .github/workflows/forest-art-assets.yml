@@ -1,0 +1,68 @@
+name: Forest Stage 04 — illustration asset exports and QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - scripts/forest_asset_generator.py
+      - scripts/forest_asset_audit.py
+      - scripts/forest_art_lab_smoke.mjs
+      - storybook/art-lab/**
+      - storybook/assets/exports/**
+      - .github/workflows/forest-art-assets.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  forest-assets:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare isolated Python raster environment
+        run: |
+          python3 -m venv /tmp/forest-art-venv
+          /tmp/forest-art-venv/bin/pip install 'Pillow>=10,<13'
+      - name: Generate transparent original test assets
+        run: /tmp/forest-art-venv/bin/python scripts/forest_asset_generator.py --output storybook/assets/exports
+      - name: Check alpha, dimensions, hashes, source and size
+        run: /tmp/forest-art-venv/bin/python scripts/forest_asset_audit.py --directory storybook/assets/exports
+      - name: Install JavaScript and browser QA
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Verify primary site build unaffected
+        run: npm run build
+      - name: Test transparency, interaction, layout and reduced motion
+        run: |
+          mkdir -p /tmp/forest-art-mirror
+          ln -s "$GITHUB_WORKSPACE" /tmp/forest-art-mirror/lazarusdev
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-art-mirror > /tmp/forest-art-server.log 2>&1 &
+          for i in {1..35}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/storybook/art-lab/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_art_lab_smoke.mjs
+      - name: Upload exports and screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage04-art-source-and-qa
+          path: |
+            storybook/assets/exports/
+            screenshots/forest-art-lab/
+          if-no-files-found: ignore
+      - name: Commit generated assets to feature branch only
+        if: success() && github.ref == 'refs/heads/feature/forest-storybook' && github.event_name == 'push'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add storybook/assets/exports/
+          if ! git diff --cached --quiet; then
+            git commit -m "art(forest): publish reproducible Stage 04 test exports"
+            git push origin HEAD:refs/heads/feature/forest-storybook
+          fi

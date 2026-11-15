@@ -1,0 +1,35 @@
+:root{--forest:#244f3b;--ink:#273829;--paper:#f7e9d6;--sun:#f3c354}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-width:320px;background:var(--paper);color:var(--ink);font-family:Georgia,serif}
+a{color:inherit}button{font:inherit} :focus-visible{outline:3px solid var(--forest);outline-offset:5px}
+.skip{position:absolute;top:-100px;left:12px;padding:13px;background:var(--forest);color:white;z-index:12}.skip:focus{top:12px}
+.masthead{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px clamp(20px,5vw,90px);border-bottom:1px solid #b3bca8}
+.masthead a{font:bold 20px/1.2 Georgia,serif;text-decoration:none}.masthead a em{font-weight:400}
+.masthead span,.eyebrow,.notice,.bottom-index,footer,.cutout-station button span,.specification dt,.specification dd{font-family:Arial,Helvetica,sans-serif}
+.masthead span{font-size:12px;font-weight:bold;letter-spacing:.06em}
+.laboratory{width:100%;min-height:890px;position:relative;overflow:clip;isolation:isolate;padding:clamp(72px,9vw,126px) clamp(20px,7vw,110px) 70px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(240px,.65fr);align-items:center;gap:20px}
+.layer-canopy{position:absolute;inset:-14px 0 auto;z-index:-1;pointer-events:none;transform:translate3d(0,var(--parallax-y,0px),0);will-change:transform}
+.layer-canopy img{display:block;width:100%;height:auto;max-height:none}
+.lab-copy{max-width:680px;position:relative;z-index:1}
+.eyebrow{font-size:12px;letter-spacing:.12em;font-weight:bold;color:var(--forest);line-height:1.5}
+h1{font-size:clamp(57px,7.5vw,122px);line-height:.99;font-weight:400;letter-spacing:-.07em;color:var(--forest);margin:18px 0 29px}h1 em{font-weight:400}
+.lab-copy>p:not(.eyebrow){font-size:clamp(17px,1.6vw,23px);line-height:1.6;max-width:40ch}
+.lab-copy>.notice{font-size:14px!important;line-height:1.5!important;margin-top:28px;border-left:3px solid var(--forest);padding-left:14px;max-width:49ch}
+.cutout-station{width:100%;max-width:370px;justify-self:center;align-self:end;text-align:center;position:relative;z-index:2}
+.cutout-station button{appearance:none;display:grid;place-items:center;min-width:120px;width:100%;border:0;background:transparent;color:var(--forest);cursor:pointer;min-height:56px;padding:0}
+.cutout-station button img{display:block;width:100%;max-width:320px;height:auto;object-fit:contain;transform:rotate(-2deg);transition:transform .18s ease;pointer-events:none}
+.cutout-station button:hover img,.cutout-station button[aria-pressed="true"] img{transform:rotate(1deg) translateY(-4px)}
+.cutout-station button span{padding:10px 15px;min-height:44px;display:flex;align-items:center;font-size:14px;font-weight:bold;text-decoration:underline;text-underline-offset:4px}
+.readout{border-top:1px solid var(--forest);margin:10px auto 0;padding:14px 5px;font-size:15px;line-height:1.55;max-width:35ch}
+.bottom-index{position:absolute;bottom:21px;left:clamp(20px,7vw,110px);right:clamp(20px,7vw,110px);display:flex;justify-content:space-between;gap:20px;font-weight:bold;font-size:11px;letter-spacing:.06em;border-top:1px solid #a7a78e;padding-top:16px}
+.specification{max-width:1050px;margin:auto;padding:85px 30px 120px}
+.specification h2{font-size:clamp(36px,5vw,76px);line-height:1.1;letter-spacing:-.055em;font-weight:400;color:var(--forest);margin:18px 0 24px}
+.specification>p{font-size:20px;line-height:1.6;max-width:60ch}
+.specification dl{display:flex;flex-wrap:wrap;gap:25px;margin:60px 0 0}
+.specification dl div{border-top:1px solid var(--forest);padding-top:16px;min-width:180px;flex:1}
+.specification dt{font-size:12px;font-weight:bold;letter-spacing:.08em}
+.specification dd{font-size:16px;margin:12px 0 0}
+footer{border-top:1px solid #a7a78e;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:18px clamp(20px,5vw,90px);font-size:12px}
+@media(max-width:700px){.masthead span{max-width:16ch;text-align:right}.laboratory{grid-template-columns:1fr;padding-top:90px;min-height:1170px;gap:18px}.layer-canopy{inset:0 0 auto}.layer-canopy img{width:100%;height:880px;object-fit:fill}.lab-copy{align-self:start}.lab-copy h1{font-size:clamp(49px,11vw,80px)}.cutout-station{align-self:end;max-width:250px;margin-bottom:88px}.cutout-station button img{max-width:240px}.bottom-index{flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.layer-canopy{transform:none!important;will-change:auto}.cutout-station button img{transition:none!important}}

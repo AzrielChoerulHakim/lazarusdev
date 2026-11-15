@@ -1,10 +1,14 @@
-# Future forest artwork — not yet created
+# Forest — source assets and export pipeline (Stage 04)
 
-Master: **The Forest Between Pages V2**.
+Source: scripts/forest_asset_generator.py
+Audit: scripts/forest_asset_audit.py
+Browser proof: scripts/forest_art_lab_smoke.mjs
+Art lab: /lazarusdev/storybook/art-lab/
+Generated WebP and per-file SHA256: exports/
 
-- Stage 03: editorial type, semantic content and responsive controls now implemented.
-- Stage 04: produce original, independently usable crayon backgrounds/foreground layers.
-- Stage 05: Paperkeeper and supporting character bible.
-- Stages 06–10: art-directed scene assets for five separate chapters.
+Current three exports are TEST STUDIES, not finished visual artwork. They demonstrate independent transparent layer production, mobile recomposition, compressed delivery and accessible interactive cutouts.
 
-**No production forest artwork is in this directory yet.** Layouts expose deliberate art mounts rather than borrowing generic vector mushrooms, fabricated textured cards or cropping the flattened master. Asset originality and consistent illustration craft are mandatory in later stages.
+Not started: Paperkeeper (Stage 05), finished five chapter illustrations (Stages 06–10), motion controller (Stage 11).
+The approved flattened masterboard is a visual benchmark only, never a material to crop into pretend layers.
+
+See docs/forest/04-asset-spec.md for source provenance, naming, canvas rules, compression budgets and manual anti-generic gate.
