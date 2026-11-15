@@ -1,0 +1,60 @@
+name: Forest Stage 09 — River Stories editorial landscape and interaction QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/river-stories.js
+      - src/storybook/styles/river-stories.css
+      - scripts/forest_river_audit.py
+      - scripts/forest_river_smoke.mjs
+      - storybook/assets/river-stories/**
+      - .github/workflows/forest-river-stories.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  river-stories:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check illustrated asset provenance and honest article semantics
+        run: |
+          python3 -m venv /tmp/forest-stage09-venv
+          /tmp/forest-stage09-venv/bin/pip install 'Pillow>=10,<13'
+          /tmp/forest-stage09-venv/bin/python scripts/forest_river_audit.py
+      - name: Validate modules and compile both GitHub Pages routes
+        run: |
+          node --check src/storybook/river-stories.js
+          node --check scripts/forest_river_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install real browser DOM runner
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Eight viewports, two routes, native notes, hash navigation, reduced motion, image failure — zero screenshots
+        run: |
+          mkdir -p /tmp/stage09-mirror/lazarusdev reports
+          cp -a dist/. /tmp/stage09-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/stage09-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/stage09-mirror > /tmp/stage09-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_river_smoke.mjs | tee reports/stage09-browser-qa.log
+      - name: Upload text QA + asset metadata ONLY (never screenshots)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage09-river-stories-text-qa
+          path: |
+            storybook/assets/river-stories/manifest.json
+            reports/stage09-browser-qa.log
+          if-no-files-found: ignore

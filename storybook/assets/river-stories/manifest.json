@@ -1,0 +1,30 @@
+{
+  "schema": "lazarus-river-stories-v1",
+  "stage": 9,
+  "direction": "Locked The Forest Between Pages V2 — Chapter 04 only",
+  "provenance": "Purpose-generated original AI-assisted colored pencil/crayon digital environment, textured paper and winding creek; no borrowed stock artwork or UI screenshot.",
+  "exportMethod": "Source original compressed to WebP; desktop recompressed. Portrait art-directed crop x=500..1268 of 1536x1024 source, NOT independently painted. Stage 14 to re-evaluate.",
+  "items": [
+    {
+      "path": "source/river-source.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 600250,
+      "sha256": "597ac2da600a046ec3cc43dcc3c9e7a672eb87637b63bf0bd9aad126ea0c5c28"
+    },
+    {
+      "path": "exports/river-desktop.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 424888,
+      "sha256": "4f1a84d5f782510bec12c5a464abb86d9c96d8ce3907ffaeb1628b82bc1e5532"
+    },
+    {
+      "path": "exports/river-mobile.webp",
+      "width": 768,
+      "height": 1024,
+      "bytes": 233428,
+      "sha256": "0138a3d37fc4f223ddd25fa9ad0cd8f5a005dee92bc9260f6c3f4879b66a0419"
+    }
+  ]
+}

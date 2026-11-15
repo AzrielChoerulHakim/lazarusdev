@@ -1,0 +1,192 @@
+/* LAZARUS DEV — Stage 09 / River Stories, chapter 04.
+ * A field notebook beside an illustrated river. Not a grid of product cards.
+ * No automatic scroll, no forced reveal animation, no rasterized copy. */
+.chapter-river {
+  background: #e8ecde;
+  padding-block: clamp(78px, 8vw, 130px) clamp(93px, 10vw, 146px);
+  overflow: clip;
+}
+.chapter-river .river-layout { display: block; padding-top: clamp(53px, 6vw, 92px); }
+.river-prologue { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(180px, .55fr); align-items: end; gap: clamp(20px, 5vw, 120px); }
+.river-heading { max-width: 900px; }
+.river-heading .eyebrow { margin-bottom: clamp(16px, 2vw, 25px); }
+.river-heading h2 { max-width: 16ch; }
+.river-heading .lead { max-width: 39ch; margin-top: clamp(20px, 2.5vw, 30px); }
+.river-heading .text-link { margin-top: clamp(22px, 3vw, 38px); }
+.river-prologue-aside {
+  width: min(100%, 260px);
+  border-top: 1px solid rgba(36,79,59,.5);
+  padding: 20px 0 8px;
+  color: var(--forest);
+  font: italic 400 clamp(1.12rem, 1.8vw, 1.48rem)/1.3 var(--font-body);
+  transform: rotate(-2deg);
+}
+.river-prologue-aside > span { display: block; font-size: 1.6em; line-height: 1.1; margin-bottom: 5px; color: #77693d; }
+.river-scene {
+  position: relative;
+  isolation: isolate;
+  margin: clamp(42px, 6vw, 82px) 0 0;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 370px;
+  overflow: hidden;
+  background: #d5dabc;
+  border: 7px solid #f3e6cb;
+  box-shadow: 0 0 0 1px rgba(52,79,55,.18), 0 20px 35px rgba(32,56,41,.1);
+}
+.river-scene > picture { position: absolute; inset: 0; }
+.river-scene-art { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+.river-roundbird {
+  position: absolute;
+  width: clamp(55px, 8.5vw, 120px);
+  height: auto;
+  left: 4.3%;
+  bottom: 21%;
+  z-index: 2;
+  transform: rotate(-8deg);
+  filter: drop-shadow(1px 4px 2px rgba(36,79,59,.13));
+  pointer-events: none;
+}
+.river-scene-caption {
+  position: absolute;
+  top: 4%;
+  left: 4.2%;
+  z-index: 2;
+  display: grid;
+  gap: 3px;
+  max-width: 260px;
+  padding: 10px 13px 11px;
+  background: rgba(247,233,214,.91);
+  color: var(--ink);
+  box-shadow: 2px 2px 0 rgba(53,88,63,.12);
+  font: italic 400 .94rem/1.25 var(--font-body);
+}
+.river-scene-caption span:first-child { font: 700 .65rem/1.3 var(--font-ui); letter-spacing: .12em; color: var(--forest); }
+.river-stone-nav {
+  position: absolute;
+  z-index: 3;
+  right: 3.5%;
+  bottom: 4.5%;
+  display: flex;
+  gap: clamp(8px, 1.4vw, 22px);
+  max-width: 94%;
+  align-items: end;
+}
+.river-stone-nav a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  min-width: 44px;
+  max-width: 240px;
+  padding: 11px 13px;
+  background: #f7ead2;
+  color: var(--forest);
+  border: 1px solid rgba(56,76,45,.7);
+  font: 700 clamp(.69rem,.92vw,.86rem)/1.25 var(--font-ui);
+  box-shadow: 3px 4px 0 rgba(47,68,42,.28);
+  text-decoration: none;
+  transform: rotate(1.8deg);
+  transition: transform .2s ease, background .2s ease;
+}
+.river-stone-nav a:nth-child(2) { transform: rotate(-2.5deg) translateY(-8px); }
+.river-stone-nav a:hover, .river-stone-nav a:focus-visible, .river-stone-nav a[data-active="true"] {
+  background: #fff4db;
+  transform: rotate(0) translateY(-3px);
+}
+.river-stone-nav a:focus-visible { outline: 3px solid #f3c354; outline-offset: 3px; }
+.river-stone-n { border: 1px solid currentColor; display: grid; place-items: center; border-radius: 50%; flex: none; width: 24px; height: 24px; font: italic 500 .85rem/1 var(--font-display); }
+.river-notebook {
+  display: grid;
+  grid-template-columns: minmax(170px, .38fr) minmax(0, 1fr);
+  gap: clamp(25px, 5vw, 85px);
+  padding-top: clamp(60px, 7.5vw, 120px);
+  align-items: start;
+}
+.river-notebook-head { padding-top: 12px; position: relative; }
+.river-notebook-head .eyebrow { font-size: .72rem; line-height: 1.7; max-width: 23ch; }
+.river-notebook-instruction {
+  max-width: 24ch;
+  margin-top: 20px;
+  color: var(--forest);
+  font: italic 400 clamp(1.15rem, 1.7vw, 1.47rem)/1.4 var(--font-body);
+}
+.river-notebook-number {
+  display: block;
+  margin-top: 25px;
+  color: rgba(36,79,59,.18);
+  font: italic 400 clamp(5rem,11vw,10rem)/.9 var(--font-display);
+}
+.chapter-river .river-pages {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  align-items: start;
+  gap: clamp(15px, 3vw, 42px);
+  border: none;
+  padding: 0 6px 13px;
+}
+.chapter-river .river-note {
+  scroll-margin-top: 30px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  background: #fff3d8;
+  color: var(--ink);
+  clip-path: polygon(0 1.4%, 6% .5%, 16% 1.1%, 30% 0%, 48% 1.6%, 63% .8%, 83% 1.8%, 100% .4%, 99.1% 26%, 100% 49%, 98.9% 77%, 100% 99.4%, 82% 98.9%, 68% 100%, 41% 98.8%, 20% 100%, 0 99%, 1% 81%, 0 60%, .6% 40%);
+  box-shadow: none;
+  transform: rotate(-1.4deg);
+  background-image: repeating-linear-gradient(0deg, transparent 0px,transparent 33px,rgba(39,56,41,.035) 34px,transparent 35px);
+}
+.chapter-river .river-note:nth-child(2) { transform: rotate(1.7deg) translateY(32px); background-color: #f8e9cc; }
+.chapter-river .river-note-fold { padding: clamp(22px,2.8vw,42px); }
+.chapter-river .river-note summary { cursor: pointer; display: flex; flex-direction: column; align-items: flex-start; list-style: none; min-height: 220px; }
+.chapter-river .river-note summary::-webkit-details-marker { display: none; }
+.chapter-river .river-note summary:focus-visible { outline: 3px solid var(--forest); outline-offset: 5px; }
+.chapter-river .river-index { color: var(--forest); font: 700 .7rem/1.4 var(--font-ui); letter-spacing: .11em; }
+.chapter-river .river-note h3 { margin: 21px 0 0; color: var(--forest); font: 400 clamp(1.72rem,2.7vw,2.6rem)/1.12 var(--font-display); letter-spacing: -.045em; overflow-wrap: anywhere; }
+.river-summary-desc { display: block; margin-top: 15px; font: 400 clamp(1.02rem,1.45vw,1.24rem)/1.46 var(--font-body); }
+.river-summary-open { display: flex; align-items: center; gap: 12px; border-top: 1px solid rgba(36,79,59,.32); margin-top: auto; padding-top: 17px; width: 100%; color: var(--forest); font: 700 .8rem/1.2 var(--font-ui); }
+.river-summary-open > span { margin-left: auto; font-size: 1.5em; }
+.river-note-fold[open] .river-summary-open > span { transform: rotate(90deg); }
+.river-note-body { border-top: 1px solid rgba(36,79,59,.34); padding-top: 19px; margin-top: 16px; }
+.chapter-river .river-note-body p { margin: 0 0 17px; font: 400 1.1rem/1.47 var(--font-body); }
+.chapter-river .river-note-body .river-note-draft-label { font: 700 .67rem/1.4 var(--font-ui); letter-spacing: .12em; color: var(--forest); }
+.chapter-river .river-note-body .river-note-unpublished { border-top: 1px dashed rgba(36,79,59,.45); padding-top: 13px; font-size: .87rem; font-style: italic; }
+.chapter-river .river-bottom { max-width: 47ch; border-top: 1px solid rgba(36,79,59,.35); margin-top: 85px; padding-top: 14px; font: 400 .89rem/1.55 var(--font-ui); }
+@media (max-width: 920px) {
+  .river-notebook { grid-template-columns: 1fr; gap: 30px; }
+  .river-notebook-head { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 30px; align-items: start; }
+  .river-notebook-instruction { margin-top: 0; }
+  .river-notebook-number { display: none; }
+}
+@media (max-width: 670px) {
+  .chapter-river .river-layout { padding-top: 48px; }
+  .river-prologue { grid-template-columns: 1fr; align-items: start; gap: 25px; }
+  .river-prologue-aside { max-width: 260px; font-size: 1.12rem; padding-top: 12px; }
+  .river-scene { aspect-ratio: 3 / 4; min-height: 420px; border-width: 4px; margin-top: 38px; }
+  .river-scene-art { object-position: center center; }
+  .river-roundbird { width: 75px; left: 6%; bottom: 23%; }
+  .river-stone-nav { bottom: 4%; left: 5%; right: 5%; max-width: 90%; display: grid; gap: 8px; }
+  .river-stone-nav a { width: max-content; max-width: min(100%,250px); transform: rotate(-1deg); min-height: 44px; font-size: .74rem; padding: 8px 11px; }
+  .river-stone-nav a:nth-child(2) { transform: rotate(2deg); }
+  .river-scene-caption { top: 3%; left: 3%; padding: 8px 9px; font-size: .79rem; }
+  .river-notebook { padding-top: 66px; }
+  .river-notebook-head { display: block; }
+  .river-notebook-instruction { max-width: 34ch; margin-top: 13px; }
+  .chapter-river .river-pages { grid-template-columns: 1fr; gap: 24px; padding-inline: 0; }
+  .chapter-river .river-note { transform: rotate(-.7deg); }
+  .chapter-river .river-note:nth-child(2) { transform: rotate(1deg); }
+  .chapter-river .river-note summary { min-height: 185px; }
+  .chapter-river .river-note h3 { font-size: clamp(1.7rem, 7vw, 2.4rem); }
+  .chapter-river .river-bottom { margin-top: 39px; }
+}
+@media (max-width: 350px) {
+  .river-scene-caption { max-width: 177px; }
+  .river-stone-nav a { padding-inline: 8px; font-size: .69rem; }
+  .chapter-river .river-note-fold { padding: 24px 20px; }
+  .chapter-river .river-note h3 { font-size: 1.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .river-stone-nav a, .river-note-fold *, .river-roundbird { transition: none !important; animation: none !important; }
+}
