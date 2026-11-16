@@ -1,0 +1,21 @@
+PASS STAGE17 /lazarusdev/ 320x720 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 375x812 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 390x844 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 430x932 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 670x850 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 768x860 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 1024x768 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 1440x900 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/ 844x390 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 320x720 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 375x812 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 390x844 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 430x932 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 670x850 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 768x860 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 1024x768 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 1440x900 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 /lazarusdev/storybook/ 844x390 index, map, physical spread, specimen, keyboard, reduced-motion
+PASS STAGE17 NO-JS /lazarusdev/
+PASS STAGE17 NO-JS /lazarusdev/storybook/
+STAGE17 COMPLETE: 18 viewport/route checks, two no-JS checks; zero screenshots.

@@ -18,7 +18,7 @@ const profiles=[
   {id:'short-landscape',w:844,h:390},
 ];
 // No screenshot capture; browser assertions remain active.
-const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
+const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let passed=0;
 try{
   for(const route of routes){

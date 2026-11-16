@@ -29,8 +29,8 @@
   <meta property="og:description" content="Independent creative development for ideas that deserve their own world.">
   <title>Lazarus Dev — Different worlds. Deliberate work.</title>
   <!-- Stage 16: discover only the matching critical hero before parsing the illustration. -->
-  <link rel="preload" as="image" type="image/webp" media="(max-width: 670px)" href="./storybook/assets/entrance/exports/entrance-mobile.webp" fetchpriority="high">
-  <link rel="preload" as="image" type="image/webp" media="(min-width: 671px)" href="./storybook/assets/entrance/exports/entrance-desktop.webp" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" media="(max-width: 670px)" href="./storybook/assets/entrance/r02/exports/entrance-mobile.webp" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 671px)" href="./storybook/assets/entrance/r02/exports/entrance-desktop.webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
@@ -48,6 +48,7 @@
   <link rel="stylesheet" href="./src/storybook/styles/mobile-native.css">
   <link rel="stylesheet" href="./src/storybook/styles/render-budget.css">
   <link rel="stylesheet" href="./src/storybook/styles/editorial-reconstruction.css">
+  <link rel="stylesheet" href="./src/storybook/styles/entrance-r02.css">
   <script type="module" src="./src/storybook/main.js"></script>
   <script type="module" src="./src/storybook/path.js"></script>
   <script type="module" src="./src/storybook/work-clearing.js"></script>
@@ -74,12 +75,6 @@
 
   <main id="page-content" tabindex="-1">
     <section class="chapter chapter-entrance" id="entrance" tabindex="-1" data-chapter aria-labelledby="entrance-title">
-      <div class="entrance-canvas" aria-hidden="true">
-        <picture aria-hidden="true">
-          <source media="(max-width: 670px)" srcset="./storybook/assets/entrance/exports/entrance-mobile.webp" type="image/webp">
-          <img class="entrance-backdrop" src="./storybook/assets/entrance/exports/entrance-desktop.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high" loading="eager">
-        </picture>
-      </div>
       <div class="page-edge"><span>FIELD GUIDE TO THE UNEXPECTED</span><span>LAZARUS DEV / EST. 2026</span></div>
       <div class="chapter-inner hero-layout">
         <div class="hero-copy">
@@ -87,13 +82,19 @@
           <h1 id="entrance-title" data-copy="entrance.heading">Different worlds.<br><em>Deliberate work.</em></h1>
           <p class="lead hero-lead" data-copy="entrance.lead">We design and engineer distinctive websites, interactive experiences, and digital products for ideas that deserve their own world.</p>
           <div class="action-row"><a class="button button-primary" href="#work-clearing">Explore the work <span aria-hidden="true">↗</span></a><a class="text-link" href="#winding-path">Follow the path <span aria-hidden="true">→</span></a></div>
-          <div class="hero-footnote"><span class="mini-rule" aria-hidden="true"></span><span>Every world begins somewhere.</span></div>
-          <a class="hero-atlas-cue" href="#field-atlas"><span class="hero-atlas-symbol" aria-hidden="true">✳</span><span class="hero-atlas-caption"><small>AN EXTRA PAGE / TUCKED INSIDE</small><strong>There is a map in this book.</strong></span><span class="hero-atlas-arrow" aria-hidden="true">↘</span></a>
         </div>
         <figure class="entrance-stage">
-          <img class="entrance-paperkeeper" src="./storybook/assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" decoding="async" loading="eager" fetchpriority="high" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
+          <div class="entrance-canvas" aria-hidden="true">
+            <picture aria-hidden="true">
+              <source media="(max-width: 670px)" srcset="./storybook/assets/entrance/r02/exports/entrance-mobile.webp" type="image/webp">
+              <img class="entrance-backdrop" src="./storybook/assets/entrance/r02/exports/entrance-desktop.webp" width="1536" height="1024" alt="" decoding="async" fetchpriority="high" loading="eager">
+            </picture>
+          </div>
+          <span class="entrance-grounding" aria-hidden="true"></span>
+          <img class="entrance-paperkeeper" src="./storybook/assets/entrance/r02/exports/paperkeeper.three-quarter.webp" width="622" height="960" decoding="async" loading="eager" fetchpriority="high" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
           <figcaption class="entrance-figcaption">A moss-covered stone arch opens into a forest path. Paperkeeper invites visitors to explore Lazarus Dev.</figcaption>
         </figure>
+        <a class="hero-atlas-cue" href="#field-atlas"><span aria-hidden="true">✳</span> A map for the curious <span aria-hidden="true">↘</span></a>
       </div>
 
       <!-- Stage 17: an opt-in fold-out inside the book; no overlay or scroll interception. -->

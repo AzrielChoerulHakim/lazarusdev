@@ -1,0 +1,68 @@
+
+> lazarus-dev-forest-storybook@2.0.0-foundation build
+> vite build
+
+vite v7.3.8 building client environment for production...
+transforming...
+✓ 25 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/assets/entrance-leaf-cue-PnZQ78Ie.webp            5.57 kB
+dist/assets/window-glow-desktop-CCKc2_Cx.webp         21.38 kB
+dist/assets/window-glow-mobile-ovbH0oD8.webp          40.40 kB
+dist/assets/paperkeeper.three-quarter-BQHcGnHK.webp   61.02 kB
+dist/index.html                                       72.91 kB │ gzip: 32.66 kB
+dist/assets/folio-archive-BVh2yDSm.webp              104.13 kB
+dist/assets/folio-atrium-BMS9U2bI.webp               114.06 kB
+dist/assets/folio-oracle-nSe-iNt7.webp               117.93 kB
+dist/assets/paperkeeper.three-quarter-sA4X8-iv.webp  191.11 kB
+dist/assets/house-mobile-BQ4f5X0t.webp               192.11 kB
+dist/assets/house-on-the-hill-portrait-Cl3fqQF3.svg  202.78 kB │ gzip: 33.78 kB
+dist/assets/river-stories-portrait-DDNnhyLY.svg      212.39 kB │ gzip: 35.57 kB
+dist/assets/work-clearing-portrait-CZeV2OB4.svg      216.24 kB │ gzip: 36.06 kB
+dist/assets/river-mobile-DxtMDanb.webp               233.43 kB
+dist/assets/winding-path-portrait-EVw57oAP.svg       239.66 kB │ gzip: 40.01 kB
+dist/assets/winding-path-mobile-B4YcBRSb.webp        274.45 kB
+dist/assets/entrance-mobile-BK8Qt3RL.webp            281.83 kB
+dist/assets/entrance-desktop-Bmq59CMK.webp           336.84 kB
+dist/assets/house-desktop-DwqfejLw.webp              374.25 kB
+dist/assets/river-desktop-CPNZuX0P.webp              424.89 kB
+dist/assets/work-clearing-woods-DZfSZ5Yl.webp        464.25 kB
+dist/assets/winding-path-desktop-DtIqB-xm.webp       556.59 kB
+dist/assets/index-DKKn54nI.css                        78.89 kB │ gzip: 16.82 kB
+dist/assets/index-Duf4BzlI.js                         17.31 kB │ gzip:  6.55 kB
+✓ built in 270ms
+
+> lazarus-dev-forest-storybook@2.0.0-foundation build:storybook
+> vite build --config vite.storybook.config.js
+
+vite v7.3.8 building client environment for production...
+transforming...
+✓ 25 modules transformed.
+rendering chunks...
+computing gzip size...
+dist-storybook/assets/entrance-leaf-cue-PnZQ78Ie.webp            5.57 kB
+dist-storybook/assets/window-glow-desktop-CCKc2_Cx.webp         21.38 kB
+dist-storybook/assets/window-glow-mobile-ovbH0oD8.webp          40.40 kB
+dist-storybook/assets/paperkeeper.three-quarter-BQHcGnHK.webp   61.02 kB
+dist-storybook/storybook/index.html                             72.91 kB │ gzip: 32.65 kB
+dist-storybook/assets/folio-archive-BVh2yDSm.webp              104.13 kB
+dist-storybook/assets/folio-atrium-BMS9U2bI.webp               114.06 kB
+dist-storybook/assets/folio-oracle-nSe-iNt7.webp               117.93 kB
+dist-storybook/assets/paperkeeper.three-quarter-sA4X8-iv.webp  191.11 kB
+dist-storybook/assets/house-mobile-BQ4f5X0t.webp               192.11 kB
+dist-storybook/assets/house-on-the-hill-portrait-Cl3fqQF3.svg  202.78 kB │ gzip: 33.78 kB
+dist-storybook/assets/river-stories-portrait-DDNnhyLY.svg      212.39 kB │ gzip: 35.57 kB
+dist-storybook/assets/work-clearing-portrait-CZeV2OB4.svg      216.24 kB │ gzip: 36.06 kB
+dist-storybook/assets/river-mobile-DxtMDanb.webp               233.43 kB
+dist-storybook/assets/winding-path-portrait-EVw57oAP.svg       239.66 kB │ gzip: 40.01 kB
+dist-storybook/assets/winding-path-mobile-B4YcBRSb.webp        274.45 kB
+dist-storybook/assets/entrance-mobile-BK8Qt3RL.webp            281.83 kB
+dist-storybook/assets/entrance-desktop-Bmq59CMK.webp           336.84 kB
+dist-storybook/assets/house-desktop-DwqfejLw.webp              374.25 kB
+dist-storybook/assets/river-desktop-CPNZuX0P.webp              424.89 kB
+dist-storybook/assets/work-clearing-woods-DZfSZ5Yl.webp        464.25 kB
+dist-storybook/assets/winding-path-desktop-DtIqB-xm.webp       556.59 kB
+dist-storybook/assets/index-DKKn54nI.css                        78.89 kB │ gzip: 16.82 kB
+dist-storybook/assets/index-Duf4BzlI.js                         17.31 kB │ gzip:  6.55 kB
+✓ built in 200ms

@@ -1,0 +1,20 @@
+{
+  "frames": [
+    {
+      "width": 1440,
+      "height": 900,
+      "ready": "true",
+      "source": "http://127.0.0.1:4189/storybook/assets/entrance/r02/exports/entrance-desktop.webp",
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "ready": "true",
+      "source": "http://127.0.0.1:4189/storybook/assets/entrance/r02/exports/entrance-mobile.webp",
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "screenshots": 0
+}

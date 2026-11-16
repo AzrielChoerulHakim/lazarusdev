@@ -1,0 +1,35 @@
+
+> lazarus-dev-forest-storybook@2.0.0-foundation check:r02
+> node scripts/forest_r02_smoke.mjs
+
+PASS R02 /lazarusdev/ 320×720 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 375×812 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 390×844 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 430×932 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 670×850 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 671×850 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 768×860 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 1024×768 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 1440×900 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 844×390 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ 720×450 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 320×720 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 375×812 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 390×844 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 430×932 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 670×850 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 671×850 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 768×860 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 1024×768 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 1440×900 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 844×390 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/storybook/ 720×450 geometry, source, keyboard, native navigation
+PASS R02 /lazarusdev/ no-js
+PASS R02 /lazarusdev/ images-blocked
+PASS R02 /lazarusdev/ reduced-motion
+PASS R02 /lazarusdev/ text-200
+PASS R02 /lazarusdev/storybook/ no-js
+PASS R02 /lazarusdev/storybook/ images-blocked
+PASS R02 /lazarusdev/storybook/ reduced-motion
+PASS R02 /lazarusdev/storybook/ text-200
+R02 COMPLETE: 22 layout profiles, 8 fallback flows, zero screenshots.

@@ -1,0 +1,121 @@
+{
+  "revision": "R02",
+  "authored": "2026-11-16",
+  "provenance": "sources.json",
+  "generator": "scripts/forest_r02_assets.mjs",
+  "converter": {
+    "sharp": "0.34.5",
+    "webp": "1.6.0"
+  },
+  "registration": {
+    "sceneGroundY": 0.865,
+    "footBaseline": "Measured from exported alpha; see character entry.",
+    "light": "upper left",
+    "layers": [
+      "environment",
+      "CSS contact shadow",
+      "transparent Paperkeeper"
+    ]
+  },
+  "assets": [
+    {
+      "name": "entrance-desktop",
+      "conversion": {
+        "width": 1536,
+        "quality": 88,
+        "alphaQuality": 100,
+        "crop": false
+      },
+      "source": {
+        "path": "source/entrance-desktop.png",
+        "sha256": "a99b08e71ac1ae9dc6d5b3d568ec4936b41a98374a3ff20d1b1bcbbf69403b6c",
+        "bytes": 2928161,
+        "width": 1536,
+        "height": 1024,
+        "hasAlpha": false
+      },
+      "export": {
+        "path": "exports/entrance-desktop.webp",
+        "sha256": "69aeeb46d50466e3544e35e55198c1b9f37fdd3fa7fdc1a191307747d8843c4a",
+        "bytes": 336838,
+        "width": 1536,
+        "height": 1024,
+        "hasAlpha": false
+      }
+    },
+    {
+      "name": "entrance-mobile",
+      "conversion": {
+        "width": 1024,
+        "quality": 88,
+        "alphaQuality": 100,
+        "crop": false
+      },
+      "source": {
+        "path": "source/entrance-mobile.png",
+        "sha256": "7d8a265b58b73e6b6fd1c712ff973b052931f415eefc2dc9476877c702e1d825",
+        "bytes": 3094682,
+        "width": 1254,
+        "height": 1254,
+        "hasAlpha": false
+      },
+      "export": {
+        "path": "exports/entrance-mobile.webp",
+        "sha256": "38d81a2a5ac3f9dfa2998960c5505cdd803730b8ca3977721088e83dcbd3851a",
+        "bytes": 281828,
+        "width": 1024,
+        "height": 1024,
+        "hasAlpha": false
+      }
+    },
+    {
+      "name": "paperkeeper.three-quarter",
+      "conversion": {
+        "height": 960,
+        "quality": 92,
+        "alphaQuality": 100,
+        "crop": false
+      },
+      "source": {
+        "path": "source/paperkeeper.three-quarter.png",
+        "sha256": "7584e06c02854fa2308dd64abd5bca95a9133832dd8429738a729ce9375d0e42",
+        "bytes": 1988302,
+        "width": 1009,
+        "height": 1558,
+        "hasAlpha": true,
+        "alpha": {
+          "min": 0,
+          "max": 255,
+          "threshold": 32,
+          "bounds": {
+            "left": 36,
+            "top": 25,
+            "right": 934,
+            "bottom": 1513
+          },
+          "footBaseline": 0.97112
+        }
+      },
+      "export": {
+        "path": "exports/paperkeeper.three-quarter.webp",
+        "sha256": "3d78023cb5e52f6793adf4a5f00680b0f474a720fd4b92a5953b8fa47ceff3f3",
+        "bytes": 191112,
+        "width": 622,
+        "height": 960,
+        "hasAlpha": true,
+        "alpha": {
+          "min": 0,
+          "max": 255,
+          "threshold": 32,
+          "bounds": {
+            "left": 22,
+            "top": 15,
+            "right": 576,
+            "bottom": 932
+          },
+          "footBaseline": 0.97083
+        }
+      }
+    }
+  ]
+}

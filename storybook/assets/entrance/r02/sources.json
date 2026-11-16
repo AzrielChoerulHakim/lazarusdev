@@ -1,0 +1,33 @@
+{
+  "revision": "R02",
+  "created": "2026-11-16",
+  "method": "New production drawings generated with OpenAI image_gen; original PNG sources retained. WebP delivery uses Sharp for resizing and encoding, without cropping or redrawing.",
+  "direction": "docs/forest/revision/r01/art-direction-revision.md",
+  "originalV2MasterAvailable": false,
+  "assets": [
+    {
+      "name": "entrance-desktop",
+      "generatedFile": "exec-f22c80b5-e08f-4ebc-8051-13b058b7a563.png",
+      "reference": "docs/forest/revision/r01/concept-board.png",
+      "brief": "Independent landscape production scene. Asymmetric mossy arch and old oak to the right, upper-left light, ochre path toward an open lower-left landing. Colored pencil and wax crayon on warm paper. No text, UI, people or embedded character. Not a crop of the concept board."
+    },
+    {
+      "name": "entrance-mobile",
+      "generatedFile": "exec-61c79897-f25a-41f1-a7b3-81313e265f38.png",
+      "reference": "source/entrance-desktop.png",
+      "brief": "Independent square composition of the same portal and oak, with the same light and paper material. Recompose portal and canopy in the upper-right; retain open lower-left landing. Full scene at narrow widths, not an automated landscape crop."
+    },
+    {
+      "name": "paperkeeper.three-quarter",
+      "generatedFile": "exec-bdca1f63-0ca1-4aee-8ec3-7ee7be085db6.png",
+      "reference": "storybook/assets/characters/paperkeeper.three-quarter.webp",
+      "initialGeneration": "exec-838647c7-6138-4541-977f-5413e0fe968c.png",
+      "brief": "Same Paperkeeper identity: asymmetric leaf hat, tiny eyes, moss cape, twig legs, smaller worn shoes, paper satchel on viewer-left, acorn lantern on viewer-right. Neutral standing pose, separate transparent layer, no ground or baked shadow. Follow-up imagegen edit cleans silhouette fringes while preserving pose and proportions."
+    }
+  ],
+  "notes": [
+    "Production briefs above summarize intent; they are not a claim to recover the missing original V2 master.",
+    "PNG and WebP byte hashes, dimensions, alpha bounds and foot baseline are recorded in manifest.json.",
+    "Only Entrance uses these assets. Other chapter artwork and existing character studies remain historical baseline until their assigned revision."
+  ]
+}

@@ -5,7 +5,7 @@ const base=process.env.STORYBOOK_PREVIEW_ORIGIN||'http://127.0.0.1:4186';
 const routes=['/lazarusdev/','/lazarusdev/storybook/'];
 const profiles=[{w:320,h:720},{w:375,h:812},{w:390,h:844},{w:430,h:932},{w:670,h:850},{w:768,h:860},{w:1024,h:768},{w:1440,h:900},{w:844,h:390}];
 const ids=['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
-const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
+const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let checks=0;
 try {
   for(const route of routes)for(const viewport of profiles){
@@ -30,6 +30,7 @@ try {
           h1:document.querySelectorAll('h1').length,
           atlasCount:document.querySelectorAll('[data-field-atlas]').length,
           atlasOpen:atlas.open,
+          backdropHeight:document.querySelector('.entrance-canvas').getBoundingClientRect().height,
           index:[...document.querySelectorAll('.field-atlas-index nav a')].map(x=>x.getAttribute('href').slice(1)),
           specimenCount:document.querySelectorAll('.work-specimen').length,
           specimenHeading:specimen.querySelector('h3')?.textContent,
@@ -86,7 +87,7 @@ try {
         return {atlasBottom:a.bottom,tailTop:tail.top,backdropHeight:backdrop.height,heroTop:hero.top,heroBottom:hero.bottom};
       });
       assert.ok(spreadBounds.tailTop>=spreadBounds.atlasBottom-2,tag+' tail must not overlap unfolded atlas');
-      assert.ok(spreadBounds.backdropHeight>=700&&spreadBounds.backdropHeight<=1111,tag+' hero painting must not stretch with the opened atlas');
+      assert.ok(state.backdropHeight>0&&Math.abs(spreadBounds.backdropHeight-state.backdropHeight)<1,tag+' hero painting must keep its closed-atlas size');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+1),false,tag+' no overflow when unfolded');
       assert.deepEqual(errors,[],tag+' browser errors');
       assert.deepEqual(unexpectedWrites,[],tag+' no outbound data writes');
@@ -103,7 +104,11 @@ try {
       await page.locator('[data-field-atlas] summary').click();
       assert.equal(await page.locator('.field-atlas-index nav a').count(),5,route+' no-JS native links');
       assert.equal(await page.locator('.work-specimen').isVisible(),true,route+' no-JS specimen readable');
+      // With page scripts disabled, wait for the native CSS fold before
+      // Playwright's pointer stability check; navigation remains a real click.
+      await page.locator('.field-atlas-spread').evaluate(async x=>{await Promise.all(x.getAnimations().map(a=>a.finished));});
       await page.locator('.field-atlas-index a[href="#work-clearing"]').click();
+      await page.waitForURL('**/#work-clearing');
       assert.equal(new URL(page.url()).hash,'#work-clearing',route+' no-JS nav works');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+1),false,route+' no-JS no overflow');
       console.log('PASS STAGE17 NO-JS '+route);

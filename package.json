@@ -8,9 +8,13 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "build:storybook": "vite build --config vite.storybook.config.js",
-    "preview:storybook": "vite preview --config vite.storybook.config.js --host 0.0.0.0"
+    "preview:storybook": "vite preview --config vite.storybook.config.js --host 0.0.0.0",
+    "assets:r02": "node scripts/forest_r02_assets.mjs",
+    "check:r02:assets": "node scripts/forest_r02_assets.mjs --check",
+    "check:r02": "node scripts/forest_r02_smoke.mjs"
   },
   "devDependencies": {
+    "sharp": "0.34.5",
     "vite": "^7.1.0"
   }
 }

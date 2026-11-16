@@ -1,0 +1,18 @@
+PASS STAGE06 /lazarusdev/ narrow-320 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ mobile-375 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ mobile-390 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ mobile-430 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ tablet-768 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ desktop-1024 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ desktop-1440 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/ short-landscape assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ narrow-320 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ mobile-375 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ mobile-390 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ mobile-430 assets 1024x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ tablet-768 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ desktop-1024 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ desktop-1440 assets 1536x1024x622x960x138x148 no overflow
+PASS STAGE06 /lazarusdev/storybook/ short-landscape assets 1536x1024x622x960x138x148 no overflow
+STAGE06 PASS with images blocked: live HTML and anchor CTA remain functional
+STAGE06 ENTRANCE QA PASS 16 route / viewport checks

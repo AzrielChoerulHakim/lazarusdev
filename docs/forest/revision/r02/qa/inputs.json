@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-16T20:51:14.256Z",
+  "node": "v24.22.1",
+  "chromium": "Chromium 156.0.8078.79 built on Debian GNU/Linux 13 (trixie)",
+  "files": [
+    {
+      "path": "index.html",
+      "sha256": "b8ba7049aec7a3ed503ad882f991aedbb824076789f0ca9d91035daa0db98001"
+    },
+    {
+      "path": "storybook/index.html",
+      "sha256": "7d98639fea2e69673d819fec30f5edefbc0f409d60392351f0688149a3099477"
+    },
+    {
+      "path": "src/storybook/styles/entrance-r02.css",
+      "sha256": "de8500fd2a8e870f3050bd21e07310b610ae1e82b856591037e1aaf56a5ce8c4"
+    },
+    {
+      "path": "scripts/forest_r02_smoke.mjs",
+      "sha256": "5d1836691ae26704b5f75ce5e0de9dc29010544e46e4c9c23ee71d9893b760dc"
+    },
+    {
+      "path": "scripts/forest_r02_assets.mjs",
+      "sha256": "ca10137d9352168754c4b901b54161033c4330e75cbcc8a9230aeca2ab846b35"
+    },
+    {
+      "path": "scripts/forest_entrance_smoke.mjs",
+      "sha256": "db9d0383e841c69449b210f29dc14f2f0dd8aa06b80caa1b149cd1ed29eaeb62"
+    },
+    {
+      "path": "scripts/forest_editorial_smoke.mjs",
+      "sha256": "b8ca608b70352e238246ffded8d79be65f649228e7160d734dc0a17540c4d88d"
+    },
+    {
+      "path": "storybook/assets/entrance/r02/manifest.json",
+      "sha256": "71217e6651d33b843cc601df581efd99553c6dd9285b072196009ccfda8b42be"
+    },
+    {
+      "path": "dist/index.html",
+      "sha256": "eb6a43b7291019cd09397359536b8d8aef05c641fa52a3d262cabc2a105b9ce3"
+    },
+    {
+      "path": "dist-storybook/storybook/index.html",
+      "sha256": "8b88dafc9b39026a84050f8a7614475ea2135ea51d399b280163f73ad58acf68"
+    }
+  ]
+}

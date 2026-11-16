@@ -1,0 +1,62 @@
+name: Forest R02 — static Entrance reference (no screenshots)
+on:
+  push:
+    branches: [feat/r02-entrance]
+  pull_request:
+    paths:
+      - index.html
+      - storybook/index.html
+      - package.json
+      - src/storybook/styles/**
+      - storybook/assets/entrance/r02/**
+      - scripts/forest_r02_*
+      - scripts/forest_entrance_smoke.mjs
+      - scripts/forest_editorial_smoke.mjs
+      - .github/workflows/forest-r02.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-reference:
+    runs-on: ubuntu-24.04
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+      STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+      R02_REPORT_PATH: reports/r02-browser.json
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install build and text-only browser QA
+        run: |
+          npm install --no-package-lock --no-audit --no-fund
+          npm install --no-save --no-package-lock --no-audit --no-fund playwright@1.56.1 axe-core@4.10.3
+      - name: Verify source and export integrity, build both entries
+        run: |
+          npm run check:r02:assets
+          npm run build
+          npm run build:storybook
+      - name: Test compiled Pages routes, no screenshots or recordings
+        run: |
+          mkdir -p /tmp/r02-mirror/lazarusdev reports
+          cp -a dist/. /tmp/r02-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/r02-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/r02-mirror > /tmp/r02-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS "$STORYBOOK_PREVIEW_ORIGIN/lazarusdev/" > /dev/null; then break; fi
+            sleep 1
+          done
+          set -o pipefail
+          npm run check:r02 | tee reports/r02-browser.log
+          node scripts/forest_entrance_smoke.mjs | tee reports/r02-entrance-regression.log
+          node scripts/forest_editorial_smoke.mjs | tee reports/r02-editorial-regression.log
+      - name: Retain text diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r02-text-qa
+          path: reports/
+          if-no-files-found: ignore

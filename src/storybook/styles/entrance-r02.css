@@ -1,0 +1,55 @@
+/* R02 static reference scene. Load after the historical Stage 06/17 styles.
+   Artwork lives inside its own figure: long copy/atlas cannot stretch it. */
+.chapter-entrance { min-height:0; background:var(--paper); }
+.chapter-entrance .page-edge { padding-top:20px; font-size:.66rem; letter-spacing:.08em; }
+.chapter-entrance .hero-layout { display:grid; grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr); gap:20px clamp(12px,2vw,30px); align-items:center; min-height:0; padding-block:clamp(38px,5vw,72px) 28px; }
+.chapter-entrance .hero-copy { min-width:0; position:relative; z-index:2; }
+.chapter-entrance .hero-copy .eyebrow { margin-bottom:22px; font-size:.73rem; line-height:1.55; max-width:36ch; letter-spacing:.07em; }
+.chapter-entrance .hero-copy h1 { font-size:clamp(3.25rem,5vw,4.5rem); line-height:1.06; letter-spacing:-.055em; max-width:13ch; text-wrap:balance; }
+.chapter-entrance .hero-lead { font-size:clamp(1.08rem,1.4vw,1.25rem); line-height:1.55; margin-top:24px; max-width:35ch; }
+.chapter-entrance .action-row { flex-direction:row; flex-wrap:wrap; align-items:center; margin-top:28px; gap:14px 22px; }
+.chapter-entrance .button-primary { border-radius:2px; box-shadow:2px 3px 0 #d6ceb8; padding-inline:18px; }
+.chapter-entrance .text-link { gap:15px; }
+.chapter-entrance .entrance-stage { position:relative; display:block; flex:none; width:100%; height:auto; min-height:0; aspect-ratio:3/2; margin:0; align-self:center; isolation:isolate; }
+.chapter-entrance .entrance-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; mask-image:linear-gradient(to right,transparent,#000 5%,#000 95%,transparent),linear-gradient(to bottom,transparent,#000 5%,#000 95%,transparent); mask-composite:intersect; }
+.entrance-canvas picture,.entrance-backdrop { display:block; width:100%; height:100%; }
+.entrance-canvas .entrance-backdrop { object-fit:contain; }
+/* Ground registration: the independently drawn pad is at y=87%. */
+.entrance-grounding { position:absolute; left:18%; bottom:12.6%; width:17%; height:1.8%; background:radial-gradient(ellipse,#39473255 0%,#39473218 45%,transparent 72%); pointer-events:none; }
+.chapter-entrance .entrance-paperkeeper { position:absolute; left:13%; bottom:11.6%; display:block; width:auto; height:62%; max-width:32%; margin:0; object-fit:contain; object-position:center bottom; filter:none; transform:none; animation:none !important; }
+.chapter-entrance .hero-atlas-cue { grid-column:1/-1; justify-self:start; width:fit-content; max-width:100%; display:inline-flex; align-items:center; gap:12px; min-height:48px; margin:4px 0 0; padding:8px 0; border:0; border-bottom:1px solid #809074; background:transparent; box-shadow:none; transform:none; color:var(--forest); font:500 .95rem/1.5 var(--font-reading); }
+.chapter-entrance .hero-atlas-cue:hover { background:transparent; text-decoration:underline; text-underline-offset:4px; }
+.chapter-entrance .chapter-tail { margin-top:0; min-height:64px; border-top:1px solid #a7a78e; font-size:.7rem; }
+.entrance-tail-index { white-space:nowrap; }
+.chapter-entrance .entrance-tail-caption { flex-wrap:wrap; }
+.chapter-entrance .entrance-tail-caption>span:last-child { white-space:normal; }
+@media(min-width:1600px) { .chapter-entrance .entrance-paperkeeper { height:60%; } }
+@media(min-width:671px) and (max-width:1000px) {
+  .chapter-entrance .hero-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:18px; padding-block:38px 24px; }
+  .chapter-entrance .hero-copy h1 { font-size:clamp(2.7rem,5.1vw,3.4rem); }
+  .chapter-entrance .hero-copy .eyebrow { font-size:.65rem; }
+  .chapter-entrance .hero-lead { font-size:1.075rem; }
+  .chapter-entrance .action-row { gap:10px; }
+}
+@media(max-width:670px) {
+  .chapter-entrance .page-edge { padding-top:14px; font-size:.58rem; gap:8px; flex-wrap:wrap; }
+  .chapter-entrance .hero-layout { display:flex; flex-direction:column; gap:14px; align-items:stretch; min-height:0; padding-block:26px 22px; }
+  .chapter-entrance .hero-copy { align-self:stretch; }
+  .chapter-entrance .hero-copy .eyebrow { margin-bottom:14px; max-width:38ch; font-size:.66rem; }
+  .chapter-entrance .hero-copy h1 { font-size:clamp(2.65rem,10.8vw,3.8rem); line-height:1.04; max-width:13ch; }
+  .chapter-entrance .hero-lead { font-size:1.075rem; line-height:1.5; margin-top:18px; max-width:36ch; }
+  .chapter-entrance .action-row { margin-top:20px; gap:10px 17px; }
+  .chapter-entrance .button-primary { padding:10px 14px; font-size:.86rem; }
+  .chapter-entrance .text-link { font-size:.86rem; gap:10px; }
+  .chapter-entrance .entrance-stage { width:100%; aspect-ratio:1; align-self:center; }
+  .chapter-entrance .entrance-paperkeeper { left:10%; bottom:12%; height:48%; max-width:35%; }
+  .entrance-grounding { left:17.5%; width:16.5%; }
+  .chapter-entrance .hero-atlas-cue { align-self:flex-start; margin-top:0; }
+  .chapter-entrance .chapter-tail { font-size:.6rem; }
+}
+@media(max-width:360px) {
+  .chapter-entrance .hero-copy h1 { font-size:2.6rem; }
+  .chapter-entrance .action-row { gap:7px 12px; }
+  .chapter-entrance .entrance-tail-caption>span:last-child { font-size:.53rem; }
+}
+@media(forced-colors:active) { .entrance-grounding { display:none; } }

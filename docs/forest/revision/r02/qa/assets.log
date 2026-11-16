@@ -1,0 +1,11 @@
+
+> lazarus-dev-forest-storybook@2.0.0-foundation check:r02:assets
+> node scripts/forest_r02_assets.mjs --check
+
+PASS R02: source/export hashes, dimensions, transparent character, independent compositions and transfer budgets.
+STAGE06 ASSET PASS entrance-gate-art-source.webp 686832 bytes
+STAGE06 ASSET PASS entrance-portrait-art-source.webp 490342 bytes
+STAGE06 ASSET PASS entrance-desktop.webp 319778 bytes
+STAGE06 ASSET PASS entrance-leaf-cue.webp 5570 bytes
+STAGE06 ASSET PASS entrance-mobile.webp 214346 bytes
+STAGE06 ASSET + SEMANTIC STATIC PASS (human art approval remains separate)
