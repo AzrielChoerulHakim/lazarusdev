@@ -64,7 +64,7 @@ try {
       // Exercise real hand-drawn pose switching at one desktop and one mobile width per route.
       if(p.w===390 || p.w===1440){
         await page.evaluate(()=>{
-          window.__keeperSeen = [];
+          window.__keeperSeen = [document.querySelector('[data-paperkeeper-walk]').getAttribute('src')];
           const reel=document.querySelector('[data-paperkeeper-walk]');
           const observer=new MutationObserver(()=>window.__keeperSeen.push(reel.getAttribute('src')));
           observer.observe(reel,{attributes:true,attributeFilter:['src']});
@@ -74,15 +74,21 @@ try {
         await page.waitForFunction(()=>document.querySelector('[data-paperkeeper-walk]').dataset.motionState==='complete',{timeout:6000});
         const frames=await page.evaluate(()=>{
           window.__keeperObserver.disconnect();
+          // Vite may inline tiny canonical WebPs as data: URLs instead of naming files.
+          // Compare the actual compiled image sources, not human-readable basenames.
+          const expected=[document.querySelector('[data-paperkeeper-walk]'),
+            ...document.querySelectorAll('[data-paperkeeper-pose]')]
+            .map(image=>image.getAttribute('src'));
+          const observed=new Set(window.__keeperSeen);
           return {
-            filenames:[...new Set(window.__keeperSeen.map(s=>s.split('/').at(-1)))],
+            posesSeen:expected.map(source=>observed.has(source)),
+            distinctFrames:new Set(expected).size,
             disabled:document.querySelector('[data-paperkeeper-step]').disabled,
             status:document.getElementById('paperkeeper-step-status').textContent
           };
         });
-        for (const frame of ['paperkeeper.walk-a.webp','paperkeeper.walk-b.webp','paperkeeper.walk-c.webp']){
-          assert.ok(frames.filenames.some(name => name.startsWith(frame.replace('.webp',''))),tag+' missing actual pose '+frame);
-        }
+        assert.equal(frames.distinctFrames,3,tag+' three independently compiled poses');
+        assert.deepEqual(frames.posesSeen,[true,true,true],tag+' each actual canonical pose must appear');
         assert.equal(frames.disabled,false,tag+' replay enabled');
         assert.match(frames.status,/Replay/,tag+' accessible completion');
         // The original on-canvas full-sized figure remains unchanged.
