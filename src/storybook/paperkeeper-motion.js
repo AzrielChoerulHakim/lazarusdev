@@ -19,6 +19,8 @@ if (reel && trigger && status) {
   if (urls.length !== 3) throw new Error('Paperkeeper motion requires exactly three canonical pose assets.');
   const updateAvailability = () => {
     trigger.hidden = !ready || reduced.matches;
+    // Inline default is hidden for no-JS; only an actual ready script may reveal it.
+    trigger.style.display = (!ready || reduced.matches) ? 'none' : '';
     if (reduced.matches) status.textContent = 'Still illustration shown. Motion is disabled by your device preferences.';
   };
   const end = (completed) => {
@@ -44,6 +46,7 @@ if (reel && trigger && status) {
     updateAvailability();
   }).catch(() => {
     trigger.hidden = true;
+    trigger.style.display = 'none';
     status.textContent = 'The motion frames are unavailable; the still character remains visible.';
   });
   trigger.addEventListener('click', () => {
