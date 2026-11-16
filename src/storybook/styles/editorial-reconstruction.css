@@ -355,3 +355,19 @@
   .field-atlas-index, .field-atlas-cartography, .work-specimen-sheet { background: Canvas; color: CanvasText; }
   .field-atlas-index a, .work-specimen-observations a { color: LinkText; }
 }
+
+/* Keep Entrance's painted scenery anchored to the gateway itself.
+   Expanding the atlas must never stretch / recrop the existing hero painting. */
+@media (min-width: 671px) {
+  .chapter-entrance .entrance-canvas {
+    bottom: auto;
+    height: clamp(780px, calc(100svh - 95px), 980px);
+  }
+}
+@media (max-width: 670px) {
+  .chapter-entrance .entrance-canvas { bottom: auto; height: 1110px; }
+  .chapter-entrance .chapter-tail { margin-top: 0; }
+}
+@media (max-width: 390px) {
+  .chapter-entrance .entrance-canvas { height: 1090px; }
+}

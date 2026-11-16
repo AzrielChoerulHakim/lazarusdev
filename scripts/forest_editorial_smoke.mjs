@@ -72,6 +72,15 @@ try {
       await page.emulateMedia({reducedMotion:'reduce'});
       assert.equal(await page.locator('.field-atlas-spread').evaluate(x=>getComputedStyle(x).animationName),'none',tag+' reduced-motion atlas');
       assert.equal(await page.locator('.field-atlas-trail').evaluate(x=>getComputedStyle(x).animationName),'none',tag+' reduced-motion ink');
+      const spreadBounds=await page.evaluate(()=>{
+        const a=document.querySelector('.field-atlas').getBoundingClientRect();
+        const tail=document.querySelector('#entrance .chapter-tail').getBoundingClientRect();
+        const backdrop=document.querySelector('.entrance-canvas').getBoundingClientRect();
+        const hero=document.querySelector('#entrance .hero-layout').getBoundingClientRect();
+        return {atlasBottom:a.bottom,tailTop:tail.top,backdropHeight:backdrop.height,heroTop:hero.top,heroBottom:hero.bottom};
+      });
+      assert.ok(spreadBounds.tailTop>=spreadBounds.atlasBottom-2,tag+' tail must not overlap unfolded atlas');
+      assert.ok(spreadBounds.backdropHeight>=700&&spreadBounds.backdropHeight<=1111,tag+' hero painting must not stretch with the opened atlas');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>document.documentElement.clientWidth+1),false,tag+' no overflow when unfolded');
       assert.deepEqual(errors,[],tag+' browser errors');
       assert.deepEqual(unexpectedWrites,[],tag+' no outbound data writes');
