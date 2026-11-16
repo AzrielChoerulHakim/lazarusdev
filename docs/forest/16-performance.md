@@ -37,3 +37,7 @@ On the same local uncompressed Chrome CI harness at 390×844, root route, Stage 
 **Decrease in first-view local transfer: 273,882 bytes (31.3%).** The previously loaded winding-path mobile WebP was absent after the fix, while its authored native SVG remained. LCP, CLS and DOMContentLoaded are *diagnostics only* here because CI runner load and network vary; no reliable field speedup percentage or production Core Web Vitals pass is claimed.
 
 The Stage 16 QA additionally simulates native illustration load failure and checks that the original raster and cottage-light fallback restore correctly. Mobile art compositions and Paperkeeper character assets are unchanged.
+
+## Parser-time mobile asset selection
+
+The first extra fallback test exposed a real cold-start race: the site previously removed `html.no-js` only when the deferred module `main.js` ran, so Chrome's preload scanner could already start downloading the covered mobile WebP. A minimal, synchronous parser-time class change in the head now selects the SVG-first loading path **before body image discovery**. With JavaScript disabled, the inline script cannot execute and `.no-js` remains, so the WebP fallback stays available. This prevents the optimization from depending on GitHub runner scheduling or Google font timing. The existing full main module still sets up navigation and content as before.
