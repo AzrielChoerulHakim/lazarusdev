@@ -1,0 +1,357 @@
+/*
+ * Stage 17 / The forest is a field book, not five disconnected landing panels.
+ * Hand-directed cartographic ink is ornamental; the navigation is genuine HTML.
+ * No global grain/noise overlay, generic card grid, auto-parallax, or scroll hijack.
+ */
+
+/* A folded annotation tucked beneath the illustrated gateway. */
+.field-atlas {
+  position: relative;
+  isolation: isolate;
+  width: min(calc(100% - var(--page-padding) * 2), var(--content-width));
+  margin: 0 auto clamp(30px, 4.5vw, 68px);
+  color: #273f30;
+  border: 1px solid #897b5f;
+  background: #e9dbbd;
+  box-shadow: 5px 7px 0 #cbb998, 0 12px 27px rgba(37, 48, 33, .1);
+}
+.field-atlas::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  top: 0;
+  bottom: 0;
+  left: 12px;
+  width: 1px;
+  background: repeating-linear-gradient(to bottom,#9c875d 0,#9c875d 7px,transparent 7px,transparent 18px);
+  opacity: .73;
+}
+.field-atlas-fold {
+  min-height: 104px;
+  display: grid;
+  grid-template-columns: 71px minmax(0, 1fr) 55px;
+  gap: clamp(11px,2.3vw,32px);
+  align-items: center;
+  padding: 16px clamp(20px,3vw,40px) 16px clamp(30px,4vw,50px);
+  cursor: pointer;
+  list-style: none;
+}
+.field-atlas-fold::-webkit-details-marker { display: none; }
+.field-atlas-fold::marker { content: ''; }
+.field-atlas-fold:focus-visible {
+  outline: 3px solid var(--forest);
+  outline-offset: 4px;
+}
+.field-atlas-seal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 66px;
+  min-height: 65px;
+  border: 2px double #315b44;
+  border-radius: 47% 53% 52% 48% / 52% 47% 53% 48%;
+  transform: rotate(-12deg);
+  color: #315b44;
+}
+.field-atlas-seal > span { font: italic 600 1.65rem/1 var(--font-display); letter-spacing: -.12em; }
+.field-atlas-seal small { margin-top: 4px; font: 700 .56rem/1 var(--font-ui); letter-spacing: .06em; }
+.field-atlas-fold-copy { display: flex; flex-direction: column; min-width: 0; }
+.field-atlas-fold-copy small { font: 700 .69rem/1.45 var(--font-ui); letter-spacing: .12em; }
+.field-atlas-fold-copy strong {
+  margin-top: 3px;
+  font: italic 500 clamp(1.65rem,3.2vw,3rem)/1.1 var(--font-display);
+  letter-spacing: -.045em;
+}
+.field-atlas-fold-copy > span { margin-top: 5px; font: 400 clamp(.91rem,1.4vw,1.1rem)/1.4 var(--font-reading); }
+.field-atlas-fold-action {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  min-height: 48px;
+  border: 1px solid #42634b;
+  font: 400 2rem/1 var(--font-display);
+  transition: transform .3s ease, background .2s ease, color .2s ease;
+}
+.field-atlas-fold:hover .field-atlas-fold-action { background: #315a44; color: #fff3d9; }
+.field-atlas[open] .field-atlas-fold-action { transform: rotate(135deg); }
+.field-atlas[open] .field-atlas-fold { border-bottom: 1px solid #b0a084; }
+
+/* Two bound leaves: a navigable typographic index and an original ornamental map. */
+.field-atlas-spread {
+  display: grid;
+  grid-template-columns: minmax(0,.86fr) minmax(0,1.14fr);
+  align-items: stretch;
+  min-width: 0;
+  border-top: 6px double rgba(107, 94, 69, .25);
+}
+.field-atlas-index {
+  position: relative;
+  min-width: 0;
+  padding: clamp(30px,4.8vw,70px) clamp(20px,4vw,67px) clamp(32px,4vw,62px);
+  background: #f4ead3;
+}
+.field-atlas-index::before {
+  content: '';
+  position: absolute;
+  top: 7%;
+  right: 0;
+  bottom: 7%;
+  width: 1px;
+  background: #bcaa89;
+  box-shadow: 3px 0 5px rgba(58,45,26,.17);
+}
+.field-atlas-kicker {
+  color: #395944;
+  font: 700 .7rem/1.5 var(--font-ui);
+  letter-spacing: .1em;
+}
+.field-atlas-kicker span { padding: 0 4px; }
+.field-atlas-index h2 {
+  margin-top: clamp(20px,3vw,40px);
+  max-width: 13ch;
+  color: #254d39;
+  font: 400 clamp(2.35rem,4.1vw,4.65rem)/1.07 var(--font-display);
+  letter-spacing: -.064em;
+}
+.field-atlas-index h2 em { font-weight: 400; color: #795b3f; }
+.field-atlas-index > p:not(.field-atlas-kicker):not(.field-atlas-marginalia) {
+  margin-top: 18px;
+  max-width: 36ch;
+  font: 400 clamp(1.02rem,1.4vw,1.2rem)/1.52 var(--font-reading);
+}
+.field-atlas-index nav { margin-top: clamp(22px,3vw,37px); }
+.field-atlas-index ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid #a6a68a; }
+.field-atlas-index li { border-bottom: 1px solid #bcb39c; }
+.field-atlas-index a {
+  display: grid;
+  grid-template-columns: 31px minmax(0,1fr) 20px;
+  gap: 13px;
+  align-items: center;
+  min-height: 61px;
+  padding: 9px 0;
+  color: #294d39;
+}
+.field-atlas-index a:hover { color: #603f24; }
+.field-atlas-index a:focus-visible {
+  outline: 3px solid #254d39;
+  outline-offset: 2px;
+  background: #e6dbc0;
+}
+.field-atlas-num { font: 700 .78rem/1.4 var(--font-ui); align-self: start; padding-top: 4px; }
+.field-atlas-destination { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.field-atlas-destination strong { font: 600 clamp(1.16rem,1.8vw,1.5rem)/1.22 var(--font-display); }
+.field-atlas-destination small { font: 400 .95rem/1.35 var(--font-reading); }
+.field-atlas-index a > span:last-child { font-size: 1.15rem; }
+.field-atlas-marginalia {
+  margin-top: 30px;
+  color: #77583d;
+  font: italic 400 clamp(1.2rem,2vw,1.6rem)/1.3 var(--font-reading);
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+.field-atlas-cartography {
+  position: relative;
+  margin: 0;
+  min-width: 0;
+  padding: clamp(17px,2.3vw,32px);
+  background: #e0dfc5;
+  overflow: hidden;
+}
+.field-atlas-map-header, .field-atlas-cartography figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px 20px;
+  color: #3e5e48;
+  font: 700 .69rem/1.5 var(--font-ui);
+  letter-spacing: .06em;
+}
+.field-atlas-cartography svg { display: block; width: 100%; height: auto; margin: clamp(9px,2vw,23px) auto; filter: saturate(.9); }
+.field-atlas-cartography figcaption {
+  flex-wrap: wrap;
+  border-top: 1px solid #a8aa8c;
+  padding-top: 14px;
+  font: italic 400 .94rem/1.36 var(--font-reading);
+  letter-spacing: 0;
+}
+.field-atlas[open] .field-atlas-spread {
+  animation: atlas-page-open .34s ease-out both;
+}
+.field-atlas[open] .field-atlas-trail {
+  animation: atlas-ink-mark .9s ease-out both;
+}
+@keyframes atlas-page-open {
+  from { opacity: .7; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes atlas-ink-mark {
+  from { stroke-dashoffset: 95; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* An editorial case specimen: actual decisions visible on this page. */
+.work-specimen {
+  --specimen-ink: #2d4b37;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(150px,.34fr) minmax(0,1fr);
+  gap: clamp(22px,4vw,66px);
+  align-items: start;
+  margin-top: clamp(74px,9vw,140px);
+  color: var(--specimen-ink);
+}
+.work-specimen-index {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: clamp(22px,4vw,43px);
+  gap: 26px;
+}
+.work-specimen-stamp {
+  width: 117px;
+  height: 117px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 4px double #476650;
+  border-radius: 49% 51% 47% 53% / 51% 45% 55% 49%;
+  color: #395943;
+  text-align: center;
+  font: 700 .86rem/1.05 var(--font-ui);
+  letter-spacing: .085em;
+  transform: rotate(-12deg);
+}
+.work-specimen-stamp em { font: italic 400 1.6rem/1 var(--font-display); margin-top:4px; }
+.work-specimen-index > p:not(.work-specimen-index-aside) {
+  max-width: 20ch;
+  color: #345741;
+  font: 700 .77rem/1.5 var(--font-ui);
+  letter-spacing: .07em;
+}
+.work-specimen-index-aside {
+  max-width: 22ch;
+  border-top: 1px solid #81947b;
+  padding-top: 16px;
+  font: italic 400 clamp(1.25rem,2.1vw,1.65rem)/1.35 var(--font-reading);
+}
+.work-specimen-sheet {
+  position: relative;
+  min-width: 0;
+  padding: clamp(32px,5vw,66px) clamp(23px,5vw,74px) clamp(22px,3vw,43px);
+  border: 1px solid #b4a487;
+  border-left: 6px double #9b8b6e;
+  background: #f1e5ca;
+  box-shadow: 9px 12px 0 #dfd3b6;
+  clip-path: polygon(0 0,calc(100% - 28px) 0,100% 28px,100% 100%,0 100%);
+}
+.work-specimen-sheet::before {
+  content: '';
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: 0;
+  right: 0;
+  background: #d2bf9d;
+  border-left: 1px solid #a88f6d;
+  border-bottom: 1px solid #a88f6d;
+}
+.work-specimen-heading .eyebrow { font: 700 .75rem/1.5 var(--font-ui); letter-spacing: .09em; color: #395943; }
+.work-specimen-heading h3 {
+  max-width: 19ch;
+  margin-top: clamp(16px,2vw,27px);
+  font: 400 clamp(2.4rem,4.3vw,5rem)/1.05 var(--font-display);
+  letter-spacing: -.058em;
+}
+.work-specimen-heading h3 em { color: #795335; }
+.work-specimen-heading > p:last-child {
+  margin-top: 23px;
+  max-width: 47ch;
+  font: 400 clamp(1.08rem,1.7vw,1.3rem)/1.55 var(--font-reading);
+}
+.work-specimen-observations {
+  list-style: none;
+  padding: 0;
+  margin: clamp(27px,3.3vw,48px) 0 0;
+  border-top: 1px solid #9a9e83;
+}
+.work-specimen-observations li {
+  display: grid;
+  grid-template-columns: minmax(115px,.32fr) minmax(0,1fr);
+  gap: clamp(13px,2.5vw,35px);
+  padding: clamp(20px,2.5vw,34px) 0;
+  border-bottom: 1px solid #aeb19b;
+}
+.work-specimen-n {
+  padding-top: 4px;
+  color: #3d6049;
+  font: 700 .76rem/1.5 var(--font-ui);
+  letter-spacing: .06em;
+}
+.work-specimen-observations strong {
+  font: 500 clamp(1.27rem,2vw,1.95rem)/1.25 var(--font-display);
+}
+.work-specimen-observations p { margin-top: 9px; max-width: 52ch; font: 400 1.04rem/1.55 var(--font-reading); }
+.work-specimen-observations a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-top: 13px;
+  border-bottom: 1px solid var(--specimen-ink);
+  color: #2d503b;
+  font: 700 .86rem/1.4 var(--font-ui);
+}
+.work-specimen-observations a:hover { color: #795335; border-color: currentColor; }
+.work-specimen-observations a:focus-visible { outline: 3px solid var(--forest); outline-offset:3px; }
+.work-specimen-foot {
+  margin-top: 24px;
+  color: #405848;
+  font: italic 400 1rem/1.5 var(--font-reading);
+}
+@media (max-width: 850px) {
+  .field-atlas-spread { grid-template-columns: 1fr; }
+  .field-atlas-index::before { display: none; }
+  .field-atlas-cartography { border-top: 6px double #b7ad90; }
+  .field-atlas-cartography svg { max-width: 690px; }
+  .work-specimen { grid-template-columns: minmax(125px,.25fr) minmax(0,1fr); gap: 25px; }
+  .work-specimen-observations li { grid-template-columns: 1fr; gap: 6px; }
+}
+@media (max-width: 670px) {
+  .field-atlas { margin-bottom: 35px; box-shadow: 3px 5px 0 #cbb998; }
+  .field-atlas-fold { grid-template-columns: 47px minmax(0,1fr) 34px; gap: 9px; padding: 15px 12px 15px 25px; min-height: 93px; }
+  .field-atlas-seal { width: 44px; min-height: 45px; }
+  .field-atlas-seal > span { font-size: 1.13rem; }
+  .field-atlas-seal small { font-size: .46rem; }
+  .field-atlas-fold-copy small { font-size: .58rem; letter-spacing: .04em; }
+  .field-atlas-fold-copy strong { font-size: clamp(1.35rem,6vw,2rem); }
+  .field-atlas-fold-copy > span { font-size: .86rem; }
+  .field-atlas-fold-action { width: 34px; min-height: 48px; font-size: 1.4rem; border: 0; }
+  .field-atlas-index { padding: 28px 22px 33px 29px; }
+  .field-atlas-index h2 { font-size: clamp(2.1rem,8.5vw,3.4rem); }
+  .field-atlas-index a { grid-template-columns: 26px minmax(0,1fr) 18px; gap: 9px; }
+  .field-atlas-map-header { font-size: .59rem; }
+  .field-atlas-cartography { padding: 16px; }
+  .field-atlas-cartography figcaption { font-size: .87rem; }
+  .work-specimen { grid-template-columns: 1fr; gap: 20px; margin-top: 74px; }
+  .work-specimen-index { display: grid; grid-template-columns: 84px minmax(0,1fr); align-items: center; gap: 12px 17px; padding-top:0; }
+  .work-specimen-stamp { grid-row: span 2; width: 82px; height: 82px; font-size: .63rem; border-width: 3px; }
+  .work-specimen-stamp em { font-size: 1.1rem; }
+  .work-specimen-index > p:not(.work-specimen-index-aside) { max-width: none; font-size: .7rem; }
+  .work-specimen-index-aside { max-width: none; padding-top: 9px; font-size:1.1rem; }
+  .work-specimen-sheet { border-left-width: 4px; box-shadow: 5px 7px 0 #dfd3b6; padding: 31px 20px 27px; }
+  .work-specimen-heading h3 { font-size: clamp(2.3rem,9vw,3.7rem); }
+  .work-specimen-observations li { grid-template-columns: 1fr; gap: 5px; }
+  .work-specimen-observations p { font-size:1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .field-atlas[open] .field-atlas-spread,
+  .field-atlas[open] .field-atlas-trail { animation: none !important; }
+  .field-atlas-fold-action { transition: none !important; }
+}
+@media (forced-colors: active) {
+  .field-atlas, .field-atlas-fold-action, .work-specimen-sheet { border: 1px solid CanvasText; box-shadow: none; }
+  .field-atlas-index, .field-atlas-cartography, .work-specimen-sheet { background: Canvas; color: CanvasText; }
+  .field-atlas-index a, .work-specimen-observations a { color: LinkText; }
+}

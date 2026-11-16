@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="./src/storybook/styles/forest-seams.css">
   <link rel="stylesheet" href="./src/storybook/styles/mobile-native.css">
   <link rel="stylesheet" href="./src/storybook/styles/render-budget.css">
+  <link rel="stylesheet" href="./src/storybook/styles/editorial-reconstruction.css">
   <script type="module" src="./src/storybook/main.js"></script>
   <script type="module" src="./src/storybook/path.js"></script>
   <script type="module" src="./src/storybook/work-clearing.js"></script>
@@ -77,6 +78,83 @@
           <figcaption class="entrance-figcaption">A moss-covered stone arch opens into a forest path. Paperkeeper invites visitors to explore Lazarus Dev.</figcaption>
         </figure>
       </div>
+
+      <!-- Stage 17: an opt-in fold-out inside the book; no overlay or scroll interception. -->
+      <details class="field-atlas" data-field-atlas>
+        <summary class="field-atlas-fold">
+          <span class="field-atlas-seal" aria-hidden="true"><span>LD</span><small>№ 01</small></span>
+          <span class="field-atlas-fold-copy"><small>AN INSERT TUCKED INSIDE THE COVER</small><strong>Unfold the field atlas.</strong><span>Five places, one winding journey.</span></span>
+          <span class="field-atlas-fold-action" aria-hidden="true">↗</span>
+        </summary>
+        <div class="field-atlas-spread">
+          <div class="field-atlas-index">
+            <p class="field-atlas-kicker">THE FOREST BETWEEN PAGES <span aria-hidden="true">/</span> AN INDEX</p>
+            <h2>The world is<br><em>larger than a page.</em></h2>
+            <p>Every clearing has a purpose. Choose a chapter, or let the path take you there in its own time.</p>
+            <nav aria-label="Field atlas chapter destinations">
+              <ol>
+                <li><a href="#entrance"><span class="field-atlas-num">01</span><span class="field-atlas-destination"><strong>The Entrance</strong><small>Where the invitation begins</small></span><span aria-hidden="true">↗</span></a></li>
+                <li><a href="#winding-path"><span class="field-atlas-num">02</span><span class="field-atlas-destination"><strong>The Winding Path</strong><small>How an idea takes shape</small></span><span aria-hidden="true">↗</span></a></li>
+                <li><a href="#work-clearing"><span class="field-atlas-num">03</span><span class="field-atlas-destination"><strong>The Work Clearing</strong><small>Studies pinned among the branches</small></span><span aria-hidden="true">↗</span></a></li>
+                <li><a href="#river-stories"><span class="field-atlas-num">04</span><span class="field-atlas-destination"><strong>River Stories</strong><small>Questions carried downstream</small></span><span aria-hidden="true">↗</span></a></li>
+                <li><a href="#house-on-the-hill"><span class="field-atlas-num">05</span><span class="field-atlas-destination"><strong>House on the Hill</strong><small>A letter left at the door</small></span><span aria-hidden="true">↗</span></a></li>
+              </ol>
+            </nav>
+            <p class="field-atlas-marginalia">Keep the map. The route is yours.</p>
+          </div>
+          <figure class="field-atlas-cartography" aria-label="Decorative pencil-map illustration of a forest arch, roots, paper folios, river and a hilltop cottage connected by a winding trail.">
+            <div class="field-atlas-map-header"><span>FIELD SURVEY / NOT TO SCALE</span><span>NORTH BY IMAGINATION ↑</span></div>
+            <svg viewBox="0 0 640 520" role="img" aria-label="A whimsical ink map with five chapter landmarks connected by a pencil path" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="atlas-pencil" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-28)"><path d="M 0 0 V 22" stroke="#648467" stroke-opacity=".16" stroke-width="1.5"/></pattern>
+              </defs>
+              <path d="M17 29 Q80 14 132 27 T243 24 T360 31 T490 24 Q561 16 623 34 L618 492 Q548 508 484 492 T349 499 T215 492 Q108 515 23 491Z" fill="#e9e5cc" stroke="#63816b" stroke-width="1.6"/>
+              <path d="M35 61 Q110 30 182 58 T340 57 T605 54 M40 474 Q118 438 202 470 T365 465 T598 470" fill="none" stroke="#6e8a70" stroke-opacity=".4" stroke-width="1.4"/>
+              <g stroke="#6b866c" stroke-opacity=".37" stroke-width="1.4" fill="none" stroke-linecap="round">
+                <path d="M42 140q47 -41 93 -5t93 0t99 -10 M32 152q58 -35 105 -7t96 2t102 -10 M318 388q59 -28 105 10t151 -9 M305 408q64 -26 119 10t170 -10"/>
+                <path d="M60 225q24 -20 42 -2 M472 63q41 -17 68 -4 M495 440q34 -13 61 3"/>
+              </g>
+              <path d="M535 18 C460 95 492 139 446 189 S402 258 448 312 S568 392 522 496" fill="none" stroke="#aac6bf" stroke-width="49" stroke-opacity=".65" stroke-linecap="round"/>
+              <path d="M535 18 C460 95 492 139 446 189 S402 258 448 312 S568 392 522 496" fill="none" stroke="#518b98" stroke-width="2.8" stroke-linecap="round" stroke-dasharray="15 13"/>
+              <g class="field-atlas-trees" stroke="#43664e" fill="none" stroke-linejoin="round" stroke-linecap="round">
+                <path d="M69 96q-34 -27 -3 -47q16 -33 40 -9q38 -9 36 21q36 30 0 45q-28 10 -44 0q-16 13 -29 -10z" fill="#aec6a0" stroke-width="2"/>
+                <path d="M100 113L105 67 M105 89l-19 -16m19 4l17 -16" stroke-width="3"/>
+                <path d="M277 88q-16 -36 17 -45q29 -41 56 -4q41 -3 38 29q18 33 -18 36q-45 16 -93 -16z" fill="#c3d3a7" stroke-width="2"/>
+                <path d="M330 120L329 69 M329 88l-20 -17m20 5l20 -17" stroke-width="2.7"/>
+                <path d="M55 376q-28 -38 11 -51q13 -33 43 -12q37 -9 42 29q24 26 -10 41q-44 19 -86 -7z" fill="#b7c8a1" stroke-width="2"/>
+                <path d="M99 398L99 344m0 28l-24 -21m24 10l23 -20" stroke-width="3"/>
+                <path d="M240 461q-26 -37 13 -54q27 -35 59 -5q37 -1 38 34q22 25 -18 37q-49 14 -92 -12z" fill="#c0cfa4" stroke-width="2"/>
+              </g>
+              <!-- The path is double-stroked in deliberate pencil strokes, never an autoplay animation. -->
+              <path class="field-atlas-trail-shadow" d="M92 444 C118 389 197 424 178 335 S281 316 254 251 S347 253 350 179 S455 176 450 122 S530 117 566 89" fill="none" stroke="#c49e67" stroke-opacity=".9" stroke-width="13" stroke-linecap="round" stroke-dasharray="1 22"/>
+              <path class="field-atlas-trail" d="M92 444 C118 389 197 424 178 335 S281 316 254 251 S347 253 350 179 S455 176 450 122 S530 117 566 89" fill="none" stroke="#8f633d" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="5 8"/>
+              <g stroke="#365942" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <!-- 01 / Arch -->
+                <path d="M56 451v-44q34 -37 69 0v44 M71 451v-43q20 -22 38 0v43 M48 452h84" stroke-width="5"/>
+                <path d="M60 415l-10 -5m76 9l9 -6M72 408l-4 -11m43 13l4 -11" stroke-width="2"/>
+                <!-- 02 / Root crossing -->
+                <path d="M154 316q38 -48 79 -8m-75 12q22 2 27 28m-10 -41q-3 -18 7 -30m23 34q8 19 32 31m-17 -42q5 -18 20 -21"/>
+                <!-- 03 / Hanging folios -->
+                <path d="M304 229q45 -17 95 -4" stroke-width="2"/>
+                <path d="M322 229l-2 45 30 1 2 -48 M359 226l4 49 28 -3-4 -44" fill="#f5e8cc" stroke-width="2.4"/>
+                <path d="M324 239l22 1m-21 8l18 1m22 -10l20 -2m-17 10l15 -1" stroke-width="1.2"/>
+                <!-- 05 / Cottage -->
+                <path d="M524 93l40 -31 42 31 M532 87v40h67V87 M560 127v-24h13v24" fill="#f2dfb5"/>
+                <path d="M540 94h13v14h-13zM580 95h12v13h-12z" fill="#efc477" stroke-width="2"/>
+                <path d="M587 68V45m-6 0h12" stroke-width="2"/>
+              </g>
+              <!-- Notebook numbering is in SVG only as decoration; accessible list lives beside it. -->
+              <g fill="#2f5844" stroke="#f7edce" stroke-width="3">
+                <circle cx="92" cy="444" r="14"/><circle cx="178" cy="335" r="14"/><circle cx="350" cy="223" r="14"/><circle cx="450" cy="122" r="14"/><circle cx="566" cy="89" r="14"/>
+              </g>
+              <g font-family="Georgia,serif" font-size="17" font-weight="bold" text-anchor="middle" fill="#fff5d9"><text x="92" y="450">I</text><text x="178" y="341">II</text><text x="350" y="229">III</text><text x="450" y="128">IV</text><text x="566" y="95">V</text></g>
+              <g fill="#aa7850" stroke="#986a43" stroke-width="1.2"><path d="M376 430q4 -17 13 -3q8 -20 18 -1q-2 9 -16 13z"/><path d="M204 132q2 -14 10 -6q7 -11 12 -3q0 10 -12 13z"/><path d="M579 308q6 -15 13 -4q10 -15 18 1q-4 10 -19 11z"/></g>
+              <g fill="none" stroke="#8b654a" stroke-width="1.4" opacity=".8"><path d="M42 250q14 -8 29 0m-25 7q10 -4 20 0m480 128q17 -6 32 0m-26 8q10 -4 24 0"/></g>
+            </svg>
+            <figcaption><span>01—05 / AN IMAGINARY GEOGRAPHY</span><span>Drawn to find your way, not to measure distance.</span></figcaption>
+          </figure>
+        </div>
+      </details>
       <div class="chapter-tail"><span class="entrance-tail-caption"><span class="entrance-tail-index">01 / 05</span><span>THE PATH CONTINUES BELOW</span></span><a class="entrance-leaf-link" href="#winding-path" aria-label="Continue into the forest, to Approach"><img src="./storybook/assets/entrance/exports/entrance-leaf-cue.webp" width="138" height="148" alt="" loading="eager" decoding="async" fetchpriority="low"></a></div>
     </section>
     <nav class="forest-seam forest-seam--path" data-chapter-seam data-seam-from="entrance" data-seam-to="winding-path" aria-label="From chapter 01 to chapter 02">
@@ -182,6 +260,28 @@
           <details class="work-folio" data-concept="the-oracle" id="folio-oracle" tabindex="-1"><summary><span class="folio-number">02</span><span class="folio-main"><span class="folio-type" data-project-label="the-oracle">Product exploration</span><span class="folio-title">The Oracle</span><span class="folio-caption" data-project-caption="the-oracle">Intelligence, with a sense of wonder.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-oracle">An experimental interface for human-centered intelligence. Information becomes a constellation of connected ideas, guiding people toward understanding without reducing complexity to a dashboard.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
           <details class="work-folio" data-concept="the-archive" id="folio-archive" tabindex="-1"><summary><span class="folio-number">03</span><span class="folio-main"><span class="folio-type" data-project-label="the-archive">Editorial exploration</span><span class="folio-title">The Archive</span><span class="folio-caption" data-project-caption="the-archive">A digital monument to ideas.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-archive">An editorial concept for culture, ideas, and memory. A digital library envisioned as a monumental place rather than an endless feed, where reading feels like exploration.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
         </div></div>
+
+        <!-- A real, in-situ specimen replaces a credibility gap, not the honest concept labels. -->
+        <div class="work-specimen" aria-labelledby="work-specimen-title">
+          <div class="work-specimen-index">
+            <span class="work-specimen-stamp" aria-hidden="true">FIELD<br>TEST<br><em>001</em></span>
+            <p>STUDIO SPECIMEN / NOT A CLIENT COMMISSION</p>
+            <p class="work-specimen-index-aside">The evidence is the page you're already reading.</p>
+          </div>
+          <div class="work-specimen-sheet">
+            <div class="work-specimen-heading">
+              <p class="eyebrow">ONE EXPERIMENT YOU CAN ACTUALLY EXPLORE</p>
+              <h3 id="work-specimen-title">This forest is<br><em>part of the work.</em></h3>
+              <p>Rather than claim a case study we can't show, here's what we chose to make tangible in this very website.</p>
+            </div>
+            <ol class="work-specimen-observations">
+              <li><span class="work-specimen-n">01 / CHARACTER</span><div><strong>A guide, not a mascot.</strong><p>Paperkeeper has a leaf hat, paper satchel and acorn lantern. The same little messenger returns throughout the story.</p><a href="#entrance">Meet the guide <span aria-hidden="true">↗</span></a></div></li>
+              <li><span class="work-specimen-n">02 / MOVEMENT</span><div><strong>The visitor gives the cue.</strong><p>A pencil trail can be traced, and a tiny walk takes place only when invited. Motion never replaces a working link.</p><a href="#winding-path">Try the winding path <span aria-hidden="true">↗</span></a></div></li>
+              <li><span class="work-specimen-n">03 / MATERIAL</span><div><strong>Each chapter is a different page.</strong><p>Hanging study sheets, riverbank notes and a lit cottage are distinct scenes with live HTML content and controls.</p><a href="#river-stories">Read the river notes <span aria-hidden="true">↗</span></a></div></li>
+            </ol>
+            <p class="work-specimen-foot">A living studio experiment. No invented client, testimonial, award, or performance claim.</p>
+          </div>
+        </div>
         <p class="work-clearing-afterword">These are illustrated studio propositions, not completed commissions or external case-study links. The drawings imagine their possibilities; the concept notes explain their intent.</p>
       </div>
     </section>
