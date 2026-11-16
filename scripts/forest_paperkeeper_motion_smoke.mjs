@@ -117,7 +117,7 @@ try {
         leaf.focus();
         const paperkeeper=document.querySelector('.entrance-paperkeeper');
         return {
-          hidden:document.querySelector('[data-paperkeeper-step]').hidden,
+          hidden:getComputedStyle(document.querySelector('[data-paperkeeper-step]')).display==='none',
           state:document.querySelector('[data-paperkeeper-walk]').dataset.motionState,
           animation:getComputedStyle(paperkeeper).animationName,
           message:document.getElementById('paperkeeper-step-status').textContent

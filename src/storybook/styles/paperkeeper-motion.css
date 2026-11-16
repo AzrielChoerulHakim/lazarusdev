@@ -43,6 +43,8 @@
 .keeper-motion-trigger:hover { color: var(--ink); }
 .keeper-motion-trigger:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }
 .keeper-motion-trigger[hidden] { display: none !important; }
+/* If scripts never initialize, the enhancement is never an actionable control. */
+.no-js .keeper-motion-trigger { display: none !important; }
 .keeper-motion-trigger:disabled { opacity: .65; cursor: default; }
 .keeper-motion-status {
   max-width: 47ch;
