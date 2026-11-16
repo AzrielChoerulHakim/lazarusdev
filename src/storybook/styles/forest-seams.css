@@ -1,0 +1,92 @@
+/* Stage 12 / Between pages. Four deliberate, non-intercepting chapter seams.
+   The field marks annotate original scene illustrations; they never replace them. */
+.forest-seam {
+  --seam-from: var(--paper);
+  --seam-to: var(--paper-mist);
+  --seam-ink: #244f3b;
+  --seam-accent: #ab7541;
+  position: relative;
+  isolation: isolate;
+  background: var(--seam-to);
+  color: var(--seam-ink);
+  overflow: clip;
+}
+.forest-seam::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 43px;
+  background: var(--seam-from);
+  clip-path: polygon(0 0,100% 0,100% 61%,97% 68%,94% 62%,91% 71%,87% 64%,83% 69%,79% 60%,76% 73%,72% 65%,67% 70%,62% 61%,57% 72%,53% 64%,48% 70%,44% 60%,39% 70%,35% 64%,31% 73%,26% 63%,22% 69%,18% 61%,14% 73%,10% 65%,6% 70%,3% 62%,0 68%);
+  pointer-events: none;
+}
+.forest-seam--clearing { --seam-from: #f1e3cc; --seam-to: #fff8ea; --seam-accent: #a26748; }
+.forest-seam--river { --seam-from: #fff8ea; --seam-to: #e8ecde; --seam-accent: #587b92; }
+.forest-seam--house { --seam-from: #e8ecde; --seam-to: #214834; --seam-ink: #f7e9d6; --seam-accent: #f3c354; }
+.forest-seam-inner {
+  position: relative;
+  width: min(calc(100% - var(--page-padding) * 2),var(--content-width));
+  min-height: 181px;
+  margin-inline: auto;
+  padding-block: 53px 32px;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(155px,.95fr) minmax(0,1.04fr);
+  align-items: center;
+  gap: clamp(10px,2.7vw,37px);
+}
+.forest-seam-origin {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  gap: 3px;
+  font: 700 clamp(.67rem,.85vw,.78rem)/1.5 var(--font-ui);
+  letter-spacing: .105em;
+}
+.forest-seam-origin strong {
+  font: italic 400 clamp(1.22rem,2vw,1.72rem)/1.2 var(--font-reading);
+  letter-spacing: -.02em;
+}
+.forest-seam-drawing { display:block; width:100%; height:auto; max-height:105px; color:var(--seam-accent); overflow:visible; pointer-events:none; }
+.forest-seam-drawing .seam-trail { fill:none; stroke:currentColor; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+.forest-seam-drawing .seam-detail { fill:none; stroke:var(--seam-ink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; opacity:.7; }
+.forest-seam-next { min-width:0; justify-self:end; width:max-content; max-width:100%; }
+.forest-seam-next small { display:block; font:700 .68rem/1.6 var(--font-ui); letter-spacing:.105em; }
+.forest-seam-link {
+  display:inline-flex;
+  min-height:48px;
+  max-width:100%;
+  align-items:center;
+  gap:clamp(12px,1.8vw,22px);
+  padding:10px 0;
+  font:600 clamp(1.1rem,1.8vw,1.62rem)/1.2 var(--font-display);
+  color:inherit;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:5px;
+}
+.forest-seam-link span[aria-hidden] { display:inline-block; flex:none; font:1.1rem/1 var(--font-ui); transition:translate .22s ease; }
+.forest-seam-link:hover span[aria-hidden], .forest-seam-link:focus-visible span[aria-hidden] { translate:5px -2px; }
+.forest-seam-link:focus-visible { outline:3px solid currentColor; outline-offset:4px; }
+.forest-seam-ready .forest-seam:not([data-ink="drawn"]) .seam-trail { stroke-dasharray:100;stroke-dashoffset:100; }
+.forest-seam-ready .forest-seam[data-ink="drawn"] .seam-trail {
+  stroke-dasharray:100;stroke-dashoffset:0;
+  transition:stroke-dashoffset 1050ms cubic-bezier(.2,.5,.28,1);
+}
+@media (max-width:760px) {
+  .forest-seam-inner { grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); row-gap:1px; padding-block:53px 29px; min-height:170px; }
+  .forest-seam-drawing { grid-column:1/-1; grid-row:2; width:min(58%,265px); height:57px; justify-self:center; }
+  .forest-seam-next { grid-column:2;grid-row:1; }
+  .forest-seam-origin { grid-column:1;grid-row:1; }
+  .forest-seam-link { font-size:clamp(1.05rem,3.9vw,1.48rem); }
+}
+@media (max-width:390px) {
+  .forest-seam-inner { column-gap:10px; }
+  .forest-seam-origin { font-size:.61rem; letter-spacing:.045em; }
+  .forest-seam-origin strong { font-size:1.1rem; }
+  .forest-seam-next small { font-size:.61rem; letter-spacing:.055em; }
+  .forest-seam-link { font-size:1.03rem; gap:9px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .forest-seam .seam-trail { stroke-dashoffset:0 !important; transition:none !important; }
+  .forest-seam-link span[aria-hidden] { transition:none !important; translate:none !important; }
+}
