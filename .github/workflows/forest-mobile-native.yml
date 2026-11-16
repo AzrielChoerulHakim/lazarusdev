@@ -1,0 +1,63 @@
+name: Forest Stage 14 — Dedicated portrait illustration and responsive usability QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - storybook/assets/mobile-native/**
+      - src/storybook/styles/mobile-native.css
+      - scripts/forest_mobile_native_smoke.mjs
+      - .github/workflows/forest-mobile-native.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-portrait:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check art-source structure and dual production builds
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          names=['winding-path','work-clearing','river-stories','house-on-the-hill']
+          for n in names:
+              path=Path('storybook/assets/mobile-native')/(n+'-portrait.svg')
+              root=ET.parse(path).getroot()
+              assert root.get('viewBox')=='0 0 768 1152', path
+              assert len(list(root.iter()))>350, 'not a developed multi-stroke portrait: '+n
+              print('VALID PORTRAIT',n,path.stat().st_size,'bytes')
+          root=ET.parse('storybook/assets/mobile-native/house-window-glow.svg').getroot()
+          assert root.get('viewBox')=='0 0 768 1152'
+          PY
+          node --check scripts/forest_mobile_native_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install browser test engine
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Check nine viewports, dual routes, art decoding, layering, light and no JS — no screenshots
+        run: |
+          mkdir -p /tmp/stage14-mirror/lazarusdev reports
+          cp -a dist/. /tmp/stage14-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/stage14-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/stage14-mirror > /tmp/stage14-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_mobile_native_smoke.mjs | tee reports/stage14-browser-qa.log
+      - name: Preserve text logs only — no screenshot or video
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage14-mobile-text-qa
+          path: reports/stage14-browser-qa.log
+          if-no-files-found: ignore
