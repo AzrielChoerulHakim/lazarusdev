@@ -1,0 +1,39 @@
+/* Stage 15 / accessible reading: legibility is part of the paper craft, not an overlay.
+   Keeps V2 art intact while correcting real axe contrast + focus regressions. */
+.work-label span:last-child { opacity: 1; }
+.path-note-number { color: rgba(36,79,59,.75); }
+.river-notebook-number { color: rgba(36,79,59,.75); }
+.chapter-house .house-ending-editorial .eyebrow { color: var(--on-forest); }
+.chapter-house .house-contact :focus-visible {
+  outline: 3px solid var(--forest);
+  outline-offset: 4px;
+}
+.house-letter-fields input:focus-visible,
+.house-letter-fields select:focus-visible,
+.house-brief:focus-visible {
+  outline: 3px solid var(--forest);
+  outline-offset: 3px;
+}
+:is(.work-hanging,.forest-seam-link,.river-stone-nav a):focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 5px;
+}
+.site-nav a:focus-visible, .house-wayfinding a:focus-visible, .site-footer a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: .23em;
+}
+@media (prefers-contrast: more) {
+  .work-label span:last-child, .river-notebook-number, .path-note-number { opacity: 1; color: var(--forest); }
+  .chapter-house .house-contact { box-shadow: none; outline: 2px solid var(--on-forest); }
+  .house-letter-path-face { border-bottom: 1px solid var(--forest); }
+  .site-nav a, .forest-seam-link, .house-wayfinding a { text-decoration: underline; text-underline-offset: .2em; }
+}
+@media (forced-colors: active) {
+  .chapter-house .house-contact, .house-letter-path input:checked + .house-letter-path-face {
+    background: Canvas; color: CanvasText;
+    outline: 1px solid CanvasText;
+  }
+  .house-letter-fields input, .house-letter-fields select, .house-brief { border: 1px solid CanvasText; }
+  :is(a,button,input,select,textarea,summary):focus-visible { outline: 3px solid Highlight !important; outline-offset: 4px; }
+  .path-note-number,.river-notebook-number,.house-ending-editorial .eyebrow { color: CanvasText !important; }
+}

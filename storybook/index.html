@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="../src/storybook/styles/river-stories.css">
   <link rel="stylesheet" href="../src/storybook/styles/house-on-the-hill.css">
   <link rel="stylesheet" href="../src/storybook/styles/field-letter.css">
+  <link rel="stylesheet" href="../src/storybook/styles/accessible-reading.css">
   <link rel="stylesheet" href="../src/storybook/styles/paperkeeper-motion.css">
   <link rel="stylesheet" href="../src/storybook/styles/forest-seams.css">
   <link rel="stylesheet" href="../src/storybook/styles/mobile-native.css">
@@ -47,8 +48,8 @@
     </div>
   </header>
 
-  <main id="page-content">
-    <section class="chapter chapter-entrance" id="entrance" data-chapter aria-labelledby="entrance-title">
+  <main id="page-content" tabindex="-1">
+    <section class="chapter chapter-entrance" id="entrance" tabindex="-1" data-chapter aria-labelledby="entrance-title">
       <div class="entrance-canvas" aria-hidden="true">
         <picture aria-hidden="true">
           <source media="(max-width: 670px)" srcset="./assets/entrance/exports/entrance-mobile.webp" type="image/webp">
@@ -79,7 +80,7 @@
       </div>
     </nav>
 
-    <section class="chapter chapter-path" id="winding-path" data-chapter aria-labelledby="winding-path-title">
+    <section class="chapter chapter-path" id="winding-path" tabindex="-1" data-chapter aria-labelledby="winding-path-title">
       <div class="chapter-inner">
         <div class="section-signature"><span class="section-counter">02 <span>/ 05</span></span><span class="section-name">THE WINDING PATH</span></div>
         <div class="section-intro path-intro"><div><p class="eyebrow" data-copy="winding-path.eyebrow">01 / THE PRACTICE</p><h2 id="winding-path-title" data-copy="winding-path.heading">Every detail<br><em>has a direction.</em></h2></div><p class="lead" data-copy="winding-path.lead">A memorable experience needs more than an unusual image. We shape the idea, design the interaction, and build the thing people actually use.</p></div>
@@ -106,7 +107,7 @@
             <span class="path-map-key"><span>FIELD MAP / THE WINDING PATH</span><span>Follow the line where an idea becomes something real.</span></span>
             <button class="path-trace-toggle" data-path-trace-toggle type="button" aria-pressed="false" aria-controls="path-trace-status" hidden>Reveal the whole route</button>
           </figcaption>
-          <aside class="keeper-motion-margin" data-paperkeeper-motion aria-label="A small Paperkeeper animation study">
+          <div class="keeper-motion-margin" data-paperkeeper-motion aria-label="A small Paperkeeper animation study">
             <span class="keeper-motion-kicker">FIELD NOTE / MOTION 01</span>
             <img class="keeper-motion-figure" data-paperkeeper-walk src="./assets/characters/paperkeeper.walk-a.webp" alt="" aria-hidden="true" width="84" height="95" loading="lazy" decoding="async">
             <img data-paperkeeper-pose="b" src="./assets/characters/paperkeeper.walk-b.webp" alt="" aria-hidden="true" hidden width="69" height="95">
@@ -115,12 +116,12 @@
               <button class="keeper-motion-trigger" data-paperkeeper-step type="button" aria-describedby="paperkeeper-step-status" hidden style="display:none">Watch Paperkeeper take a step <span aria-hidden="true">↗</span></button>
               <p class="keeper-motion-status" id="paperkeeper-step-status" role="status" aria-live="polite">Three pencil-drawn walking poses, shown only when invited.</p>
             </div>
-          </aside>
+          </div>
           <p class="path-trace-readout" id="path-trace-status" role="status" aria-live="polite">A pencil route follows the page as you scroll. No part of this journey blocks navigation.</p>
         </figure>
 
         <div class="path-body">
-          <div class="path-services" aria-label="Our areas of practice">
+          <div class="path-services" role="group" aria-label="Our areas of practice">
             <div class="column-label"><span>WHAT WE MAKE</span><span>01—04</span></div>
             <ol class="service-list">
               <li><span class="service-n">01</span><div><h3 data-service-name="creative-development">Creative development</h3><p data-service-desc="creative-development">Distinctive sites, refined interactions, cinematic frontends.</p></div></li>
@@ -129,7 +130,7 @@
               <li><span class="service-n">04</span><div><h3 data-service-name="independent-experiments">Independent experiments</h3><p data-service-desc="independent-experiments">Our own ideas, crafted beyond the boundaries of a brief.</p></div></li>
             </ol>
           </div>
-          <aside class="path-note"><div class="path-note-inner"><span class="path-note-number" aria-hidden="true">II</span><p class="eyebrow">A POSSIBLE WORKING RHYTHM</p><p class="path-note-title">Discover <span aria-hidden="true">/</span> Define <span aria-hidden="true">/</span> Make <span aria-hidden="true">/</span> Refine</p><p>Four guiding ideas for the work ahead, not a claim about a fixed delivery process.</p><a class="text-link" href="#work-clearing">See the explorations <span aria-hidden="true">→</span></a></div></aside>
+          <div class="path-note"><div class="path-note-inner"><span class="path-note-number" aria-hidden="true">II</span><p class="eyebrow">A POSSIBLE WORKING RHYTHM</p><p class="path-note-title">Discover <span aria-hidden="true">/</span> Define <span aria-hidden="true">/</span> Make <span aria-hidden="true">/</span> Refine</p><p>Four guiding ideas for the work ahead, not a claim about a fixed delivery process.</p><a class="text-link" href="#work-clearing">See the explorations <span aria-hidden="true">→</span></a></div></div>
         </div>
       </div>
     </section>
@@ -142,7 +143,7 @@
     </nav>
 
 
-    <section class="chapter chapter-clearing" id="work-clearing" data-chapter aria-labelledby="work-clearing-title">
+    <section class="chapter chapter-clearing" id="work-clearing" tabindex="-1" data-chapter aria-labelledby="work-clearing-title">
       <div class="chapter-inner">
         <div class="section-signature"><span class="section-counter">03 <span>/ 05</span></span><span class="section-name">THE WORK CLEARING</span></div>
         <div class="section-intro work-intro"><div><p class="eyebrow" data-copy="work-clearing.eyebrow">02 / SELECTED WORLDS</p><h2 id="work-clearing-title" data-copy="work-clearing.heading">A clearing<br><em>for ideas.</em></h2></div><div><p class="lead" data-copy="work-clearing.lead">Some worlds begin as experiments. Others are built for people. Both deserve clarity about what they are.</p><p class="disclosure">Studio explorations / concept work — not client commissions.</p></div></div>
@@ -150,7 +151,7 @@
           <div class="work-clearing-world">
             <img class="work-clearing-woods" src="./assets/work-clearing/exports/work-clearing-woods.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
             <img class="portrait-native-art portrait-native-art--work-clearing" src="./assets/mobile-native/work-clearing-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
-            <div class="work-hangings" aria-label="Three illustrated concept sheets on the forest clothesline">
+            <div class="work-hangings" role="group" aria-label="Three illustrated concept sheets on the forest clothesline">
               <a class="work-hanging" data-open-concept="atrium" href="#folio-atrium" aria-label="Open the concept notes for The Atrium: A place for the beautifully impossible.">
                 <img src="./assets/work-clearing/exports/folio-atrium.webp" width="580" height="770" alt="" loading="lazy" decoding="async">
                 <span class="work-hanging-label" aria-hidden="true"><span class="work-hanging-title">The Atrium</span><span class="work-hanging-type">Experience concept / 01</span></span>
@@ -170,9 +171,9 @@
         </figure>
 
         <div class="work-columns"><div class="work-label"><span>THREE STUDIO EXPLORATIONS</span><span>SELECTED / 2026</span></div><div class="work-folios">
-          <details class="work-folio" data-concept="the-atrium" id="folio-atrium"><summary><span class="folio-number">01</span><span class="folio-main"><span class="folio-type" data-project-label="the-atrium">Experience concept</span><span class="folio-title">The Atrium</span><span class="folio-caption" data-project-caption="the-atrium">A place for the beautifully impossible.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-atrium">A conceptual destination for art and architecture. Monumental portals transform navigation into an act of discovery, while carefully staged light and typography make each interaction feel considered.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
-          <details class="work-folio" data-concept="the-oracle" id="folio-oracle"><summary><span class="folio-number">02</span><span class="folio-main"><span class="folio-type" data-project-label="the-oracle">Product exploration</span><span class="folio-title">The Oracle</span><span class="folio-caption" data-project-caption="the-oracle">Intelligence, with a sense of wonder.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-oracle">An experimental interface for human-centered intelligence. Information becomes a constellation of connected ideas, guiding people toward understanding without reducing complexity to a dashboard.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
-          <details class="work-folio" data-concept="the-archive" id="folio-archive"><summary><span class="folio-number">03</span><span class="folio-main"><span class="folio-type" data-project-label="the-archive">Editorial exploration</span><span class="folio-title">The Archive</span><span class="folio-caption" data-project-caption="the-archive">A digital monument to ideas.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-archive">An editorial concept for culture, ideas, and memory. A digital library envisioned as a monumental place rather than an endless feed, where reading feels like exploration.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
+          <details class="work-folio" data-concept="the-atrium" id="folio-atrium" tabindex="-1"><summary><span class="folio-number">01</span><span class="folio-main"><span class="folio-type" data-project-label="the-atrium">Experience concept</span><span class="folio-title">The Atrium</span><span class="folio-caption" data-project-caption="the-atrium">A place for the beautifully impossible.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-atrium">A conceptual destination for art and architecture. Monumental portals transform navigation into an act of discovery, while carefully staged light and typography make each interaction feel considered.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
+          <details class="work-folio" data-concept="the-oracle" id="folio-oracle" tabindex="-1"><summary><span class="folio-number">02</span><span class="folio-main"><span class="folio-type" data-project-label="the-oracle">Product exploration</span><span class="folio-title">The Oracle</span><span class="folio-caption" data-project-caption="the-oracle">Intelligence, with a sense of wonder.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-oracle">An experimental interface for human-centered intelligence. Information becomes a constellation of connected ideas, guiding people toward understanding without reducing complexity to a dashboard.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
+          <details class="work-folio" data-concept="the-archive" id="folio-archive" tabindex="-1"><summary><span class="folio-number">03</span><span class="folio-main"><span class="folio-type" data-project-label="the-archive">Editorial exploration</span><span class="folio-title">The Archive</span><span class="folio-caption" data-project-caption="the-archive">A digital monument to ideas.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-archive">An editorial concept for culture, ideas, and memory. A digital library envisioned as a monumental place rather than an endless feed, where reading feels like exploration.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
         </div></div>
         <p class="work-clearing-afterword">These are illustrated studio propositions, not completed commissions or external case-study links. The drawings imagine their possibilities; the concept notes explain their intent.</p>
       </div>
@@ -186,7 +187,7 @@
     </nav>
 
 
-    <section class="chapter chapter-river" id="river-stories" data-chapter aria-labelledby="river-stories-title">
+    <section class="chapter chapter-river" id="river-stories" tabindex="-1" data-chapter aria-labelledby="river-stories-title">
       <div class="chapter-inner">
         <div class="section-signature"><span class="section-counter">04 <span>/ 05</span></span><span class="section-name">RIVER STORIES</span></div>
         <div class="river-layout">
@@ -220,7 +221,7 @@
               <span class="river-notebook-number" aria-hidden="true">IV.</span>
             </div>
             <div class="river-pages">
-              <article class="river-note" id="river-note-a" aria-labelledby="river-note-a-title">
+              <article class="river-note" id="river-note-a" tabindex="-1" aria-labelledby="river-note-a-title">
                 <details class="river-note-fold">
                   <summary>
                     <span class="river-index">NOTE A / WORKING OUTLINE</span>
@@ -235,7 +236,7 @@
                   </div>
                 </details>
               </article>
-              <article class="river-note" id="river-note-b" aria-labelledby="river-note-b-title">
+              <article class="river-note" id="river-note-b" tabindex="-1" aria-labelledby="river-note-b-title">
                 <details class="river-note-fold">
                   <summary>
                     <span class="river-index">NOTE B / WORKING OUTLINE</span>
@@ -265,7 +266,7 @@
     </nav>
 
 
-    <section class="chapter chapter-house" id="house-on-the-hill" data-chapter aria-labelledby="house-on-the-hill-title">
+    <section class="chapter chapter-house" id="house-on-the-hill" tabindex="-1" data-chapter aria-labelledby="house-on-the-hill-title">
   <div class="chapter-inner">
     <div class="section-signature"><span class="section-counter">05 <span>/ 05</span></span><span class="section-name">HOUSE ON THE HILL</span></div>
     <div class="house-preface">
@@ -275,11 +276,11 @@
         <p class="lead" data-copy="house-on-the-hill.lead">Lazarus Dev takes on creative development work and explores digital products of its own. Each calls for curiosity, care, and the discipline to finish what matters.</p>
         <blockquote data-copy="house-on-the-hill.manifesto">We're not here to make more of the same. We build with intention, question the expected, and give the unusual a useful form.</blockquote>
       </div>
-      <aside class="house-preface-note" aria-label="The final chapter">
+      <div class="house-preface-note" aria-label="The final chapter">
         <span class="house-preface-mark" aria-hidden="true">V.</span>
         <p>At the end of the path, the work continues inside.</p>
         <a class="house-inline-link" href="#studio-inquiry">Leave a note at the door <span aria-hidden="true">↘</span></a>
-      </aside>
+      </div>
     </div>
 
     <figure class="house-scene" data-house-scene data-lit="false" aria-labelledby="house-scene-caption">
@@ -311,7 +312,7 @@
         <div class="house-ending-rule" aria-hidden="true"><span>✳</span></div>
         <p class="house-ending-aside">An independent creative development studio. No stock promises, no invented client credentials, and no pretend inbox.</p>
       </div>
-      <aside class="house-contact" id="studio-inquiry" aria-labelledby="house-inquiry-title">
+      <section class="house-contact" id="studio-inquiry" tabindex="-1" aria-labelledby="house-inquiry-title">
         <p class="eyebrow">A LETTER LEFT AT THE DOOR</p>
         <h3 id="house-inquiry-title">Have an idea<br>worth exploring?</h3>
         <p class="house-contact-explainer">Start a short project brief here. This site does not yet have a verified way to deliver it to Lazarus Dev.</p>
@@ -337,7 +338,7 @@
         <button type="button" class="house-save-button" data-house-save hidden>Save the letter as .txt <span aria-hidden="true">↓</span></button>
         <p id="house-copy-status" class="house-copy-status" role="status" aria-live="polite">You can always select the text above and copy it manually.</p>
         <p class="house-status">CONTACT DELIVERY / NOT YET CONNECTED</p>
-      </aside>
+      </section>
     </div>
     <nav class="house-wayfinding" aria-label="The forest, from the last page">
       <a href="#entrance">↖ Return to the beginning</a>
