@@ -1,0 +1,51 @@
+name: Forest Stage 15 — accessibility, keyboard and contrast audit (no screenshots)
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/main.js
+      - src/storybook/styles/accessible-reading.css
+      - scripts/forest_accessibility_smoke.mjs
+      - .github/workflows/forest-accessibility.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  accessibility-audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate scripts and compile both routes
+        run: |
+          node --check scripts/forest_accessibility_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install browser QA and axe-core
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1 axe-core@4.10.3
+          google-chrome --version
+      - name: Axe WCAG 2.x, keyboard, native navigation, 4 viewports x 2 routes, no-JS — NO SCREENSHOTS
+        run: |
+          mkdir -p /tmp/stage15-mirror/lazarusdev reports
+          cp -a dist/. /tmp/stage15-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/stage15-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/stage15-mirror > /tmp/stage15-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          set -o pipefail
+          node scripts/forest_accessibility_smoke.mjs | tee reports/stage15-accessibility-qa.log
+      - name: Upload text logs only — absolutely no screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage15-a11y-text-qa
+          path: reports/stage15-accessibility-qa.log
+          if-no-files-found: ignore
