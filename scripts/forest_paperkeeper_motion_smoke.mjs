@@ -130,6 +130,9 @@ try {
     } finally {await context.close();}
     // HTML, native anchors and fallback content must survive scripts disabled.
     const nojs=await browser.newContext({viewport:{width:320,height:720},javascriptEnabled:false});
+    // This test must ensure *no application scripts are ever delivered*, even on a
+    // browser channel with unusual javascriptEnabled handling.
+    await nojs.route('**/*.js',route=>route.abort('blockedbyclient'));
     const p=await nojs.newPage();
     try {
       await p.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
