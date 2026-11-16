@@ -136,9 +136,19 @@ try {
       const fallback=await p.evaluate(()=>({
         chapters:document.querySelectorAll('[data-chapter]').length,
         hidden:getComputedStyle(document.querySelector('[data-paperkeeper-step]')).display==='none',
+        diagnostic:{
+          control:document.querySelector('[data-paperkeeper-step]').outerHTML.slice(0,350),
+          markupHidden:document.querySelector('[data-paperkeeper-step]').hasAttribute('hidden'),
+          inlineStyle:document.querySelector('[data-paperkeeper-step]').getAttribute('style'),
+          cssDisplay:getComputedStyle(document.querySelector('[data-paperkeeper-step]')).display,
+          rootClass:document.documentElement.className,
+          readyState:document.readyState,
+          styleSheets:document.styleSheets.length
+        },
         text:document.querySelector('#winding-path-title').textContent,
         nav:!!document.querySelector('a[href="#winding-path"]'),
       }));
+      console.log('NO-JS DIAGNOSTIC',route,JSON.stringify(fallback.diagnostic));
       assert.equal(fallback.chapters,5,route+' no-JS chapter fallback');
       assert.equal(fallback.hidden,true,route+' no-JS control hidden');
       assert.ok(fallback.text.includes('Every detail'),route+' no-JS text');
