@@ -44,7 +44,8 @@
 .house-brief::placeholder { color: #566457; opacity: 1; }
 .house-brief:focus-visible, .chapter-house .house-copy-button:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }
 .chapter-house .house-contact .house-privacy-note, .chapter-house .house-contact .house-copy-status { margin-top: 13px; font: 400 .87rem/1.5 var(--font-ui); color: #344536; }
-.chapter-house .house-copy-button { width: 100%; margin-top: 22px; border-color: var(--forest); }
+.chapter-house .house-copy-button { width: 100%; margin-top: 22px; border-color: var(--forest); background: var(--forest); color: var(--on-forest); }
+.chapter-house .house-copy-button:hover { background: var(--ink); border-color: var(--ink); }
 .chapter-house .house-copy-button[hidden] { display: none !important; }
 .chapter-house .house-contact .house-status { border-top: 1px solid rgba(36,79,59,.3); margin-top: 24px; padding-top: 15px; color: var(--forest); font-size: .79rem; }
 .house-wayfinding { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-top: clamp(60px,8vw,115px); border-top: 1px solid rgba(247,233,214,.48); padding-top: 20px; }
