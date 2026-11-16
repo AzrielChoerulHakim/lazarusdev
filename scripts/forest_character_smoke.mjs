@@ -1,13 +1,11 @@
-/** Character Bible Stage 05 — actual responsive browser audit. */
+/** Character Bible Stage 05 — responsive browser audit, no screenshots or recordings. */
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const origin=process.env.FOREST_CHARACTER_ORIGIN||'http://127.0.0.1:4186';
 const lab=origin+'/lazarusdev/storybook/character-lab/';
 const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 const widths=[{name:'320',w:320,h:720},{name:'390',w:390,h:844},{name:'768',w:768,h:860},{name:'1440',w:1440,h:900}];
-await mkdir('screenshots/forest-character',{recursive:true});
 try{
  for(const viewport of widths){
   const page=await browser.newPage({viewport:{width:viewport.w,height:viewport.h},deviceScaleFactor:1});
@@ -69,9 +67,6 @@ try{
   await page.emulateMedia({reducedMotion:'reduce'});
   const duration=await page.locator('.pose-buttons button').first().evaluate(n=>parseFloat(getComputedStyle(n).transitionDuration));
   assert.ok(duration<=.005,'reduced-motion transitions are active');
-  if(['390','1440'].includes(viewport.name)){
-   await page.screenshot({path:'screenshots/forest-character/character-'+viewport.name+'.png',fullPage:true,animations:'disabled'});
-  }
   console.log('PASS Character Lab '+viewport.name,JSON.stringify({images:status.images.length,support:status.support,action:status.action,views:status.buttons.length,overflow:status.overflow}));
   await page.close();
  }

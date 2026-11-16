@@ -31,3 +31,11 @@ A new Stage 18 workflow builds both route outputs, checks root/duplicate metadat
 ## Distinguish the two meanings of launch
 
 **Public website launch** can finish once canonical indexing, metadata, build and deployment gates pass. **Full commercial/contact readiness** remains blocked until the owner supplies a verified inbox/endpoint and approves the artistic output. Do not call the Field Letter a submitted inquiry or claim an aesthetic sign-off.
+
+## Launch regression and privacy clean-up
+
+The Stage 06 static audit originally asserted `noindex,nofollow` in both HTML files. That contract belonged to pre-launch staging, not a valid release; Stage 18 updates it to enforce distinct root/indexable and alternate/noindex policies while retaining asset integrity and semantic checks.
+
+The older Stage 04 art-lab and Stage 05 Paperkeeper lab browser tests also still contained legacy `page.screenshot()` calls and artifact upload paths. The launch clean-up removes those captures, removes screenshot artifact entries, and makes the Stage 04 historical asset workflow read-only rather than automatically pushing test exports onto the feature branch. Stage 18 CI scans current browser test scripts and workflow definitions for capture calls or screenshot artifact paths so the user's no-automatic-screenshot requirement remains enforceable.
+
+No visual inspection or image capture is performed by this clean-up.

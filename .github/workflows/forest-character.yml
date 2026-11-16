@@ -47,13 +47,12 @@ jobs:
             sleep 2
           done
           node scripts/forest_character_smoke.mjs
-      - name: Upload reference screenshots and asset manifest
+      - name: Upload asset manifest and character bible only — no screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: forest-stage05-paperkeeper-character-qa
           path: |
-            screenshots/forest-character/
             storybook/assets/characters/manifest.json
             docs/forest/05-character-bible.md
           if-no-files-found: ignore

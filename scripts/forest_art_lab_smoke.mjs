@@ -1,12 +1,10 @@
 import assert from 'node:assert/strict';
-import { mkdir } from 'node:fs/promises';
 import { chromium } from 'playwright';
 
-// Stage 04: functional WebP/alpha test, NOT a human art-direction rating.
+// Stage 04: WebP/alpha test, NOT a human art score. Never take screenshots or recordings.
 const origin=process.env.FOREST_LAB_ORIGIN || 'http://127.0.0.1:4186';
 const url=origin+'/lazarusdev/storybook/art-lab/';
 const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
-await mkdir('screenshots/forest-art-lab',{recursive:true});
 try{
   for(const profile of [
     {id:'desktop',width:1440,height:900},
@@ -58,7 +56,6 @@ try{
     await page.evaluate(()=>scrollTo(0,400));
     const transform=await page.locator('.layer-canopy').evaluate(n=>getComputedStyle(n).transform);
     assert.equal(transform,'none','Reduced motion should disable parallax');
-    await page.screenshot({path:'screenshots/forest-art-lab/'+profile.id+'.png',fullPage:true,animations:'disabled'});
     console.log('STAGE04 LAB '+profile.id+' PASS',JSON.stringify(result));
     await page.close();
   }

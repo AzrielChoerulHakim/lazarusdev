@@ -11,14 +11,14 @@ on:
       - .github/workflows/forest-art-assets.yml
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   forest-assets:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -47,22 +47,11 @@ jobs:
             sleep 2
           done
           node scripts/forest_art_lab_smoke.mjs
-      - name: Upload exports and screenshots
+      - name: Upload source exports only — never screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: forest-stage04-art-source-and-qa
           path: |
             storybook/assets/exports/
-            screenshots/forest-art-lab/
           if-no-files-found: ignore
-      - name: Commit generated assets to feature branch only
-        if: success() && github.ref == 'refs/heads/feature/forest-storybook' && github.event_name == 'push'
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add storybook/assets/exports/
-          if ! git diff --cached --quiet; then
-            git commit -m "art(forest): publish reproducible Stage 04 test exports"
-            git push origin HEAD:refs/heads/feature/forest-storybook
-          fi

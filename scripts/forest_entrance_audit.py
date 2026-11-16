@@ -45,5 +45,7 @@ for path in (Path('index.html'),Path('storybook/index.html')):
     assert 'art-reserve-entrance' not in html
     assert html.count('<h1 ') == 1
     assert 'name="viewport"' in html
-    assert 'name="robots" content="noindex,nofollow"' in html
+    expected_robots = "index,follow,max-image-preview:large" if path.name == "index.html" else "noindex,follow"
+    assert f'name="robots" content="{expected_robots}"' in html, (path, "robots metadata")
+    assert 'rel="canonical" href="https://azrielchoerulhakim.github.io/lazarusdev/"' in html
 print('STAGE06 ASSET + SEMANTIC STATIC PASS (human art approval remains separate)')

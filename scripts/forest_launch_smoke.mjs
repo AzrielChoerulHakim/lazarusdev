@@ -1,5 +1,6 @@
 /** Stage 18 — GitHub Pages public release verification. No screenshots or video. */
 import assert from 'node:assert/strict';
+import {readdir,readFile} from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const base = process.env.STORYBOOK_PREVIEW_ORIGIN || 'http://127.0.0.1:4186';
@@ -9,6 +10,15 @@ const leafIcon = canonical + 'storybook/assets/entrance/exports/entrance-leaf-cu
 const routes = ['/lazarusdev/', '/lazarusdev/storybook/'];
 const views = [{w:320,h:720},{w:390,h:844},{w:768,h:860},{w:1440,h:900},{w:844,h:390}];
 const chapters = ['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
+// Enforce the owner's standing prohibition across all current automation code.
+for (const [directory,extension] of [['scripts','.mjs'],['.github/workflows','.yml']]) {
+  for (const filename of await readdir(directory)) {
+    if (!filename.endsWith(extension)) continue;
+    const code = await readFile(directory+'/'+filename,'utf8');
+    assert.equal(/\.screenshot\s*\(|\.video\s*\(|screenshots\//.test(code),false,
+      'Automatic screenshot/recording code or artifact path is forbidden: '+directory+'/'+filename);
+  }
+}
 const browser = await chromium.launch({...(process.env.CI ? {channel:'chrome'} : {}),headless:true,args:['--no-sandbox']});
 let checks = 0;
 try {
