@@ -1,7 +1,7 @@
 # R01 — Arahan kreatif revisi 01
 
 Tanggal: 16 November 2026. Baseline `8e6b0cf0d33e4589f3699f82888334930359cb74`.
-Status: **paket usulan siap review**. Produksi R02 dan penerimaan board oleh pemilik belum dilakukan.
+Status: **R01 selesai; arahan kerja ditetapkan berdasarkan delegasi pengguna**. Produksi R02 belum dilakukan. Pemeriksaan dan keputusan kreatif menjadi tanggung jawab Codex; tidak menunggu review pemilik.
 
 ## Keputusan arah
 
@@ -15,7 +15,7 @@ Sumber yang dibaca: `docs/forest/ART-DIRECTION-LOCK.md`, `05-character-bible.md`
 
 `master-board-v2.png`, `DESIGN-SYSTEM.md`, dan `ART-DIRECTION-AUDIT.md` asli belum ditemukan dalam lingkup itu. Hash master yang tercatat: `e6bd07a35e3a79b7cca5e2832b301aa2a2cbb13af46942eb2c95460358f85403`. Ini bukan klaim pencarian seluruh akun atau seluruh branch arsip.
 
-Board R01 adalah **interpretasi usulan**, bukan master yang ditemukan kembali. Tidak mengganti lock lama secara diam-diam. Jika master ditemukan, bandingkan dulu sebelum menetapkan revisi sebagai acuan produksi. Penerimaan usulan ini dicatat pada `review-record.md`.
+Board R01 adalah **interpretasi yang ditetapkan sebagai acuan kerja**, bukan master yang ditemukan kembali. Riwayat lock lama dipertahankan. Jika master ditemukan, rekonsiliasi perbedaannya terhadap keputusan kerja. Dasar keputusan tercatat pada `review-record.md`.
 
 ## Bahasa ilustrasi yang dipilih
 
@@ -60,7 +60,7 @@ Gerak lain, trigger dan fallback: lihat `motion-matrix.md`. Perjalanan lima loka
 
 ## Batas dan kriteria penerimaan
 
-R01 selesai sebagai paket ketika board, aturan, storyboard, inventaris, dan matriks tersedia serta konsisten. Status artistik **siap review**, bukan diterima otomatis. Board usulan perlu satu keputusan bersama sebelum diperluas ke produksi massal; pengguna dapat menerima, meminta revisi tertentu, atau memberikan master asli untuk rekonsiliasi.
+R01 selesai: board, aturan, storyboard, inventaris dan matriks tersedia, telah diperiksa, dan ditetapkan sebagai acuan oleh Codex atas delegasi pengguna. Review internal dilakukan sebelum perluasan produksi tanpa meminta persetujuan berulang. Pengguna tetap dapat mengarahkan perubahan kapan saja. Keputusan acuan R01 tidak menyatakan bahwa aset atau animasi produksi yang belum dibuat sudah lulus.
 
 Reviewer menilai: siluet, goresan/material, kontinuitas karakter, keragaman komposisi, maksud gerak, integritas sumber, tipografi dan harmoni UX. Ikuti rubric lock (setiap aspek ≥4/5 dan rerata ≥4,5/5) hanya setelah inspeksi; tidak ada skor yang diisi dari build atau oleh template. Board yang bagus tidak meluluskan scene produksi yang belum dibuat.
 

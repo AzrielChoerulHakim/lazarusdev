@@ -1,6 +1,6 @@
 {
   "stage": "R01",
-  "status": "proposed-for-review",
+  "status": "completed-working-direction",
   "baselineCommit": "8e6b0cf0d33e4589f3699f82888334930359cb74",
   "created": "2026-11-16",
   "originalMasterRecovered": false,
@@ -18,5 +18,7 @@
     {"path": "storybook/assets/characters/paperkeeper.three-quarter.webp", "sha256": "d5318e71162ce5ef0700e194574729d1863bf889714dcaa8d7ec27be0bb3018e", "role": "character identity"},
     {"path": "storybook/assets/entrance/exports/entrance-desktop.webp", "sha256": "b2f3114ed393bbe6ac2f06c2ed6399bfc8b82bbadc4fa713ec70b6108df334ae", "role": "environment and pencil material"}
   ],
-  "ownerAcceptance": "not-yet-recorded"
+  "decisionAuthority": "User explicitly delegated execution and creative review to Codex without waiting for owner review",
+  "directionAdoptedBy": "Codex",
+  "ownerVisualSignoffClaimed": false
 }

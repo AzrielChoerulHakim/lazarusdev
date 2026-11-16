@@ -1,6 +1,6 @@
 # R01 — Catatan keputusan dan handoff
 
-Status paket: **siap review**. Arahan ini diusulkan oleh Codex berdasarkan audit dan aturan Forest V2. Status penerimaan pemilik: **belum tercatat**. Tidak ada skor artistik yang diisi otomatis.
+Status: **R01 selesai; arahan kerja ditetapkan oleh Codex atas delegasi pengguna**. Pengguna secara eksplisit meminta eksekusi tanpa menunggu review dirinya. Codex bertanggung jawab mengambil keputusan kreatif dan melakukan pemeriksaan; tidak ada klaim bahwa pengguna telah menilai atau menyetujui gambar satu per satu.
 
 ## Kelengkapan
 
@@ -11,9 +11,9 @@ Status paket: **siap review**. Arahan ini diusulkan oleh Codex berdasarkan audit
 - [x] Inventaris pertahankan/perbaiki/ganti dan dependensi produksi.
 - [x] Storyboard lima bab dan intent aksi Entrance.
 - [x] Matriks trigger/input, waktu, replay, cancel dan reduced motion.
-- [ ] Keputusan pemilik atas board usulan atau rekonsiliasi dengan master asli.
+- [x] Tetapkan board R01 sebagai acuan kerja berdasarkan audit, pemeriksaan aset dan delegasi keputusan dari pengguna. Master asli tetap belum ditemukan; provenance tersebut tidak berubah.
 
-## Keputusan yang siap ditinjau
+## Keputusan kerja yang ditetapkan
 
 1. Pertahankan Forest V2 dengan kekayaan goresan yang dipusatkan; tambah ruang kertas dan hierarki detail.
 2. Pasangkan komposisi desktop/mobile sejak produksi. Empat SVG portrait lama menjadi prioritas penggantian.
@@ -37,4 +37,4 @@ Hash PNG dan dua gambar referensi tersimpan dalam `provenance.json`. Semua perub
 
 Mulai dari `art-direction-revision.md` bagian Entrance. Produksi hanya pasangan scene Entrance dengan karakter statis, frame referensi dan ruang teks nyata. Referensi utama karakter: `storybook/assets/characters/paperkeeper.three-quarter.webp` dan bible Stage 05. Acuan material: scene baseline + board usulan yang diterima. Pertahankan peran HTML, provenance, dan kebijakan tanpa screenshot otomatis.
 
-Jika pengguna memberikan master asli, periksa SHA-256 terhadap lock, bandingkan dengan board ini, dan catat konflik secara spesifik sebelum membuat aset produksi. Jika usulan diterima, catat keputusan tersebut tanpa mengubah sejarah master lama. R01 tidak dengan sendirinya mengotorisasi R02 atau publikasi website.
+Jika master asli ditemukan kemudian, periksa SHA-256 terhadap lock dan rekonsiliasi perbedaannya. Ketiadaan master tidak menjadi alasan menunggu review pengguna: aturan Forest V2 dan board R01 yang sudah diperiksa menjadi acuan kerja. R02 menerima handoff yang telah diputuskan; tidak ada gerbang persetujuan visual tambahan dari pengguna. Lingkup pekerjaan dan publikasi tetap mengikuti instruksi pengguna.

@@ -13,6 +13,6 @@ Paket lengkap:
 - `review-record.md` — kelengkapan, hasil verifikasi dan keputusan yang masih terbuka.
 - `provenance.json` — sumber dan SHA-256 board/referensi.
 
-Status: siap review. Baseline `8e6b0cf`. Board dibangun dengan bantuan generasi gambar dari referensi milik proyek; tidak diklaim sebagai ilustrasi fisik buatan tangan. Gambar tidak digunakan sebagai layer atau sprite produksi. R02 belum dimulai.
+Status: R01 selesai; acuan kerja ditetapkan oleh Codex atas delegasi pengguna tanpa menunggu review pemilik. Baseline `8e6b0cf`. Board dibangun dengan bantuan generasi gambar dari referensi milik proyek; tidak diklaim sebagai ilustrasi fisik buatan tangan. Gambar tidak digunakan sebagai layer atau sprite produksi. Label PROPOSED DIRECTION pada gambar merekam jenis artefak konsep, bukan kewajiban persetujuan pengguna. R02 belum dimulai.
 
 Board HTML menggunakan empat aset pembanding melalui path relatif ke root repository. Saat membuka paket ZIP, ekstrak seluruh folder agar struktur path tetap utuh; buka `docs/forest/revision/r01/board.html`. Bila browser membatasi file lokal, sajikan folder ekstraksi dengan HTTP lokal.
