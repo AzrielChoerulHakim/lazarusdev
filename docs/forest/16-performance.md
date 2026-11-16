@@ -15,3 +15,11 @@ Improve the first impression and reduce needless render competition, **not** sim
 Browser timing and LCP vary with the CI machine and network. The measured numbers are diagnostics, **not** production Core Web Vitals claims; the gate focuses on resource contracts and broad transfer budgets, not brittle millisecond thresholds. A truthful field Core Web Vitals assessment requires real visitor telemetry and consent/privacy decisions, which are not configured in this stage.
 
 No screenshots, videos, user telemetry, analytics, new contact endpoints, fabricated reviews or invented clients. Stage 17 aesthetic audit and Stage 18 launch remain separate.
+
+## Measured redundant mobile image, resolved
+
+The first text-only Chrome run (390px on GitHub Actions, local uncompressed test server) recorded about **876 kB** of first-view resources, including both `winding-path-mobile.webp` (~274 kB) and the original independent `winding-path-portrait.svg` (~240 kB). The earlier WebP was completely covered by its SVG painting on mobile. That was needless transfer, not an aesthetic requirement.
+
+The final mobile-specific CSS therefore stops displaying dormant WebP fallback layers when JS is active. Unlike `visibility:hidden`, `display:none` alongside native `loading=lazy` allows Chrome to defer their network fetch. The static HTML raster assets are **not deleted**; no-JS users receive them as before, and a small `error` listener in the established main module restores them when the independent SVG artwork fails. Dedicated mobile SVGs remain the primary illustrations. This can eliminate near-viewport duplicate transfer while preserving chapter content and explicit fallback behavior.
+
+The Stage 16 script verifies mobile initial-network composition: the original covered mobile WebP should not load while its native illustration successfully decodes. Results and actual bytes are recorded in text logs; any claimed improvement is scoped to that test environment, not field users.

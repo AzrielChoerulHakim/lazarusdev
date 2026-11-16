@@ -86,7 +86,15 @@ try {
       });
       // This generous ceiling guards catastrophic eager loads; LCP/CLS numbers are
       // diagnostics only, not fabricated field Core Web Vitals.
-      assert.ok(performanceData.localTransferBytes<=2500000,tag+' unexpectedly high first-view transfer '+performanceData.localTransferBytes);
+      if (w<=670) {
+        // SVG is the actual live portrait artwork. The hidden legacy raster
+        // behind it must not consume a second near-viewport download.
+        assert.equal(
+          performanceData.imageNames.some(name=>name.startsWith('winding-path-mobile-')),
+          false, tag+' covered mobile raster unexpectedly fetched'
+        );
+      }
+            assert.ok(performanceData.localTransferBytes<=2500000,tag+' unexpectedly high first-view transfer '+performanceData.localTransferBytes);
       assert.ok(performanceData.cls<0.3,tag+' unexpected layout shift '+performanceData.cls);
       assert.deepEqual(issues,[],tag+' console/runtime and HTTP errors');
       console.log('STAGE16 '+tag+' '+JSON.stringify(performanceData));

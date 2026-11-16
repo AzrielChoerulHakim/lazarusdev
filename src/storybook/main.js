@@ -138,3 +138,14 @@ updateLocation();
 document.body.dataset.storybookReady = 'true';
 document.body.dataset.storybookStage = '03';
 document.body.dataset.chapterCount = String(chapters.length);
+
+/* Stage 16: keep raster paintings as a genuine failure fallback, not an
+   unnecessary second mobile download beneath already-rendered SVG art.
+   No viewport/scroll event, network call or synthetic frame is introduced. */
+for (const portrait of document.querySelectorAll('.portrait-native-art')) {
+  const canvas = portrait.closest('.path-map-art, .work-clearing-world, .river-scene, .house-scene-canvas');
+  if (!canvas) continue;
+  const restoreRaster = () => { canvas.dataset.nativeFailed = 'true'; };
+  portrait.addEventListener('error', restoreRaster, {once:true});
+  if (portrait.complete && portrait.naturalWidth === 0) restoreRaster();
+}
