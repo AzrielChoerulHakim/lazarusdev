@@ -371,3 +371,38 @@
 @media (max-width: 390px) {
   .chapter-entrance .entrance-canvas { height: 1090px; }
 }
+
+/* A small invitation on the actual first screen, leading to the genuine fold-out. */
+.hero-atlas-cue {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 59px;
+  margin-top: clamp(22px,2.7vw,38px);
+  padding: 10px 15px;
+  border-top: 1px solid #6a7454;
+  border-bottom: 1px solid #6a7454;
+  background: rgba(246,230,199,.88);
+  color: #244f3b;
+  text-decoration: none;
+  transform: rotate(-1deg);
+  box-shadow: 3px 3px 0 rgba(55,67,40,.09);
+}
+.hero-atlas-cue:hover { background: #f1e2c2; }
+.hero-atlas-cue:focus-visible { outline:3px solid var(--forest); outline-offset:4px; }
+.hero-atlas-symbol { flex:none; font:400 2.05rem/1 var(--font-display); color: #8d5c37; }
+.hero-atlas-caption { display:flex; flex-direction:column; gap:2px; min-width:0; }
+.hero-atlas-caption small { font:700 .62rem/1.45 var(--font-ui); letter-spacing:.07em; }
+.hero-atlas-caption strong { font:italic 500 clamp(.99rem,1.5vw,1.2rem)/1.25 var(--font-display); }
+.hero-atlas-arrow { flex:none; font:400 1.55rem/1 var(--font-display); align-self:center; }
+@media (max-width:670px) {
+  .hero-atlas-cue { margin-top:17px; gap:9px; padding:9px 11px; min-height:53px; }
+  .hero-atlas-symbol { font-size:1.6rem; }
+  .hero-atlas-caption small { font-size:.56rem; }
+  .hero-atlas-caption strong { font-size:1.02rem; }
+}
+@media (forced-colors: active) {
+  .hero-atlas-cue { background:Canvas; color:LinkText; border-color:CanvasText; box-shadow:none; }
+}

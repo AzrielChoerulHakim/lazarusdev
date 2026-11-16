@@ -53,6 +53,12 @@ try {
       assert.ok(state.summarySize.every(x=>x>=48),tag+' atlas control target');
       assert.equal(state.injectedScripts,0,tag+' no extra JS needed');
 
+      const cue=page.locator('.hero-atlas-cue');
+      assert.equal(await cue.getAttribute('href'),'#field-atlas',tag+' first-screen atlas invitation');
+      const cueSize=await cue.evaluate(x=>{const rect=x.getBoundingClientRect();return [rect.width,rect.height]});
+      assert.ok(cueSize.every(v=>v>=44),tag+' hero atlas cue touch target');
+      await cue.click();
+      assert.equal(new URL(page.url()).hash,'#field-atlas',tag+' teaser leads to atlas');
       const summary=page.locator('[data-field-atlas] summary');
       await summary.focus();
       await page.keyboard.press('Enter');
