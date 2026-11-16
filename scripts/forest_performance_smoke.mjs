@@ -96,7 +96,31 @@ try {
       }
             assert.ok(performanceData.localTransferBytes<=2500000,tag+' unexpectedly high first-view transfer '+performanceData.localTransferBytes);
       assert.ok(performanceData.cls<0.3,tag+' unexpected layout shift '+performanceData.cls);
-      assert.deepEqual(issues,[],tag+' console/runtime and HTTP errors');
+      // A failed primary portrait must reactivate the original WebP painting;
+      // do this only AFTER the cold-load transfer measurement above.
+      if(w<=670) {
+        const fallback=await page.evaluate(()=>{
+          const pathNative=document.querySelector('.portrait-native-art--winding-path');
+          const houseNative=document.querySelector('.portrait-native-art--house-on-the-hill');
+          pathNative.dispatchEvent(new Event('error'));
+          houseNative.dispatchEvent(new Event('error'));
+          return {
+            path:document.querySelector('.path-map-art').dataset.nativeFailed,
+            pathRaster:getComputedStyle(document.querySelector('.path-map-art > picture')).display,
+            pathNative:getComputedStyle(pathNative).display,
+            house:document.querySelector('.house-scene-canvas').dataset.nativeFailed,
+            houseRaster:getComputedStyle(document.querySelector('.house-scene-canvas > picture:not(.house-glow-layer)')).display,
+            houseGlow:getComputedStyle(document.querySelector('.house-glow-layer')).visibility
+          };
+        });
+        assert.equal(fallback.path,'true',tag+' path fallback flag');
+        assert.equal(fallback.pathRaster,'block',tag+' path original raster reinstated');
+        assert.equal(fallback.pathNative,'none',tag+' broken SVG hidden');
+        assert.equal(fallback.house,'true',tag+' cottage fallback flag');
+        assert.equal(fallback.houseRaster,'block',tag+' cottage original raster reinstated');
+        assert.equal(fallback.houseGlow,'visible',tag+' legacy light fallback reinstated');
+      }
+            assert.deepEqual(issues,[],tag+' console/runtime and HTTP errors');
       console.log('STAGE16 '+tag+' '+JSON.stringify(performanceData));
       passes++;
     }finally{await ctx.close();}

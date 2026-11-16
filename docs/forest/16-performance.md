@@ -23,3 +23,17 @@ The first text-only Chrome run (390px on GitHub Actions, local uncompressed test
 The final mobile-specific CSS therefore stops displaying dormant WebP fallback layers when JS is active. Unlike `visibility:hidden`, `display:none` alongside native `loading=lazy` allows Chrome to defer their network fetch. The static HTML raster assets are **not deleted**; no-JS users receive them as before, and a small `error` listener in the established main module restores them when the independent SVG artwork fails. Dedicated mobile SVGs remain the primary illustrations. This can eliminate near-viewport duplicate transfer while preserving chapter content and explicit fallback behavior.
 
 The Stage 16 script verifies mobile initial-network composition: the original covered mobile WebP should not load while its native illustration successfully decodes. Results and actual bytes are recorded in text logs; any claimed improvement is scoped to that test environment, not field users.
+
+## CI comparison, measured 16 November 2026
+
+On the same local uncompressed Chrome CI harness at 390×844, root route, Stage 16 initial trial and optimized final trial recorded:
+
+| Metric | Before deduplicating hidden raster | After |
+|---|---:|---:|
+| First-view local transfer | 876,207 bytes | 602,325 bytes |
+| First-view image transfer | 796,535 bytes | 521,787 bytes |
+| Near-view image requests | 5 | 4 |
+
+**Decrease in first-view local transfer: 273,882 bytes (31.3%).** The previously loaded winding-path mobile WebP was absent after the fix, while its authored native SVG remained. LCP, CLS and DOMContentLoaded are *diagnostics only* here because CI runner load and network vary; no reliable field speedup percentage or production Core Web Vitals pass is claimed.
+
+The Stage 16 QA additionally simulates native illustration load failure and checks that the original raster and cottage-light fallback restore correctly. Mobile art compositions and Paperkeeper character assets are unchanged.
