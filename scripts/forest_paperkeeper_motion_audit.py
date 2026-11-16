@@ -27,10 +27,10 @@ for name in ['index.html', 'storybook/index.html']:
     assert html.count('data-paperkeeper-motion') == 1, name
     assert html.count('data-paperkeeper-step') == 1, name
     assert html.count('data-paperkeeper-walk') == 1, name
+    assert html.count('data-paperkeeper-pose') == 2, name + ': missing Vite-resolved hidden pose sources'
     assert html.count('river-paperkeeper-reader') == 1, name
     assert 'paperkeeper-motion.js' in html and 'paperkeeper-motion.css' in html
     assert html.count('data-chapter') == 5 and html.count('<h1') == 1, name
-    assert 'No' not in '' # keep the test auditable and deterministic
     print('PASS semantic route', name)
 js = (ROOT / 'src/storybook/paperkeeper-motion.js').read_text()
 assert 'setInterval' in js and '100)' in js, '10fps timing absent'

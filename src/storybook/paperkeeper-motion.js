@@ -6,7 +6,8 @@ const reel = document.querySelector('[data-paperkeeper-walk]');
 const trigger = document.querySelector('[data-paperkeeper-step]');
 const status = document.getElementById('paperkeeper-step-status');
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-const poseNames = ['paperkeeper.walk-a.webp', 'paperkeeper.walk-b.webp', 'paperkeeper.walk-c.webp'];
+// All three URLs originate in real <img src> markup so Vite can hash each asset.
+const poseImages = reel ? [reel, ...document.querySelectorAll('[data-paperkeeper-pose]')] : [];
 const sequence = [0,1,2,1,0,1,2,1,0,0];
 let timer = 0;
 let index = 0;
@@ -14,8 +15,8 @@ let ready = false;
 let houseTimer = 0;
 
 if (reel && trigger && status) {
-  const base = new URL(reel.getAttribute('src'), document.baseURI).href.replace(/[^/]+$/, '');
-  const urls = poseNames.map(name => base + name);
+  const urls = poseImages.map(image => new URL(image.getAttribute('src'), document.baseURI).href);
+  if (urls.length !== 3) throw new Error('Paperkeeper motion requires exactly three canonical pose assets.');
   const updateAvailability = () => {
     trigger.hidden = !ready || reduced.matches;
     if (reduced.matches) status.textContent = 'Still illustration shown. Motion is disabled by your device preferences.';

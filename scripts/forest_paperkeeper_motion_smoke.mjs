@@ -74,7 +74,7 @@ try {
           };
         });
         for (const frame of ['paperkeeper.walk-a.webp','paperkeeper.walk-b.webp','paperkeeper.walk-c.webp']){
-          assert.ok(frames.filenames.includes(frame),tag+' missing actual pose '+frame);
+          assert.ok(frames.filenames.some(name => name.startsWith(frame.replace('.webp',''))),tag+' missing actual pose '+frame);
         }
         assert.equal(frames.disabled,false,tag+' replay enabled');
         assert.match(frames.status,/Replay/,tag+' accessible completion');
