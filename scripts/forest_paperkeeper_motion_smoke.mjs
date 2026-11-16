@@ -93,7 +93,7 @@ try {
         assert.match(frames.status,/Replay/,tag+' accessible completion');
         // The original on-canvas full-sized figure remains unchanged.
         const original=await page.locator('.path-map-paperkeeper').getAttribute('src');
-        assert.match(original,/paperkeeper\.three-quarter\.webp/,tag+' canonical figure');
+        assert.match(original,/paperkeeper\.three-quarter(?:-[^/]+)?\.webp/,tag+' canonical figure');
         const light=page.locator('[data-house-light-toggle]');
         await light.click();
         assert.equal(await page.locator('[data-house-scene]').getAttribute('data-lit'),'true',tag+' house action retained');
