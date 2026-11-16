@@ -19,11 +19,13 @@
   <link rel="stylesheet" href="./src/storybook/styles/work-clearing.css">
   <link rel="stylesheet" href="./src/storybook/styles/river-stories.css">
   <link rel="stylesheet" href="./src/storybook/styles/house-on-the-hill.css">
+  <link rel="stylesheet" href="./src/storybook/styles/paperkeeper-motion.css">
   <script type="module" src="./src/storybook/main.js"></script>
   <script type="module" src="./src/storybook/path.js"></script>
   <script type="module" src="./src/storybook/work-clearing.js"></script>
   <script type="module" src="./src/storybook/river-stories.js"></script>
   <script type="module" src="./src/storybook/house-on-the-hill.js"></script>
+  <script type="module" src="./src/storybook/paperkeeper-motion.js"></script>
 </head>
 <body class="forest-site">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -91,6 +93,14 @@
             <span class="path-map-key"><span>FIELD MAP / THE WINDING PATH</span><span>Follow the line where an idea becomes something real.</span></span>
             <button class="path-trace-toggle" data-path-trace-toggle type="button" aria-pressed="false" aria-controls="path-trace-status" hidden>Reveal the whole route</button>
           </figcaption>
+          <aside class="keeper-motion-margin" data-paperkeeper-motion aria-label="A small Paperkeeper animation study">
+            <span class="keeper-motion-kicker">FIELD NOTE / MOTION 01</span>
+            <img class="keeper-motion-figure" data-paperkeeper-walk src="./storybook/assets/characters/paperkeeper.walk-a.webp" alt="" aria-hidden="true" width="84" height="95" loading="lazy" decoding="async">
+            <div class="keeper-motion-copy">
+              <button class="keeper-motion-trigger" data-paperkeeper-step type="button" aria-describedby="paperkeeper-step-status" hidden>Watch Paperkeeper take a step <span aria-hidden="true">↗</span></button>
+              <p class="keeper-motion-status" id="paperkeeper-step-status" role="status" aria-live="polite">Three pencil-drawn walking poses, shown only when invited.</p>
+            </div>
+          </aside>
           <p class="path-trace-readout" id="path-trace-status" role="status" aria-live="polite">A pencil route follows the page as you scroll. No part of this journey blocks navigation.</p>
         </figure>
 
@@ -173,6 +183,7 @@
             <div class="river-notebook-head">
               <p class="eyebrow">NOTES IN DEVELOPMENT <span aria-hidden="true">—</span> NOT PUBLISHED ARTICLES</p>
               <p class="river-notebook-instruction">Two pages tucked into the riverbank. Choose a page to unfold its questions, not a fabricated published story.</p>
+              <img class="river-paperkeeper-reader" src="./storybook/assets/characters/paperkeeper.read.webp" width="86" height="90" alt="" aria-hidden="true" loading="lazy" decoding="async">
               <span class="river-notebook-number" aria-hidden="true">IV.</span>
             </div>
             <div class="river-pages">

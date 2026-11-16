@@ -1,0 +1,115 @@
+/* Stage 11 — Paperkeeper's restrained, event-led animation language.
+   Existing illustration layers stay intact. No endless animation or scroll interception. */
+.keeper-motion-margin {
+  display: grid;
+  grid-template-columns: minmax(150px, .75fr) 90px minmax(200px, 1.55fr);
+  align-items: center;
+  gap: 16px 23px;
+  padding: 18px 6px 20px;
+  border-bottom: 1px solid rgba(36,79,59,.38);
+  color: var(--forest);
+}
+.keeper-motion-kicker {
+  align-self: start;
+  padding-top: 7px;
+  font: 700 .68rem/1.55 var(--font-ui);
+  letter-spacing: .095em;
+}
+.keeper-motion-figure {
+  display: block;
+  width: 84px;
+  height: 95px;
+  object-fit: contain;
+  object-position: center bottom;
+  justify-self: center;
+  image-rendering: auto;
+}
+.keeper-motion-copy { min-width: 0; }
+.keeper-motion-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px;
+  max-width: 100%;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1.5px solid var(--forest);
+  background: transparent;
+  color: var(--forest);
+  cursor: pointer;
+  font: 700 .85rem/1.4 var(--font-ui);
+  text-align: left;
+}
+.keeper-motion-trigger:hover { color: var(--ink); }
+.keeper-motion-trigger:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }
+.keeper-motion-trigger[hidden] { display: none !important; }
+.keeper-motion-trigger:disabled { opacity: .65; cursor: default; }
+.keeper-motion-status {
+  max-width: 47ch;
+  margin: 7px 0 0;
+  font: italic 400 .96rem/1.4 var(--font-reading);
+  color: var(--ink);
+}
+.river-notebook-head { position: relative; padding-bottom: 98px; }
+.river-paperkeeper-reader {
+  position: absolute;
+  left: 8px;
+  bottom: 0;
+  width: 86px;
+  height: 90px;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 1px rgba(39,56,41,.16));
+  transform-origin: 55% 90%;
+}
+/* The guide acknowledges reader intent; each gesture ends in a still frame. */
+@keyframes paperkeeper-hat-tip {
+  0%, 100% { transform: rotate(0); }
+  33% { transform: rotate(-2.5deg) translateY(2px); }
+  66% { transform: rotate(1deg); }
+}
+@keyframes paperkeeper-leaf-glance {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(4deg) translateX(3px); }
+}
+@keyframes paperkeeper-page-nod {
+  0%, 100% { transform: rotate(0); }
+  50% { transform: rotate(5deg) translateY(2px); }
+}
+@keyframes paperkeeper-lantern-ack {
+  0%, 100% { transform: rotate(0); }
+  45% { transform: rotate(3deg) translateY(2px); }
+}
+.chapter-entrance:has(.entrance-leaf-link:is(:hover,:focus-visible)) .entrance-paperkeeper {
+  animation: paperkeeper-hat-tip 450ms steps(3,end) 1;
+  transform-origin: 56% 85%;
+}
+.work-clearing-world:has(.work-hanging:is(:hover,:focus-visible)) .work-clearing-paperkeeper {
+  animation: paperkeeper-leaf-glance 500ms steps(3,end) 1;
+  transform-origin: 53% 88%;
+}
+.river-notebook:has(.river-note-fold[open]) .river-paperkeeper-reader {
+  animation: paperkeeper-page-nod 490ms steps(3,end) 1;
+}
+.house-paperkeeper.keeper-acknowledging {
+  animation: paperkeeper-lantern-ack 450ms steps(3,end) 1;
+  transform-origin: 50% 85%;
+}
+@media (max-width: 670px) {
+  .keeper-motion-margin { grid-template-columns: 75px minmax(0,1fr); gap: 10px 16px; padding: 17px 3px; }
+  .keeper-motion-kicker { grid-column: 1/-1; padding-top: 0; }
+  .keeper-motion-figure { width: 70px; height: 83px; }
+  .keeper-motion-trigger { min-height: 48px; font-size: .79rem; }
+  .keeper-motion-status { font-size: .89rem; }
+  .river-notebook-head { padding-bottom: 91px; }
+  .river-paperkeeper-reader { width: 78px; height: 83px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-entrance .entrance-paperkeeper,
+  .work-clearing-world .work-clearing-paperkeeper,
+  .river-notebook .river-paperkeeper-reader,
+  .house-paperkeeper.keeper-acknowledging {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

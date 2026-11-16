@@ -1,0 +1,57 @@
+name: Forest Stage 11 — Paperkeeper finite animation and accessibility QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/paperkeeper-motion.js
+      - src/storybook/styles/paperkeeper-motion.css
+      - scripts/forest_paperkeeper_motion_audit.py
+      - scripts/forest_paperkeeper_motion_smoke.mjs
+      - docs/forest/11-paperkeeper-motion.md
+      - .github/workflows/forest-paperkeeper-motion.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  paperkeeper-motion:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit canonical sprites, honest markup and no-screen-capture policy
+        run: python3 scripts/forest_paperkeeper_motion_audit.py
+      - name: Validate code and compile both GitHub Pages routes
+        run: |
+          node --check src/storybook/paperkeeper-motion.js
+          node --check scripts/forest_paperkeeper_motion_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install browser test engine
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Native scroll, real sprites, 8 viewports x 2 routes, reduced motion and no JS
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/forest-stage11-mirror/lazarusdev reports
+          cp -a dist/. /tmp/forest-stage11-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-stage11-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-stage11-mirror > /tmp/forest-stage11-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_paperkeeper_motion_smoke.mjs | tee reports/forest-stage11-browser-qa.log
+      - name: Upload text-only diagnostics — screenshots prohibited
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage11-paperkeeper-text-qa
+          path: |
+            reports/forest-stage11-browser-qa.log
+          if-no-files-found: ignore
