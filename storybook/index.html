@@ -18,10 +18,12 @@
   <link rel="stylesheet" href="../src/storybook/styles/winding-path.css">
   <link rel="stylesheet" href="../src/storybook/styles/work-clearing.css">
   <link rel="stylesheet" href="../src/storybook/styles/river-stories.css">
+  <link rel="stylesheet" href="../src/storybook/styles/house-on-the-hill.css">
   <script type="module" src="../src/storybook/main.js"></script>
   <script type="module" src="../src/storybook/path.js"></script>
   <script type="module" src="../src/storybook/work-clearing.js"></script>
   <script type="module" src="../src/storybook/river-stories.js"></script>
+  <script type="module" src="../src/storybook/house-on-the-hill.js"></script>
 </head>
 <body class="forest-site">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -212,11 +214,68 @@
     </section>
 
     <section class="chapter chapter-house" id="house-on-the-hill" data-chapter aria-labelledby="house-on-the-hill-title">
-      <div class="chapter-inner"><div class="section-signature"><span class="section-counter">05 <span>/ 05</span></span><span class="section-name">HOUSE ON THE HILL</span></div><div class="house-layout">
-        <div class="house-statement"><p class="eyebrow" data-copy="house-on-the-hill.eyebrow">04 / AN INDEPENDENT STUDIO</p><h2 id="house-on-the-hill-title" data-copy="house-on-the-hill.heading">Small by choice.<br><em>Wide in imagination.</em></h2><p class="lead" data-copy="house-on-the-hill.lead">Lazarus Dev takes on creative development work and explores digital products of its own. Each calls for curiosity, care, and the discipline to finish what matters.</p><blockquote data-copy="house-on-the-hill.manifesto">We're not here to make more of the same. We build with intention, question the expected, and give the unusual a useful form.</blockquote></div>
-        <aside class="house-contact" aria-label="Contact information"><p class="eyebrow">BEGIN A CONVERSATION</p><h3>Something unusual<br>in mind?</h3><p>A verified direct contact channel has not been published on this site yet. We won't pretend an enquiry was sent.</p><p class="house-status">CONTACT CHANNEL / NOT YET CONNECTED</p><a class="button button-paper" href="#entrance">Back to the beginning <span aria-hidden="true">↑</span></a></aside>
-      </div></div>
-    </section>
+  <div class="chapter-inner">
+    <div class="section-signature"><span class="section-counter">05 <span>/ 05</span></span><span class="section-name">HOUSE ON THE HILL</span></div>
+    <div class="house-preface">
+      <div class="house-statement">
+        <p class="eyebrow" data-copy="house-on-the-hill.eyebrow">04 / AN INDEPENDENT STUDIO</p>
+        <h2 id="house-on-the-hill-title" data-copy="house-on-the-hill.heading">Small by choice.<br><em>Wide in imagination.</em></h2>
+        <p class="lead" data-copy="house-on-the-hill.lead">Lazarus Dev takes on creative development work and explores digital products of its own. Each calls for curiosity, care, and the discipline to finish what matters.</p>
+        <blockquote data-copy="house-on-the-hill.manifesto">We're not here to make more of the same. We build with intention, question the expected, and give the unusual a useful form.</blockquote>
+      </div>
+      <aside class="house-preface-note" aria-label="The final chapter">
+        <span class="house-preface-mark" aria-hidden="true">V.</span>
+        <p>At the end of the path, the work continues inside.</p>
+        <a class="house-inline-link" href="#studio-inquiry">Leave a note at the door <span aria-hidden="true">↘</span></a>
+      </aside>
+    </div>
+
+    <figure class="house-scene" data-house-scene data-lit="false" aria-labelledby="house-scene-caption">
+      <div class="house-scene-canvas">
+        <picture aria-hidden="true">
+          <source media="(max-width: 670px)" srcset="./assets/house-on-the-hill/exports/house-mobile.webp" type="image/webp">
+          <img class="house-scene-image" src="./assets/house-on-the-hill/exports/house-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+        </picture>
+        <picture class="house-glow-layer" aria-hidden="true">
+          <source media="(max-width: 670px)" srcset="./assets/house-on-the-hill/exports/window-glow-mobile.webp" type="image/webp">
+          <img class="house-window-glow" src="./assets/house-on-the-hill/exports/window-glow-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+        </picture>
+        <img class="house-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" alt="" aria-hidden="true" width="426" height="656" loading="lazy" decoding="async">
+      </div>
+      <figcaption class="house-scene-caption" id="house-scene-caption">
+        <span class="house-scene-meta"><span>FIELD SKETCH / 05</span><span>A place to return to.</span></span>
+        <button type="button" class="house-light-toggle" data-house-light-toggle aria-pressed="false" aria-controls="house-light-status" hidden><span aria-hidden="true">✳</span><span data-house-light-label>Brighten the windows</span></button>
+        <span id="house-light-status" class="house-light-status" role="status" aria-live="polite">A little light is already on.</span>
+      </figcaption>
+    </figure>
+
+    <div class="house-ending">
+      <div class="house-ending-editorial">
+        <p class="eyebrow">NOT THE END OF THE STORY</p>
+        <h3>Every unfamiliar world<br><em>begins with a question.</em></h3>
+        <p>Whether it becomes a website, a digital product, or something we have yet to name, a good idea deserves more than a familiar template.</p>
+        <div class="house-ending-rule" aria-hidden="true"><span>✳</span></div>
+        <p class="house-ending-aside">An independent creative development studio. No stock promises, no invented client credentials, and no pretend inbox.</p>
+      </div>
+      <aside class="house-contact" id="studio-inquiry" aria-labelledby="house-inquiry-title">
+        <p class="eyebrow">A LETTER LEFT AT THE DOOR</p>
+        <h3 id="house-inquiry-title">Have an idea<br>worth exploring?</h3>
+        <p class="house-contact-explainer">Start a short project brief here. This site does not yet have a verified way to deliver it to Lazarus Dev.</p>
+        <label class="house-brief-label" for="house-brief">Your project note <span>(stays on this device)</span></label>
+        <textarea id="house-brief" class="house-brief" rows="5" maxlength="4000" placeholder="Tell us what you're imagining, what it should do, and what makes it different." aria-describedby="house-copy-note"></textarea>
+        <p id="house-copy-note" class="house-privacy-note">Copy your draft for your own records. Nothing is sent, submitted, stored or shared with Lazarus Dev from this page.</p>
+        <button type="button" class="button button-primary house-copy-button" data-house-copy hidden>Copy my project brief <span aria-hidden="true">↗</span></button>
+        <p id="house-copy-status" class="house-copy-status" role="status" aria-live="polite">You can always select the text above and copy it manually.</p>
+        <p class="house-status">CONTACT DELIVERY / NOT YET CONNECTED</p>
+      </aside>
+    </div>
+    <nav class="house-wayfinding" aria-label="The forest, from the last page">
+      <a href="#entrance">↖ Return to the beginning</a>
+      <a href="#work-clearing">Revisit the studio explorations ↗</a>
+    </nav>
+  </div>
+</section>
+
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><p class="footer-brand">LAZARUS <em>DEV.</em></p><p>Independent by design.<br>Built with intention.</p><nav aria-label="Footer navigation"><a href="#winding-path">Approach</a><a href="#work-clearing">Work</a><a href="#river-stories">Field Notes</a><a href="#house-on-the-hill">Studio</a></nav><p class="footer-note">© <span data-year>2026</span> LAZARUS DEV <span aria-hidden="true">·</span> FOREST DESIGN SYSTEM / STAGE 03</p></div></footer>

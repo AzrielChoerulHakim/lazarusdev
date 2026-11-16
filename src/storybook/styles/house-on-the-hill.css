@@ -1,0 +1,83 @@
+/* Chapter 05 — House on the Hill. Original crayon scene, real editorial copy,
+   manually responsive windows, truthful local-only brief. No card-grid/UI screenshot. */
+.chapter-house { background: #214834; color: var(--on-forest); padding-block: clamp(72px,8vw,116px) clamp(65px,7vw,110px); }
+.chapter-house .section-signature { border-color: rgba(247,233,214,.52); }
+.house-preface { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(210px, .54fr); gap: clamp(34px,7vw,115px); align-items: end; padding-block: clamp(54px,7vw,94px) clamp(40px,5vw,70px); }
+.chapter-house .house-statement h2 { color: var(--on-forest); max-width: 12ch; font-size: clamp(3rem, 5.7vw, 6rem); margin-top: 18px; line-height: 1.02; }
+.chapter-house .house-statement h2 em { color: #eecf9d; }
+.chapter-house .house-statement .lead { margin-top: 29px; max-width: 46ch; }
+.chapter-house .house-statement blockquote { margin-top: clamp(30px,4vw,58px); max-width: 39ch; padding-left: 22px; border-left: 2px solid var(--sun); font-size: clamp(1.35rem,2vw,1.85rem); }
+.house-preface-note { padding: 22px 0 6px; border-top: 1px solid rgba(247,233,214,.65); color: var(--on-forest); }
+.house-preface-mark { font: italic 400 clamp(4.2rem,8vw,7.8rem)/.9 var(--font-display); color: #f2d1a1; }
+.house-preface-note p { margin-top: 26px; max-width: 21ch; font: italic 400 clamp(1.25rem,2.1vw,1.75rem)/1.35 var(--font-reading); }
+.house-inline-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid currentColor; font: 700 .94rem/1.45 var(--font-ui); margin-top: 32px; padding: 12px 0; min-height: 48px; }
+.house-inline-link:hover { color: #f3c354; }
+.house-scene { margin: 0; background: var(--paper); color: var(--forest); box-shadow: 0 0 0 1px #b9a583; }
+.house-scene-canvas { position: relative; isolation: isolate; aspect-ratio: 3/2; overflow: hidden; background: #d6d9bd; }
+.house-scene-canvas > picture { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+.house-scene-image, .house-window-glow { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.house-glow-layer { pointer-events: none; opacity: 0; transition: opacity .28s ease-out; mix-blend-mode: screen; }
+.house-scene[data-lit="true"] .house-glow-layer { opacity: 1; }
+.house-paperkeeper { position: absolute; z-index: 2; left: 5%; bottom: 3%; width: auto; height: clamp(112px,17vw,250px); max-width: 20%; object-fit: contain; filter: drop-shadow(0 5px 3px rgba(23,40,27,.2)); pointer-events: none; }
+.house-scene-caption { display: flex; align-items: center; flex-wrap: wrap; gap: 10px clamp(16px,2.5vw,34px); justify-content: space-between; padding: 15px clamp(16px,2.4vw,35px); background: var(--paper); border-top: 1px solid #d2bc92; font: 700 .81rem/1.5 var(--font-ui); }
+.house-scene-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 22px; }
+.house-scene-meta > span:last-child { font: italic 400 1.12rem/1.4 var(--font-reading); }
+.house-light-toggle { display: inline-flex; min-height: 48px; min-width: 48px; align-items: center; gap: 12px; color: var(--forest); background: transparent; border: 1px solid var(--forest); padding: 10px 17px; font: 700 .85rem/1.35 var(--font-ui); }
+.house-light-toggle[hidden] { display: none !important; }
+.house-light-toggle:hover, .house-light-toggle[aria-pressed="true"] { background: var(--forest); color: var(--on-forest); }
+.house-light-toggle span:first-child { font-size: 1.3rem; line-height: 1; }
+.house-light-status { color: var(--forest); font-size: .76rem; flex-basis: 100%; }
+.house-ending { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: clamp(42px,8vw,135px); align-items: start; padding-top: clamp(72px,9vw,132px); }
+.house-ending-editorial { padding-top: clamp(10px,3vw,38px); }
+.house-ending-editorial h3 { margin-top: 20px; color: var(--on-forest); font: 400 clamp(2.2rem,3.9vw,4.15rem)/1.12 var(--font-display); letter-spacing: -.045em; }
+.house-ending-editorial h3 em { color: #f3cc98; }
+.house-ending-editorial > p:not(.eyebrow) { margin-top: 29px; max-width: 39ch; font-size: clamp(1.12rem,1.5vw,1.32rem); line-height: 1.55; }
+.house-ending-rule { color: #f3c354; font-size: 3rem; margin-top: 30px; border-bottom: 1px solid rgba(247,233,214,.42); }
+.house-ending-editorial > p.house-ending-aside { max-width: 40ch; font-size: .98rem; opacity: .86; }
+.chapter-house .house-contact { scroll-margin-top: 100px; background: var(--paper); border: 0; padding: clamp(25px,4vw,55px); color: var(--ink); box-shadow: 12px 16px 0 rgba(16,37,29,.24); }
+.chapter-house .house-contact .eyebrow { color: var(--forest); }
+.chapter-house .house-contact h3 { margin-top: 18px; font-size: clamp(2.1rem,3vw,3.5rem); color: var(--forest); }
+.chapter-house .house-contact .house-contact-explainer { margin-top: 24px; font: 400 1.08rem/1.55 var(--font-reading); }
+.house-brief-label { display: block; margin-top: 24px; font: 700 .92rem/1.45 var(--font-ui); color: var(--forest); }
+.house-brief-label span { font-weight: 400; font-size: .81rem; }
+.house-brief { display: block; width: 100%; min-height: 148px; margin-top: 10px; padding: 14px 16px; background: #fffaf0; color: var(--ink); border: 1px solid #8e997b; resize: vertical; font: 400 1.1rem/1.54 var(--font-reading); }
+.house-brief::placeholder { color: #566457; opacity: 1; }
+.house-brief:focus-visible, .chapter-house .house-copy-button:focus-visible { outline: 3px solid var(--forest); outline-offset: 4px; }
+.chapter-house .house-contact .house-privacy-note, .chapter-house .house-contact .house-copy-status { margin-top: 13px; font: 400 .87rem/1.5 var(--font-ui); color: #344536; }
+.chapter-house .house-copy-button { width: 100%; margin-top: 22px; border-color: var(--forest); }
+.chapter-house .house-copy-button[hidden] { display: none !important; }
+.chapter-house .house-contact .house-status { border-top: 1px solid rgba(36,79,59,.3); margin-top: 24px; padding-top: 15px; color: var(--forest); font-size: .79rem; }
+.house-wayfinding { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; margin-top: clamp(60px,8vw,115px); border-top: 1px solid rgba(247,233,214,.48); padding-top: 20px; }
+.house-wayfinding a { display: inline-flex; align-items: center; min-height: 48px; padding: 10px 0; border-bottom: 1px solid transparent; font: 700 .95rem/1.45 var(--font-ui); }
+.house-wayfinding a:hover { border-color: currentColor; }
+@media (max-width: 850px) {
+ .house-preface, .house-ending { grid-template-columns: 1fr; gap: 32px; }
+ .house-preface-note { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 25px; }
+ .house-preface-note p { margin-top: 0; max-width: 28ch; }
+ .house-inline-link { margin-top: 0; }
+ .house-ending { gap: 45px; }
+ .chapter-house .house-contact { max-width: 690px; }
+}
+@media (max-width: 670px) {
+ .chapter-house { padding-block: 74px 68px; }
+ .house-preface { padding-block: 49px 36px; }
+ .chapter-house .house-statement h2 { font-size: clamp(2.5rem,10vw,4rem); }
+ .chapter-house .house-statement blockquote { font-size: clamp(1.25rem,5vw,1.5rem); }
+ .house-preface-note { gap: 14px; }
+ .house-preface-mark { font-size: 4rem; }
+ .house-preface-note p { max-width: 23ch; }
+ .house-inline-link { width: 100%; }
+ .house-scene-canvas { aspect-ratio: 2/3; }
+ .house-paperkeeper { left: 5%; bottom: 5%; height: clamp(96px,28vw,155px); max-width: 31%; }
+ .house-scene-caption { align-items: stretch; padding: 15px; }
+ .house-scene-meta { flex-basis: 100%; }
+ .house-light-toggle { width: 100%; justify-content: center; }
+ .house-ending { padding-top: 62px; }
+ .house-ending-editorial h3 { font-size: clamp(2.1rem,8vw,3.1rem); }
+ .chapter-house .house-contact { box-shadow: 6px 9px 0 rgba(16,37,29,.24); padding: 24px 19px; }
+ .house-wayfinding { margin-top: 66px; }
+ .house-wayfinding a { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+ .house-glow-layer, .house-light-toggle { transition: none !important; }
+}

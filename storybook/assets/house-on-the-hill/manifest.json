@@ -1,0 +1,55 @@
+{
+  "chapter": "05 / House on the Hill",
+  "art_direction": "The Forest Between Pages V2",
+  "created": "2026-11-16",
+  "source": "AI-assisted original purpose-generated digital colored-pencil landscape; no raster UI. Original model PNG retained separately in tool environment; archived compressed WebP source here.",
+  "mobile": "Purposeful cottage-focused reframing of desktop image. NOT independently drawn; Stage 14 must revisit mobile-native illustration.",
+  "glow": "Derived original transparent overlay aligned exactly to desktop painting window positions; brightness responds to user choice, no flashing loop.",
+  "items": [
+    {
+      "name": "house-crayon-source.webp",
+      "path": "source/house-crayon-source.webp",
+      "size": 481744,
+      "sha256": "3f3a00e27d1d3596d40bec0bc13134d16be538ddc87d32bbce98525dde5d0ac2",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB"
+    },
+    {
+      "name": "house-desktop.webp",
+      "path": "exports/house-desktop.webp",
+      "size": 374252,
+      "sha256": "417563f8abbf27f560b482bbfbd9cc600504656b46b97b16d979411665ff597c",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB"
+    },
+    {
+      "name": "house-mobile.webp",
+      "path": "exports/house-mobile.webp",
+      "size": 192108,
+      "sha256": "e39e097539e9ac04723e3d6455a6f1ebba74b356cf74edc9e3d07c6edc3b92ab",
+      "width": 768,
+      "height": 1152,
+      "mode": "RGB"
+    },
+    {
+      "name": "window-glow-desktop.webp",
+      "path": "exports/window-glow-desktop.webp",
+      "size": 21380,
+      "sha256": "79732f091e313da4dd10e51055be6b08ed09259fee9d47b70b6118b265bd4c05",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA"
+    },
+    {
+      "name": "window-glow-mobile.webp",
+      "path": "exports/window-glow-mobile.webp",
+      "size": 40398,
+      "sha256": "73caa72e630ede1e415aa62d062011725422dcb5ad044b1e9ac9f9f7e3c9e976",
+      "width": 768,
+      "height": 1152,
+      "mode": "RGBA"
+    }
+  ]
+}
