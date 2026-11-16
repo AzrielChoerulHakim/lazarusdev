@@ -67,7 +67,7 @@ try {
    assert.equal(Number.parseFloat(reduce.line),0,route+' reduced motion no ink draw');
    assert.equal(reduce.links,4);
   } finally {await ctx.close();}
-  const nojs=await browser.newContext({viewport:{width:320,height:720},javascriptEnabled:false});
+  const nojs=await browser.newContext({viewport:{width:320,height:720},javaScriptEnabled:false});
   try {
    const page=await nojs.newPage();
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});

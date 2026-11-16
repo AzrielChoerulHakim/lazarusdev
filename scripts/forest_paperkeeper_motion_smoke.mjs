@@ -129,7 +129,7 @@ try {
       assert.match(reduced.message,/disabled/,route+' reduced notice');
     } finally {await context.close();}
     // HTML, native anchors and fallback content must survive scripts disabled.
-    const nojs=await browser.newContext({viewport:{width:320,height:720},javascriptEnabled:false});
+    const nojs=await browser.newContext({viewport:{width:320,height:720},javaScriptEnabled:false});
     // This test must ensure *no application scripts are ever delivered*, even on a
     // browser channel with unusual javascriptEnabled handling.
     await nojs.route('**/*.js',route=>route.abort('blockedbyclient'));
