@@ -74,13 +74,13 @@ try {
    const fallback=await page.evaluate(()=>({
      scenes:document.querySelectorAll('[data-chapter]').length,
      seams:document.querySelectorAll('[data-chapter-seam]').length,
-     ready:document.documentElement.classList.contains('forest-seam-ready'),
+     nojs:document.documentElement.classList.contains('no-js'),
      anchors:[...document.querySelectorAll('a.forest-seam-link')].map(el=>el.hash),
      line:getComputedStyle(document.querySelector('.seam-trail')).strokeDashoffset
    }));
    assert.equal(fallback.scenes,5,route+' static scenes');
    assert.equal(fallback.seams,4,route+' static seams');
-   assert.equal(fallback.ready,false,route+' no JS gating');
+   assert.equal(fallback.nojs,true,route+' document retains no-JS fallback class');
    assert.deepEqual(fallback.anchors,targets.map(t=>'#'+t),route+' static anchors');
    assert.equal(Number.parseFloat(fallback.line),0,route+' illustrated stroke visible without JS');
   } finally {await nojs.close();}

@@ -30,7 +30,7 @@ for name in ['index.html', 'storybook/index.html']:
     assert html.count('data-paperkeeper-pose') == 2, name + ': missing Vite-resolved hidden pose sources'
     assert html.count('river-paperkeeper-reader') == 1, name
     assert 'paperkeeper-motion.js' in html and 'paperkeeper-motion.css' in html
-    assert len(re.findall(r'<section\\b[^>]*\\bdata-chapter(?:\\s|=|>)', html)) == 5 and html.count('<h1') == 1, name
+    assert sum(' data-chapter ' in tag for tag in re.findall('<section[^>]*>', html)) == 5 and html.count('<h1') == 1, name
     print('PASS semantic route', name)
 js = (ROOT / 'src/storybook/paperkeeper-motion.js').read_text()
 assert 'setInterval' in js and '100)' in js, '10fps timing absent'
