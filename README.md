@@ -1,36 +1,44 @@
 # LAZARUS DEV — The Forest Between Pages
 
-**Live:** https://azrielchoerulhakim.github.io/lazarusdev/
+**Website:** https://azrielchoerulhakim.github.io/lazarusdev/
 
-The live root is now the **Stage 03 semantic storybook shell**: accessible, responsive typography and navigation across five mapped chapters. This is the design system / editorial foundation, **not the final illustrated book**. Original crayon forest assets, the Paperkeeper model bible, layered scenes, narrative animations and working project enquiry remain reserved for later stages.
+Lazarus Dev is an independent creative development and digital product studio. This live website is a five-chapter, illustrated editorial field book — not a template-based portfolio or a verified list of commissioned client projects.
 
-## Design authority
+## The book
 
-- \`docs/forest/ART-DIRECTION-LOCK.md\` — approved Master Design V2 identity, colors and no-generic constraint.
-- \`docs/forest/01-content-map.md\` — five chapters and transparent concept-project claims.
-- \`docs/forest/03-design-system.md\` — Stage 03 UI tokens, responsive behavior, a11y audit, limitations.
-- \`src/storybook/styles/tokens.css\` — V2 core palette, type stack, global accessible controls.
-- \`src/storybook/styles/chapters.css\` — distinct editorial compositions of Entrance, Winding Path, Work Clearing, River Stories, and House on the Hill.
-- \`src/storybook/main.js\` — content contract, plain-text data sync, mobile nav and current-chapter state.
-- \`src/storybook/data/content.js\` — copy source; speculative projects labeled concepts.
+1. **Entrance:** an illustrated gateway, the Paperkeeper character, and a fold-out Field Atlas.
+2. **Winding Path:** the studio's creative development practice and a visitor-controlled pencil trail.
+3. **Work Clearing:** three explicitly labeled *concept explorations* and a real, inspectable specimen of this website's own design decisions.
+4. **River Stories:** unpublished field-note outlines; no fabricated published articles.
+5. **House on the Hill:** studio manifesto, intentional window-light interaction and a local-only Field Letter editor.
 
-The normal GitHub Pages root \`index.html\` and nested \`storybook/index.html\` are equivalent standalone entrances, each using route-correct relative paths.
+Every route keeps semantic HTML, native chapter anchors, keyboard controls, `prefers-reduced-motion`, and no-JavaScript reading fallbacks. The root and legacy `/storybook/` URLs serve the same narrative; **only the root is canonical and indexable**. The sitemap contains that root URL only.
 
-## Commands
+## Installation and checks
 
-\`\`\`bash
+```bash
 npm install
 npm run dev
 npm run build
-npm run preview
 npm run build:storybook
-npm run preview:storybook
-\`\`\`
+npm run preview
+```
 
-## Quality gate
+The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK.md`. Production HTML is `index.html` and `storybook/index.html`; chapter visuals are in `storybook/assets/`, and behavior/styles live in `src/storybook/`. The pipeline includes automated, **text-only** browser QA across chapter invariants, keyboard, screen-reader semantics via axe, viewport constraints, motion policy, asset and performance budgets, and launch metadata. **No browser screenshots or videos are automatically captured or uploaded.**
 
-\`.github/workflows/forest-scaffold.yml\` builds both routes, verifies the legacy 3D stack is absent, runs Playwright across 320, 375, 390, 430, 768, 1024, 1440 and 844x390 short-landscape sizes, tests nav/focus/anchors/details/contrast/touch target and reduced motion, captures desktop/mobile screenshots and uploads the artifacts.
+## Public claims and launch boundaries
 
-**No claim of final art-direction approval:** stage 04+ must create independent original illustration assets rather than fake SVG mascots, stock graphics, general noise overlays or crops from the master image. A full production accessibility and performance audit remains for stage 15/16.
+- The folio studies are **concepts, not client commissions**. The page itself is a studio-made experiment, not a fabricated client case study.
+- **The Field Letter does not send inquiries.** It only assembles a project brief for copying or downloading on the visitor's device. There is no verified studio contact email, telephone, webhook or inbox in this repository. A real delivery channel must be provided, reviewed and integrated before claiming that the site receives leads.
+- Illustrated scenes include AI-assisted raster pieces and separately scripted SVG portrait compositions. They are not represented as physically hand-drawn.
+- Technical automated QA is **not evidence of final artistic approval**. A human-directed editorial/visual review is still needed, particularly for mobile-versus-desktop art consistency and the user's non-generic standard.
+- Public indexing was enabled for the canonical root at Stage 18. Discoverability is not guaranteed; Google Search Console and domain configuration are separate site-owner decisions. The nested duplicate is `noindex,follow`.
 
-The former 3D project is not in the active code tree. Its historical source is retained separately on \`archive/3d-pre-storybook-2026-11-15\`, not included in the deployed site.
+## Launch documentation
+
+- `docs/forest/18-launch-readiness.md` — final deployment, indexability, evidence and remaining blockers.
+- `docs/forest/17-creative-reconstruction.md` — editorial changes and outstanding aesthetic review.
+- `docs/forest/16-performance.md` — measured CI resource budget (not production Core Web Vitals).
+- `docs/forest/15-accessibility.md` — accessibility checks and limitations.
+
+The earlier 3D experiment remains in historical Git branches and is not the current production design.
