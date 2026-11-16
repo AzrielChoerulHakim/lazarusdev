@@ -1,0 +1,15 @@
+/* Stage 16 — Preserve each illustrated canvas's exact CSS aspect-ratio and
+   skip painting heavy SVG pigment/filter layers until approaching the reader.
+   All text, keyboard interactions, link destinations and fallback images stay in DOM.
+   content-visibility: auto is a rendering hint, NOT a visibility or reveal effect. */
+@supports (content-visibility: auto) {
+  .path-map-art,
+  .work-clearing-world,
+  .river-scene,
+  .house-scene-canvas {
+    content-visibility: auto;
+    /* 'auto' remembers the real size after first layout; aspect-ratio
+       already reserves stable width/height before first paint. */
+    contain-intrinsic-size: auto 700px;
+  }
+}

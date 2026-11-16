@@ -9,6 +9,9 @@
   <meta property="og:title" content="Lazarus Dev — Different worlds. Deliberate work.">
   <meta property="og:description" content="Independent creative development for ideas that deserve their own world.">
   <title>Lazarus Dev — Different worlds. Deliberate work.</title>
+  <!-- Stage 16: discover only the matching critical hero before parsing the illustration. -->
+  <link rel="preload" as="image" type="image/webp" media="(max-width: 670px)" href="./assets/entrance/exports/entrance-mobile.webp" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" media="(min-width: 671px)" href="./assets/entrance/exports/entrance-desktop.webp" fetchpriority="high">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:ital,wght@0,400;0,600;1,400;1,600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
@@ -24,6 +27,7 @@
   <link rel="stylesheet" href="../src/storybook/styles/paperkeeper-motion.css">
   <link rel="stylesheet" href="../src/storybook/styles/forest-seams.css">
   <link rel="stylesheet" href="../src/storybook/styles/mobile-native.css">
+  <link rel="stylesheet" href="../src/storybook/styles/render-budget.css">
   <script type="module" src="../src/storybook/main.js"></script>
   <script type="module" src="../src/storybook/path.js"></script>
   <script type="module" src="../src/storybook/work-clearing.js"></script>
@@ -66,11 +70,11 @@
           <div class="hero-footnote"><span class="mini-rule" aria-hidden="true"></span><span>Every world begins somewhere.</span></div>
         </div>
         <figure class="entrance-stage">
-          <img class="entrance-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" decoding="async" loading="eager" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
+          <img class="entrance-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" decoding="async" loading="eager" fetchpriority="high" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
           <figcaption class="entrance-figcaption">A moss-covered stone arch opens into a forest path. Paperkeeper invites visitors to explore Lazarus Dev.</figcaption>
         </figure>
       </div>
-      <div class="chapter-tail"><span class="entrance-tail-caption"><span class="entrance-tail-index">01 / 05</span><span>THE PATH CONTINUES BELOW</span></span><a class="entrance-leaf-link" href="#winding-path" aria-label="Continue into the forest, to Approach"><img src="./assets/entrance/exports/entrance-leaf-cue.webp" width="138" height="148" alt="" loading="eager" decoding="async"></a></div>
+      <div class="chapter-tail"><span class="entrance-tail-caption"><span class="entrance-tail-index">01 / 05</span><span>THE PATH CONTINUES BELOW</span></span><a class="entrance-leaf-link" href="#winding-path" aria-label="Continue into the forest, to Approach"><img src="./assets/entrance/exports/entrance-leaf-cue.webp" width="138" height="148" alt="" loading="eager" decoding="async" fetchpriority="low"></a></div>
     </section>
     <nav class="forest-seam forest-seam--path" data-chapter-seam data-seam-from="entrance" data-seam-to="winding-path" aria-label="From chapter 01 to chapter 02">
       <div class="forest-seam-inner">
@@ -89,11 +93,11 @@
           <div class="path-map-art" aria-hidden="true">
             <picture>
               <source media="(max-width: 670px)" srcset="./assets/winding-path/exports/winding-path-mobile.webp" type="image/webp">
-              <img class="path-map-backdrop" src="./assets/winding-path/exports/winding-path-desktop.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+              <img class="path-map-backdrop" src="./assets/winding-path/exports/winding-path-desktop.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
             </picture>
-            <img class="portrait-native-art portrait-native-art--winding-path" src="./assets/mobile-native/winding-path-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
-            <img class="path-map-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" alt="" width="426" height="656" loading="lazy" decoding="async">
-            <img class="path-map-moth" src="./assets/characters/moth.guide.webp" alt="" width="145" height="80" loading="lazy" decoding="async">
+            <img class="portrait-native-art portrait-native-art--winding-path" src="./assets/mobile-native/winding-path-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="path-map-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" alt="" width="426" height="656" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="path-map-moth" src="./assets/characters/moth.guide.webp" alt="" width="145" height="80" loading="lazy" decoding="async" fetchpriority="low">
             <svg class="path-ink path-ink--desktop" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1536 1024" preserveAspectRatio="none">
               <path data-path-stroke d="M 84 908 C 288 821 430 743 609 655 S 814 568 838 486 S 1063 392 1127 339 S 1272 235 1440 194"/>
               <path class="path-ink-gloss" data-path-stroke d="M 84 908 C 288 821 430 743 609 655 S 814 568 838 486 S 1063 392 1127 339 S 1272 235 1440 194"/>
@@ -109,9 +113,9 @@
           </figcaption>
           <div class="keeper-motion-margin" data-paperkeeper-motion aria-label="A small Paperkeeper animation study">
             <span class="keeper-motion-kicker">FIELD NOTE / MOTION 01</span>
-            <img class="keeper-motion-figure" data-paperkeeper-walk src="./assets/characters/paperkeeper.walk-a.webp" alt="" aria-hidden="true" width="84" height="95" loading="lazy" decoding="async">
-            <img data-paperkeeper-pose="b" src="./assets/characters/paperkeeper.walk-b.webp" alt="" aria-hidden="true" hidden width="69" height="95">
-            <img data-paperkeeper-pose="c" src="./assets/characters/paperkeeper.walk-c.webp" alt="" aria-hidden="true" hidden width="64" height="95">
+            <img class="keeper-motion-figure" data-paperkeeper-walk src="./assets/characters/paperkeeper.walk-a.webp" alt="" aria-hidden="true" width="84" height="95" loading="lazy" decoding="async" fetchpriority="low">
+            <img data-paperkeeper-pose="b" src="./assets/characters/paperkeeper.walk-b.webp" alt="" aria-hidden="true" hidden width="69" height="95" fetchpriority="low">
+            <img data-paperkeeper-pose="c" src="./assets/characters/paperkeeper.walk-c.webp" alt="" aria-hidden="true" hidden width="64" height="95" fetchpriority="low">
             <div class="keeper-motion-copy">
               <button class="keeper-motion-trigger" data-paperkeeper-step type="button" aria-describedby="paperkeeper-step-status" hidden style="display:none">Watch Paperkeeper take a step <span aria-hidden="true">↗</span></button>
               <p class="keeper-motion-status" id="paperkeeper-step-status" role="status" aria-live="polite">Three pencil-drawn walking poses, shown only when invited.</p>
@@ -149,23 +153,23 @@
         <div class="section-intro work-intro"><div><p class="eyebrow" data-copy="work-clearing.eyebrow">02 / SELECTED WORLDS</p><h2 id="work-clearing-title" data-copy="work-clearing.heading">A clearing<br><em>for ideas.</em></h2></div><div><p class="lead" data-copy="work-clearing.lead">Some worlds begin as experiments. Others are built for people. Both deserve clarity about what they are.</p><p class="disclosure">Studio explorations / concept work — not client commissions.</p></div></div>
         <figure class="work-clearing-installation" aria-labelledby="work-clearing-picture-caption">
           <div class="work-clearing-world">
-            <img class="work-clearing-woods" src="./assets/work-clearing/exports/work-clearing-woods.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
-            <img class="portrait-native-art portrait-native-art--work-clearing" src="./assets/mobile-native/work-clearing-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
+            <img class="work-clearing-woods" src="./assets/work-clearing/exports/work-clearing-woods.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="portrait-native-art portrait-native-art--work-clearing" src="./assets/mobile-native/work-clearing-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
             <div class="work-hangings" role="group" aria-label="Three illustrated concept sheets on the forest clothesline">
               <a class="work-hanging" data-open-concept="atrium" href="#folio-atrium" aria-label="Open the concept notes for The Atrium: A place for the beautifully impossible.">
-                <img src="./assets/work-clearing/exports/folio-atrium.webp" width="580" height="770" alt="" loading="lazy" decoding="async">
+                <img src="./assets/work-clearing/exports/folio-atrium.webp" width="580" height="770" alt="" loading="lazy" decoding="async" fetchpriority="low">
                 <span class="work-hanging-label" aria-hidden="true"><span class="work-hanging-title">The Atrium</span><span class="work-hanging-type">Experience concept / 01</span></span>
               </a>
               <a class="work-hanging" data-open-concept="oracle" href="#folio-oracle" aria-label="Open the concept notes for The Oracle: Intelligence, with a sense of wonder.">
-                <img src="./assets/work-clearing/exports/folio-oracle.webp" width="580" height="770" alt="" loading="lazy" decoding="async">
+                <img src="./assets/work-clearing/exports/folio-oracle.webp" width="580" height="770" alt="" loading="lazy" decoding="async" fetchpriority="low">
                 <span class="work-hanging-label" aria-hidden="true"><span class="work-hanging-title">The Oracle</span><span class="work-hanging-type">Product exploration / 02</span></span>
               </a>
               <a class="work-hanging" data-open-concept="archive" href="#folio-archive" aria-label="Open the concept notes for The Archive: A digital monument to ideas.">
-                <img src="./assets/work-clearing/exports/folio-archive.webp" width="580" height="770" alt="" loading="lazy" decoding="async">
+                <img src="./assets/work-clearing/exports/folio-archive.webp" width="580" height="770" alt="" loading="lazy" decoding="async" fetchpriority="low">
                 <span class="work-hanging-label" aria-hidden="true"><span class="work-hanging-title">The Archive</span><span class="work-hanging-type">Editorial exploration / 03</span></span>
               </a>
             </div>
-            <img class="work-clearing-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" alt="" aria-hidden="true" loading="lazy" decoding="async">
+            <img class="work-clearing-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" width="426" height="656" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low">
           </div>
           <figcaption class="work-clearing-caption" id="work-clearing-picture-caption"><span>THREE FIELD SHEETS / STUDIO EXPLORATIONS</span><span>Choose a hanging sheet to open its concept notes below.</span></figcaption>
         </figure>
@@ -203,10 +207,10 @@
           <figure class="river-scene" aria-labelledby="river-scene-description">
             <picture>
               <source media="(max-width: 670px)" srcset="./assets/river-stories/exports/river-mobile.webp" type="image/webp">
-              <img class="river-scene-art" src="./assets/river-stories/exports/river-desktop.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+              <img class="river-scene-art" src="./assets/river-stories/exports/river-desktop.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async" fetchpriority="low">
             </picture>
-            <img class="portrait-native-art portrait-native-art--river-stories" src="./assets/mobile-native/river-stories-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
-            <img class="river-roundbird" src="./assets/characters/roundbird.idle.webp" alt="" aria-hidden="true" width="160" height="156" loading="lazy" decoding="async">
+            <img class="portrait-native-art portrait-native-art--river-stories" src="./assets/mobile-native/river-stories-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="river-roundbird" src="./assets/characters/roundbird.idle.webp" alt="" aria-hidden="true" width="160" height="156" loading="lazy" decoding="async" fetchpriority="low">
             <figcaption id="river-scene-description" class="river-scene-caption"><span>FIELD SKETCH / 04</span><span>A river carries unfinished ideas forward.</span></figcaption>
             <nav class="river-stone-nav" aria-label="Jump to editorial outlines">
               <a href="#river-note-a" data-river-jump="river-note-a"><span class="river-stone-n">A</span><span>Impossible portal</span><span aria-hidden="true">↘</span></a>
@@ -217,7 +221,7 @@
             <div class="river-notebook-head">
               <p class="eyebrow">NOTES IN DEVELOPMENT <span aria-hidden="true">—</span> NOT PUBLISHED ARTICLES</p>
               <p class="river-notebook-instruction">Two pages tucked into the riverbank. Choose a page to unfold its questions, not a fabricated published story.</p>
-              <img class="river-paperkeeper-reader" src="./assets/characters/paperkeeper.read.webp" width="86" height="90" alt="" aria-hidden="true" loading="lazy" decoding="async">
+              <img class="river-paperkeeper-reader" src="./assets/characters/paperkeeper.read.webp" width="86" height="90" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low">
               <span class="river-notebook-number" aria-hidden="true">IV.</span>
             </div>
             <div class="river-pages">
@@ -287,15 +291,15 @@
       <div class="house-scene-canvas">
         <picture aria-hidden="true">
           <source media="(max-width: 670px)" srcset="./assets/house-on-the-hill/exports/house-mobile.webp" type="image/webp">
-          <img class="house-scene-image" src="./assets/house-on-the-hill/exports/house-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+          <img class="house-scene-image" src="./assets/house-on-the-hill/exports/house-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">
         </picture>
-            <img class="portrait-native-art portrait-native-art--house-on-the-hill" src="./assets/mobile-native/house-on-the-hill-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
+            <img class="portrait-native-art portrait-native-art--house-on-the-hill" src="./assets/mobile-native/house-on-the-hill-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
         <picture class="house-glow-layer" aria-hidden="true">
           <source media="(max-width: 670px)" srcset="./assets/house-on-the-hill/exports/window-glow-mobile.webp" type="image/webp">
-          <img class="house-window-glow" src="./assets/house-on-the-hill/exports/window-glow-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async">
+          <img class="house-window-glow" src="./assets/house-on-the-hill/exports/window-glow-desktop.webp" width="1536" height="1024" alt="" loading="lazy" decoding="async" fetchpriority="low">
         </picture>
-        <img class="portrait-native-glow" src="./assets/mobile-native/house-window-glow.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async">
-        <img class="house-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" alt="" aria-hidden="true" width="426" height="656" loading="lazy" decoding="async">
+        <img class="portrait-native-glow" src="./assets/mobile-native/house-window-glow.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
+        <img class="house-paperkeeper" src="./assets/characters/paperkeeper.three-quarter.webp" alt="" aria-hidden="true" width="426" height="656" loading="lazy" decoding="async" fetchpriority="low">
       </div>
       <figcaption class="house-scene-caption" id="house-scene-caption">
         <span class="house-scene-meta"><span>FIELD SKETCH / 05</span><span>A place to return to.</span></span>

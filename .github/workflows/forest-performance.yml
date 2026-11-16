@@ -1,0 +1,50 @@
+name: Forest Stage 16 — Performance, first paint and resource budgets (no screenshots)
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/styles/render-budget.css
+      - scripts/forest_performance_smoke.mjs
+      - .github/workflows/forest-performance.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  measured-performance:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify source and build root plus storybook GitHub Pages routes
+        run: |
+          node --check scripts/forest_performance_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Prepare real Chrome performance measurements
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Check responsive hero preload, below-fold priority, LCP samples and no-JS — no screenshots
+        run: |
+          mkdir -p /tmp/stage16-mirror/lazarusdev reports
+          cp -a dist/. /tmp/stage16-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/stage16-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/stage16-mirror > /tmp/stage16-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          set -o pipefail
+          node scripts/forest_performance_smoke.mjs | tee reports/stage16-performance-qa.log
+      - name: Upload only text measurements (never screenshots/videos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage16-performance-text-qa
+          path: reports/stage16-performance-qa.log
+          if-no-files-found: ignore
