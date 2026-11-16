@@ -64,7 +64,7 @@ try {
      const path=seam.querySelector('.seam-trail');
      return {line: getComputedStyle(path).strokeDashoffset,links:document.querySelectorAll('.forest-seam-link').length};
    });
-   assert.equal(reduce.line,'0',route+' reduced motion no ink draw');
+   assert.equal(Number.parseFloat(reduce.line),0,route+' reduced motion no ink draw');
    assert.equal(reduce.links,4);
   } finally {await ctx.close();}
   const nojs=await browser.newContext({viewport:{width:320,height:720},javascriptEnabled:false});
@@ -82,7 +82,7 @@ try {
    assert.equal(fallback.seams,4,route+' static seams');
    assert.equal(fallback.ready,false,route+' no JS gating');
    assert.deepEqual(fallback.anchors,targets.map(t=>'#'+t),route+' static anchors');
-   assert.equal(fallback.line,'0',route+' illustrated stroke visible without JS');
+   assert.equal(Number.parseFloat(fallback.line),0,route+' illustrated stroke visible without JS');
   } finally {await nojs.close();}
   console.log('PASS reduced motion and no-JS',route);
  }
