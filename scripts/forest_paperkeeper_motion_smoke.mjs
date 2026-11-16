@@ -135,7 +135,7 @@ try {
       await p.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
       const fallback=await p.evaluate(()=>({
         chapters:document.querySelectorAll('[data-chapter]').length,
-        hidden:document.querySelector('[data-paperkeeper-step]').hidden,
+        hidden:getComputedStyle(document.querySelector('[data-paperkeeper-step]')).display==='none',
         text:document.querySelector('#winding-path-title').textContent,
         nav:!!document.querySelector('a[href="#winding-path"]'),
       }));
