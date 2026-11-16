@@ -1,0 +1,51 @@
+name: Forest Stage 13 — Field Letter interaction, local conversion and accessibility QA
+on:
+  push:
+    branches: [main, feature/forest-storybook]
+    paths:
+      - index.html
+      - storybook/index.html
+      - src/storybook/house-on-the-hill.js
+      - src/storybook/styles/field-letter.css
+      - scripts/forest_field_letter_smoke.mjs
+      - .github/workflows/forest-field-letter.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  field-letter:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and dual GitHub Pages builds
+        run: |
+          node --check src/storybook/house-on-the-hill.js
+          node --check scripts/forest_field_letter_smoke.mjs
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+      - name: Install Chrome browser automation
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          google-chrome --version
+      - name: Check editor, clipboard, text download, reduced motion and no-JS fallback — no screenshots
+        run: |
+          mkdir -p /tmp/stage13-mirror/lazarusdev reports
+          cp -a dist/. /tmp/stage13-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/stage13-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/stage13-mirror > /tmp/stage13-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
+            sleep 2
+          done
+          node scripts/forest_field_letter_smoke.mjs | tee reports/stage13-browser-qa.log
+      - name: Upload text logs only — no screenshots or recordings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-stage13-letter-text-qa
+          path: reports/stage13-browser-qa.log
+          if-no-files-found: ignore

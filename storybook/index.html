@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="../src/storybook/styles/work-clearing.css">
   <link rel="stylesheet" href="../src/storybook/styles/river-stories.css">
   <link rel="stylesheet" href="../src/storybook/styles/house-on-the-hill.css">
+  <link rel="stylesheet" href="../src/storybook/styles/field-letter.css">
   <link rel="stylesheet" href="../src/storybook/styles/paperkeeper-motion.css">
   <link rel="stylesheet" href="../src/storybook/styles/forest-seams.css">
   <script type="module" src="../src/storybook/main.js"></script>
@@ -41,7 +42,7 @@
         <a href="#river-stories">Field Notes</a>
         <a href="#house-on-the-hill">Studio &amp; Contact</a>
       </nav>
-      <div class="header-actions"><a class="header-quick" href="#work-clearing">See our work <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span class="menu-toggle-word">Menu</span><span class="menu-toggle-lines" aria-hidden="true"><i></i><i></i></span></button></div>
+      <div class="header-actions"><a class="header-quick" href="#studio-inquiry">Draft a project note <span aria-hidden="true">↗</span></a><button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Open navigation"><span class="menu-toggle-word">Menu</span><span class="menu-toggle-lines" aria-hidden="true"><i></i><i></i></span></button></div>
     </div>
   </header>
 
@@ -308,10 +309,26 @@
         <p class="eyebrow">A LETTER LEFT AT THE DOOR</p>
         <h3 id="house-inquiry-title">Have an idea<br>worth exploring?</h3>
         <p class="house-contact-explainer">Start a short project brief here. This site does not yet have a verified way to deliver it to Lazarus Dev.</p>
+        <div class="house-letter-builder" data-letter-builder hidden>
+          <p class="house-letter-register"><span>THE FIELD REGISTER / 01–03</span><span>PRIVATE UNTIL YOU SHARE IT</span></p>
+          <fieldset class="house-letter-paths">
+            <legend>Which kind of world are you imagining?</legend>
+            <label class="house-letter-path"><input type="radio" name="house-letter-kind" value="A distinctive website" checked><span class="house-letter-path-face"><span class="house-letter-roman" aria-hidden="true">I.</span><span><strong>A distinctive website</strong><small>A home for an idea with its own character.</small></span></span></label>
+            <label class="house-letter-path"><input type="radio" name="house-letter-kind" value="An interactive experience"><span class="house-letter-path-face"><span class="house-letter-roman" aria-hidden="true">II.</span><span><strong>An interactive experience</strong><small>A place to explore, not just scroll through.</small></span></span></label>
+            <label class="house-letter-path"><input type="radio" name="house-letter-kind" value="A digital product"><span class="house-letter-path-face"><span class="house-letter-roman" aria-hidden="true">III.</span><span><strong>A digital product</strong><small>Something useful that can grow over time.</small></span></span></label>
+          </fieldset>
+          <div class="house-letter-fields">
+            <div><label for="house-letter-goal">One thing it should achieve <span>(optional)</span></label><input id="house-letter-goal" type="text" maxlength="160" autocomplete="off" placeholder="Give the work a purpose."></div>
+            <div><label for="house-letter-timing">When should it take shape?</label><select id="house-letter-timing"><option value="Still exploring">Still exploring</option><option value="Within a few weeks">Within a few weeks</option><option value="Within a few months">Within a few months</option><option value="Flexible timeline">No fixed timeline</option></select></div>
+          </div>
+          <p class="house-letter-builder-note">These details will accompany your note when you copy or save it. They stay in this browser tab.</p>
+        </div>
         <label class="house-brief-label" for="house-brief">Your project note <span>(stays on this device)</span></label>
         <textarea id="house-brief" class="house-brief" rows="5" maxlength="4000" placeholder="Tell us what you're imagining, what it should do, and what makes it different." aria-describedby="house-copy-note"></textarea>
+        <details class="house-letter-review" data-letter-review hidden><summary>Read the complete letter <span aria-hidden="true">↗</span></summary><pre data-letter-output>Write a project note above to prepare your letter.</pre></details>
         <p id="house-copy-note" class="house-privacy-note">Copy your draft for your own records. Nothing is sent, submitted, stored or shared with Lazarus Dev from this page.</p>
         <button type="button" class="button house-copy-button" data-house-copy hidden>Copy my project brief <span aria-hidden="true">↗</span></button>
+        <button type="button" class="house-save-button" data-house-save hidden>Save the letter as .txt <span aria-hidden="true">↓</span></button>
         <p id="house-copy-status" class="house-copy-status" role="status" aria-live="polite">You can always select the text above and copy it manually.</p>
         <p class="house-status">CONTACT DELIVERY / NOT YET CONNECTED</p>
       </aside>
