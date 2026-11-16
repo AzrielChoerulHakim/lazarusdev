@@ -26,6 +26,13 @@ try {
       assert.equal(response?.status(),200,tag+' response');
       await page.waitForFunction(()=>document.body.dataset.storybookReady==='true',{timeout:12000});
       await page.waitForFunction(()=>!document.querySelector('[data-paperkeeper-step]').hidden,{timeout:12000});
+      // The small drawing is deliberately lazy-loaded below the fold.
+      // Exercise its real viewport load rather than assuming an offscreen image is decoded.
+      await page.locator('[data-paperkeeper-walk]').scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>{
+        const image=document.querySelector('[data-paperkeeper-walk]');
+        return image.complete && image.naturalWidth > 0;
+      },{timeout:10000});
       const metrics = await page.evaluate(()=>{
         const reel = document.querySelector('[data-paperkeeper-walk]');
         const button = document.querySelector('[data-paperkeeper-step]');
