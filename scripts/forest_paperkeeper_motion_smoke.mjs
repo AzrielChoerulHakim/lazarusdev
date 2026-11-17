@@ -80,5 +80,5 @@ try{
    console.log('PASS Stage11 '+route+' no-JS readable source');
   }finally{await ctx2.close();}
  }
- console.log('STAGE11 AUTO WALK COMPLETE '+checks+'/16 profiles; no screenshots/video.');
+ console.log('STAGE11 AUTO WALK COMPLETE '+checks+'/16 profiles; no media captures.');
 }finally{await browser.close();}
