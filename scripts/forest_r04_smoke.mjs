@@ -115,5 +115,29 @@ try {
       pass('offscreen cancel without automatic replay');
     }finally{await context.close();}
   }
+  // R10 regression: a first-time visitor clicks the actual hero cue BEFORE
+  // any atlas-frame warming. No fixture scroll/preparation or synthetic
+  // .open assignment is allowed here; this is the observed user journey.
+  for(const route of routes)for(const width of [390,1440]){
+    const {context,page,errors}=await setup(route,{width,height:width===390?844:900});
+    const tag=route+' '+width+' cold cue';
+    try{
+      const initial=await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-state');
+      assert.ok(['idle','loading','ready'].includes(initial),tag+' dormant actor before user gesture');
+      await page.locator('.hero-atlas-cue').click();
+      await page.waitForURL('**/#field-atlas');
+      assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true,tag+' atlas opens on the first cue click');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper')?.dataset.actingState==='playing',null,{timeout:20000});
+      const visible=await page.locator('.field-atlas-paperkeeper').evaluate(el=>{
+        const r=el.getBoundingClientRect();
+        return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;
+      });
+      assert.equal(visible,true,tag+' acting visible in the arrived viewport');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper')?.dataset.actingState==='settled',null,{timeout:10000});
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-frame'),'settled');
+      assert.deepEqual(errors,[],tag+' no errors');
+      pass(tag+' immediate native atlas + finite visible action');
+    }finally{await context.close();}
+  }
   console.log('R04 COMPLETE: '+passed+' built-browser cases; zero screenshots/video.');
 }finally{await browser.close();}
