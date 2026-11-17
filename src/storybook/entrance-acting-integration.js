@@ -1,44 +1,46 @@
-/** R04: Native Field Atlas integration of R03's finite, authored acting. */
+/** R10 — The atlas character is an actor the reader can actually see. */
 import { createEntranceActing } from './entrance-acting.js';
 
-const keeper = document.querySelector('#entrance .entrance-paperkeeper');
-const atlas = document.querySelector('details#field-atlas[data-field-atlas]');
-if (keeper && atlas) {
-  const acting = createEntranceActing(keeper);
-  let loaded = document.readyState === 'complete';
-  let nearby = false;
-  let warming = false;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+const atlas=document.querySelector('details#field-atlas[data-field-atlas]');
+const cue=document.querySelector('#entrance .hero-atlas-cue');
+const keeper=atlas?.querySelector('.field-atlas-paperkeeper');
 
-  const warm = () => {
-    if (warming || !loaded || !nearby || document.hidden || reduced.matches) return;
-    warming = true;
-    observer?.disconnect();
-    document.removeEventListener('visibilitychange', warm);
+if(atlas&&keeper){
+  const acting=createEntranceActing(keeper);
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  let loaded=document.readyState==='complete',warmed=false,requested=false,queued=false;
+  const inView=()=>{
+    const r=keeper.getBoundingClientRect();
+    return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight&&r.right>0&&r.left<innerWidth;
+  };
+  const warm=()=>{
+    if(warmed||!loaded||document.hidden||reduced.matches||!inView())return;
+    warmed=true;
     void acting.prepare();
   };
-
-  // Wait for the R02 critical painting to finish loading. R03 URLs remain
-  // lazy and only decode near the character; no new autoplay behavior.
-  const observer = 'IntersectionObserver' in window
-    ? new IntersectionObserver(([entry]) => {
-      nearby = Boolean(entry?.isIntersecting);
-      warm();
-    }, { rootMargin: '160px 0px', threshold: 0 })
-    : null;
-  if (observer) observer.observe(keeper);
-  else { nearby = true; warm(); }
-  if (!loaded) window.addEventListener('load', () => {
-    loaded = true;
-    warm();
-  }, { once: true });
-  document.addEventListener('visibilitychange', warm);
-  reduced.addEventListener('change', warm);
-
-  // Do not prevent/await the native toggle, move focus, or force scroll.
-  // Closing the atlas does not reverse or restart a gesture.
-  atlas.addEventListener('toggle', () => {
-    if (atlas.open) void acting.play();
-  });
-  // R03 itself handles hidden/offscreen/pagehide and reduced-motion changes.
+  const schedule=()=>{
+    if(queued||!requested||!atlas.open||document.hidden)return;
+    queued=true;
+    // First let native fragment navigation place the open fold on screen.
+    // R03's own IntersectionObserver has a chance to update its visibility.
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      queued=false;
+      if(!requested||!atlas.open||!inView())return;
+      requested=false;
+      void acting.play();
+    }));
+  };
+  const request=()=>{if(!atlas.open)return;requested=true;schedule();};
+  // Keep the real anchor and its native hash navigation. The first cue click
+  // opens the genuine atlas and animates the companion beside its summary.
+  cue?.addEventListener('click',()=>{if(!atlas.open)atlas.open=true;request();});
+  atlas.addEventListener('toggle',()=>{if(atlas.open)request();else requested=false;});
+  const near=window.IntersectionObserver?new IntersectionObserver(([entry])=>{
+    if(entry?.isIntersecting){warm();schedule();}
+  },{rootMargin:'160px 0px'}):null;
+  near?.observe(keeper);
+  if(!loaded)addEventListener('load',()=>{loaded=true;warm();},{once:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden){warm();schedule();}});
+  addEventListener('scroll',()=>{warm();schedule();},{passive:true});
+  addEventListener('resize',schedule,{passive:true});
 }

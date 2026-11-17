@@ -1,35 +1,13 @@
-/* Stage 16 — Preserve each illustrated canvas's exact CSS aspect-ratio and
-   skip painting heavy SVG pigment/filter layers until approaching the reader.
-   All text, keyboard interactions, link destinations and fallback images stay in DOM.
-   content-visibility: auto is a rendering hint, NOT a visibility or reveal effect. */
+/* Stage16 rendering budget. Stage14's mobile SVG-mask rule was retired
+   after R10 restored the original rich portrait raster paintings. */
 @supports (content-visibility: auto) {
   .path-map-art,
   .work-clearing-world,
   .river-scene,
   .house-scene-canvas {
     content-visibility: auto;
-    /* 'auto' remembers the real size after first layout; aspect-ratio
-       already reserves stable width/height before first paint. */
     contain-intrinsic-size: auto 700px;
   }
 }
-
-/* Native portrait SVG is the actual mobile illustration. The previous
-   hidden WebP layer must not start a second near-viewport image download.
-   Keep DOM fallbacks, show them immediately if script is disabled, and
-   restore them automatically if SVG decoding fails. */
-@media (max-width: 670px) {
-  html:not(.no-js) .path-map-art:not([data-native-failed="true"]) > picture,
-  html:not(.no-js) .work-clearing-world:not([data-native-failed="true"]) > .work-clearing-woods,
-  html:not(.no-js) .river-scene:not([data-native-failed="true"]) > picture,
-  html:not(.no-js) .house-scene-canvas:not([data-native-failed="true"]) > picture {
-    display: none !important;
-  }
-  html:not(.no-js) [data-native-failed="true"] > .portrait-native-art {
-    display: none !important;
-  }
-  html:not(.no-js) .house-scene-canvas[data-native-failed="true"] > .house-glow-layer {
-    display: block !important;
-    visibility: visible !important;
-  }
-}
+/* Keep the real raster scenes in layout and lazy-loaded. Do not suppress
+   their <picture> in favor of the archived simplified vector overlay. */

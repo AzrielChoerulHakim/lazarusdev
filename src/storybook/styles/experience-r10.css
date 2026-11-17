@@ -1,0 +1,104 @@
+/* R10 / regain the original pencil-painting material on mobile.
+   The atlas is a functional prop with visible finite character acting. */
+.field-atlas-fold {
+  grid-template-columns:68px 112px minmax(0,1fr) 48px;
+  gap:clamp(11px,1.8vw,26px);
+  min-height:170px;
+  padding-block:8px;
+}
+.field-atlas-character {
+  position:relative;
+  align-self:end;
+  justify-self:center;
+  display:grid;
+  place-items:end center;
+  width:min(100%,112px);
+  height:155px;
+  pointer-events:none;
+}
+.field-atlas-character::after {
+  content:'';
+  position:absolute;
+  bottom:5px;
+  left:16%;
+  width:70%;
+  height:7px;
+  background:radial-gradient(ellipse,rgba(35,58,37,.32),transparent 72%);
+  z-index:0;
+}
+.field-atlas-paperkeeper {
+  position:relative;
+  z-index:1;
+  display:block;
+  height:100%;
+  width:auto;
+  max-width:100%;
+  object-fit:contain;
+  object-position:bottom center;
+  transform:none!important;
+  animation:none!important;
+}
+.field-atlas[open] .field-atlas-fold {background:rgba(255,246,220,.32);}
+@media(max-width:670px){
+  /* The original painted portrait WebP images were hidden beneath rough
+     Stage14 vector studies. Restore them as the real mobile scenery. */
+  .portrait-native-art,.portrait-native-glow {display:none!important;}
+  .path-map-art>picture,.river-scene>picture,
+  .house-scene-canvas>picture:not(.house-glow-layer) {display:block!important;}
+  .work-clearing-world>.work-clearing-woods {display:block!important;}
+  .house-scene-canvas>.house-glow-layer {display:block!important;visibility:visible!important;}
+  .path-map-art>picture,.river-scene>picture,
+  .house-scene-canvas>picture:not(.house-glow-layer) {position:absolute;inset:0;width:100%;height:100%;}
+  .path-map-art .path-map-backdrop,
+  .river-scene .river-scene-art,
+  .house-scene-canvas .house-scene-image {object-fit:cover;object-position:center;}
+  .work-clearing-world .work-clearing-woods {object-fit:cover;object-position:50% 42%;}
+  .house-scene-canvas .house-window-glow {object-fit:cover;object-position:center;}
+  .house-scene-canvas .house-glow-layer {mix-blend-mode:screen;}
+  .field-atlas-fold {
+    grid-template-columns:82px minmax(0,1fr) 34px;
+    gap:clamp(8px,2vw,12px);
+    padding:11px 11px 11px 22px;
+    min-height:140px;
+  }
+  .field-atlas-seal {display:none;}
+  .field-atlas-character {height:118px;width:82px;}
+  .field-atlas-fold-copy strong {font-size:clamp(1.29rem,5.5vw,1.9rem);}
+  .field-atlas-fold-copy>span {font-size:.83rem;}
+  .field-atlas-fold-action {width:34px;}
+}
+/* Rebalance illustration density against the amount of real editorial copy. */
+.chapter-path {padding-block:clamp(47px,5vw,83px) clamp(56px,7vw,108px);}
+.chapter-clearing {padding-block:clamp(48px,5.5vw,88px) clamp(60px,7vw,110px);}
+.chapter-river {padding-block:clamp(52px,5.5vw,90px) clamp(62px,7vw,112px);}
+.chapter-house {padding-block:clamp(53px,5.5vw,91px) clamp(58px,6vw,96px);}
+.chapter-path .path-intro,.chapter-clearing .work-intro,
+.chapter-river .river-layout {padding-top:clamp(22px,3.8vw,56px);}
+.path-map {margin-top:clamp(27px,3.6vw,53px);}
+.chapter-path .path-body {margin-top:clamp(39px,5vw,72px);}
+.work-clearing-installation {margin-top:clamp(27px,3.8vw,55px);}
+.chapter-clearing .work-columns {margin-top:clamp(38px,4.5vw,68px);}
+.work-specimen {margin-top:clamp(47px,5.5vw,82px);}
+.river-scene {margin-top:clamp(30px,4vw,58px);}
+.river-notebook {padding-top:clamp(42px,5.2vw,75px);}
+.house-preface {padding-block:clamp(32px,4.2vw,59px) clamp(25px,3.4vw,46px);}
+.house-ending {padding-top:clamp(42px,5vw,80px);}
+.house-wayfinding {margin-top:clamp(42px,5vw,78px);}
+.forest-seam-inner {min-height:112px;padding-block:23px 18px;}
+.forest-seam-drawing {max-height:75px;}
+.forest-seam::before {height:30px;}
+@media(max-width:670px){
+ .chapter-path,.chapter-clearing,.chapter-river,.chapter-house {padding-block:41px 65px;}
+ .chapter-path .path-intro,.chapter-clearing .work-intro,
+ .chapter-river .river-layout {padding-top:28px;}
+ .chapter-path .path-body,.chapter-clearing .work-columns {margin-top:34px;}
+ .work-clearing-world {height:clamp(438px,123vw,555px);min-height:0;}
+ .work-specimen {margin-top:43px;}
+ .river-notebook {padding-top:39px;}
+ .house-preface {padding-block:33px 27px;}
+ .house-ending {padding-top:45px;}
+ .house-wayfinding {margin-top:44px;}
+ .forest-seam-inner {min-height:102px;padding-block:20px 12px;}
+ .forest-seam-drawing {height:38px;}
+}
+@media(prefers-reduced-motion:reduce){.field-atlas-paperkeeper{transition:none!important;}}

@@ -16,8 +16,8 @@ async function setup(route,opts={}) {
   return {context,page,errors};
 }
 async function ready(page,state='ready') {
-  await page.locator('.entrance-paperkeeper').scrollIntoViewIfNeeded();
-  await page.waitForFunction(state=>document.querySelector('.entrance-paperkeeper')?.dataset.actingState===state,state,{timeout:25000});
+  await page.locator('.field-atlas-paperkeeper').scrollIntoViewIfNeeded();
+  await page.waitForFunction(state=>document.querySelector('.field-atlas-paperkeeper')?.dataset.actingState===state,state,{timeout:25000});
 }
 function pass(label){passed++;console.log('PASS R04 '+label);}
 try {
@@ -26,32 +26,36 @@ try {
     const label=route+' '+width;
     try{
       await ready(page);
-      const still=await page.locator('.entrance-paperkeeper').getAttribute('src');
+      const still=await page.locator('.field-atlas-paperkeeper').getAttribute('src');
       assert.ok(still.includes('paperkeeper.three-quarter'),label+' R02 reference still');
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),null,'No autoplay');
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-frame'),null,'No autoplay');
       await page.evaluate(()=>{
         window.r04Trace=[];
-        const img=document.querySelector('.entrance-paperkeeper');
+        const img=document.querySelector('.field-atlas-paperkeeper');
         new MutationObserver(()=>{
           const id=img.dataset.actingFrame;
           if(id && r04Trace.at(-1)!==id)r04Trace.push(id);
         }).observe(img,{attributes:true,attributeFilter:['data-acting-frame']});
       });
-      const scroll=await page.evaluate(()=>window.scrollY);
-      await page.locator('#field-atlas').evaluate(el=>{el.open=true;});
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='playing',null,{timeout:5000});
+      // Real journey: hero cue navigates to (and opens) the actual atlas.
+      await page.locator('.hero-atlas-cue').click();
+      await page.waitForURL('**/#field-atlas');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='playing',null,{timeout:10000});
       assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true);
-      assert.ok(Math.abs((await page.evaluate(()=>scrollY))-scroll)<2,label+' no forced scroll');
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
+      assert.equal(await page.locator('.field-atlas-paperkeeper').evaluate(el=>{
+        const r=el.getBoundingClientRect();
+        return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;
+      }),true,label+' actual acting visible during atlas opening');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
       const first=await page.evaluate(()=>r04Trace);
       for(const id of ['notice','anticipate','lift-low','lift-mid','overshoot','follow','settled'])assert.ok(first.includes(id),label+' missing '+id);
-      assert.equal(await page.locator('.entrance-paperkeeper').evaluate(el=>getComputedStyle(el).transform),'none');
+      assert.equal(await page.locator('.field-atlas-paperkeeper').evaluate(el=>getComputedStyle(el).transform),'none');
       await page.locator('#field-atlas').evaluate(el=>{el.open=false;});
       await page.waitForTimeout(100);
       await page.evaluate(()=>{r04Trace.length=0;});
       await page.locator('#field-atlas').evaluate(el=>{el.open=true;});
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='playing',null,{timeout:5000});
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='playing',null,{timeout:5000});
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
       assert.ok((await page.evaluate(()=>r04Trace)).includes('acknowledge'),label+' replay pose');
       assert.deepEqual(errors,[]);
       pass(label+' finite invitation + raised-lantern replay');
@@ -61,13 +65,13 @@ try {
     const {context,page,errors}=await setup(route,{reducedMotion:'reduce'});
     try{
       await ready(page,'idle');
-      assert.ok((await page.locator('.entrance-paperkeeper').getAttribute('src')).includes('paperkeeper.three-quarter'),'Reduced motion preserves critical R02 image before action');
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),null,'No eager final frame swap');
+      assert.ok((await page.locator('.field-atlas-paperkeeper').getAttribute('src')).includes('paperkeeper.three-quarter'),'Reduced motion preserves critical R02 image before action');
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-frame'),null,'No eager final frame swap');
       await page.locator('#field-atlas summary').focus();
       await page.keyboard.press('Enter');
       assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true);
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),'settled');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-frame'),'settled');
       assert.deepEqual(errors,[]);
       pass(route+' reduced motion + native keyboard');
     }finally{await context.close();}
@@ -75,7 +79,7 @@ try {
   for(const route of routes){
     const {context,page,errors}=await setup(route,{javaScriptEnabled:false});
     try{
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-state'),null);
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-state'),null);
       await page.locator('#field-atlas summary').click();
       assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true);
       assert.equal(await page.locator('#entrance h1').isVisible(),true);
@@ -87,7 +91,7 @@ try {
     const {context,page,errors}=await setup(route,{blockFrame:true});
     try{
       await ready(page,'unavailable');
-      assert.ok((await page.locator('.entrance-paperkeeper').getAttribute('src')).includes('paperkeeper.three-quarter'));
+      assert.ok((await page.locator('.field-atlas-paperkeeper').getAttribute('src')).includes('paperkeeper.three-quarter'));
       await page.locator('#field-atlas summary').click();
       assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true);
       await page.locator('.field-atlas-index a[href="#work-clearing"]').click();
@@ -101,12 +105,12 @@ try {
     try{
       await ready(page);
       await page.locator('#field-atlas').evaluate(el=>{el.open=true;});
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingFrame==='lift-low',null,{timeout:5000});
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingFrame==='lift-low',null,{timeout:5000});
       await page.evaluate(()=>window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='settled');
+      await page.waitForFunction(()=>document.querySelector('.field-atlas-paperkeeper').dataset.actingState==='settled');
       await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));
       await page.waitForTimeout(400);
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-state'),'settled');
+      assert.equal(await page.locator('.field-atlas-paperkeeper').getAttribute('data-acting-state'),'settled');
       assert.deepEqual(errors,[]);
       pass('offscreen cancel without automatic replay');
     }finally{await context.close();}

@@ -53,10 +53,26 @@ for(const route of routes) for(const {w,h} of sizes) {
   assert.equal(outcome.pictures.length,5,tag+' images exist');
   for(const [idx,img] of outcome.pictures.entries()){
    assert.deepEqual(img.natural,[768,1152],tag+' native portrait asset '+idx);
-   assert.equal(img.visible,w<=670,tag+' correct breakpoint visibility '+idx);
+   assert.equal(img.visible,false,tag+' archived simplified SVG must not mask painting '+idx);
    assert.ok(img.src.includes('/mobile-native/'),tag+' original portrait URL');
   }
   if(w<=670){
+    const raster=await page.evaluate(async()=>{
+      const image=sel=>document.querySelector(sel);
+      const targets=['.path-map-backdrop','.river-scene-art','.house-scene-image','.work-clearing-woods'];
+      for(const sel of targets){const img=image(sel);img.loading='eager';await img.decode();}
+      return {
+        path:image('.path-map-backdrop').currentSrc,
+        river:image('.river-scene-art').currentSrc,
+        house:image('.house-scene-image').currentSrc,
+        workVisible:getComputedStyle(image('.work-clearing-woods')).display!=='none',
+        houseVisible:getComputedStyle(document.querySelector('.house-scene-canvas > picture:not(.house-glow-layer)')).display!=='none'
+      };
+    });
+    assert.ok(raster.path.includes('winding-path-mobile.webp'),tag+' original painted path');
+    assert.ok(raster.river.includes('river-mobile.webp'),tag+' original painted river');
+    assert.ok(raster.house.includes('house-mobile.webp'),tag+' original painted house');
+    assert.equal(raster.workVisible&&raster.houseVisible,true,tag+' paintings not hidden');
     assert.equal(outcome.stacks.folios,'3',tag+' folio stacking');
     assert.equal(outcome.stacks.pathInk,'4',tag+' traced path over art');
     assert.equal(outcome.stacks.houseKeeper,'4',tag+' keeper over art');
@@ -71,10 +87,10 @@ for(const route of routes) for(const {w,h} of sizes) {
    await light.click();
    assert.equal(await light.getAttribute('aria-pressed'),'true',tag+' house click');
    await page.waitForTimeout(330);
-   const opacity=await page.locator('.portrait-native-glow').evaluate(e=>Number(getComputedStyle(e).opacity));
-   assert.ok(opacity>.95,tag+' matching native window glow');
+   const opacity=await page.locator('.house-glow-layer').evaluate(e=>Number(getComputedStyle(e).opacity));
+   assert.ok(opacity>.95,tag+' matching raster window glow');
    await page.emulateMedia({reducedMotion:'reduce'});
-   const duration=await page.locator('.portrait-native-glow').evaluate(e=>getComputedStyle(e).transitionDuration);
+   const duration=await page.locator('.house-glow-layer').evaluate(e=>getComputedStyle(e).transitionDuration);
    assert.ok(parseFloat(duration)===0,tag+' reduced motion glow');
   }
   console.log('PASS MOBILE NATIVE '+tag);passed++;
@@ -86,7 +102,7 @@ for(const route of routes){
  try {
   await page.goto(host+route,{waitUntil:'domcontentloaded'});
   assert.equal(await page.locator('section[data-chapter]').count(),5,route+' no JS all chapters');
-  assert.ok(await page.locator('.portrait-native-art--river-stories').isVisible(),route+' no JS illustration visible');
+  assert.ok(await page.locator('.river-scene-art').isVisible(),route+' no JS illustration visible');
   assert.ok(await page.locator('#house-brief').isVisible(),route+' no JS contact note visible');
   assert.equal(await page.locator('[data-house-save]').isVisible(),false,route+' no JS enhancement hidden');
   console.log('PASS MOBILE NATIVE NO JS '+route);

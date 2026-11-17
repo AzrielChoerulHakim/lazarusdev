@@ -87,12 +87,10 @@ try {
       // This generous ceiling guards catastrophic eager loads; LCP/CLS numbers are
       // diagnostics only, not fabricated field Core Web Vitals.
       if (w<=670) {
-        // SVG is the actual live portrait artwork. The hidden legacy raster
-        // behind it must not consume a second near-viewport download.
-        assert.equal(
-          performanceData.imageNames.some(name=>name.startsWith('winding-path-mobile-')),
-          false, tag+' covered mobile raster unexpectedly fetched'
-        );
+        // R10: the genuine, detailed portrait WebP is primary again.
+        // The archived coarse SVG is not visible or requested as main art.
+        assert.equal(await page.locator('.portrait-native-art--house-on-the-hill').isVisible(),false,tag+' no coarse SVG mask');
+        assert.equal(await page.locator('.house-scene-image').isVisible(),true,tag+' authentic cottage painting');
       }
             assert.ok(performanceData.localTransferBytes<=2500000,tag+' unexpectedly high first-view transfer '+performanceData.localTransferBytes);
       assert.ok(performanceData.cls<0.3,tag+' unexpected layout shift '+performanceData.cls);
@@ -133,7 +131,7 @@ try {
       await page.goto(base+route,{waitUntil:'domcontentloaded'});
       assert.equal(await page.locator('section[data-chapter]').count(),5,route+' no JS five chapters');
       assert.equal(await page.locator('#house-brief').isVisible(),true,route+' local note available');
-      assert.equal(await page.locator('.portrait-native-art--river-stories').isVisible(),true,route+' portrait art present');
+      assert.equal(await page.locator('.river-scene-art').isVisible(),true,route+' portrait art present');
       assert.equal(await page.locator('.entrance-backdrop').isVisible(),true,route+' static hero');
       console.log('STAGE16 NO-JS PASS '+route);
     }finally{await ctx.close();}
