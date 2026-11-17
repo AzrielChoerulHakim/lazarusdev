@@ -1,81 +1,61 @@
-/** R11 — A physically drawn 720ms pencil route on explicit activation.
- * Passive native scrolling, no CSS character rig, no focus/scroll changes.
+/**
+ * R12: The pencil route draws itself on arrival. No motion toggle.
+ * Native scrolling and chapter links remain immediately available.
  */
-const map=document.querySelector('[data-path-map]');
-const toggle=document.querySelector('[data-path-trace-toggle]');
-const readout=document.getElementById('path-trace-status');
-
-if(map&&toggle&&readout){
-  const paths=[...map.querySelectorAll('[data-path-stroke]')];
-  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
-  let manual=false,frame=0,tween=0,displayed=0;
-  for(const path of paths){
-    const length=path.getTotalLength();
-    path.dataset.length=String(length);
-    path.style.strokeDasharray=length+' '+length;
-    path.style.strokeDashoffset=String(length);
-  }
-  const scrollProgress=()=>{
-    const rect=map.getBoundingClientRect();
-    const fraction=(innerHeight*.86-rect.top)/(rect.height+innerHeight*.34);
-    return Math.min(1,Math.max(0,fraction));
+const map = document.querySelector('[data-path-map]');
+if (map) {
+  const art = map.querySelector('.path-map-art');
+  const paths = [...map.querySelectorAll('[data-path-stroke]')];
+  const shortMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const duration = shortMotion ? 530 : 950;
+  let begun = false, raf = 0;
+  const lines = paths.map(path => {
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length + ' ' + length;
+    path.style.strokeDashoffset = String(length);
+    return { path, length };
+  });
+  const paint = progress => {
+    const value = Math.max(0, Math.min(1, progress));
+    for (const { path, length } of lines) path.style.strokeDashoffset = String(length * (1 - value));
+    map.dataset.progress = String(Math.round(value * 100));
   };
-  const target=()=>motion.matches||manual?1:scrollProgress();
-  const paint=progress=>{
-    displayed=Math.min(1,Math.max(0,progress));
-    for(const path of paths)path.style.strokeDashoffset=String(Number(path.dataset.length)*(1-displayed));
-    map.dataset.progress=String(Math.round(displayed*100));
+  map.dataset.motionMode = 'automatic';
+  map.dataset.tracePhase = 'awaiting';
+  paint(0);
+  const visible = () => {
+    const rect = art.getBoundingClientRect();
+    const overlap = Math.max(0, Math.min(innerHeight, rect.bottom) - Math.max(0, rect.top));
+    return rect.width > 0 && overlap >= Math.min(rect.height * .2, 140);
   };
-  const stop=()=>{
-    if(tween)cancelAnimationFrame(tween);
-    tween=0;
-    map.dataset.tracePhase='settled';
-  };
-  const update=()=>{
-    frame=0;
-    if(!tween)paint(target());
-  };
-  const schedule=()=>{if(!frame&&!tween)frame=requestAnimationFrame(update);};
-  const traceTo=goal=>{
-    stop();
-    if(motion.matches||document.hidden||Math.abs(goal-displayed)<.003){
-      paint(goal);
-      return;
-    }
-    const from=displayed,started=performance.now(),duration=720;
-    map.dataset.tracePhase='drawing';
-    const draw=now=>{
-      const t=Math.min(1,(now-started)/duration);
-      const ease=1-Math.pow(1-t,3);
-      paint(from+(goal-from)*ease);
-      if(t>=1){
-        tween=0;
-        map.dataset.tracePhase='settled';
-        schedule();
-      }else tween=requestAnimationFrame(draw);
+  function draw() {
+    if (begun || document.hidden || !visible()) return;
+    begun = true;
+    map.dataset.tracePhase = 'drawing';
+    map.dataset.autoPlayed = 'true';
+    const start = performance.now();
+    const tick = now => {
+      const progress = Math.min(1, (now - start) / duration);
+      paint(1 - Math.pow(1 - progress, 2.5));
+      if (progress >= 1) {
+        raf = 0;
+        paint(1);
+        map.dataset.tracePhase = 'settled';
+      } else raf = requestAnimationFrame(tick);
     };
-    tween=requestAnimationFrame(draw);
-  };
-  toggle.hidden=false;
-  map.dataset.tracePhase='settled';
-  toggle.addEventListener('click',()=>{
-    manual=!manual;
-    toggle.setAttribute('aria-pressed',String(manual));
-    toggle.textContent=manual?'Return to natural tracing':'Reveal the whole route';
-    readout.textContent=manual
-      ?'A pencil traces the full route. The journey remains yours to navigate.'
-      :'The route follows your natural scroll again. Every chapter link still works.';
-    traceTo(target());
-  });
-  addEventListener('scroll',schedule,{passive:true});
-  addEventListener('resize',schedule,{passive:true});
-  motion.addEventListener('change',()=>{
-    stop();
-    paint(target());
-  });
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden){stop();paint(target());}
-  });
-  addEventListener('pagehide',stop,{once:true});
-  schedule();
+    raf = requestAnimationFrame(tick);
+  }
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(e => e.isIntersecting)) draw();
+      if (begun) observer.disconnect();
+    }, { threshold: [0, .2, .4] });
+    observer.observe(art);
+  }
+  addEventListener('scroll', draw, { passive: true });
+  addEventListener('resize', draw, { passive: true });
+  addEventListener('pageshow', draw);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) draw(); });
+  requestAnimationFrame(draw);
+  addEventListener('pagehide', () => { if (raf) cancelAnimationFrame(raf); }, { once: true });
 }

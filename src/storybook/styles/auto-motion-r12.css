@@ -1,0 +1,108 @@
+/* R12 — Motion belongs to the world, not a settings panel.
+   Only authentic illustrations animate: short authored acting + quiet
+   ambient props while in view. No generic global opacity entrances. */
+@keyframes r12-moth-flight {
+  0%,100% { transform:translate(0,0) rotate(-4deg); }
+  45% { transform:translate(3px,-7px) rotate(3deg); }
+  70% { transform:translate(-2px,-3px) rotate(-2deg); }
+}
+@keyframes r12-folio-breeze-a {
+  0%,100% { transform:rotate(-3deg) translateY(24px); }
+  52% { transform:rotate(-1.4deg) translateY(21px); }
+}
+@keyframes r12-folio-breeze-b {
+  0%,100% { transform:rotate(2deg) translateY(4px); }
+  50% { transform:rotate(3deg) translateY(6px); }
+}
+@keyframes r12-folio-breeze-c {
+  0%,100% { transform:rotate(-1.8deg) translateY(35px); }
+  50% { transform:rotate(-.2deg) translateY(32px); }
+}
+@keyframes r12-roundbird-observe {
+  0%,100% { transform:rotate(-8deg) translateY(0); }
+  18% { transform:rotate(-6deg) translateY(-4px); }
+  26% { transform:rotate(-8deg) translateY(0); }
+  56% { transform:rotate(-10deg) translateY(-2px); }
+  64% { transform:rotate(-8deg) translateY(0); }
+}
+@keyframes r12-ripple-drift {
+  0%,100% { transform:translate(0,0); }
+  50% { transform:translate(5px,2px); }
+}
+@keyframes r12-window-breath {
+  0%,100% { opacity:var(--window-low,.14); }
+  52% { opacity:var(--window-high,.39); }
+  82% { opacity:var(--window-mid,.23); }
+}
+.path-map-art[data-auto-visible="true"] .path-map-moth {
+  animation:r12-moth-flight 3200ms ease-in-out infinite;
+  will-change:transform;
+}
+.work-clearing-world[data-auto-visible="true"] .work-hanging:nth-child(1) {
+  animation:r12-folio-breeze-a 5100ms ease-in-out infinite;
+}
+.work-clearing-world[data-auto-visible="true"] .work-hanging:nth-child(2) {
+  animation:r12-folio-breeze-b 6100ms ease-in-out infinite;
+}
+.work-clearing-world[data-auto-visible="true"] .work-hanging:nth-child(3) {
+  animation:r12-folio-breeze-c 5600ms ease-in-out infinite;
+}
+.river-scene[data-auto-visible="true"] .river-roundbird {
+  animation:r12-roundbird-observe 4900ms ease-in-out infinite;
+}
+.river-scene[data-auto-visible="true"] .forest-r05-ink--river {
+  animation:r12-ripple-drift 4300ms ease-in-out infinite;
+}
+.house-scene[data-auto-visible="true"] .house-glow-layer {
+  --window-low:.14; --window-high:.39; --window-mid:.23;
+  animation:r12-window-breath 4300ms ease-in-out infinite;
+}
+.house-scene[data-auto-visible="true"][data-lit="true"] .house-glow-layer {
+  --window-low:.74; --window-high:1; --window-mid:.89;
+}
+/* Hide legacy play/trace toggles even on cached HTML while the new files roll out. */
+.path-trace-toggle,.keeper-motion-trigger { display:none!important; }
+@media (max-width:920px) {
+  @keyframes r12-folio-breeze-a {
+    0%,100% { transform:rotate(-2deg) translateY(16px); }
+    52% { transform:rotate(-1deg) translateY(14px); }
+  }
+  @keyframes r12-folio-breeze-b {
+    0%,100% { transform:rotate(1.4deg) translateY(6px); }
+    50% { transform:rotate(2deg) translateY(7px); }
+  }
+  @keyframes r12-folio-breeze-c {
+    0%,100% { transform:rotate(-1deg) translateY(19px); }
+    50% { transform:rotate(0) translateY(17px); }
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  /* Still visibly alive, at smaller excursions and a gentler cadence. */
+  @keyframes r12-moth-flight {
+    0%,100% { transform:translateY(0); }
+    50% { transform:translateY(-2px); }
+  }
+  @keyframes r12-roundbird-observe {
+    0%,100% { transform:rotate(-8deg); }
+    50% { transform:rotate(-7deg); }
+  }
+  .river-scene[data-auto-visible="true"] .river-roundbird {
+    animation:r12-roundbird-observe 6400ms ease-in-out infinite!important;
+  }
+  .work-clearing-world[data-auto-visible="true"] .work-hanging:nth-child(1) {
+    animation:r12-folio-breeze-a 8000ms ease-in-out infinite!important;
+  }
+  .path-map-art[data-auto-visible="true"] .path-map-moth {
+    animation:r12-moth-flight 5600ms ease-in-out infinite!important;
+  }
+  .forest-seam-ready .forest-seam:not([data-ink="drawn"]) .seam-trail {
+    stroke-dasharray:100!important;stroke-dashoffset:100!important;
+  }
+  .forest-seam-ready .forest-seam[data-ink="drawn"] .seam-trail {
+    stroke-dasharray:100!important;stroke-dashoffset:0!important;
+    transition:stroke-dashoffset 650ms ease-out!important;
+  }
+}
+@media (forced-colors:active) {
+  .house-scene[data-auto-visible="true"] .house-glow-layer {animation:none;}
+}

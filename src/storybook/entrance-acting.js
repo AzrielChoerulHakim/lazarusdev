@@ -4,12 +4,16 @@ import { entranceActing } from './entrance-acting-assets.js';
 const mounted = new WeakMap();
 let active = null;
 
-export function createEntranceActing(image, { assets = entranceActing } = {}) {
+export function createEntranceActing(image, { assets = entranceActing, alwaysAnimate = false } = {}) {
   if (image?.tagName !== 'IMG') throw new TypeError('Entrance acting needs an existing image fallback.');
   mounted.get(image)?.destroy();
   const document = image.ownerDocument;
   const window = document.defaultView;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // R12: studio scenes can opt into automatically played, finite story beats.
+  // The engine's default behavior remains unchanged for R03 standalone QA.
+  const reduced = alwaysAnimate
+    ? { matches: false, addEventListener() {}, removeEventListener() {} }
+    : window.matchMedia('(prefers-reduced-motion: reduce)');
   const frames = new Map(assets.frames.map(frame => [frame.id, frame]));
   const decoded = new Map();
   const loads = new Map();
