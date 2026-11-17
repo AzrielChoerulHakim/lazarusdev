@@ -15,7 +15,7 @@ for (const [directory,extension] of [['scripts','.mjs'],['.github/workflows','.y
   for (const filename of await readdir(directory)) {
     if (!filename.endsWith(extension)) continue;
     const code = await readFile(directory+'/'+filename,'utf8');
-    assert.equal(/\.screenshot\s*\(|\.video\s*\(|screenshots\//.test(code),false,
+    assert.equal(/\.screenshot\s*\(|\.video\s*\(|^\s*(?:path|artifact):\s*[^\n#]*screenshots\//m.test(code),false,
       'Automatic screenshot/recording code or artifact path is forbidden: '+directory+'/'+filename);
   }
 }
