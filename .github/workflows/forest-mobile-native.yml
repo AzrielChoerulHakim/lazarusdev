@@ -53,6 +53,7 @@ jobs:
             if curl -fsS http://127.0.0.1:4186/lazarusdev/ > /dev/null; then break; fi
             sleep 2
           done
+          set -o pipefail
           node scripts/forest_mobile_native_smoke.mjs | tee reports/stage14-browser-qa.log
       - name: Preserve text logs only — no screenshot or video
         if: always()
