@@ -1,7 +1,7 @@
 name: Forest R08–R09 — Revision integration and release gates (text-only)
 on:
   push:
-    branches: [feat/r02-entrance, main]
+    branches: [feat/r02-entrance, feat/r11-tactile-gestures, main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -40,6 +40,8 @@ jobs:
         run: node scripts/forest_mobile_native_smoke.mjs | tee reports/r10-mobile-art.log
       - name: Run R08 production-page art, interactions and fallback verification
         run: npm run check:r08 | tee reports/r08-browser.log
+      - name: Verify R11 visible hand-drawn response and reading rhythm
+        run: npm run check:r11 | tee reports/r11-browser.log
       - name: Preserve R04 authored-character integration invariants
         run: npm run check:r04 | tee reports/r04-regression.log
       - name: Audit cold hero decoding, responsive transfers and performance budgets

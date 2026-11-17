@@ -1,0 +1,97 @@
+/* R11 / Tactile controls instead of opacity-only editorial feedback.
+ * Primary painting remains untouched. Every act lives beside its trigger. */
+
+/* The route control belongs *on* the illustration: the actual pencil stroke
+ * must remain visible when somebody chooses to draw it. */
+.path-map {position:relative;}
+.path-map>.path-trace-toggle {
+  position:absolute;
+  z-index:7;
+  top:clamp(12px,2vw,22px);
+  right:clamp(12px,2vw,22px);
+  width:auto;
+  max-width:calc(100% - 24px);
+  min-width:172px;
+  min-height:48px;
+  border:1px solid #35543d;
+  background:#f7e9d6ed;
+  color:#244f3b;
+  box-shadow:3px 4px 0 #314d3770;
+  backdrop-filter:blur(2px);
+}
+.path-map>.path-trace-toggle[aria-pressed="true"] {
+  background:#244f3b;
+  color:#fff1d6;
+  box-shadow:2px 3px 0 #d3ab70;
+}
+.path-map>.path-trace-toggle:focus-visible {
+  outline:3px solid #f3c354;
+  outline-offset:3px;
+}
+/* The actual path itself draws over 720ms via JS strokeDashoffset; no
+ * infinite outline sweep, generic pulse or artificial body rotation. */
+
+/* A selected hanging folio reacts like a suspended paper slip, then settles.
+ * Its native <details> note receives a hand-wobbled drawn underline exactly
+ * where the reader's attention lands after following the hanging link. */
+.work-hanging:nth-child(1){--r11-rest-angle:-3deg;--r11-rest-y:24px;}
+.work-hanging:nth-child(2){--r11-rest-angle:2deg;--r11-rest-y:4px;}
+.work-hanging:nth-child(3){--r11-rest-angle:-1.8deg;--r11-rest-y:35px;}
+@keyframes r11-folio-hinge {
+  0%,100% {transform:rotate(var(--r11-rest-angle)) translateY(var(--r11-rest-y));}
+  30% {transform:rotate(calc(var(--r11-rest-angle) + 2.4deg)) translateY(calc(var(--r11-rest-y) - 5px));}
+  68% {transform:rotate(calc(var(--r11-rest-angle) - 1.2deg)) translateY(calc(var(--r11-rest-y) + 2px));}
+}
+.work-clearing-world[data-motion-cue="folio"] .work-hanging[data-active="true"] {
+  animation:r11-folio-hinge 650ms cubic-bezier(.22,.65,.26,1) 1 both;
+}
+.work-folio .folio-main::after {
+  content:"";
+  display:block;
+  flex:none;
+  width:min(260px,100%);
+  height:13px;
+  margin-top:5px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 13'%3E%3Cpath d='M3 7Q36 2 71 8T135 6 197 7 257 5' stroke='%238d7049' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3Cpath d='M7 10Q55 6 107 10T215 9' stroke='%23b39866' stroke-width='.8' fill='none'/%3E%3C/svg%3E") left center/100% 100% no-repeat;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 620ms steps(13,end);
+}
+.work-folio[open] .folio-main::after {clip-path:inset(0 0 0 0);}
+
+/* Native river notes expose a different ink vocabulary: three uneven
+ * waterlines drawn across the opened note's title, not a glowing card. */
+.river-note-fold summary h3::after {
+  content:"";
+  display:block;
+  width:min(225px,100%);
+  height:18px;
+  margin-top:12px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 225 18'%3E%3Cpath d='M2 5Q17 -1 33 5T63 5 93 5 123 5 153 5 183 5 223 5M8 11Q25 6 43 12T78 11 115 11 151 12 190 11 220 12M2 16Q30 13 59 16T124 15 199 16' stroke='%235f8b92' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") left center/100% 100% no-repeat;
+  clip-path:inset(0 100% 0 0);
+  transition:clip-path 740ms steps(15,end);
+}
+.river-note-fold[open] summary h3::after {clip-path:inset(0 0 0 0);}
+@media(max-width:920px){
+ .work-hanging:nth-child(1){--r11-rest-angle:-2deg;--r11-rest-y:16px;}
+ .work-hanging:nth-child(2){--r11-rest-angle:1.4deg;--r11-rest-y:6px;}
+ .work-hanging:nth-child(3){--r11-rest-angle:-1deg;--r11-rest-y:19px;}
+}
+@media(max-width:670px){
+ .path-map>.path-trace-toggle {
+   top:12px;right:12px;
+   width:auto;max-width:calc(100% - 24px);
+   min-width:0;
+   padding:10px 13px;
+   font-size:.75rem;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .work-clearing-world .work-hanging[data-active="true"]{animation:none!important;}
+ .work-folio .folio-main::after,
+ .river-note-fold summary h3::after {transition:none!important;}
+}
+@media(forced-colors:active){
+ .path-map>.path-trace-toggle{background:Canvas;color:CanvasText;box-shadow:none;}
+ .work-folio .folio-main::after,
+ .river-note-fold summary h3::after{background:none;border-bottom:2px solid CanvasText;}
+}
