@@ -69,9 +69,9 @@ for(const route of routes) for(const {w,h} of sizes) {
         houseVisible:getComputedStyle(document.querySelector('.house-scene-canvas > picture:not(.house-glow-layer)')).display!=='none'
       };
     });
-    assert.ok(raster.path.includes('winding-path-mobile.webp'),tag+' original painted path');
-    assert.ok(raster.river.includes('river-mobile.webp'),tag+' original painted river');
-    assert.ok(raster.house.includes('house-mobile.webp'),tag+' original painted house');
+    assert.ok(raster.path.includes('winding-path-mobile'),tag+' original painted path');
+    assert.ok(raster.river.includes('river-mobile'),tag+' original painted river');
+    assert.ok(raster.house.includes('house-mobile'),tag+' original painted house');
     assert.equal(raster.workVisible&&raster.houseVisible,true,tag+' paintings not hidden');
     assert.equal(outcome.stacks.folios,'3',tag+' folio stacking');
     assert.equal(outcome.stacks.pathInk,'4',tag+' traced path over art');

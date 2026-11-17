@@ -60,10 +60,13 @@ try {
       assert.ok(cueSize.every(v=>v>=44),tag+' hero atlas cue touch target');
       await cue.click();
       assert.equal(new URL(page.url()).hash,'#field-atlas',tag+' teaser leads to atlas');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' teaser directly opens atlas');
       const summary=page.locator('[data-field-atlas] summary');
       await summary.focus();
       await page.keyboard.press('Enter');
-      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' Enter opens atlas');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),false,tag+' Enter closes the native atlas');
+      await page.keyboard.press('Enter');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' Enter reopens atlas');
       assert.equal(await page.locator('.field-atlas-spread').isVisible(),true,tag+' open spread visible');
       assert.equal(await page.locator('.field-atlas-cartography svg').count(),1,tag+' original annotated map');
       const atlasLink=page.locator('.field-atlas-index a[href="#river-stories"]');

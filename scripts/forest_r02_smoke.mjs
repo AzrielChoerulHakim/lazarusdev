@@ -85,9 +85,12 @@ try {
       assert.equal(await page.locator('.entrance-paperkeeper').evaluate(x=>getComputedStyle(x).animationName),'none',tag+' static even when old tilt trigger is focused');
       await page.locator('.hero-atlas-cue').click();
       await page.waitForURL('**/#field-atlas');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' cue opens the real atlas in one action');
       await page.locator('[data-field-atlas] summary').focus();
       await page.keyboard.press('Enter');
-      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' keyboard atlas');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),false,tag+' keyboard closes native atlas');
+      await page.keyboard.press('Enter');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,tag+' keyboard reopens native atlas');
       assert.ok(Math.abs((await layout(page)).stage.height-state.stage.height)<1,tag+' atlas does not stretch scene');
       await page.locator('.field-atlas-index a[href="#work-clearing"]').click();
       await page.waitForURL('**/#work-clearing');
@@ -125,7 +128,12 @@ try {
       await page.waitForURL('**/#work-clearing');
       await page.locator('.hero-atlas-cue').click();
       await page.waitForURL('**/#field-atlas');
+      assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),mode!=='no-js',route+' '+mode+' cue fallback');
       await page.locator('[data-field-atlas] summary').click();
+      if(mode!=='no-js'){
+        assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),false,route+' '+mode+' native close');
+        await page.locator('[data-field-atlas] summary').click();
+      }
       assert.equal(await page.locator('[data-field-atlas]').evaluate(x=>x.open),true,route+' '+mode+' native atlas');
       report.fallbacks.push({route,mode,passed:true,scope:mode==='text-200'?'Entrance text reflow; global baseline overflow recorded for R06/R08':'document',overflow});
       console.log('PASS R02 '+route+' '+mode);
