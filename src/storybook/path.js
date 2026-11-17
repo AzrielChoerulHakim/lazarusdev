@@ -1,45 +1,81 @@
-/** Stage 07: one meaningful native-scroll pencil trace. Never prevents scrolling. */
-const map = document.querySelector('[data-path-map]');
-const toggle = document.querySelector('[data-path-trace-toggle]');
-const readout = document.getElementById('path-trace-status');
+/** R11 — A physically drawn 720ms pencil route on explicit activation.
+ * Passive native scrolling, no CSS character rig, no focus/scroll changes.
+ */
+const map=document.querySelector('[data-path-map]');
+const toggle=document.querySelector('[data-path-trace-toggle]');
+const readout=document.getElementById('path-trace-status');
 
-if (map && toggle && readout) {
-  const paths = [...map.querySelectorAll('[data-path-stroke]')];
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let manual = false;
-  let raf = 0;
-  for (const path of paths) {
-    const length = path.getTotalLength();
-    path.dataset.length = `${length}`;
-    path.style.strokeDasharray = `${length} ${length}`;
-    path.style.strokeDashoffset = `${length}`;
+if(map&&toggle&&readout){
+  const paths=[...map.querySelectorAll('[data-path-stroke]')];
+  const motion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  let manual=false,frame=0,tween=0,displayed=0;
+  for(const path of paths){
+    const length=path.getTotalLength();
+    path.dataset.length=String(length);
+    path.style.strokeDasharray=length+' '+length;
+    path.style.strokeDashoffset=String(length);
   }
-  const paint = () => {
-    raf = 0;
-    const box = map.getBoundingClientRect();
-    // Reveal only as the reader naturally advances across the illustration.
-    const numerator = window.innerHeight * .86 - box.top;
-    const denominator = box.height + window.innerHeight * .34;
-    const scrollProgress = Math.max(0, Math.min(1, numerator / denominator));
-    const progress = motion.matches || manual ? 1 : scrollProgress;
-    paths.forEach(path => { path.style.strokeDashoffset = `${Number(path.dataset.length) * (1 - progress)}`; });
-    map.dataset.progress = String(Math.round(progress * 100));
+  const scrollProgress=()=>{
+    const rect=map.getBoundingClientRect();
+    const fraction=(innerHeight*.86-rect.top)/(rect.height+innerHeight*.34);
+    return Math.min(1,Math.max(0,fraction));
   };
-  const schedule = () => { if (!raf) raf = requestAnimationFrame(paint); };
-  toggle.hidden = false;
-  toggle.addEventListener('click', () => {
-    manual = !manual;
-    toggle.setAttribute('aria-pressed', String(manual));
-    toggle.textContent = manual ? 'Return to natural tracing' : 'Reveal the whole route';
-    readout.textContent = manual
-      ? 'The entire illustrated path is visible. The journey does not restrict scrolling.'
-      : 'The pencil route follows your natural scroll. You can still jump to any chapter.';
-    // A direct click is an explicit user action: update in the same event,
-    // rather than waiting for the next animation frame.
-    paint();
+  const target=()=>motion.matches||manual?1:scrollProgress();
+  const paint=progress=>{
+    displayed=Math.min(1,Math.max(0,progress));
+    for(const path of paths)path.style.strokeDashoffset=String(Number(path.dataset.length)*(1-displayed));
+    map.dataset.progress=String(Math.round(displayed*100));
+  };
+  const stop=()=>{
+    if(tween)cancelAnimationFrame(tween);
+    tween=0;
+    map.dataset.tracePhase='settled';
+  };
+  const update=()=>{
+    frame=0;
+    if(!tween)paint(target());
+  };
+  const schedule=()=>{if(!frame&&!tween)frame=requestAnimationFrame(update);};
+  const traceTo=goal=>{
+    stop();
+    if(motion.matches||document.hidden||Math.abs(goal-displayed)<.003){
+      paint(goal);
+      return;
+    }
+    const from=displayed,started=performance.now(),duration=720;
+    map.dataset.tracePhase='drawing';
+    const draw=now=>{
+      const t=Math.min(1,(now-started)/duration);
+      const ease=1-Math.pow(1-t,3);
+      paint(from+(goal-from)*ease);
+      if(t>=1){
+        tween=0;
+        map.dataset.tracePhase='settled';
+        schedule();
+      }else tween=requestAnimationFrame(draw);
+    };
+    tween=requestAnimationFrame(draw);
+  };
+  toggle.hidden=false;
+  map.dataset.tracePhase='settled';
+  toggle.addEventListener('click',()=>{
+    manual=!manual;
+    toggle.setAttribute('aria-pressed',String(manual));
+    toggle.textContent=manual?'Return to natural tracing':'Reveal the whole route';
+    readout.textContent=manual
+      ?'A pencil traces the full route. The journey remains yours to navigate.'
+      :'The route follows your natural scroll again. Every chapter link still works.';
+    traceTo(target());
   });
-  addEventListener('scroll', schedule, {passive: true});
-  addEventListener('resize', schedule, {passive: true});
-  motion.addEventListener?.('change', schedule);
+  addEventListener('scroll',schedule,{passive:true});
+  addEventListener('resize',schedule,{passive:true});
+  motion.addEventListener('change',()=>{
+    stop();
+    paint(target());
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){stop();paint(target());}
+  });
+  addEventListener('pagehide',stop,{once:true});
   schedule();
 }
