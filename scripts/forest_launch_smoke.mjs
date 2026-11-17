@@ -5,7 +5,7 @@ import { chromium } from 'playwright';
 
 const base = process.env.STORYBOOK_PREVIEW_ORIGIN || 'http://127.0.0.1:4186';
 const canonical = 'https://azrielchoerulhakim.github.io/lazarusdev/';
-const ogImage = canonical + 'storybook/assets/entrance/exports/entrance-desktop.webp';
+const ogImage = canonical + 'storybook/assets/entrance/r02/exports/entrance-desktop.webp';
 const leafIcon = canonical + 'storybook/assets/entrance/exports/entrance-leaf-cue.webp';
 const routes = ['/lazarusdev/', '/lazarusdev/storybook/'];
 const views = [{w:320,h:720},{w:390,h:844},{w:768,h:860},{w:1440,h:900},{w:844,h:390}];

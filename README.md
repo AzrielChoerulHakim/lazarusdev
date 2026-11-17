@@ -42,3 +42,21 @@ The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK
 - `docs/forest/15-accessibility.md` — accessibility checks and limitations.
 
 The earlier 3D experiment remains in historical Git branches and is not the current production design.
+
+## R01–R09 revision track (17 November 2026)
+
+The current **Forest Between Pages** is built on the full five-chapter Stage18 base and includes a distinct revision track:
+
+- R01 — delegated editorial art direction, material rules and storyboard.
+- R02 — newly illustrated desktop/mobile Entrance and independent full-size Paperkeeper reference.
+- R03 — nine registered lantern poses, finite 1200ms invitation / 560ms raised-pose acknowledgment.
+- R04 — native Field Atlas activation of the R03 motion, lazy decode and reduced-motion/no-JS fallback.
+- R05 — four original decorative **marginal engravings**, not a falsely claimed repaint of the four full forest paintings.
+- R06 — finite, event-led ink-response layer for the Path, Work, River and House controls; no full-body puppet animation.
+- R07 — editorial reflow fixes and readable, source-controlled responsive polish.
+- R08 — Chromium integration/QA gate for both production routes plus R04/Stage18 regression.
+- R09 — canonical share-art refresh to the R02 Entrance, release verification and promotion to main.
+
+**Art acceptance remains honest:** A complete new pair of separately illustrated desktop/portrait paintings for Chapters 02–05, new anatomically drawn gesture sprites, and subjective human visual signoff have **not** been completed by this revision track. The original chapter paintings remain in production. All concept works remain labeled as concepts, and Field Letter remains local-only because no verified inbox exists. Automated CI does not certify non-generic artistic quality.
+
+The canonical GitHub Pages source is `main`; `/storybook/` is a linked, non-indexed alternate. Revision source material and QA notes are in `docs/forest/revision/`.
