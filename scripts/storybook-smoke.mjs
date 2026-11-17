@@ -185,6 +185,9 @@ try {
   });
   check(skipVisible, 'Skip link is not the first focusable control');
   await page.keyboard.press('Enter');
+  // Same-document fragment navigation settles asynchronously in modern Chrome.
+  // Wait for the real URL, never synthesize a hash or bypass the native link.
+  await page.waitForURL('**/#page-content', {timeout: 5000});
   check(new URL(page.url()).hash === '#page-content', 'Skip link does not reach main content');
   await page.close();
 } finally {
