@@ -73,5 +73,5 @@ try {
    checks++;
   }finally{await nojs.close();}
  }
- console.log('R12 COMPLETE '+checks+' real-browser flows; zero screenshots/video.');
+ console.log('R12 COMPLETE '+checks+' real-browser flows; zero media captures.');
 }finally{await browser.close();}
