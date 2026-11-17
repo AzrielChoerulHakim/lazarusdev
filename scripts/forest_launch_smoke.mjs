@@ -29,11 +29,16 @@ try {
   assert.match(sitemap,/<urlset xmlns="http:\/\/www\.sitemaps\.org\/schemas\/sitemap\/0\.9">/,'valid sitemap namespace');
   assert.match(sitemap,/<loc>https:\/\/azrielchoerulhakim\.github\.io\/lazarusdev\/<\/loc>/,'canonical listed');
   assert.equal((sitemap.match(/<loc>/g)||[]).length,1,'single canonical URL, no duplicates');
+  // Metadata URLs point at unbundled, versioned GitHub Pages source assets.
+  // The built Vite mirror fingerprints its image URLs, so requesting the
+  // original repository path from that mirror is an invalid 404 expectation.
+  // Audit source bytes here; Stage16 verifies the actual built image requests.
   for (const mediaPath of [new URL(ogImage).pathname, new URL(leafIcon).pathname]) {
-    const mediaResponse=await control.request.get(base+mediaPath);
-    assert.equal(mediaResponse.status(),200,'published media exists '+mediaPath);
-    assert.match(mediaResponse.headers()['content-type']||'',/image\/webp/,'published image type '+mediaPath);
-    assert.ok(Number(mediaResponse.headers()['content-length'])>1000,'nonempty art '+mediaPath);
+    const sourcePath=mediaPath.replace(/^\/lazarusdev\//,'');
+    const bytes=await readFile(sourcePath);
+    assert.ok(bytes.length>1000,'versioned public artwork is nonempty '+sourcePath);
+    assert.equal(bytes.subarray(0,4).toString('ascii'),'RIFF','WebP container '+sourcePath);
+    assert.equal(bytes.subarray(8,12).toString('ascii'),'WEBP','WebP file '+sourcePath);
   }
   await control.close();
   for (const route of routes) for (const {w,h} of views) {
