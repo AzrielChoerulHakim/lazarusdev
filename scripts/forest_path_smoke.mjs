@@ -18,6 +18,7 @@ try {
    assert.equal(await page.locator('[data-path-trace-toggle]').count(),0,'No trace enable/disable choice');
    await scene.scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:10000});
+   await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.tracePhase==='settled',null,{timeout:10000});
    const state=await page.evaluate(async()=>{
     const img=document.querySelector('.path-map-backdrop');
     await img.decode();
@@ -59,6 +60,7 @@ try {
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
    await page.locator('.path-map-art').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:10000});
+   await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.tracePhase==='settled',null,{timeout:10000});
    assert.equal(await page.locator('[data-path-trace-toggle]').count(),0);
    console.log('PASS Stage07 '+route+' softer but automatic drawing under reduced OS preference');
   }finally{await context.close();}
