@@ -25,7 +25,7 @@ for name in sorted(required):
 for name in ['index.html', 'storybook/index.html']:
     html = (ROOT / name).read_text()
     assert html.count('data-paperkeeper-motion') == 1, name
-    assert html.count('data-paperkeeper-step') == 1, name
+    assert html.count('data-paperkeeper-step') == 0, name + ': deprecated motion choice'
     assert html.count('data-paperkeeper-walk') == 1, name
     assert html.count('data-paperkeeper-pose') == 2, name + ': missing Vite-resolved hidden pose sources'
     assert html.count('river-paperkeeper-reader') == 1, name
@@ -34,7 +34,7 @@ for name in ['index.html', 'storybook/index.html']:
     print('PASS semantic route', name)
 js = (ROOT / 'src/storybook/paperkeeper-motion.js').read_text()
 assert 'setInterval' in js and '100)' in js, '10fps timing absent'
-assert "prefers-reduced-motion: reduce" in js
+assert 'IntersectionObserver' in js and 'autoPlayed' in js
 assert 'visibilitychange' in js
 assert 'scrollTo(' not in js and 'preventDefault(' not in js
 css = (ROOT / 'src/storybook/styles/paperkeeper-motion.css').read_text()
@@ -43,4 +43,4 @@ assert 'infinite' not in css.lower(), 'repeating loops are disallowed'
 for path in ['scripts/forest_paperkeeper_motion_smoke.mjs', '.github/workflows/forest-paperkeeper-motion.yml']:
     s = (ROOT/path).read_text()
     assert not re.search(r'page\.screenshot\s*\(', s), 'screenshot capture prohibited'
-print('PASS Stage 11 static integrity, reduced motion and screenshot exclusions')
+print('PASS Stage 11 authored sprites, automatic movement and screenshot exclusions')
