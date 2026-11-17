@@ -36,6 +36,8 @@ jobs:
             if curl -fsS "$STORYBOOK_PREVIEW_ORIGIN/lazarusdev/" > /dev/null; then break; fi
             sleep 1
           done
+      - name: Verify painted mobile scenes and native glow on both built routes
+        run: node scripts/forest_mobile_native_smoke.mjs | tee reports/r10-mobile-art.log
       - name: Run R08 production-page art, interactions and fallback verification
         run: npm run check:r08 | tee reports/r08-browser.log
       - name: Preserve R04 authored-character integration invariants
