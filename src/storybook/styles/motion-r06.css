@@ -1,0 +1,29 @@
+/* R06 — pigment and light gestures on *separate drawings* only.
+   No whole-character CSS rotation, layout animation, parallax or forced scroll. */
+@keyframes forest-r06-ink {
+  0% {opacity:.25;filter:saturate(.7);}
+  40% {opacity:.82;filter:saturate(1.1);}
+  100% {opacity:.65;filter:saturate(.9);}
+}
+@keyframes forest-r06-ripple {
+  0% {opacity:.35;filter:saturate(.65);}
+  60% {opacity:.82;filter:saturate(1);}
+  100% {opacity:.58;filter:saturate(.9);}
+}
+.path-map-art[data-motion-cue="route"] .forest-r05-ink--path,
+.work-clearing-world[data-motion-cue="folio"] .forest-r05-ink--folio {animation:forest-r06-ink .7s ease-out 1 both;}
+.river-scene[data-motion-cue="note"] .forest-r05-ink--river {animation:forest-r06-ripple .85s ease-out 1 both;}
+.house-scene[data-motion-cue="lantern"] .forest-r05-ink--house {animation:forest-r06-ripple .75s ease-out 1 both;}
+.house-scene[data-lit="true"] .forest-r05-ink--house {opacity:.87;}
+/* A paper tab is a spatial focus marker, not a fake client-project highlight. */
+.work-clearing-world[data-active-folio="folio-atrium"] .work-hanging[data-open-concept="atrium"],
+.work-clearing-world[data-active-folio="folio-oracle"] .work-hanging[data-open-concept="oracle"],
+.work-clearing-world[data-active-folio="folio-archive"] .work-hanging[data-open-concept="archive"] {outline:2px dashed rgba(81,92,57,.72);outline-offset:3px;}
+/* Eliminate legacy pseudo-rig on the larger reader/house cutouts; the independent
+   liquid/glow/ink marks and preexisting finite walk study carry the response. */
+.river-paperkeeper-reader,
+.house-paperkeeper.keeper-acknowledging,
+.work-clearing-world:has(.work-hanging:is(:hover,:focus-visible)) .work-clearing-paperkeeper {animation:none!important;transform:none!important;}
+@media(prefers-reduced-motion:reduce){
+ .forest-r05-ink {animation:none!important;transition:none!important;}
+}
