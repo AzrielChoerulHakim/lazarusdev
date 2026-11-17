@@ -36,6 +36,10 @@ jobs:
             if curl -fsS "$STORYBOOK_PREVIEW_ORIGIN/lazarusdev/" > /dev/null; then break; fi
             sleep 1
           done
+      - name: Verify honest canonical public release metadata
+        run: |
+          set -o pipefail
+          node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
       - name: Audit automatic motion source contracts
         run: |
           python3 scripts/forest_paperkeeper_motion_audit.py
@@ -73,10 +77,6 @@ jobs:
           node scripts/forest_path_smoke.mjs | tee reports/stage07-auto-route.log
           node scripts/forest_paperkeeper_motion_smoke.mjs | tee reports/stage11-auto-character.log
           node scripts/forest_scene_transitions_smoke.mjs | tee reports/stage12-auto-seams.log
-      - name: Verify honest canonical public release metadata
-        run: |
-          set -o pipefail
-          node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
       - name: Upload text-only reports
         if: always()
         uses: actions/upload-artifact@v4
