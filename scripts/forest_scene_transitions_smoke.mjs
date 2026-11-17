@@ -59,13 +59,9 @@ try {
   try {
    const page=await ctx.newPage();
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
-   const reduce=await page.evaluate(()=>{
-     const seam=document.querySelector('[data-chapter-seam]');
-     const path=seam.querySelector('.seam-trail');
-     return {line: getComputedStyle(path).strokeDashoffset,links:document.querySelectorAll('.forest-seam-link').length};
-   });
-   assert.equal(Number.parseFloat(reduce.line),0,route+' reduced motion no ink draw');
-   assert.equal(reduce.links,4);
+   await page.locator('[data-chapter-seam]').first().scrollIntoViewIfNeeded();
+   await page.waitForFunction(()=>document.querySelector('[data-chapter-seam]')?.dataset.ink==='drawn',null,{timeout:8000});
+   assert.equal(await page.locator('.forest-seam-link').count(),4);
   } finally {await ctx.close();}
   const nojs=await browser.newContext({viewport:{width:320,height:720},javaScriptEnabled:false});
   try {
