@@ -49,7 +49,7 @@ try{
       for(const img of await page.locator('img.forest-r05-ink').all()){
         await img.scrollIntoViewIfNeeded();
         await img.evaluate(async el=>el.decode());
-        assert.ok(await img.evaluate(el=>el.naturalWidth>=200&&el.naturalHeight>=200),tag+' 240px original mark');
+        assert.ok(await img.evaluate(el=>el.complete&&el.naturalWidth>0&&el.naturalHeight>0&&Number(el.getAttribute('width'))>=200&&Number(el.getAttribute('height'))>=200),tag+' authored SVG marks decoded with declared 240px canvas');
         assert.equal(await img.evaluate(el=>getComputedStyle(el).pointerEvents),'none',tag+' decorative mark cannot intercept UI');
       }
 
