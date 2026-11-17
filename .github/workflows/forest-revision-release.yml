@@ -36,25 +36,47 @@ jobs:
             if curl -fsS "$STORYBOOK_PREVIEW_ORIGIN/lazarusdev/" > /dev/null; then break; fi
             sleep 1
           done
+      - name: Audit automatic motion source contracts
+        run: |
+          python3 scripts/forest_paperkeeper_motion_audit.py
+          python3 scripts/forest_scene_transitions_audit.py
+          python3 -m venv /tmp/lazarus-r12-audit
+          /tmp/lazarus-r12-audit/bin/pip install -q 'Pillow>=10,<13'
+          /tmp/lazarus-r12-audit/bin/python scripts/forest_path_audit.py
       - name: Verify painted mobile scenes and native glow on both built routes
-        run: node scripts/forest_mobile_native_smoke.mjs | tee reports/r10-mobile-art.log
+        run: |
+          set -o pipefail
+          node scripts/forest_mobile_native_smoke.mjs | tee reports/r10-mobile-art.log
       - name: Run R08 production-page art, interactions and fallback verification
-        run: npm run check:r08 | tee reports/r08-browser.log
+        run: |
+          set -o pipefail
+          npm run check:r08 | tee reports/r08-browser.log
       - name: Verify R11 visible hand-drawn response and reading rhythm
-        run: npm run check:r11 | tee reports/r11-browser.log
+        run: |
+          set -o pipefail
+          npm run check:r11 | tee reports/r11-browser.log
       - name: Verify R12 automatic scene acting and no opt-in controls
-        run: npm run check:r12 | tee reports/r12-auto-motion.log
+        run: |
+          set -o pipefail
+          npm run check:r12 | tee reports/r12-auto-motion.log
       - name: Preserve R04 authored-character integration invariants
-        run: npm run check:r04 | tee reports/r04-regression.log
+        run: |
+          set -o pipefail
+          npm run check:r04 | tee reports/r04-regression.log
       - name: Audit cold hero decoding, responsive transfers and performance budgets
-        run: node scripts/forest_performance_smoke.mjs | tee reports/r09-performance-regression.log
+        run: |
+          set -o pipefail
+          node scripts/forest_performance_smoke.mjs | tee reports/r09-performance-regression.log
       - name: Verify Stage 07, 11 and 12 automatic behavior on real built routes
         run: |
+          set -o pipefail
           node scripts/forest_path_smoke.mjs | tee reports/stage07-auto-route.log
           node scripts/forest_paperkeeper_motion_smoke.mjs | tee reports/stage11-auto-character.log
           node scripts/forest_scene_transitions_smoke.mjs | tee reports/stage12-auto-seams.log
       - name: Verify honest canonical public release metadata
-        run: node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
+        run: |
+          set -o pipefail
+          node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
       - name: Upload text-only reports
         if: always()
         uses: actions/upload-artifact@v4
