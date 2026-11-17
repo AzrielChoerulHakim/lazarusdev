@@ -30,7 +30,7 @@ for html in [ROOT/'index.html',ROOT/'storybook/index.html']:
     assert 'path-map' in t and 'data-path-map' in t
     assert 'winding-path-mobile.webp' in t and 'winding-path-desktop.webp' in t
     assert 'paperkeeper.three-quarter.webp' in t and 'moth.guide.webp' in t
-    assert 'data-path-trace-toggle' in t and 'aria-pressed="false"' in t
+    assert 'data-path-trace-toggle' not in t, 'manual motion toggle must be absent'
     assert 'href="#work-clearing"' in t
     assert 'Discover' in t and 'Define' in t and 'Make' in t and 'Refine' in t
     assert 'src/storybook/path.js' in t or '../src/storybook/path.js' in t
@@ -39,4 +39,4 @@ for p in ['storybook/assets/characters/paperkeeper.three-quarter.webp', 'storybo
     assert (ROOT/p).exists(),p
 for file in ['src/storybook/path.js','src/storybook/styles/winding-path.css']:
     assert (ROOT/file).exists()
-print('STAGE07 ASSET & SEMANTIC AUDIT PASS', [(a['role'],a['bytes']) for a in man['files']])
+print('STAGE07 AUTO-PATH ASSET & SEMANTIC AUDIT PASS', [(a['role'],a['bytes']) for a in man['files']])
