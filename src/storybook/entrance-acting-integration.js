@@ -10,6 +10,7 @@ function mountInView(image) {
   if (!image) return null;
   const acting = createEntranceActing(image, { alwaysAnimate: true });
   let played = false;
+  let allowStart = false;
   let preparing = false;
   let scheduled = false;
   const hasView = () => {
@@ -19,7 +20,7 @@ function mountInView(image) {
       && box.right > 0 && box.left < innerWidth;
   };
   function schedule() {
-    if (scheduled || played || preparing || document.hidden || document.readyState !== 'complete' || !hasView()) return;
+    if (!allowStart || scheduled || played || preparing || document.hidden || document.readyState !== 'complete' || !hasView()) return;
     scheduled = true;
     // Preserve the R02 critical painting's discovery/decoding before warming sprites.
     requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -47,7 +48,9 @@ function mountInView(image) {
     }, { threshold: [0, .25, .5] })
     : null;
   observer?.observe(image);
-  const loaded = () => window.setTimeout(schedule, 220);
+  // The critical artwork must paint before the 1.48MB optional sprite sequence warms.
+  // Motion still begins automatically, after the first-view transfer window.
+  const loaded = () => window.setTimeout(() => { allowStart = true; schedule(); }, 1150);
   if (document.readyState === 'complete') loaded();
   else window.addEventListener('load', loaded, { once: true });
   window.addEventListener('scroll', schedule, { passive: true });
