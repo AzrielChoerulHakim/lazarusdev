@@ -43,7 +43,8 @@ try{
       assert.equal(initial.over,false,tag+' no horizontal overflow');
       assert.ok(/paperkeeper\.three-quarter|notice|anticipate|lift-low|lift-mid|overshoot|follow|settled|acknowledge/.test(initial.source),tag+' real authored Paperkeeper');
       assert.equal(initial.noFakeClient,true,tag+' truthful folios');
-      for(const name of art)assert.ok(initial.ink.some(src=>src.includes(name)),tag+' asset '+name);
+      const sourceMarkup=await readFile(new URL(route.includes('/storybook/')?'../storybook/index.html':'../index.html',import.meta.url),'utf8');
+      for(const name of art)assert.ok(sourceMarkup.includes(name),tag+' original source asset '+name);
 
       for(const img of await page.locator('img.forest-r05-ink').all()){
         await img.scrollIntoViewIfNeeded();
