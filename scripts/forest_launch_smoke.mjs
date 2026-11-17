@@ -117,7 +117,8 @@ try {
       assert.equal(await page.locator('#house-brief').isVisible(),true,route+' no-JS local note');
       assert.equal(await page.locator('[data-house-copy]').isVisible(),false,route+' no fake submit button');
       await page.locator('[data-field-atlas] summary').click();
-      await page.locator('.field-atlas-index a[href="#river-stories"]').click();
+      await page.locator('.field-atlas-index a[href="#river-stories"]').focus();
+      await page.keyboard.press('Enter');
       assert.equal(new URL(page.url()).hash,'#river-stories',route+' native atlas link works without JS');
       console.log('PASS STAGE18 no-JS '+route);
     }finally{await context.close();}
