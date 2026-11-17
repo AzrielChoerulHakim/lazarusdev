@@ -16,6 +16,7 @@ try{
    assert.equal(await page.locator('[data-path-trace-toggle]').count(),0,'No manual motion control');
    await page.locator('.path-map-art').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:10000});
+   await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.tracePhase==='settled',null,{timeout:10000});
    const state=await page.evaluate(()=>({
     mode:document.querySelector('[data-path-map]').dataset.motionMode,
     phase:document.querySelector('[data-path-map]').dataset.tracePhase,
@@ -44,6 +45,7 @@ try{
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
    await page.locator('.path-map-art').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:10000});
+   await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.tracePhase==='settled',null,{timeout:10000});
    await page.locator('#folio-oracle summary').click();
    assert.equal(await page.locator('#folio-oracle').evaluate(x=>x.open),true);
    checks++;
@@ -62,5 +64,5 @@ try{
    console.log('PASS R11 '+route+' no-JS native folio and notebook');
   }finally{await ctx2.close();}
  }
- console.log('R11/R12 COMPLETE '+checks+' browser flows; no screenshots/video.');
+ console.log('R11/R12 COMPLETE '+checks+' browser flows; no media captures.');
 }finally{await browser.close();}
