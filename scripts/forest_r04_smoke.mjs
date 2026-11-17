@@ -60,12 +60,14 @@ try {
   for(const route of routes){
     const {context,page,errors}=await setup(route,{reducedMotion:'reduce'});
     try{
-      await ready(page,'settled');
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),'settled');
+      await ready(page,'idle');
+      assert.ok((await page.locator('.entrance-paperkeeper').getAttribute('src')).includes('paperkeeper.three-quarter'),'Reduced motion preserves critical R02 image before action');
+      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),null,'No eager final frame swap');
       await page.locator('#field-atlas summary').focus();
       await page.keyboard.press('Enter');
       assert.equal(await page.locator('#field-atlas').evaluate(el=>el.open),true);
-      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-state'),'settled');
+      await page.waitForFunction(()=>document.querySelector('.entrance-paperkeeper').dataset.actingState==='settled',null,{timeout:10000});
+      assert.equal(await page.locator('.entrance-paperkeeper').getAttribute('data-acting-frame'),'settled');
       assert.deepEqual(errors,[]);
       pass(route+' reduced motion + native keyboard');
     }finally{await context.close();}

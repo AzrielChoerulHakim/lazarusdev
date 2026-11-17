@@ -20,3 +20,7 @@ Promotion: fast-forward the reviewed `feat/r02-entrance` revision series onto `m
 - No automated screenshots, videos or recordings were generated.
 
 This handover allows a truthful incremental production release, not a claim that incomplete artistic deliverables are finished.
+
+## Stage16 corrective gate
+
+Reduced-motion cold-load image decoding must not race with R04 frame replacement. The release acceptance sequence now includes `scripts/forest_performance_smoke.mjs` on the current commit. This is an actual performance/decoding regression guard rather than a claim of real-user Core Web Vitals.

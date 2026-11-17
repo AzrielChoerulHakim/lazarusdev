@@ -8,9 +8,10 @@ if (keeper && atlas) {
   let loaded = document.readyState === 'complete';
   let nearby = false;
   let warming = false;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   const warm = () => {
-    if (warming || !loaded || !nearby || document.hidden) return;
+    if (warming || !loaded || !nearby || document.hidden || reduced.matches) return;
     warming = true;
     observer?.disconnect();
     document.removeEventListener('visibilitychange', warm);
@@ -32,6 +33,7 @@ if (keeper && atlas) {
     warm();
   }, { once: true });
   document.addEventListener('visibilitychange', warm);
+  reduced.addEventListener('change', warm);
 
   // Do not prevent/await the native toggle, move focus, or force scroll.
   // Closing the atlas does not reverse or restart a gesture.
