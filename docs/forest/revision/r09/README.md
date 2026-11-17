@@ -24,3 +24,7 @@ This handover allows a truthful incremental production release, not a claim that
 ## Stage16 corrective gate
 
 Reduced-motion cold-load image decoding must not race with R04 frame replacement. The release acceptance sequence now includes `scripts/forest_performance_smoke.mjs` on the current commit. This is an actual performance/decoding regression guard rather than a claim of real-user Core Web Vitals.
+
+## R05 asset-priority correction
+
+Each of the four new, below-fold marginal SVG illustrations now explicitly uses `fetchpriority="low"` in both HTML entrypoints, in addition to `loading="lazy"`, to preserve the Stage16 contract for first-view illustration bandwidth. These small drawings must never compete with the R02 Entrance painting or guide.
