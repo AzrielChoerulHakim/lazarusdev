@@ -40,6 +40,8 @@ jobs:
         run: npm run check:r08 | tee reports/r08-browser.log
       - name: Preserve R04 authored-character integration invariants
         run: npm run check:r04 | tee reports/r04-regression.log
+      - name: Audit cold hero decoding, responsive transfers and performance budgets
+        run: node scripts/forest_performance_smoke.mjs | tee reports/r09-performance-regression.log
       - name: Verify honest canonical public release metadata
         run: node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
       - name: Upload text-only reports
