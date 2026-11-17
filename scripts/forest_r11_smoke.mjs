@@ -56,8 +56,10 @@ try{
   try{
    await nojs.goto(origin+route,{waitUntil:'domcontentloaded'});
    assert.equal(await nojs.locator('[data-path-trace-toggle]').count(),0);
-   await nojs.locator('#folio-atrium summary').click();
-   await nojs.locator('#river-note-a summary').click();
+   await nojs.locator('#folio-atrium summary').focus();
+   await nojs.keyboard.press('Enter');
+   await nojs.locator('#river-note-a summary').focus();
+   await nojs.keyboard.press('Enter');
    assert.equal(await nojs.locator('#folio-atrium').evaluate(x=>x.open),true);
    assert.equal(await nojs.locator('#river-note-a details').evaluate(x=>x.open),true);
    checks++;
