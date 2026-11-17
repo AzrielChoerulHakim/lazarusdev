@@ -1,4 +1,4 @@
-name: Forest R02–R03 — Entrance artwork and acting (no screenshots)
+name: Forest R02–R04 — Entrance artwork and acting (no screenshots)
 on:
   push:
     branches: [feat/r02-entrance]
@@ -13,6 +13,8 @@ on:
       - src/storybook/entrance-acting*.js
       - scripts/forest_r02_*
       - scripts/forest_r03_*
+      - scripts/forest_r04_*
+      - docs/forest/revision/r04/**
       - scripts/forest_entrance_smoke.mjs
       - scripts/forest_editorial_smoke.mjs
       - .github/workflows/forest-r02.yml
@@ -57,6 +59,7 @@ jobs:
           done
           set -o pipefail
           npm run check:r02 | tee reports/r02-browser.log
+          npm run check:r04 | tee reports/r04-browser.log
           node scripts/forest_entrance_smoke.mjs | tee reports/r02-entrance-regression.log
           node scripts/forest_editorial_smoke.mjs | tee reports/r02-editorial-regression.log
       - name: Retain text diagnostics

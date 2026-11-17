@@ -14,7 +14,8 @@
     "check:r02": "node scripts/forest_r02_smoke.mjs",
     "assets:r03": "node scripts/forest_r03_assets.mjs",
     "check:r03:assets": "node scripts/forest_r03_assets.mjs --check",
-    "check:r03": "node scripts/forest_r03_smoke.mjs"
+    "check:r03": "node scripts/forest_r03_smoke.mjs",
+    "check:r04": "node scripts/forest_r04_smoke.mjs"
   },
   "devDependencies": {
     "sharp": "0.34.5",
