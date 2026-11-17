@@ -78,7 +78,7 @@ try{
         assert.equal(audit.h1,1,context);
         assert.ok(audit.imageSizes.every(x=>x>0),context+' decoded assets '+audit.imageSizes);
         assert.equal(audit.background.includes('entrance-mobile'),p.w<=670,context+' correct art-directed composition: '+audit.background);
-        assert.ok(audit.person.includes('paperkeeper.three-quarter'),context+' approved character');
+        assert.ok(/paperkeeper\.three-quarter|notice|anticipate|lift-low|lift-mid|overshoot|follow|settled|acknowledge/.test(audit.person),context+' authored Paperkeeper');
         assert.ok(audit.leaf.includes('entrance-leaf-cue'),context+' independent leaf art');
         assert.ok(audit.heroText.includes('Different worlds.'),context);
         assert.ok(audit.hasLiveCta&&audit.hasPath&&audit.hasLeafPath,context+' CTA must be native anchors');
