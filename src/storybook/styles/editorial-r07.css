@@ -1,0 +1,51 @@
+/* R07 — Editorial reflow and edge discipline. Respect the existing Fraunces/
+   Newsreader/Atkinson system and real chapter copy. Do not use generic cards. */
+:where(.chapter, .forest-seam) { min-width: 0; }
+:where(.chapter, .forest-seam) :is(h1,h2,h3,blockquote) { text-wrap: balance; }
+:where(.chapter) :is(p,li,figcaption) { text-wrap: pretty; }
+/* Dynamic font scaling should not push large editorial specimen pages sideways. */
+.house-preface,
+.house-ending,
+.house-contact,
+.house-statement,
+.house-letter-builder,
+.house-letter-fields,
+.house-letter-fields > div,
+.house-letter-paths,
+.house-letter-path,
+.house-scene-caption,
+.river-notebook,
+.work-specimen-sheet,
+.field-atlas-index {min-width:0;}
+.house-contact :is(input,textarea,select) {max-width:100%;min-width:0;}
+.house-statement h2,
+.house-ending-editorial h3,
+.work-specimen-heading h3 { overflow-wrap:break-word; }
+.chapter-house .house-contact { overflow-wrap:break-word; }
+.house-letter-path .house-letter-path-face { min-width:0; }
+.house-letter-path-face :is(strong,small) { overflow-wrap:anywhere; }
+@media(max-width:920px){
+ .site-header .header-inner {min-width:0;}
+ .site-header .brand {min-width:0;max-width:calc(100% - 104px);}
+ .site-header .brand-name {white-space:normal;overflow-wrap:anywhere;line-height:1.1;}
+ .site-header .header-actions {flex-shrink:0;}
+ .site-header .menu-toggle {flex-shrink:0;}
+ .site-header .site-nav {max-width:calc(100% + var(--page-padding)*2);}
+}
+@media(max-width:670px){
+ .chapter-house .house-statement h2 {font-size:clamp(2.1rem,9vw,3.95rem);line-height:1.1;}
+ .chapter-house .house-contact {max-width:100%;overflow-wrap:anywhere;}
+ .house-brief-label span {white-space:normal;}
+ .house-preface-note p {max-width:100%;}
+ .field-atlas-index a {min-width:0;}
+ .field-atlas-fold-copy strong {overflow-wrap:anywhere;}
+ .work-specimen-heading h3 {overflow-wrap:anywhere;}
+}
+@media(max-width:390px){
+ .site-header .brand {gap:6px;}
+ .site-header .brand-mark {flex-shrink:0;}
+ .site-header .brand-name {font-size:clamp(.7rem,3.3vw,.9rem);}
+ .site-header .menu-toggle {gap:7px;font-size:.83rem;}
+ .chapter-house .house-statement h2 {overflow-wrap:anywhere;}
+ .house-preface-note {min-width:0;}
+}
