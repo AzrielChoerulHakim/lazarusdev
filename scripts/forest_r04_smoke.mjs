@@ -82,5 +82,5 @@ try{
    console.log('PASS R04 '+route+' missing frame keeps original still and native navigation');
   }finally{await blocked.ctx.close();}
  }
- console.log('R04/R12 COMPLETE '+cases+' real-browser flows; zero screenshots/video.');
+ console.log('R04/R12 COMPLETE '+cases+' real-browser flows; zero media captures.');
 }finally{await browser.close();}
