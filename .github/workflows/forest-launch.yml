@@ -42,6 +42,7 @@ jobs:
             if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then break; fi
             sleep 2
           done
+          set -o pipefail
           node scripts/forest_launch_smoke.mjs | tee reports/stage18-browser-qa.log
       - name: Upload text-only release evidence, never screenshots or recordings
         if: always()
