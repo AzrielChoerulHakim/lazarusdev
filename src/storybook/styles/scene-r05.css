@@ -1,0 +1,21 @@
+/* R05 — Hand-authored scene marks, never replacing the four existing painted worlds.
+   These are small, original vector engraving companions with a finite story function.
+   They are decorative, uninteractive, independently loaded and do not carry copy. */
+.forest-r05-ink { position:absolute;z-index:2;display:block;width:clamp(72px,11vw,160px);height:auto;max-height:32%;object-fit:contain;pointer-events:none;user-select:none;mix-blend-mode:multiply;opacity:.63;filter:saturate(.83); }
+.path-map-art .forest-r05-ink--path {right:3%;bottom:8%;width:13%;}
+.work-clearing-world .forest-r05-ink--folio {left:2%;bottom:3%;width:11%;z-index:2;opacity:.55;}
+.river-scene .forest-r05-ink--river {right:1.5%;top:10%;width:15%;z-index:2;opacity:.58;}
+.house-scene-canvas .forest-r05-ink--house {right:3%;top:5%;width:12%;z-index:3;opacity:.5;mix-blend-mode:screen;}
+/* Art-directed chapter-specific reading rhythm: refrain from identical cards. */
+.chapter-path .path-map-caption,
+.chapter-clearing .work-clearing-caption,
+.chapter-river .river-scene-caption,
+.chapter-house .house-scene-caption {text-wrap:pretty;}
+@media(max-width:670px) {
+ .forest-r05-ink {width:16%;opacity:.48;max-height:21%;}
+ .path-map-art .forest-r05-ink--path {right:3%;bottom:4%;width:17%;}
+ .work-clearing-world .forest-r05-ink--folio {left:2%;bottom:3%;width:14%;}
+ .river-scene .forest-r05-ink--river {right:2%;top:5%;width:17%;}
+ .house-scene-canvas .forest-r05-ink--house {right:3%;top:3%;width:17%;}
+}
+@media(forced-colors:active){.forest-r05-ink{display:none;}}

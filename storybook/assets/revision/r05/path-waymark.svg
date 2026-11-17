@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Decorative ink engraving">
+<defs>
+<filter id="rough" x="-12%" y="-12%" width="125%" height="125%"><feTurbulence type="fractalNoise" baseFrequency=".025" numOctaves="2" seed="7" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="1.4"/></filter>
+<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(23)"><path d="M1 0V7" stroke="#6b7051" stroke-width=".6" opacity=".42"/></pattern>
+</defs>
+<g fill="none" stroke="#355342" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M23 197Q61 154 78 121T144 64Q170 40 200 43" stroke="#946c3a" stroke-width="5"/><path d="M26 199Q63 158 80 118T141 68Q168 40 200 46" stroke="#e0ae5d" stroke-width="1.6"/><path d="M35 182q-13 -14 -23 -10 2 17 23 10m17 -20q-2 -26 14 -34 9 22 -14 34m28 -42q-17 -20 -39 -13 11 23 39 13m41 -48q-1 -27 19 -39 12 24 -19 39m31 -20q20 -18 42 -9 -13 24 -42 9"/><path d="M14 198l24 4m-17 -10 16 5M46 147l14 9m-7 -19 9 8m73 -78 15 6m-6 -16 15 8"/><path d="M168 111l14 -26 12 19z" fill="url(#hatch)" stroke="#92723c"/><circle cx="195" cy="45" r="5" fill="#dcab5a"/><path d="M196 29v-9m0 48v-9m-16 -14h-10m46 0h-10" stroke="#a16e3b" stroke-width="1.6"/></g>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Decorative ink engraving">
+<defs>
+<filter id="rough" x="-12%" y="-12%" width="125%" height="125%"><feTurbulence type="fractalNoise" baseFrequency=".025" numOctaves="2" seed="7" result="grain"/><feDisplacementMap in="SourceGraphic" in2="grain" scale="1.4"/></filter>
+<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(23)"><path d="M1 0V7" stroke="#6b7051" stroke-width=".6" opacity=".42"/></pattern>
+</defs>
+<g fill="none" stroke="#355342" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M45 174v-96q0 -39 47 -39t48 39v97z" fill="#e9ddbc" fill-opacity=".35" stroke="#6e6944" stroke-width="4"/><path d="M60 174V78q0 -27 32 -27t33 27v96z" fill="#e3b46b" fill-opacity=".55" stroke="#9f7645" stroke-width="3"/><path d="M92 51v125m-31 -58h64" stroke="#6e6b48" stroke-width="3"/><path d="M51 172h94m-84 -4h64" stroke="#806f4f" stroke-width="2"/><path d="M150 48q15 -18 36 -13m-31 18q24 -10 46 -6m-34 16q17 -6 28 -2" stroke="#a5a58a" stroke-width="1.8"/><path d="M181 78v19m-10 -9h21m-11 -9q-2 14 0 19" stroke="#d7a95e" stroke-width="1.6"/><path d="M35 46q-14 9 -21 23m19 -9q-15 7 -20 17m140 102q28 0 55 -11m-47 21q28 -3 42 -9" stroke="#6e8a66" stroke-width="2.1"/></g>
+</svg>
