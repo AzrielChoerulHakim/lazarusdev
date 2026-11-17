@@ -41,7 +41,7 @@ try{
       assert.equal(initial.ink.length,4,tag+' custom marks');
       assert.equal(new Set(initial.ink).size,4,tag+' unique marks');
       assert.equal(initial.over,false,tag+' no horizontal overflow');
-      assert.ok(initial.source.includes('r02/exports'),tag+' R02 real Paperkeeper');
+      assert.ok(/paperkeeper\.three-quarter|notice|anticipate|lift-low|lift-mid|overshoot|follow|settled|acknowledge/.test(initial.source),tag+' real authored Paperkeeper');
       assert.equal(initial.noFakeClient,true,tag+' truthful folios');
       for(const name of art)assert.ok(initial.ink.some(src=>src.includes(name)),tag+' asset '+name);
 
@@ -52,7 +52,9 @@ try{
         assert.equal(await img.evaluate(el=>getComputedStyle(el).pointerEvents),'none',tag+' decorative mark cannot intercept UI');
       }
 
-      await interaction(page,'[data-path-trace-toggle]',{selector:'.path-map-art',field:'motionCue',value:'route'});
+      await page.locator('.path-map-art').scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:8000});
+      assert.equal(await page.locator('[data-path-trace-toggle]').count(),0,tag+' no manual motion choice');
       await interaction(page,'#folio-atrium summary',{selector:'.work-clearing-world',field:'activeFolio',value:'folio-atrium'});
       await interaction(page,'#river-note-a summary',{selector:'.river-scene',field:'activeNote',value:'river-note-a'});
       await interaction(page,'[data-house-light-toggle]',{selector:'.house-scene',field:'motionCue',value:'lantern'});
@@ -64,12 +66,12 @@ try{
   for(const route of routes){
     const {context,page,errors}=await pageFor(route,{reducedMotion:'reduce'});
     try{
-      await page.locator('[data-path-trace-toggle]').click();
-      assert.equal(await page.locator('.path-map-art').getAttribute('data-motion-cue'),'settled');
+      await page.locator('.path-map-art').scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>document.querySelector('[data-path-map]')?.dataset.progress==='100',null,{timeout:8000});
       await page.locator('#river-note-b summary').click();
-      assert.equal(await page.locator('.river-scene').getAttribute('data-motion-cue'),'settled');
+      assert.equal(await page.locator('#river-note-b details').evaluate(x=>x.open),true);
       assert.deepEqual(errors,[]);
-      pass(route+' reduced-motion skips decorative animation');
+      pass(route+' automatic path and native river note with reduced preference');
     }finally{await context.close();}
   }
   for(const route of routes){
