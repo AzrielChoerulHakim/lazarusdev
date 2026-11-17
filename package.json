@@ -11,7 +11,10 @@
     "preview:storybook": "vite preview --config vite.storybook.config.js --host 0.0.0.0",
     "assets:r02": "node scripts/forest_r02_assets.mjs",
     "check:r02:assets": "node scripts/forest_r02_assets.mjs --check",
-    "check:r02": "node scripts/forest_r02_smoke.mjs"
+    "check:r02": "node scripts/forest_r02_smoke.mjs",
+    "assets:r03": "node scripts/forest_r03_assets.mjs",
+    "check:r03:assets": "node scripts/forest_r03_assets.mjs --check",
+    "check:r03": "node scripts/forest_r03_smoke.mjs"
   },
   "devDependencies": {
     "sharp": "0.34.5",

@@ -1,4 +1,4 @@
-name: Forest R02 — static Entrance reference (no screenshots)
+name: Forest R02–R03 — Entrance artwork and acting (no screenshots)
 on:
   push:
     branches: [feat/r02-entrance]
@@ -9,7 +9,10 @@ on:
       - package.json
       - src/storybook/styles/**
       - storybook/assets/entrance/r02/**
+      - storybook/assets/entrance/r03/**
+      - src/storybook/entrance-acting*.js
       - scripts/forest_r02_*
+      - scripts/forest_r03_*
       - scripts/forest_entrance_smoke.mjs
       - scripts/forest_editorial_smoke.mjs
       - .github/workflows/forest-r02.yml
@@ -37,8 +40,11 @@ jobs:
       - name: Verify source and export integrity, build both entries
         run: |
           npm run check:r02:assets
+          npm run check:r03:assets
           npm run build
           npm run build:storybook
+      - name: Verify compiled acting, replay, cancellation and fallback
+        run: npm run check:r03
       - name: Test compiled Pages routes, no screenshots or recordings
         run: |
           mkdir -p /tmp/r02-mirror/lazarusdev reports

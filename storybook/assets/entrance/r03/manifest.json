@@ -1,0 +1,607 @@
+{
+  "revision": "R03",
+  "action": "lantern-invitation",
+  "authored": "2026-11-17",
+  "method": "OpenAI image_gen: authored full-body poses. Sharp: mechanical cell extraction, shared-scale registration and WebP encoding only.",
+  "timelineSha256": "b7fbb53ab1ef63869e5e6483fcd0ed7453afe3cfaa955bbbd9e15b2d4470a603",
+  "canvas": {
+    "width": 622,
+    "height": 960
+  },
+  "registration": {
+    "baseline": 932,
+    "pivotX": 310.75,
+    "footSpan": 114.5
+  },
+  "converter": {
+    "sharp": "0.34.5",
+    "webp": "1.6.0"
+  },
+  "clips": {
+    "invite": [
+      {
+        "frame": "neutral",
+        "duration": 100
+      },
+      {
+        "frame": "notice",
+        "duration": 140
+      },
+      {
+        "frame": "anticipate",
+        "duration": 120
+      },
+      {
+        "frame": "lift-low",
+        "duration": 100
+      },
+      {
+        "frame": "lift-mid",
+        "duration": 100
+      },
+      {
+        "frame": "overshoot",
+        "duration": 120
+      },
+      {
+        "frame": "follow",
+        "duration": 120
+      },
+      {
+        "frame": "settled",
+        "duration": 400
+      }
+    ],
+    "acknowledge": [
+      {
+        "frame": "settled",
+        "duration": 100
+      },
+      {
+        "frame": "acknowledge",
+        "duration": 180
+      },
+      {
+        "frame": "settled",
+        "duration": 280
+      }
+    ]
+  },
+  "frames": [
+    {
+      "id": "neutral",
+      "intent": "Original R02 standing pose; lantern low.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "../r02/exports/paperkeeper.three-quarter.webp",
+        "sha256": "3d78023cb5e52f6793adf4a5f00680b0f474a720fd4b92a5953b8fa47ceff3f3",
+        "width": 622,
+        "height": 960
+      },
+      "crop": null,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "export": {
+        "path": "exports/neutral.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "3d78023cb5e52f6793adf4a5f00680b0f474a720fd4b92a5953b8fa47ceff3f3",
+          "bytes": 191112,
+          "bounds": {
+            "left": 22,
+            "top": 15,
+            "right": 576,
+            "bottom": 932
+          },
+          "transparentFraction": 0.51678,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.75,
+            "span": 114.5,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 298,
+                "center": 253.5
+              },
+              {
+                "left": 315,
+                "right": 421,
+                "center": 368
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 521.5,
+            "y": 711.2,
+            "pixels": 3176
+          }
+        }
+      }
+    },
+    {
+      "id": "notice",
+      "intent": "Eyes and head notice the path; arm still low.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/notice-anticipation.png",
+        "sha256": "40aa011be96dd7b96b83400f51fed64a1fba08dd3262aaab3244a87585a0250b",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": 0
+      },
+      "export": {
+        "path": "exports/notice.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "7775bb6ad1ac72b3794e9d8870e08655075544f0735fe7c2933f9dc0a7606784",
+          "bytes": 158616,
+          "bounds": {
+            "left": 23,
+            "top": 15,
+            "right": 574,
+            "bottom": 932
+          },
+          "transparentFraction": 0.4903,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 311,
+            "span": 113,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 300,
+                "center": 254.5
+              },
+              {
+                "left": 313,
+                "right": 422,
+                "center": 367.5
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 521.57,
+            "y": 703.63,
+            "pixels": 3034
+          }
+        }
+      }
+    },
+    {
+      "id": "anticipate",
+      "intent": "Small head dip and blink; elbow gathers before lifting.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/notice-anticipation.png",
+        "sha256": "40aa011be96dd7b96b83400f51fed64a1fba08dd3262aaab3244a87585a0250b",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": 0
+      },
+      "export": {
+        "path": "exports/anticipate.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "a947a31ffcfaa205662e2d03ed054e90df5040157753dfba29d7916bdd95915d",
+          "bytes": 152726,
+          "bounds": {
+            "left": 22,
+            "top": 15,
+            "right": 575,
+            "bottom": 932
+          },
+          "transparentFraction": 0.49948,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 311.25,
+            "span": 113.5,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 300,
+                "center": 254.5
+              },
+              {
+                "left": 314,
+                "right": 422,
+                "center": 368
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 505.1,
+            "y": 683.95,
+            "pixels": 1976
+          }
+        }
+      }
+    },
+    {
+      "id": "lift-low",
+      "intent": "Elbow flexes; lantern begins its upward arc.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/lift.png",
+        "sha256": "4ab98207cd8821243e2898e866d46640bf9ecff1dd702222d0da67de6ef3ac5b",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -1
+      },
+      "export": {
+        "path": "exports/lift-low.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "1c31ab7e7bc40f00d32b87e3b32ca7e13d2544dddffb9acdee09aa671d1fadc4",
+          "bytes": 163488,
+          "bounds": {
+            "left": 23,
+            "top": 15,
+            "right": 568,
+            "bottom": 932
+          },
+          "transparentFraction": 0.50776,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.75,
+            "span": 111.5,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 301,
+                "center": 255
+              },
+              {
+                "left": 312,
+                "right": 421,
+                "center": 366.5
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 520,
+            "y": 581.7,
+            "pixels": 3287
+          }
+        }
+      }
+    },
+    {
+      "id": "lift-mid",
+      "intent": "Forearm rises while feet and torso remain planted.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/lift.png",
+        "sha256": "4ab98207cd8821243e2898e866d46640bf9ecff1dd702222d0da67de6ef3ac5b",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -1
+      },
+      "export": {
+        "path": "exports/lift-mid.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "9636fafab9ec192d7cb1d1606b8f2a75fd8fb7e1fe2a6e41fd787e1efa30fd2f",
+          "bytes": 164808,
+          "bounds": {
+            "left": 23,
+            "top": 14,
+            "right": 568,
+            "bottom": 932
+          },
+          "transparentFraction": 0.50539,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.75,
+            "span": 111.5,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 301,
+                "center": 255
+              },
+              {
+                "left": 312,
+                "right": 421,
+                "center": 366.5
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 520.74,
+            "y": 519.94,
+            "pixels": 3449
+          }
+        }
+      }
+    },
+    {
+      "id": "overshoot",
+      "intent": "Hand reaches the high point; lantern follows under its handle.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/offer.png",
+        "sha256": "600b6fcc372544a18a68cf14bf46a770d3c4e91803f6585b500175c496303309",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -1
+      },
+      "export": {
+        "path": "exports/overshoot.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "764f772f8bd76bdba283bda062726d0a1fb0ee3658795fcd40ecf1adfc9aecec",
+          "bytes": 159898,
+          "bounds": {
+            "left": 24,
+            "top": 15,
+            "right": 595,
+            "bottom": 932
+          },
+          "transparentFraction": 0.5036,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.5,
+            "span": 111,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 301,
+                "center": 255
+              },
+              {
+                "left": 312,
+                "right": 420,
+                "center": 366
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 543.53,
+            "y": 454.35,
+            "pixels": 4182
+          }
+        }
+      }
+    },
+    {
+      "id": "follow",
+      "intent": "Hand settles first; lantern and loose leaves follow.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/offer.png",
+        "sha256": "600b6fcc372544a18a68cf14bf46a770d3c4e91803f6585b500175c496303309",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -1
+      },
+      "export": {
+        "path": "exports/follow.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "fcdfbb4b2f03f04bbbfda1a14e2d844661a660fedcb5809c0cbad68c0c79a694",
+          "bytes": 159424,
+          "bounds": {
+            "left": 24,
+            "top": 15,
+            "right": 579,
+            "bottom": 932
+          },
+          "transparentFraction": 0.50409,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.5,
+            "span": 111,
+            "shoes": [
+              {
+                "left": 209,
+                "right": 301,
+                "center": 255
+              },
+              {
+                "left": 312,
+                "right": 420,
+                "center": 366
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 528.29,
+            "y": 480.41,
+            "pixels": 4309
+          }
+        }
+      }
+    },
+    {
+      "id": "settled",
+      "intent": "Stable invitation with raised lantern and relaxed cape/satchel.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/settle-acknowledge.png",
+        "sha256": "55c32081e2b1c0f6982257e6e7cb46b8511eb9c8b2f408bb36260dd1b4d81074",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 0,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -3
+      },
+      "export": {
+        "path": "exports/settled.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "2c9832b2e36c9631e5c2ca29d1f1ac4d6577c3b62e2c3d18c1e75048fd1bdcd5",
+          "bytes": 167476,
+          "bounds": {
+            "left": 23,
+            "top": 12,
+            "right": 594,
+            "bottom": 932
+          },
+          "transparentFraction": 0.47638,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.5,
+            "span": 112,
+            "shoes": [
+              {
+                "left": 208,
+                "right": 301,
+                "center": 254.5
+              },
+              {
+                "left": 311,
+                "right": 422,
+                "center": 366.5
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 540.46,
+            "y": 486.7,
+            "pixels": 5240
+          }
+        }
+      }
+    },
+    {
+      "id": "acknowledge",
+      "intent": "Small nod while keeping lantern raised; replay never drops to neutral.",
+      "orientation": "three-quarter, facing viewer-right",
+      "source": {
+        "path": "source/settle-acknowledge.png",
+        "sha256": "55c32081e2b1c0f6982257e6e7cb46b8511eb9c8b2f408bb36260dd1b4d81074",
+        "width": 1536,
+        "height": 1024
+      },
+      "crop": {
+        "left": 768,
+        "top": 0,
+        "width": 768,
+        "height": 1024
+      },
+      "registration": {
+        "scale": 0.9492753623188406,
+        "offsetX": -67,
+        "offsetY": -2
+      },
+      "export": {
+        "path": "exports/acknowledge.webp",
+        "metrics": {
+          "width": 622,
+          "height": 960,
+          "sha256": "7cc052c571e8ec255313332d5b61d8adcc32df328671707d72744343f530561e",
+          "bytes": 164984,
+          "bounds": {
+            "left": 23,
+            "top": 14,
+            "right": 595,
+            "bottom": 932
+          },
+          "transparentFraction": 0.48129,
+          "feet": {
+            "baseline": 932,
+            "pivotX": 310.5,
+            "span": 112,
+            "shoes": [
+              {
+                "left": 208,
+                "right": 301,
+                "center": 254.5
+              },
+              {
+                "left": 311,
+                "right": 422,
+                "center": 366.5
+              }
+            ]
+          },
+          "lanternHighlight": {
+            "x": 540.33,
+            "y": 490.99,
+            "pixels": 5501
+          }
+        }
+      }
+    }
+  ]
+}

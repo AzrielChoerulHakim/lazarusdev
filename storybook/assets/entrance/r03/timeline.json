@@ -1,0 +1,36 @@
+{
+  "action": "lantern-invitation",
+  "revision": "R03",
+  "canvas": { "width": 622, "height": 960 },
+  "orientation": "three-quarter, facing viewer-right",
+  "neutral": "neutral",
+  "settled": "settled",
+  "frames": [
+    { "id": "neutral", "source": "../r02/exports/paperkeeper.three-quarter.webp", "cell": null, "intent": "Original R02 standing pose; lantern low." },
+    { "id": "notice", "source": "source/notice-anticipation.png", "cell": 0, "intent": "Eyes and head notice the path; arm still low." },
+    { "id": "anticipate", "source": "source/notice-anticipation.png", "cell": 1, "intent": "Small head dip and blink; elbow gathers before lifting." },
+    { "id": "lift-low", "source": "source/lift.png", "cell": 0, "intent": "Elbow flexes; lantern begins its upward arc." },
+    { "id": "lift-mid", "source": "source/lift.png", "cell": 1, "intent": "Forearm rises while feet and torso remain planted." },
+    { "id": "overshoot", "source": "source/offer.png", "cell": 0, "intent": "Hand reaches the high point; lantern follows under its handle." },
+    { "id": "follow", "source": "source/offer.png", "cell": 1, "intent": "Hand settles first; lantern and loose leaves follow." },
+    { "id": "settled", "source": "source/settle-acknowledge.png", "cell": 0, "intent": "Stable invitation with raised lantern and relaxed cape/satchel." },
+    { "id": "acknowledge", "source": "source/settle-acknowledge.png", "cell": 1, "intent": "Small nod while keeping lantern raised; replay never drops to neutral." }
+  ],
+  "clips": {
+    "invite": [
+      { "frame": "neutral", "duration": 100 },
+      { "frame": "notice", "duration": 140 },
+      { "frame": "anticipate", "duration": 120 },
+      { "frame": "lift-low", "duration": 100 },
+      { "frame": "lift-mid", "duration": 100 },
+      { "frame": "overshoot", "duration": 120 },
+      { "frame": "follow", "duration": 120 },
+      { "frame": "settled", "duration": 400 }
+    ],
+    "acknowledge": [
+      { "frame": "settled", "duration": 100 },
+      { "frame": "acknowledge", "duration": 180 },
+      { "frame": "settled", "duration": 280 }
+    ]
+  }
+}
