@@ -1,0 +1,51 @@
+name: Forest R08–R09 — Revision integration and release gates (text-only)
+on:
+  push:
+    branches: [feat/r02-entrance, main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integration:
+    runs-on: ubuntu-24.04
+    env:
+      CHROME_PATH: /usr/bin/google-chrome
+      STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install and verify both release builds
+        run: |
+          npm install --no-package-lock --no-audit --no-fund
+          npm install --no-save --no-package-lock --no-audit --no-fund playwright@1.56.1 axe-core@4.10.3
+          npm run check:r02:assets
+          npm run check:r03:assets
+          npm run build
+          npm run build:storybook
+      - name: Serve assembled canonical and alternate routes
+        run: |
+          mkdir -p /tmp/forest-release/lazarusdev reports
+          cp -a dist/. /tmp/forest-release/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-release/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-release > /tmp/forest-release.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS "$STORYBOOK_PREVIEW_ORIGIN/lazarusdev/" > /dev/null; then break; fi
+            sleep 1
+          done
+      - name: Run R08 production-page art, interactions and fallback verification
+        run: npm run check:r08 | tee reports/r08-browser.log
+      - name: Preserve R04 authored-character integration invariants
+        run: npm run check:r04 | tee reports/r04-regression.log
+      - name: Verify honest canonical public release metadata
+        run: node scripts/forest_launch_smoke.mjs | tee reports/r09-launch.log
+      - name: Upload text-only reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r08-r09-text-qa
+          path: reports/
+          if-no-files-found: ignore
