@@ -17,3 +17,11 @@
 **5 — Narrative and regression**: The Atrium remains an honest concept from the real hanging folio. The scroll to Work, keyboard, foreground focus isolation, Escape, Back browser, scrollY/scrollLeft restoration and unchanged Oracle/Archive folios pass Chromium integration. Paperkeeper and river-to-house identity are outside this stage.
 
 **Decision:** **TECHNICAL PASS / VISUAL CANDIDATE / HUMAN ART SIGN-OFF NOT SIGNED OFF**. Do not automatically promote it to a final approved painting or claim actual handheld comprehension testing.
+
+## Re-audit after real finger-input and relief fix
+
+Final candidate is tied to [`fe4d68d3`](https://github.com/AzrielChoerulHakim/lazarusdev/commit/fe4d68d3b60e4dc3504b082ff3dbe721b4b0f2d0). Comparing its genuine [left 0%](./evidence/390x844-light-0.png), [middle 50%](./evidence/390x844-light-50.png) and [right 100%](./evidence/390x844-light-100.png), the relief now reaches its strongest legible state around the physical center of the light sweep rather than staying highly visible at the far-right extreme. Side highlights and floor shadow directions still change. The former monotonic increase was a light-model error, not an aesthetic judgment.
+
+The original verification did not include trusted finger gestures. The new [R15 browser run](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625657) proves in Chrome touch emulation that vertical panning does not change the slider and that one horizontal swipe succeeds on both `390×844` and `320×720` for both routes. It also discovered and fixed nested SVG pointer capture cancellation. See the [R15 QA addendum](./QA-RESULTS.md).
+
+Art gap remains: the folio's warm, organic crayon stone is still richer than this authored SVG relief/stone hatch. Technical re-validation cannot award a final human art rubric score. **Visual candidate, not signed off.**

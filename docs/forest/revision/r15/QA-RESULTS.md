@@ -46,3 +46,29 @@ The R15 workflow produced **24 actual Chromium PNGs**: two routes × three viewp
 - R15A sprite cleanup, R16 single paper, R17 painted dusk and R18 final art calibration are not part of this R15 implementation.
 
 **Conclusion:** R15's technical build, real Chromium integration and capture gates **PASS** at the tested source SHA; the manual art approval gate remains **NOT SIGNED OFF**. Preserve R13 frozen reference PNGs when continuing.
+
+
+## R15 follow-up / real touch gesture regression — 18 November 2026
+
+**New production source:** [`fe4d68d3`](https://github.com/AzrielChoerulHakim/lazarusdev/commit/fe4d68d3b60e4dc3504b082ff3dbe721b4b0f2d0).  
+**New frozen screenshot commit:** [`4ea2ed45`](https://github.com/AzrielChoerulHakim/lazarusdev/commit/4ea2ed458f7ecfedf16cbde280ae40a13eb1e8ea).  
+**Actual R15 browser workflow:** **PASS**, [run 44274625657](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625657).  
+**Genuine PNG artifact:** `forest-r15-atrium-fe4d68d3b60e4dc3504b082ff3dbe721b4b0f2d0`, ID `14414062574`, 7,629,537 bytes.  
+**Manifest:** [`evidence/manifest.json`](./evidence/manifest.json), source `fe4d68d3...`, **24 frames** (2 routes × 3 viewports × 4 captures).
+
+| Check at source commit `fe4d68d3` | Status |
+|---|---|
+| R15 production build, deterministic light geometry and browser regression | **PASS** |
+| **NEW:** Trusted Chrome touch gesture, vertical panning must not move light, horizontal single-swipe must reveal leaves — **both routes, 390×844 and 320×720** | **PASS** |
+| Mobile/desktop/short-landscape root + storybook; keyboard, one mouse drag, Back, focus, Escape, reduced motion | **PASS** |
+| R12 Atrium and paper rescue regression | **PASS** — [run 44274625491](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625491) |
+| R13 rendered visual evidence workflow | **PASS** — [run 44274625535](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625535) |
+| Stage 03 semantic/responsive | **PASS** — [run 44274625928](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625928) |
+| R08–R09 release/integration | **PASS** — [run 44274625667](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625667) |
+| GitHub Pages publish | **PASS** — [run 44274624183](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274624183) |
+
+**Issue caught by the new test, and resolved:** in Chrome a touch pointer may acquire implicit capture on a nested SVG child. Re-parenting capture onto the scene causes that child to emit a bubbling `lostpointercapture` event and prematurely terminates the swipe. The corrected gesture implementation preserves implicit touch capture, ignores descendant-only capture loss, and locks touch intent by axis. This behavior was **not** covered by the earlier mouse-only test even though its workflow was green.
+
+**Visual inspection of the newest images:** [0%](./evidence/390x844-light-0.png) and [100%](./evidence/390x844-light-100.png) leave the medallion relatively quiet, whereas [50%](./evidence/390x844-light-50.png) reveals a bright central leaf/carving motif. This is intentionally source-location-dependent instead of a uniform opacity increase with slider percentage. It is a rendered screenshot observation, not a human art-direction approval.
+
+**Human blind art-signoff, physical-device UX, and screen-reader signoff:** **NOT VERIFIED**. R15 remains a **technical pass with candidate art**. The above re-run supersedes the older verification source/IDs above, which are preserved as historical evidence.

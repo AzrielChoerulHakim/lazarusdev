@@ -42,3 +42,7 @@ The second R15 pass addresses two gaps **not demonstrated by the earlier mouse-o
 - New real-touch Chromium emulation covers `390×844` and `320×720`, both published routes, vertical-vs-horizontal gestures, 44px entry-target geometry and browser Back. This is automated Chrome touch input, **not an on-device user test**.
 
 These updates are additive to the existing R15 engineering scope and do not alter R15A's Paperkeeper assets or subsequent chapter storyboards.
+
+### Verification of the R15 re-audit
+
+The extended R15 workflow [run 44274625657](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625657) **PASS** on source `fe4d68d3` for both routes. Automated tests now use **trusted Chromium touch input** for 390×844 and 320×720; they reproduced and fixed an SVG implicit pointer-capture cancellation missed by mouse tests. The newest 24 Chromium frames and six committed source PNGs are recorded in the [QA addendum](./QA-RESULTS.md). Hardware phone testing and final art approval remain **NOT VERIFIED**.
