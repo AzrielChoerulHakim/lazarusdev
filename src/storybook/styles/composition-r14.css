@@ -1,0 +1,26 @@
+/* R14 — Non-destructive composition and tonal candidates.
+   Only the existing painted scenery is graded. Character, paper props,
+   interfaces, text, Atrium folios and separate window glow remain untouched.
+   R17 is responsible for true painted dusk relighting, not this tonal study. */
+.path-map-backdrop{filter:saturate(.91) contrast(1.04) brightness(.98)}
+.work-clearing-world>.work-clearing-woods{filter:saturate(.84) contrast(1.08) brightness(.82)}
+.river-scene>picture .river-scene-art{filter:saturate(.90) contrast(1.06) brightness(.95)}
+.house-scene-canvas>picture:not(.house-glow-layer) .house-scene-image{filter:saturate(.82) contrast(1.08) brightness(.80)}
+/* At 390px the R13 note controls obscured 82.76% of Paperkeeper.
+   Place controls on their OWN paper margin instead of changing z-index. */
+@media(max-width:670px){
+ .chapter-river .river-scene{overflow:visible;margin-bottom:112px}
+ .chapter-river .river-stone-nav{position:absolute;top:calc(100% + 15px);bottom:auto;left:0;right:0;max-width:none;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:10px;z-index:5}
+ .chapter-river .river-stone-nav a,.chapter-river .river-stone-nav a:nth-child(2){transform:none;width:100%;min-width:0;max-width:none;min-height:56px;padding:9px 10px;font-size:clamp(.69rem,2.8vw,.83rem);line-height:1.35}
+ .chapter-river .river-stone-nav a>span:nth-child(2){min-width:0}
+ .chapter-river .river-stone-nav a>span:last-child{margin-left:auto}
+ .chapter-river .river-stone-nav a:is(:hover,:focus-visible){transform:none}
+}
+@media(max-width:350px){
+ .chapter-river .river-scene{margin-bottom:130px}
+ .chapter-river .river-stone-nav{grid-template-columns:1fr;gap:7px}
+ .chapter-river .river-stone-nav a{min-height:46px}
+}
+@media(forced-colors:active){
+ .path-map-backdrop,.work-clearing-world>.work-clearing-woods,.river-scene>picture .river-scene-art,.house-scene-canvas>picture:not(.house-glow-layer) .house-scene-image{filter:none}
+}

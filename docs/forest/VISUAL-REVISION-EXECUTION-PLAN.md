@@ -3,7 +3,7 @@
 **Proyek:** The Forest Between Pages (Lazarus Dev)  
 **Ditetapkan:** 18 November 2026  
 **Target branch:** `main` (commit langsung atas instruksi eksplisit pemilik)  
-**Status:** `R13 CAPTURED + BASELINE REVIEW RECORDED`; R14, R15, **R15A**, R16–R19 `PLANNED`. R13 bukan klaim visual art sign-off.  
+**Status:** `R13 CAPTURED + BASELINE REVIEW RECORDED`; `R14 CANDIDATE IMPLEMENTED — ART SIGN-OFF PENDING`; R15, **R15A**, R16–R19 `PLANNED`. R13 bukan klaim visual art sign-off.  
 **Sumber arah:** audit visual lima bab, pengalaman The Atrium, kontinuitas Paperkeeper dan halaman sobek; `ART-DIRECTION-LOCK.md` dan `visual-comparison-r12.md`.
 
 ## Tujuan akhir
@@ -31,7 +31,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 **Lulus jika:** screenshot aktual desktop/ponsel dapat dibandingkan; artefak dan laporan otomatis terhubung pada SHA commit yang sama; status manual tetap tertulis `NOT SIGNED OFF` hingga dinilai manusia.
 
 ### R14 / Tahap 1 — Kunci sepuluh komposisi dan kurva cahaya
-**Status:** TODO · **Prasyarat:** R13.
+**Status:** CANDIDATE IMPLEMENTED (original R13 10 PNG reference sheet, light/groundline contract and portrait river safe-zone fix); post-R14 image review / blind thumbnail test **NOT VERIFIED**; final art direction **NOT SIGNED OFF**. See [R14 evidence](./revision/r14/README.md). · **Prasyarat:** R13.
 
 **Pekerjaan**
 1. Buat *production comparison sheet* berisi **lima render desktop dan lima ponsel** dari komposisi final/candidate, bukan hanya `visual-comparison-r12.svg` yang sekarang masih skematis.

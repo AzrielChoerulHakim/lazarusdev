@@ -1,0 +1,270 @@
+{
+  "schema": "lazarus-r14-production-composition-v1",
+  "stage": "R14",
+  "state": "CANDIDATE_IMPLEMENTED__MANUAL_SIGNOFF_PENDING",
+  "evidence": {
+    "source": "docs/forest/revision/r13/evidence",
+    "source_commit": "e6c4f80e3c38f74938c343c2a90ae5709be962db",
+    "kind": "actual Chromium rendered production PNG",
+    "preserved": true,
+    "post_r14_capture": "NOT RECORDED IN R14 SHEET"
+  },
+  "acceptance": {
+    "ten_production_reference_images": 10,
+    "physical_mobile": "NOT VERIFIED",
+    "blind_thumbnail_human_test": "NOT VERIFIED",
+    "art_direction": "NOT SIGNED OFF",
+    "new_river_overlap_measurement": "NOT VERIFIED"
+  },
+  "asset_policy": "Original raster paintings, portrait exports, Paperkeeper sprite frames and R13 evidence are not replaced. Tonal candidate grades environment rasters only.",
+  "chapters": [
+    {
+      "id": "entrance",
+      "number": "01",
+      "name": "Entrance",
+      "file": "entrance",
+      "signature": "Narrow moss arch / morning aperture",
+      "light": "Golden-green morning opening between cooler trunks",
+      "focal": [
+        53,
+        54
+      ],
+      "desktopFoot": [
+        [
+          13,
+          12
+        ]
+      ],
+      "mobileFoot": [
+        [
+          10,
+          12
+        ]
+      ],
+      "safe": "Keep heading and CTA outside the illustration; reserve opening around arch.",
+      "narrative": "Paperkeeper holds lantern at entrance; the rescued page has not appeared.",
+      "desktop_png": "1440x900-entrance.png",
+      "mobile_png": "390x844-entrance.png"
+    },
+    {
+      "id": "path",
+      "number": "02",
+      "name": "Winding Path",
+      "file": "path",
+      "signature": "Crossing diagonal roots / serpentine path",
+      "light": "Alternating diagonal lit trail and shaded roots",
+      "focal": [
+        56,
+        58
+      ],
+      "desktopFoot": [
+        [
+          13,
+          6
+        ],
+        [
+          32,
+          18
+        ],
+        [
+          43,
+          29
+        ],
+        [
+          56,
+          37
+        ],
+        [
+          63,
+          48
+        ]
+      ],
+      "mobileFoot": [
+        [
+          12,
+          5
+        ],
+        [
+          35,
+          14
+        ],
+        [
+          53,
+          26
+        ],
+        [
+          41,
+          36
+        ],
+        [
+          57,
+          46
+        ]
+      ],
+      "safe": "Path-trace control stays clear of walker and route apex.",
+      "narrative": "Character follows the already-authored groundline; no invented pose.",
+      "desktop_png": "1440x900-path.png",
+      "mobile_png": "390x844-path.png"
+    },
+    {
+      "id": "clearing",
+      "number": "03",
+      "name": "Work Clearing",
+      "file": "clearing",
+      "signature": "Wide foliage opening / suspended paper folios",
+      "light": "Quiet woodland so the Atrium golden portal leads the eye",
+      "focal": [
+        48,
+        44
+      ],
+      "desktopFoot": [
+        [
+          9,
+          4
+        ],
+        [
+          28,
+          6
+        ],
+        [
+          47,
+          5
+        ],
+        [
+          55,
+          9
+        ]
+      ],
+      "mobileFoot": [
+        [
+          10,
+          5
+        ],
+        [
+          33,
+          7
+        ],
+        [
+          52,
+          5
+        ],
+        [
+          62,
+          8
+        ]
+      ],
+      "safe": "Visible Atrium, adjacent poster edge, entry and folio labels.",
+      "narrative": "Concept folios are separate paper artworks, not the torn river page.",
+      "desktop_png": "1440x900-clearing.png",
+      "mobile_png": "390x844-clearing.png"
+    },
+    {
+      "id": "river",
+      "number": "04",
+      "name": "River Stories",
+      "file": "river",
+      "signature": "Cool meander / contrasting shores / close view",
+      "light": "Cooler water against a pale torn-page silhouette",
+      "focal": [
+        69,
+        73
+      ],
+      "desktopFoot": [
+        [
+          47,
+          5
+        ],
+        [
+          61,
+          8
+        ],
+        [
+          70,
+          12
+        ],
+        [
+          77,
+          14
+        ]
+      ],
+      "mobileFoot": [
+        [
+          46,
+          8
+        ],
+        [
+          61,
+          12
+        ],
+        [
+          76,
+          15
+        ]
+      ],
+      "safe": "Move note buttons beneath portrait frame, never over Paperkeeper.",
+      "narrative": "One interactive torn-corner prop currently near left 69%, bottom 18%; duplicate painted papers await R16 source repaint.",
+      "desktop_png": "1440x900-river.png",
+      "mobile_png": "390x844-river.png"
+    },
+    {
+      "id": "house",
+      "number": "05",
+      "name": "House on the Hill",
+      "file": "house",
+      "signature": "Small cottage / gold window against hillside",
+      "light": "Cooler late-evening landscape while existing window light stays warm",
+      "focal": [
+        65,
+        29
+      ],
+      "desktopFoot": [
+        [
+          12,
+          4
+        ],
+        [
+          34,
+          13
+        ],
+        [
+          45,
+          20
+        ],
+        [
+          59,
+          30
+        ],
+        [
+          73,
+          40
+        ]
+      ],
+      "mobileFoot": [
+        [
+          14,
+          5
+        ],
+        [
+          39,
+          12
+        ],
+        [
+          52,
+          20
+        ],
+        [
+          62,
+          31
+        ],
+        [
+          72,
+          42
+        ]
+      ],
+      "safe": "Window and torn page stay away from house light toggle and Field Letter.",
+      "narrative": "Same torn-edge SVG prop at left 65% top 29% on mobile; real physical hanging and twilight repaint belong to R17.",
+      "desktop_png": "1440x900-house.png",
+      "mobile_png": "390x844-house.png"
+    }
+  ]
+}
