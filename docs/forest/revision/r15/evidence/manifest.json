@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15-rendered-v1",
-  "sourceCommit": "49ce63a152401f1103d9783de8cf874563903bf1",
+  "sourceCommit": "5a1ebb13f3b40b3e503e53aac505d2acd8696d74",
   "browser": "Chromium",
   "source": "real Vite build",
   "routes": [
@@ -13,92 +13,92 @@
     {
       "folder": "root/390x844",
       "name": "atrium-light-0",
-      "bytes": 235245,
-      "sha256": "644d579eccb52e94678d90cffebbbca37a51ac65aa1448106a5bfe32581a0465"
+      "bytes": 205586,
+      "sha256": "bee65ff8576cf36c4861abb1a78a0a7942d83973556b35bd198e2a0ef959b562"
     },
     {
       "folder": "root/390x844",
       "name": "atrium-light-50",
-      "bytes": 244180,
-      "sha256": "98415a9de3252d541600f9fe27b66abad951a33ce72cee2fe51bddbb3b1a93ee"
+      "bytes": 218202,
+      "sha256": "39a30bbe3721bacf3ae831bbc17f74f0c4d4a59f1a20ca46c3d55319c2a7068c"
     },
     {
       "folder": "root/390x844",
       "name": "atrium-light-100",
-      "bytes": 236674,
-      "sha256": "d8e1593f2593f3652734d73fb98b02475014ea9d0814fca9d84a9ac28a7a68ac"
+      "bytes": 212776,
+      "sha256": "1ea130b09336a0b1c2e41eb6bd3438b1876923c07ce9fdb6265d1543323aa5f7"
     },
     {
       "folder": "root/1440x900",
       "name": "poster-atrium",
-      "bytes": 264789,
-      "sha256": "9623e6db98b829f374f36be58d1500cf8dba697345a70a36239e496ab1bcb8c7"
+      "bytes": 264956,
+      "sha256": "a49f87343e1d5dfdd374672063b3974cc7067dec5e2a70d8bd8aab45d4596067"
     },
     {
       "folder": "root/1440x900",
       "name": "atrium-light-0",
-      "bytes": 766617,
-      "sha256": "de9f18a93753ecda68f2863d0316a914c23bfea85b173921f5899980df0ec727"
+      "bytes": 738992,
+      "sha256": "478150e04908f235579b00714371b28184c67d854ebdc4c0fd4c22d0c09d03b4"
     },
     {
       "folder": "root/1440x900",
       "name": "atrium-light-50",
-      "bytes": 771035,
-      "sha256": "400b844e669d617476528420488f9d8d316b0fe58f427ccaeec3f71696c1ae05"
+      "bytes": 745876,
+      "sha256": "4b6337561e74c831dae0b5971bf49136c931a870ab0dbcdb35f2360e8eaa869b"
     },
     {
       "folder": "root/1440x900",
       "name": "atrium-light-100",
-      "bytes": 776437,
-      "sha256": "807766ca8a5c4bad36182da8cde0e4dc82a4feb8ed9bfe564b22f4ea106de667"
+      "bytes": 749390,
+      "sha256": "075947e4191d7422b92be4fc915cef84254cff67203874da75dbd26c93cc69ab"
     },
     {
       "folder": "root/844x390",
       "name": "poster-atrium",
-      "bytes": 137256,
-      "sha256": "5d25bb57019af21ce27279b4b1410f859e0d6f08bd107ff9cf25c60979678bdd"
+      "bytes": 148187,
+      "sha256": "d93ad32613bf8277ad32a570b553ffc1c41b4076251b596359a95d4ff4fc8a68"
     },
     {
       "folder": "root/844x390",
       "name": "atrium-light-0",
-      "bytes": 267347,
-      "sha256": "c2cbc702ad782c00263307bdc7928417192779aabfdae54623319181e78a1bbb"
+      "bytes": 242162,
+      "sha256": "e8c3dc409b418e32df6a5ea75e31da313ca6f773324fdbbb03069bcb47e3029e"
     },
     {
       "folder": "root/844x390",
       "name": "atrium-light-50",
-      "bytes": 274262,
-      "sha256": "66832fe11ee036f7711e15e5f6c4121765bd0db867097441cebf7e41fb8526b4"
+      "bytes": 248537,
+      "sha256": "5ea69e2ff54e6f989b89c999334ba9c29e265297e4e5cf3fb9a7a74d0ea44f0d"
     },
     {
       "folder": "root/844x390",
       "name": "atrium-light-100",
-      "bytes": 274643,
-      "sha256": "77cf6660f772903910fa773fddafec3bef42383c81c9fe3b313d9c48825e3330"
+      "bytes": 246834,
+      "sha256": "4a90588688465c4147b4f40bd50f41abfa0e0ab017c09a64da285805dfdda7e5"
     },
     {
       "folder": "storybook/390x844",
       "name": "poster-atrium",
-      "bytes": 83279,
-      "sha256": "64ca6021ccfdaf5b922027a507b40d0dcddca1d061a9c3b45de0caa62bb54019"
+      "bytes": 103208,
+      "sha256": "9c80de83b0e51ea23295a1f885642b32aeb1b5bb74f2fe9f949b29e5a722cdef"
     },
     {
       "folder": "storybook/390x844",
       "name": "atrium-light-0",
-      "bytes": 235245,
-      "sha256": "644d579eccb52e94678d90cffebbbca37a51ac65aa1448106a5bfe32581a0465"
+      "bytes": 205586,
+      "sha256": "bee65ff8576cf36c4861abb1a78a0a7942d83973556b35bd198e2a0ef959b562"
     },
     {
       "folder": "storybook/390x844",
       "name": "atrium-light-50",
-      "bytes": 244180,
-      "sha256": "98415a9de3252d541600f9fe27b66abad951a33ce72cee2fe51bddbb3b1a93ee"
+      "bytes": 218202,
+      "sha256": "39a30bbe3721bacf3ae831bbc17f74f0c4d4a59f1a20ca46c3d55319c2a7068c"
     },
     {
       "folder": "storybook/390x844",
       "name": "atrium-light-100",
-      "bytes": 236674,
-      "sha256": "d8e1593f2593f3652734d73fb98b02475014ea9d0814fca9d84a9ac28a7a68ac"
+      "bytes": 212776,
+      "sha256": "1ea130b09336a0b1c2e41eb6bd3438b1876923c07ce9fdb6265d1543323aa5f7"
     },
     {
       "folder": "storybook/1440x900",
@@ -109,44 +109,44 @@
     {
       "folder": "storybook/1440x900",
       "name": "atrium-light-0",
-      "bytes": 766617,
-      "sha256": "de9f18a93753ecda68f2863d0316a914c23bfea85b173921f5899980df0ec727"
+      "bytes": 738992,
+      "sha256": "478150e04908f235579b00714371b28184c67d854ebdc4c0fd4c22d0c09d03b4"
     },
     {
       "folder": "storybook/1440x900",
       "name": "atrium-light-50",
-      "bytes": 771035,
-      "sha256": "400b844e669d617476528420488f9d8d316b0fe58f427ccaeec3f71696c1ae05"
+      "bytes": 745876,
+      "sha256": "4b6337561e74c831dae0b5971bf49136c931a870ab0dbcdb35f2360e8eaa869b"
     },
     {
       "folder": "storybook/1440x900",
       "name": "atrium-light-100",
-      "bytes": 776437,
-      "sha256": "807766ca8a5c4bad36182da8cde0e4dc82a4feb8ed9bfe564b22f4ea106de667"
+      "bytes": 749390,
+      "sha256": "075947e4191d7422b92be4fc915cef84254cff67203874da75dbd26c93cc69ab"
     },
     {
       "folder": "storybook/844x390",
       "name": "poster-atrium",
-      "bytes": 148189,
-      "sha256": "82872e06c3f85293fbaf36f1c45b84f78b9eab75526dffbe6cebfca1c6d00ad1"
+      "bytes": 137256,
+      "sha256": "5d25bb57019af21ce27279b4b1410f859e0d6f08bd107ff9cf25c60979678bdd"
     },
     {
       "folder": "storybook/844x390",
       "name": "atrium-light-0",
-      "bytes": 267347,
-      "sha256": "c2cbc702ad782c00263307bdc7928417192779aabfdae54623319181e78a1bbb"
+      "bytes": 242162,
+      "sha256": "e8c3dc409b418e32df6a5ea75e31da313ca6f773324fdbbb03069bcb47e3029e"
     },
     {
       "folder": "storybook/844x390",
       "name": "atrium-light-50",
-      "bytes": 274262,
-      "sha256": "66832fe11ee036f7711e15e5f6c4121765bd0db867097441cebf7e41fb8526b4"
+      "bytes": 248537,
+      "sha256": "5ea69e2ff54e6f989b89c999334ba9c29e265297e4e5cf3fb9a7a74d0ea44f0d"
     },
     {
       "folder": "storybook/844x390",
       "name": "atrium-light-100",
-      "bytes": 274643,
-      "sha256": "77cf6660f772903910fa773fddafec3bef42383c81c9fe3b313d9c48825e3330"
+      "bytes": 246834,
+      "sha256": "4a90588688465c4147b4f40bd50f41abfa0e0ab017c09a64da285805dfdda7e5"
     }
   ],
   "errors": []
