@@ -1,0 +1,282 @@
+{
+  "schema": "lazarus-r15a-production-character-v1",
+  "originalsPreserved": true,
+  "frame": {
+    "width": 128,
+    "height": 144,
+    "count": 9,
+    "baselineY": 133,
+    "paddingMin": 8,
+    "sheet": [
+      1152,
+      144
+    ]
+  },
+  "sourceProvenance": {
+    "journey": "storybook/assets/characters/paperkeeper-journey.webp",
+    "hero": "storybook/assets/entrance/r02/exports/paperkeeper.three-quarter.webp",
+    "front": "storybook/assets/characters/paperkeeper.front.webp",
+    "threeQuarter": "storybook/assets/characters/paperkeeper.three-quarter.webp",
+    "profile": "storybook/assets/characters/paperkeeper.profile.webp",
+    "back": "storybook/assets/characters/paperkeeper.back.webp",
+    "reader": "storybook/assets/characters/paperkeeper.read.webp",
+    "walkA": "storybook/assets/characters/paperkeeper.walk-a.webp",
+    "walkB": "storybook/assets/characters/paperkeeper.walk-b.webp",
+    "walkC": "storybook/assets/characters/paperkeeper.walk-c.webp"
+  },
+  "poses": {
+    "step-a": {
+      "slot": 0,
+      "source": "walkA",
+      "description": "walking study — original step A",
+      "normalizedRect": [
+        18,
+        18,
+        110,
+        132
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        95,
+        117
+      ],
+      "origin": [
+        16,
+        16
+      ],
+      "sha256": "8e37c30a34e1f719a00089c0ce344ff73bd7533820c3358a16b663f64fb57381",
+      "status": "source-derived-genuine-pose"
+    },
+    "step-b": {
+      "slot": 1,
+      "source": "walkB",
+      "description": "walking study — original step B",
+      "normalizedRect": [
+        21,
+        18,
+        106,
+        132
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        86,
+        117
+      ],
+      "origin": [
+        21,
+        16
+      ],
+      "sha256": "326d7602b10b34916d3b07258ccea83650af5290cd09a4ddb40450167dc7eb31",
+      "status": "source-derived-genuine-pose"
+    },
+    "step-c": {
+      "slot": 2,
+      "source": "walkC",
+      "description": "walking study — original step C",
+      "normalizedRect": [
+        24,
+        19,
+        102,
+        132
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        79,
+        116
+      ],
+      "origin": [
+        24,
+        17
+      ],
+      "sha256": "8ed2400df7b547e5f83ed413dc4fc27849c74d397ee8a5afc9be404c34569312",
+      "status": "source-derived-genuine-pose"
+    },
+    "stand": {
+      "slot": 3,
+      "source": "hero",
+      "description": "high-resolution R02 three-quarter, lantern in hand",
+      "normalizedRect": [
+        26,
+        8,
+        102,
+        133
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        76,
+        125
+      ],
+      "origin": [
+        26,
+        8
+      ],
+      "sha256": "9894f5bc890191698d932d85145d4510d09b0e2dce8c821ee5c98d9dd89beda5",
+      "status": "source-derived-genuine-pose"
+    },
+    "turn": {
+      "slot": 4,
+      "source": "profile",
+      "description": "turnaround profile; not a unique drawn turn animation",
+      "normalizedRect": [
+        27,
+        9,
+        101,
+        133
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        74,
+        124
+      ],
+      "origin": [
+        27,
+        9
+      ],
+      "sha256": "cc2a6cc44a1fa220bd24e759cc39e3c33e74a9bd6de75e011c002775e1b2520a",
+      "status": "source-derived-genuine-pose"
+    },
+    "look": {
+      "slot": 5,
+      "source": "front",
+      "description": "original illustrated front view",
+      "normalizedRect": [
+        23,
+        8,
+        104,
+        134
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        81,
+        126
+      ],
+      "origin": [
+        23,
+        8
+      ],
+      "sha256": "8c088bb3eedac43c4a55bb33460391491b925d0fa11cc4588f04f98e7bb9ade1",
+      "status": "source-derived-genuine-pose"
+    },
+    "reach": {
+      "slot": 6,
+      "source": "journey",
+      "description": "legacy river gesture, needs purpose-drawn refinement",
+      "normalizedRect": [
+        15,
+        10,
+        114,
+        131
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        102,
+        125
+      ],
+      "origin": [
+        13,
+        8
+      ],
+      "sha256": "d680f1c45656419f2735670a027fcfd699b180cc518b322acf401e8bff8463fa",
+      "status": "legacy-keyframe-needs-narrative-redraw"
+    },
+    "read": {
+      "slot": 7,
+      "source": "reader",
+      "description": "original seated reader; not interchangeable with lift",
+      "normalizedRect": [
+        17,
+        26,
+        112,
+        133
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        97,
+        107
+      ],
+      "origin": [
+        15,
+        26
+      ],
+      "sha256": "14669d58d1c3a224f7cb73ad04cb1157d38bc4ca42af1b5ea4446e1a0e76f467",
+      "status": "source-derived-genuine-pose"
+    },
+    "lantern": {
+      "slot": 8,
+      "source": "hero",
+      "description": "original illustrated lantern carrier",
+      "normalizedRect": [
+        26,
+        8,
+        102,
+        133
+      ],
+      "footAnchor": [
+        64,
+        133
+      ],
+      "targetSize": [
+        76,
+        125
+      ],
+      "origin": [
+        26,
+        8
+      ],
+      "sha256": "9894f5bc890191698d932d85145d4510d09b0e2dce8c821ee5c98d9dd89beda5",
+      "status": "source-derived-genuine-pose"
+    }
+  },
+  "releaseAssets": [
+    "pose-step-a.webp",
+    "pose-step-b.webp",
+    "pose-step-c.webp",
+    "pose-stand.webp",
+    "pose-turn.webp",
+    "pose-look.webp",
+    "pose-reach.webp",
+    "pose-read.webp",
+    "pose-lantern.webp",
+    "paperkeeper-journey-r15a.webp",
+    "entrance-r15a.webp",
+    "reader-r15a.webp",
+    "proof-paper.png",
+    "proof-dark.png",
+    "proof-river.png",
+    "proof-black.png"
+  ],
+  "sheetSha256": "f797f30a4fde234cf9a71b55beb3a811439645bbcafcab60c03824e933199af3",
+  "entrance": {
+    "sha256": "12f34ee3e4c425e6e8b2068978af6adba46c3ec1145a2005815898ef8a5d3566",
+    "size": [
+      622,
+      960
+    ],
+    "baselineY": 938,
+    "source": "storyboard/r02/exports/paperkeeper.three-quarter.webp"
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "schema": "lazarus-r15a-input-audit-v1",
+  "raw": {
+    "journey": {
+      "path": "storybook/assets/characters/paperkeeper-journey.webp",
+      "sha256": "c2f7c0d0fa7c537f350e16470109d473492497d5b2ba51a89285609b7a35165b",
+      "bytes": 85888,
+      "before": {
+        "rect": [
+          11,
+          6,
+          845,
+          96
+        ],
+        "opaque": 26356,
+        "partial": 6934,
+        "edgeWhite": 766,
+        "red": 34,
+        "dimensions": [
+          864,
+          100
+        ]
+      },
+      "after": {
+        "rect": [
+          11,
+          6,
+          845,
+          96
+        ],
+        "opaque": 26356,
+        "partial": 4014,
+        "edgeWhite": 73,
+        "red": 34,
+        "dimensions": [
+          864,
+          100
+        ]
+      },
+      "deletedSaturatedRed": 2920,
+      "decontaminatedEdgePixels": 621
+    },
+    "hero": {
+      "path": "storybook/assets/entrance/r02/exports/paperkeeper.three-quarter.webp",
+      "sha256": "3d78023cb5e52f6793adf4a5f00680b0f474a720fd4b92a5953b8fa47ceff3f3",
+      "bytes": 191112,
+      "before": {
+        "rect": [
+          22,
+          15,
+          576,
+          933
+        ],
+        "opaque": 269334,
+        "partial": 19206,
+        "edgeWhite": 0,
+        "red": 1538,
+        "dimensions": [
+          622,
+          960
+        ]
+      },
+      "after": {
+        "rect": [
+          22,
+          15,
+          576,
+          933
+        ],
+        "opaque": 269322,
+        "partial": 6029,
+        "edgeWhite": 0,
+        "red": 1520,
+        "dimensions": [
+          622,
+          960
+        ]
+      },
+      "deletedSaturatedRed": 13189,
+      "decontaminatedEdgePixels": 0
+    },
+    "front": {
+      "path": "storybook/assets/characters/paperkeeper.front.webp",
+      "sha256": "ae26eb6cf0290c86f75e963ad0d0e21c2376ff3d81d8a33da179029cc123a1bb",
+      "bytes": 63402,
+      "before": {
+        "rect": [
+          13,
+          13,
+          421,
+          645
+        ],
+        "opaque": 142519,
+        "partial": 6496,
+        "edgeWhite": 750,
+        "red": 277,
+        "dimensions": [
+          421,
+          658
+        ]
+      },
+      "after": {
+        "rect": [
+          13,
+          13,
+          421,
+          645
+        ],
+        "opaque": 142518,
+        "partial": 5325,
+        "edgeWhite": 222,
+        "red": 276,
+        "dimensions": [
+          421,
+          658
+        ]
+      },
+      "deletedSaturatedRed": 1172,
+      "decontaminatedEdgePixels": 1252
+    },
+    "threeQuarter": {
+      "path": "storybook/assets/characters/paperkeeper.three-quarter.webp",
+      "sha256": "d5318e71162ce5ef0700e194574729d1863bf889714dcaa8d7ec27be0bb3018e",
+      "bytes": 61016,
+      "before": {
+        "rect": [
+          13,
+          13,
+          416,
+          643
+        ],
+        "opaque": 140561,
+        "partial": 5934,
+        "edgeWhite": 814,
+        "red": 280,
+        "dimensions": [
+          426,
+          656
+        ]
+      },
+      "after": {
+        "rect": [
+          13,
+          13,
+          416,
+          643
+        ],
+        "opaque": 140556,
+        "partial": 4854,
+        "edgeWhite": 198,
+        "red": 275,
+        "dimensions": [
+          426,
+          656
+        ]
+      },
+      "deletedSaturatedRed": 1085,
+      "decontaminatedEdgePixels": 1206
+    },
+    "profile": {
+      "path": "storybook/assets/characters/paperkeeper.profile.webp",
+      "sha256": "616d9a52618d86920a13c703129a13096117adca4e9b05706eb8a670b0ff94c1",
+      "bytes": 55230,
+      "before": {
+        "rect": [
+          12,
+          13,
+          380,
+          635
+        ],
+        "opaque": 118309,
+        "partial": 5431,
+        "edgeWhite": 656,
+        "red": 246,
+        "dimensions": [
+          393,
+          648
+        ]
+      },
+      "after": {
+        "rect": [
+          12,
+          13,
+          380,
+          635
+        ],
+        "opaque": 118308,
+        "partial": 4502,
+        "edgeWhite": 170,
+        "red": 245,
+        "dimensions": [
+          393,
+          648
+        ]
+      },
+      "deletedSaturatedRed": 930,
+      "decontaminatedEdgePixels": 1046
+    },
+    "back": {
+      "path": "storybook/assets/characters/paperkeeper.back.webp",
+      "sha256": "c79dc987c50f0276fb563549ffab37a671b26535f12860b32978fdc60f2b1200",
+      "bytes": 64426,
+      "before": {
+        "rect": [
+          13,
+          13,
+          418,
+          648
+        ],
+        "opaque": 138506,
+        "partial": 6284,
+        "edgeWhite": 767,
+        "red": 133,
+        "dimensions": [
+          431,
+          661
+        ]
+      },
+      "after": {
+        "rect": [
+          13,
+          13,
+          418,
+          648
+        ],
+        "opaque": 138505,
+        "partial": 5175,
+        "edgeWhite": 199,
+        "red": 132,
+        "dimensions": [
+          431,
+          661
+        ]
+      },
+      "deletedSaturatedRed": 1110,
+      "decontaminatedEdgePixels": 1281
+    },
+    "reader": {
+      "path": "storybook/assets/characters/paperkeeper.read.webp",
+      "sha256": "83a15ba622c822a8292268b5321dc47b21ff464267e52f32979a32e5b34eeb96",
+      "bytes": 3098,
+      "before": {
+        "rect": [
+          5,
+          0,
+          78,
+          82
+        ],
+        "opaque": 3618,
+        "partial": 682,
+        "edgeWhite": 110,
+        "red": 14,
+        "dimensions": [
+          86,
+          90
+        ]
+      },
+      "after": {
+        "rect": [
+          5,
+          0,
+          77,
+          81
+        ],
+        "opaque": 3540,
+        "partial": 147,
+        "edgeWhite": 0,
+        "red": 14,
+        "dimensions": [
+          86,
+          90
+        ]
+      },
+      "deletedSaturatedRed": 0,
+      "decontaminatedEdgePixels": 0
+    },
+    "walkA": {
+      "path": "storybook/assets/characters/paperkeeper.walk-a.webp",
+      "sha256": "c18785d950eeb33c1288f9b5f2a250cf62f3ac3705b30c5dcba3c9dcd9bfcc5a",
+      "bytes": 2918,
+      "before": {
+        "rect": [
+          8,
+          3,
+          76,
+          87
+        ],
+        "opaque": 3147,
+        "partial": 818,
+        "edgeWhite": 100,
+        "red": 0,
+        "dimensions": [
+          84,
+          95
+        ]
+      },
+      "after": {
+        "rect": [
+          8,
+          3,
+          76,
+          87
+        ],
+        "opaque": 3027,
+        "partial": 176,
+        "edgeWhite": 0,
+        "red": 0,
+        "dimensions": [
+          84,
+          95
+        ]
+      },
+      "deletedSaturatedRed": 0,
+      "decontaminatedEdgePixels": 0
+    },
+    "walkB": {
+      "path": "storybook/assets/characters/paperkeeper.walk-b.webp",
+      "sha256": "a6a2e24b5cd2475ffc2dbde539f4da7451a2a23e36962fea0ba70ab17bbba3d6",
+      "bytes": 2776,
+      "before": {
+        "rect": [
+          0,
+          4,
+          61,
+          87
+        ],
+        "opaque": 3074,
+        "partial": 720,
+        "edgeWhite": 119,
+        "red": 0,
+        "dimensions": [
+          69,
+          95
+        ]
+      },
+      "after": {
+        "rect": [
+          0,
+          5,
+          61,
+          87
+        ],
+        "opaque": 2995,
+        "partial": 155,
+        "edgeWhite": 0,
+        "red": 0,
+        "dimensions": [
+          69,
+          95
+        ]
+      },
+      "deletedSaturatedRed": 0,
+      "decontaminatedEdgePixels": 0
+    },
+    "walkC": {
+      "path": "storybook/assets/characters/paperkeeper.walk-c.webp",
+      "sha256": "2cc12d5925bde89cad077a3aa725e69c518ad86c7b390590c400729e384def9e",
+      "bytes": 2700,
+      "before": {
+        "rect": [
+          0,
+          4,
+          56,
+          87
+        ],
+        "opaque": 3078,
+        "partial": 589,
+        "edgeWhite": 87,
+        "red": 0,
+        "dimensions": [
+          64,
+          95
+        ]
+      },
+      "after": {
+        "rect": [
+          0,
+          4,
+          56,
+          86
+        ],
+        "opaque": 2874,
+        "partial": 98,
+        "edgeWhite": 0,
+        "red": 0,
+        "dimensions": [
+          64,
+          95
+        ]
+      },
+      "deletedSaturatedRed": 0,
+      "decontaminatedEdgePixels": 0
+    }
+  },
+  "notes": [
+    "All canonical Stage05 and R02 source exports remain immutable.",
+    "White edge diagnostics are numerical candidates; intended cream highlights are protected.",
+    "Narrative river action is not falsely claimed to be a brand-new hand-drawn reach/lift/carry pose."
+  ]
+}
