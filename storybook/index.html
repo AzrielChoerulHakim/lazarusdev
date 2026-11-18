@@ -56,6 +56,7 @@
   <link rel="stylesheet" href="../src/storybook/styles/ink-r11.css">
   <link rel="stylesheet" href="../src/storybook/styles/keeper-journey.css">
   <link rel="stylesheet" href="../src/storybook/styles/atrium-room.css">
+  <link rel="stylesheet" href="../src/storybook/styles/paper-rescue.css">
   <script type="module" src="../src/storybook/main.js"></script>
   <script type="module" src="../src/storybook/entrance-acting-integration.js"></script>
   <script type="module" src="../src/storybook/work-clearing.js"></script>
@@ -64,6 +65,7 @@
   <script type="module" src="../src/storybook/chapter-attention.js"></script>
   <script type="module" src="../src/storybook/keeper-journey.js"></script>
   <script type="module" src="../src/storybook/atrium-room.js"></script>
+  <script type="module" src="../src/storybook/paper-rescue.js"></script>
 </head>
 <body class="forest-site">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -299,7 +301,7 @@
     </section>
     <nav class="forest-seam forest-seam--river" data-chapter-seam data-seam-from="work-clearing" data-seam-to="river-stories" aria-label="From chapter 03 to chapter 04">
       <div class="forest-seam-inner">
-        <span class="forest-seam-origin"><strong>He ducks beneath the last sheet. You hear running water. Two loose pages have caught against the riverbank.</strong></span>
+        <span class="forest-seam-origin"><strong>He ducks beneath the last sheet. You hear running water. One pale sheet is caught at the riverbank.</strong></span>
         <span class="keeper-crossing" aria-hidden="true"><span class="journey-walker" data-walk="crossing" aria-hidden="true"></span></span>
         <div class="forest-seam-next"><a class="forest-seam-link" href="#river-stories">Follow the river notes <span aria-hidden="true"><svg class="journey-arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path transform="rotate(-45 8 8)" d="M2 8h11M8 3l5 5-5 5"/></svg></span></a></div>
       </div>
@@ -327,13 +329,15 @@
             <img class="portrait-native-art portrait-native-art--river-stories" src="./assets/mobile-native/river-stories-portrait.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
             <img class="forest-r05-ink forest-r05-ink--river" src="../storybook/assets/revision/r05/river-ripple.svg" width="240" height="240" alt="" aria-hidden="true" loading="lazy" decoding="async" fetchpriority="low">
             <span class="journey-walker" data-walk="river" aria-hidden="true"></span>
+            <span class="rescue-page" aria-hidden="true"><svg viewBox="0 0 104 142" class="kept-page-art" aria-hidden="true" focusable="false"><path d="M4 4L98 3L100 117L78 119L69 136L58 124L42 139L33 126L3 129Z" fill="#f7e8c5" stroke="#796c55" stroke-width="4"/><path d="M18 26H77M18 42H88M18 58H73M18 74H82M18 91H66M18 107H83" fill="none" stroke="#b4a17b" stroke-width="2" stroke-dasharray="37 5 13 6" opacity=".75"/><path d="M36 4L19 26M96 94L78 119M42 139L40 118" fill="none" stroke="#a38c63" opacity=".65" stroke-width="3"/><path d="M8 113Q40 99 97 115" fill="none" stroke="#739ca1" stroke-width="10" opacity=".4"/></svg></span><span class="rescue-lantern" aria-hidden="true"><svg viewBox="0 0 70 92" focusable="false" aria-hidden="true"><path d="M35 13V5M23 15Q35-2 47 15" fill="none" stroke="#4e5033" stroke-width="5" stroke-linecap="round"/><path d="M16 28Q35 15 54 28L57 62Q35 79 13 62Z" fill="#76583a" stroke="#3d432e" stroke-width="4"/><path d="M23 32Q35 24 47 32L48 57Q35 66 21 57Z" fill="#f6cf73"/><path d="M26 38L43 52M45 36L23 54" stroke="#fff2b1" stroke-width="3" opacity=".8"/><path d="M19 66H51M25 76H45" stroke="#514533" stroke-width="6" stroke-linecap="round"/></svg></span>
             <img class="river-roundbird" src="./assets/characters/roundbird.idle.webp" alt="" aria-hidden="true" width="160" height="156" loading="lazy" decoding="async" fetchpriority="low">
-            <figcaption id="river-scene-description" class="river-scene-caption"><span>FIELD SKETCH / 04</span><span>A river carries unfinished ideas forward.</span></figcaption>
+            <figcaption id="river-scene-description" class="river-scene-caption"><span>FIELD SKETCH / 04</span><span>He notices a torn page caught at the water’s edge.</span></figcaption>
             <nav class="river-stone-nav" aria-label="Jump to editorial outlines">
               <a href="#river-note-a" data-river-jump="river-note-a"><span class="river-stone-n">A</span><span>Impossible portal</span><span aria-hidden="true"><svg class="journey-arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path transform="rotate(45 8 8)" d="M2 8h11M8 3l5 5-5 5"/></svg></span></a>
               <a href="#river-note-b" data-river-jump="river-note-b"><span class="river-stone-n">B</span><span>Material &amp; mood</span><span aria-hidden="true"><svg class="journey-arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path transform="rotate(45 8 8)" d="M2 8h11M8 3l5 5-5 5"/></svg></span></a>
             </nav>
           </figure>
+          <p class="river-rescue-caption">One small page, rescued from the water. Look for its torn corner when you reach the house.</p>
           <div class="river-notebook">
             <div class="river-notebook-head">
               <p class="eyebrow">NOTES IN DEVELOPMENT <span aria-hidden="true">—</span> NOT PUBLISHED ARTICLES</p>
@@ -380,7 +384,7 @@
     </section>
     <nav class="forest-seam forest-seam--house" data-chapter-seam data-seam-from="river-stories" data-seam-to="house-on-the-hill" aria-label="From chapter 04 to chapter 05">
       <div class="forest-seam-inner">
-        <span class="forest-seam-origin"><strong>From the bank you can see a square of lamplight. The Paperkeeper takes the pages and starts up the hill.</strong></span>
+        <span class="forest-seam-origin"><strong>From the bank you can see a square of lamplight. The Paperkeeper carries the rescued page up the hill.</strong></span>
         <span class="keeper-crossing" aria-hidden="true"><span class="journey-walker" data-walk="crossing" aria-hidden="true"></span></span>
         <div class="forest-seam-next"><a class="forest-seam-link" href="#house-on-the-hill">Find the house on the hill <span aria-hidden="true"><svg class="journey-arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path transform="rotate(-45 8 8)" d="M2 8h11M8 3l5 5-5 5"/></svg></span></a></div>
       </div>
@@ -418,13 +422,15 @@
         </picture>
         <img class="portrait-native-glow" src="./assets/mobile-native/house-window-glow.svg" alt="" aria-hidden="true" width="768" height="1152" loading="lazy" decoding="async" fetchpriority="low">
         <span class="journey-walker" data-walk="house" aria-hidden="true"></span>
+        <span class="kept-page-window" aria-hidden="true"><span class="kept-page-twine"></span><svg viewBox="0 0 104 142" class="kept-page-art" aria-hidden="true" focusable="false"><path d="M4 4L98 3L100 117L78 119L69 136L58 124L42 139L33 126L3 129Z" fill="#f7e8c5" stroke="#796c55" stroke-width="4"/><path d="M18 26H77M18 42H88M18 58H73M18 74H82M18 91H66M18 107H83" fill="none" stroke="#b4a17b" stroke-width="2" stroke-dasharray="37 5 13 6" opacity=".75"/><path d="M36 4L19 26M96 94L78 119M42 139L40 118" fill="none" stroke="#a38c63" opacity=".65" stroke-width="3"/><path d="M8 113Q40 99 97 115" fill="none" stroke="#739ca1" stroke-width="10" opacity=".4"/></svg></span>
       </div>
       <figcaption class="house-scene-caption" id="house-scene-caption">
-        <span class="house-scene-meta"><span>FIELD SKETCH / 05</span><span>A place to return to.</span></span>
+        <span class="house-scene-meta"><span>FIELD SKETCH / 05</span><span>The same torn corner returns, drying near the window.</span></span>
         <button type="button" class="house-light-toggle" data-house-light-toggle aria-pressed="false" aria-controls="house-light-status" hidden><span aria-hidden="true">✳</span><span data-house-light-label>Brighten the windows</span></button>
         <span id="house-light-status" class="house-light-status" role="status" aria-live="polite">A little light is already on.</span>
       </figcaption>
     </figure>
+    <p class="house-kept-caption">By the warm window, the same torn page dries. A clean sheet waits on the desk for your Field Letter.</p>
 
     <div class="house-ending">
       <div class="house-ending-editorial">
@@ -432,7 +438,7 @@
         <h3>Every unfamiliar world<br><em>begins with a question.</em></h3>
         <p>Whether it becomes a website, a digital product, or something we have yet to name, a good idea deserves more than a familiar template.</p>
         <div class="house-ending-rule" aria-hidden="true"><span>✳</span></div>
-        <p class="house-ending-aside">Inside, the Paperkeeper lays the two damp pages by the lamp. A dry sheet and a pencil are waiting for you.</p>
+        <p class="house-ending-aside">Inside, the Paperkeeper leaves the rescued page by the window to dry. A clean sheet and a pencil are waiting for you.</p>
       </div>
       <section class="house-contact" id="studio-inquiry" tabindex="-1" aria-labelledby="house-inquiry-title">
         <p class="eyebrow">A LETTER LEFT AT THE DOOR</p>

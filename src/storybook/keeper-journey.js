@@ -63,6 +63,12 @@ function paint(walker, state, still) {
   } else if (!still && !reduced.matches && state.distance !== undefined && progress > 0 && progress < 1) {
     pose = now < state.turnUntil ? 'turn' : strides[Math.floor(point.distance / (state.height * size * .18)) % strides.length];
   }
+  // A finite rescue beat takes precedence over ordinary scrolling poses.
+  if (kind === 'river' && !seam) {
+    const story = walker.closest('.river-scene')?.dataset.rescue;
+    const storyPose = {watch:'look', lantern:'look', reach:'reach', lift:'read', carrying:'read', still:'read'};
+    if (story && storyPose[story]) pose = storyPose[story];
+  }
   if (kind === 'river') {
     const lift = Math.min(1, Math.max(0, (progress - arrival) / (.88 - arrival)));
     walker.style.setProperty('--page-lift', String(lift));
