@@ -12,8 +12,15 @@ try {
    const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
+   // Follow the actual native Explore the work anchor before the room CTA.
+   await page.locator('#entrance .button-primary[href="#work-clearing"]').click();
    const button=page.locator('.atrium-clearing-shortcut');
    await button.scrollIntoViewIfNeeded();
+   console.log('ATRIUM CTA geometry',JSON.stringify(await button.evaluate(el=>{
+     const box=el.getBoundingClientRect();
+     const hit=document.elementFromPoint(box.left+box.width/2,box.top+box.height/2);
+     return {y:scrollY,top:box.top,left:box.left,height:box.height,hit:hit?.className||hit?.tagName};
+   })));
    const before=await page.evaluate(()=>({y:scrollY, x:document.querySelector('.work-hangings').scrollLeft}));
    await button.click();
    await page.waitForFunction(()=>!document.querySelector('#atrium-room').hidden);

@@ -45,3 +45,7 @@
  .atrium-room *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 @media(forced-colors:active){.atrium-back,.atrium-note-entry,.atrium-clearing-shortcut{border:2px solid ButtonText}}
+
+/* Keep the entered-world invitation above earlier chapters during lazy layout reflow. */
+.chapter-clearing{position:relative;z-index:3;isolation:isolate}
+.atrium-clearing-shortcut{position:relative;z-index:5;max-width:100%}
