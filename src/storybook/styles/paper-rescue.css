@@ -43,3 +43,17 @@
  .rescue-page,.rescue-lantern,.kept-page-window{animation:none!important;transition:none!important}
  .river-scene[data-rescue="reach"] .rescue-page,.river-scene[data-rescue="lift"] .rescue-page,.river-scene[data-rescue="carrying"] .rescue-page{animation:none!important;transform:translate(-35px,-63px) rotate(-14deg)}
 }
+
+/* R15A / Physical continuity between new hand-painted action sprites and
+   the existing DOM props. The five new cells already show the lantern and
+   held paper in the hands; the older duplicate overlaid lantern and hovering
+   page would otherwise create two of each object on actual screenshots.
+   Leave semantic DOM props intact for R16's single-page reconstruction. */
+.river-scene .rescue-lantern{
+ opacity:0!important;
+ visibility:hidden!important;
+}
+.river-scene:is([data-rescue="lift"],[data-rescue="carrying"],[data-rescue="still"]) .rescue-page{
+ opacity:0!important;
+ visibility:hidden!important;
+}

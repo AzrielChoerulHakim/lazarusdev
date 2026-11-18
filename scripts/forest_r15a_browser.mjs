@@ -91,6 +91,13 @@ try{
      if(width<=390){
        assert.equal(info.pose,'carry','reduced-motion must show genuine static carry pose');
        assert.equal(info.storySheet,true,'scene must use actual five illustrated story poses');
+       const duplicate=await page.evaluate(()=>{
+         const river=document.querySelector('.river-scene');
+         return {lantern:getComputedStyle(river.querySelector('.rescue-lantern')).visibility,
+           page:getComputedStyle(river.querySelector('.rescue-page')).visibility};
+       });
+       assert.deepEqual(duplicate,{lantern:'hidden',page:'hidden'},
+         'avoid two lanterns and a disconnected hovering page in carry pose');
      }
      const covered=intersect(info.walker,info.navRect);
      const fraction=info.walker?covered/Math.max(1,info.walker.width*info.walker.height):0;
