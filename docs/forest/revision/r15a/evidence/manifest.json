@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v1",
-  "sourceCommit": "87366b7cfaef950f971267de375a3d1bc09b7a25",
+  "sourceCommit": "8cd2a71a4592891fc174cae3ce375ff184d04ed8",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
