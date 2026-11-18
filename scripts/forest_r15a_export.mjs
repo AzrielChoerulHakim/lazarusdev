@@ -171,10 +171,12 @@ for(const name of Object.keys(sourcePaths)){
   decontaminatedEdgePixels:orig.corrected};
 }
 const sourceStrip=read.journey;
-if(sourceStrip.width!==900||sourceStrip.height!==100)throw Error('Expected R11 900×100 journey strip');
+if(sourceStrip.width % 9 !== 0 || sourceStrip.height<80)
+ throw Error('Journey must contain nine equal cells, received '+sourceStrip.width+'×'+sourceStrip.height);
+const sourceCellWidth=sourceStrip.width/9;
 const stripFrames=[];
 for(let i=0;i<9;i++){
- const raw=cropData(sourceStrip,[i*100,0,(i+1)*100,100],0);
+ const raw=cropData(sourceStrip,[i*sourceCellWidth,0,(i+1)*sourceCellWidth,sourceStrip.height],0);
  // Use original painterly frame 7 for the seated posture; frame 6 is an
  // existing limited key pose, not an artist-verified hand-reach.
  stripFrames.push(raw);
