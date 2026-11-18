@@ -37,7 +37,15 @@ try{
   assert.equal(response.status(),200);
   const visible=await page.evaluate(async()=>{
    const assets=[document.querySelector('.entrance-paperkeeper'),document.querySelector('.river-paperkeeper-reader')];
-   for(const img of assets){img.loading='eager';await img.decode();}
+   for(const img of assets){
+     if(!img)throw Error('Missing Paperkeeper image in site');
+     img.loading='eager';
+     try { await img.decode(); }
+     catch(error) {
+       throw new Error('Paperkeeper failed to load '+img.src+
+       ' complete='+img.complete+' natural='+img.naturalWidth+' : '+String(error));
+     }
+   }
    const walker=document.querySelector('[data-walk="river"]');
    const css=getComputedStyle(walker),url=css.backgroundImage;
    const match=/url\(["']?([^"')]+)["']?\)/.exec(url);

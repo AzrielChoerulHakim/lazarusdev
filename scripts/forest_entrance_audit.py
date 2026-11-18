@@ -36,7 +36,14 @@ for path in (Path('index.html'),Path('storybook/index.html')):
     html=path.read_text(encoding='utf-8')
     assert 'entrance-desktop.webp' in html
     assert 'entrance-mobile.webp' in html
-    assert 'paperkeeper.three-quarter.webp' in html
+    # R15A replaces the displayed image with a source-preserving cleaned alpha
+    # export. The original Stage05 character is still hashed and retained.
+    assert ('paperkeeper.three-quarter.webp' in html or 'r15a/entrance-r15a.webp' in html), path
+    if 'r15a/entrance-r15a.webp' in html:
+        replacement=Path('storybook/assets/characters/r15a/entrance-r15a.webp')
+        assert replacement.is_file(),replacement
+        with Image.open(replacement) as image:
+            assert image.mode=='RGBA' and image.size==(622,960)
     assert 'entrance-leaf-cue.webp' in html
     assert 'id="entrance-title"' in html
     assert 'href="#work-clearing"' in html
