@@ -1,0 +1,19 @@
+/* R12 — every visitor encounters authored scene motion without opt-in controls.
+   No continuous movement, scroll hijacking, or whole-body puppet rotation. */
+.path-trace-toggle,.keeper-motion-trigger,.house-light-toggle {display:none!important;}
+.path-map-art[data-auto-motion="route"] .forest-r05-ink--path,
+.work-clearing-world[data-auto-motion="folio"] .forest-r05-ink--folio {animation:forest-r06-ink .72s ease-out 1 both;}
+.river-scene[data-auto-motion="note"] .forest-r05-ink--river,
+.house-scene[data-auto-motion="lantern"] .forest-r05-ink--house {animation:forest-r06-ripple .85s ease-out 1 both;}
+@keyframes r12-arrival-ink {
+  from {opacity:.42;filter:saturate(.78);}
+  to {opacity:1;filter:saturate(1);}
+}
+.chapter-entrance .entrance-stage[data-auto-motion="arrival"] .entrance-canvas {animation:r12-arrival-ink 1.05s ease-out 1 both;}
+@media(prefers-reduced-motion:reduce){
+ .chapter-entrance .entrance-stage[data-auto-motion="arrival"] .entrance-canvas,
+ .path-map-art[data-auto-motion="route"] .forest-r05-ink--path,
+ .work-clearing-world[data-auto-motion="folio"] .forest-r05-ink--folio,
+ .river-scene[data-auto-motion="note"] .forest-r05-ink--river,
+ .house-scene[data-auto-motion="lantern"] .forest-r05-ink--house {animation:none!important;}
+}
