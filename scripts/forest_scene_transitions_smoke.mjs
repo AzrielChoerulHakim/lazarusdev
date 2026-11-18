@@ -62,9 +62,9 @@ try {
    const reduce=await page.evaluate(()=>{
      const seam=document.querySelector('[data-chapter-seam]');
      const path=seam.querySelector('[data-walk]');
-     return {line: getComputedStyle(path).animationDuration,links:document.querySelectorAll('.forest-seam-link').length};
+     return {line: getComputedStyle(path).animationName,links:document.querySelectorAll('.forest-seam-link').length};
    });
-   assert.equal(Number.parseFloat(reduce.line),0,route+' reduced motion no ink draw');
+   assert.equal(reduce.line,'none',route+' reduced motion no ink draw');
    assert.equal(reduce.links,4);
   } finally {await ctx.close();}
   const nojs=await browser.newContext({viewport:{width:320,height:720},javaScriptEnabled:false});
@@ -76,13 +76,13 @@ try {
      seams:document.querySelectorAll('[data-chapter-seam]').length,
      nojs:document.documentElement.classList.contains('no-js'),
      anchors:[...document.querySelectorAll('a.forest-seam-link')].map(el=>el.hash),
-     line:getComputedStyle(document.querySelector('[data-walk]')).animationDuration
+     line:getComputedStyle(document.querySelector('[data-walk]')).animationName
    }));
    assert.equal(fallback.scenes,5,route+' static scenes');
    assert.equal(fallback.seams,4,route+' static seams');
    assert.equal(fallback.nojs,true,route+' document retains no-JS fallback class');
    assert.deepEqual(fallback.anchors,targets.map(t=>'#'+t),route+' static anchors');
-   assert.equal(Number.parseFloat(fallback.line),0,route+' illustrated stroke visible without JS');
+   assert.equal(fallback.line,'none',route+' illustrated stroke visible without JS');
   } finally {await nojs.close();}
   console.log('PASS reduced motion and no-JS',route);
  }
