@@ -13,7 +13,7 @@ for(const p of [a,b,c]) {
  assert.ok(p.left.penumbra&&p.right.penumbra);
  assert.ok(p.reliefOpacity>=0&&p.reliefOpacity<=1);
  assert.ok(p.reliefRaking>=0&&p.reliefRaking<=1);
- assert.ok(p.beamX2>p.beamX1);
+ assert.ok(p.reliefBeamTo>p.reliefBeamFrom);
 }
 assert.ok(a.left.direction>0&&a.right.direction>0,'left lamp casts rightward shadows');
 assert.ok(c.left.direction<0&&c.right.direction<0,'right lamp casts leftward shadows');
