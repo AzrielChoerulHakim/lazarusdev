@@ -70,4 +70,12 @@ jobs:
           git add docs/forest/revision/r15a/evidence/
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'test(forest-r15a): freeze real five-chapter character scene captures [skip ci]'
-          git push origin HEAD:main
+          # Another visual-evidence workflow can advance main concurrently.
+          # Rebase only our source-preserving commit; never force-push.
+          for retry in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 2
+          done
+          exit 1
