@@ -1,6 +1,6 @@
 {
-  "schema": "lazarus-r15a-live-scene-v1",
-  "sourceCommit": "a6490dd4f3643c98c73965869d1f09ff84676c7b",
+  "schema": "lazarus-r15a-live-scene-v2",
+  "sourceCommit": "4a0670ffaab1732f57c222d3613dd7c3d3728b9e",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -224,6 +224,26 @@
       "file": "storybook/844x390/scene-house.png",
       "bytes": 800917,
       "sha256": "f57e351fd0964df0767ebb8445a042cbe7494de0fe697b94186d2ab8fd230cb7"
+    },
+    {
+      "file": "root/390x844/rescue-lift.png",
+      "bytes": 343994,
+      "sha256": "50b2c7aaa835dd8da201e70f3655f03de300861725316bfe4ca5dd730f3b5bd5"
+    },
+    {
+      "file": "root/390x844/rescue-carrying.png",
+      "bytes": 343926,
+      "sha256": "95ac365f2dd91fd6e6825e76823934e1c591a26b1ff8ed519ea6da57256abfb5"
+    },
+    {
+      "file": "storybook/390x844/rescue-lift.png",
+      "bytes": 343994,
+      "sha256": "50b2c7aaa835dd8da201e70f3655f03de300861725316bfe4ca5dd730f3b5bd5"
+    },
+    {
+      "file": "storybook/390x844/rescue-carrying.png",
+      "bytes": 343926,
+      "sha256": "95ac365f2dd91fd6e6825e76823934e1c591a26b1ff8ed519ea6da57256abfb5"
     }
   ],
   "metrics": [
@@ -1194,9 +1214,85 @@
       "storySheet": false,
       "navRect": null,
       "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "rescue-action",
+      "history": [
+        {
+          "phase": "watch",
+          "pose": "look-down"
+        },
+        {
+          "phase": "lantern",
+          "pose": "set-lantern"
+        },
+        {
+          "phase": "reach",
+          "pose": "reach"
+        },
+        {
+          "phase": "lift",
+          "pose": "lift"
+        },
+        {
+          "phase": "carrying",
+          "pose": "carry"
+        }
+      ],
+      "expected": {
+        "watch": "look-down",
+        "lantern": "set-lantern",
+        "reach": "reach",
+        "lift": "lift",
+        "carrying": "carry"
+      },
+      "source": "actual browser DOM mutation / 5 action phases"
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "rescue-action",
+      "history": [
+        {
+          "phase": "watch",
+          "pose": "look-down"
+        },
+        {
+          "phase": "lantern",
+          "pose": "set-lantern"
+        },
+        {
+          "phase": "reach",
+          "pose": "reach"
+        },
+        {
+          "phase": "lift",
+          "pose": "lift"
+        },
+        {
+          "phase": "carrying",
+          "pose": "carry"
+        }
+      ],
+      "expected": {
+        "watch": "look-down",
+        "lantern": "set-lantern",
+        "reach": "reach",
+        "lift": "lift",
+        "carrying": "carry"
+      },
+      "source": "actual browser DOM mutation / 5 action phases"
     }
   ],
   "failures": [],
-  "signOff": "USER-APPROVED-DIRECTION / ART-CUTOUT-MANUAL-SIGNOFF-SEPARATE",
+  "signOff": "USER-APPROVED-DIRECTION / ARTWORK-REVIEWED-IN-RENDER",
   "physicalPhone": "NOT VERIFIED"
 }
