@@ -48,17 +48,19 @@ try{
        throw new Error('Paperkeeper current image is missing '+img.src);
    }
    const walker=document.querySelector('[data-walk="river"]');
+   const legacyUrl=getComputedStyle(document.querySelector('[data-walk="path"]')).backgroundImage;
    const css=getComputedStyle(walker),url=css.backgroundImage;
    const match=/url\(["']?([^"')]+)["']?\)/.exec(url);
    if(!match)return {url,width:0,height:0,alpha:255};
    const im=new Image();im.src=match[1];await im.decode();
    const canvas=document.createElement('canvas');canvas.width=im.naturalWidth;canvas.height=im.naturalHeight;
    const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(im,0,0);
-   return {url,width:canvas.width,height:canvas.height,alpha:ctx.getImageData(0,0,1,1).data[3],
+   return {url,legacyUrl,width:canvas.width,height:canvas.height,alpha:ctx.getImageData(0,0,1,1).data[3],
       entrance:assets[0].naturalWidth,reader:assets[1].naturalWidth};
   });
-  assert.match(visible.url,/paperkeeper-journey-r15a/,'must use new production asset');
-  assert.deepEqual([visible.width,visible.height],[1152,144]);
+  assert.match(visible.url,/narrative-journey-r15a/,'river now uses newly drawn five-frame story');
+  assert.match(visible.legacyUrl,/paperkeeper-journey-r15a/,'walkers must still use nine original-derived frames');
+  assert.deepEqual([visible.width,visible.height],[640,144]);
   assert.equal(visible.alpha,0,'sprite sheet corner must be truly transparent');
   assert.equal(visible.entrance,622);
   assert.equal(visible.reader,128);
