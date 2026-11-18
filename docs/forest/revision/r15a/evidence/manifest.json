@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "4a0670ffaab1732f57c222d3613dd7c3d3728b9e",
+  "sourceCommit": "2e051311ee7afdd56584c7816026e1d25cb0db7a",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -42,8 +42,8 @@
     },
     {
       "file": "root/1440x900/scene-river.png",
-      "bytes": 2103557,
-      "sha256": "05c82bb1464db014da864d4eee85e310d06aeb9fcfb9692041e1cdd189435054"
+      "bytes": 2108037,
+      "sha256": "b89367f4ffecc8e7e0749c49e5151478d20f4477017317681905652ab082cd5f"
     },
     {
       "file": "root/1440x900/scene-house.png",
@@ -67,8 +67,8 @@
     },
     {
       "file": "root/390x844/scene-river.png",
-      "bytes": 343682,
-      "sha256": "dbba499788591e318e5531936928d52b41e2c0bd612cee105ed2b0c2abc38e41"
+      "bytes": 344548,
+      "sha256": "a218fa6b21d9d70a06b9383ca5f84d18c812205a5159c6e4df52814ae6ed66e6"
     },
     {
       "file": "root/390x844/scene-house.png",
@@ -92,8 +92,8 @@
     },
     {
       "file": "root/320x720/scene-river.png",
-      "bytes": 257480,
-      "sha256": "cf8f20a55dfba4001881c3a72aeac6bd6cb02a2049803eb6f2d92f10309a6e7d"
+      "bytes": 258118,
+      "sha256": "09f710a311bab6c410b01e3c5c75a8603007d129589d64b4bfcd3645be9d778a"
     },
     {
       "file": "root/320x720/scene-house.png",
@@ -117,8 +117,8 @@
     },
     {
       "file": "root/844x390/scene-river.png",
-      "bytes": 758872,
-      "sha256": "96d17a72cd402d7513bab3bc5fa09b8195b6077c91929587962e39d3e8f5f4ea"
+      "bytes": 759890,
+      "sha256": "8d0fb6f7a2cd5f8d26665a66722c68cf62b47870bfbdd00f8d3a56e6ceee934f"
     },
     {
       "file": "root/844x390/scene-house.png",
@@ -142,8 +142,8 @@
     },
     {
       "file": "storybook/1440x900/scene-river.png",
-      "bytes": 2103557,
-      "sha256": "05c82bb1464db014da864d4eee85e310d06aeb9fcfb9692041e1cdd189435054"
+      "bytes": 2108037,
+      "sha256": "b89367f4ffecc8e7e0749c49e5151478d20f4477017317681905652ab082cd5f"
     },
     {
       "file": "storybook/1440x900/scene-house.png",
@@ -167,8 +167,8 @@
     },
     {
       "file": "storybook/390x844/scene-river.png",
-      "bytes": 343682,
-      "sha256": "dbba499788591e318e5531936928d52b41e2c0bd612cee105ed2b0c2abc38e41"
+      "bytes": 344548,
+      "sha256": "a218fa6b21d9d70a06b9383ca5f84d18c812205a5159c6e4df52814ae6ed66e6"
     },
     {
       "file": "storybook/390x844/scene-house.png",
@@ -192,8 +192,8 @@
     },
     {
       "file": "storybook/320x720/scene-river.png",
-      "bytes": 257480,
-      "sha256": "cf8f20a55dfba4001881c3a72aeac6bd6cb02a2049803eb6f2d92f10309a6e7d"
+      "bytes": 258118,
+      "sha256": "09f710a311bab6c410b01e3c5c75a8603007d129589d64b4bfcd3645be9d778a"
     },
     {
       "file": "storybook/320x720/scene-house.png",
@@ -217,8 +217,8 @@
     },
     {
       "file": "storybook/844x390/scene-river.png",
-      "bytes": 758872,
-      "sha256": "96d17a72cd402d7513bab3bc5fa09b8195b6077c91929587962e39d3e8f5f4ea"
+      "bytes": 759890,
+      "sha256": "8d0fb6f7a2cd5f8d26665a66722c68cf62b47870bfbdd00f8d3a56e6ceee934f"
     },
     {
       "file": "storybook/844x390/scene-house.png",
@@ -227,23 +227,23 @@
     },
     {
       "file": "root/390x844/rescue-lift.png",
-      "bytes": 343994,
-      "sha256": "50b2c7aaa835dd8da201e70f3655f03de300861725316bfe4ca5dd730f3b5bd5"
+      "bytes": 344736,
+      "sha256": "aac1698c1ca5c450572d6f1e89d7994bce52dc73454634588cf40f2a0cd02216"
     },
     {
       "file": "root/390x844/rescue-carrying.png",
-      "bytes": 343926,
-      "sha256": "95ac365f2dd91fd6e6825e76823934e1c591a26b1ff8ed519ea6da57256abfb5"
+      "bytes": 344666,
+      "sha256": "5500f9bed214b41b82f11eed269965c8f4b83ad100fd1275cb580956fabc18b1"
     },
     {
       "file": "storybook/390x844/rescue-lift.png",
-      "bytes": 343994,
-      "sha256": "50b2c7aaa835dd8da201e70f3655f03de300861725316bfe4ca5dd730f3b5bd5"
+      "bytes": 344736,
+      "sha256": "aac1698c1ca5c450572d6f1e89d7994bce52dc73454634588cf40f2a0cd02216"
     },
     {
       "file": "storybook/390x844/rescue-carrying.png",
-      "bytes": 343926,
-      "sha256": "95ac365f2dd91fd6e6825e76823934e1c591a26b1ff8ed519ea6da57256abfb5"
+      "bytes": 344666,
+      "sha256": "5500f9bed214b41b82f11eed269965c8f4b83ad100fd1275cb580956fabc18b1"
     }
   ],
   "metrics": [
