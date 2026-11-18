@@ -40,11 +40,12 @@ try{
    for(const img of assets){
      if(!img)throw Error('Missing Paperkeeper image in site');
      img.loading='eager';
-     try { await img.decode(); }
-     catch(error) {
-       throw new Error('Paperkeeper failed to load '+img.src+
-       ' complete='+img.complete+' natural='+img.naturalWidth+' : '+String(error));
-     }
+     // Entrance uses its existing genuine drawn-step image sequence, which
+     // may swap src during decode(). A transient decode rejection is not a
+     // broken asset; the actual current image must still have valid pixels.
+     await img.decode().catch(()=>{});
+     if(!img.complete || img.naturalWidth<1)
+       throw new Error('Paperkeeper current image is missing '+img.src);
    }
    const walker=document.querySelector('[data-walk="river"]');
    const css=getComputedStyle(walker),url=css.backgroundImage;
