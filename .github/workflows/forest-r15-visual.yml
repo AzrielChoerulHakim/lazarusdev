@@ -1,0 +1,75 @@
+name: Forest R15 - Atrium material and light projection
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/storybook/atrium-lighting.mjs'
+      - 'src/storybook/atrium-room.js'
+      - 'src/storybook/styles/atrium-room.css'
+      - 'index.html'
+      - 'storybook/index.html'
+      - 'scripts/forest_r15_*.mjs'
+      - '.github/workflows/forest-r15-visual.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  rendered-atrium:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build the two production site routes
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+          npm run check:r15:geometry
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+      - name: Start static production mirror
+        run: |
+          mkdir -p /tmp/forest-r15-mirror/lazarusdev
+          cp -a dist/. /tmp/forest-r15-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-r15-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-r15-mirror >/tmp/forest-r15-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/forest-r15-server.log
+          exit 1
+      - name: Verify light projections, preservation and capture genuine frames
+        run: npm run check:r15:browser
+        env:
+          CI: 'true'
+          R15_CAPTURE_DIR: artifacts/r15-visual
+          STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+          GIT_SHA: ${{ github.sha }}
+      - name: Upload actual rendered source evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r15-atrium-${{ github.sha }}
+          path: artifacts/r15-visual/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Preserve six rendered reference images on main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p docs/forest/revision/r15/evidence
+          cp artifacts/r15-visual/manifest.json docs/forest/revision/r15/evidence/manifest.json
+          for light in 0 50 100; do
+            cp "artifacts/r15-visual/root/390x844/atrium-light-${light}.png" "docs/forest/revision/r15/evidence/390x844-light-${light}.png"
+          done
+          cp artifacts/r15-visual/root/390x844/poster-atrium.png docs/forest/revision/r15/evidence/390x844-poster.png
+          cp artifacts/r15-visual/root/1440x900/atrium-light-50.png docs/forest/revision/r15/evidence/1440x900-light-50.png
+          cp artifacts/r15-visual/root/844x390/atrium-light-50.png docs/forest/revision/r15/evidence/844x390-light-50.png
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/forest/revision/r15/evidence
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'test(forest-r15): preserve rendered Atrium light evidence [skip ci]'
+          git push origin HEAD:main

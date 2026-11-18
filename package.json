@@ -18,7 +18,9 @@
     "check:r04": "node scripts/forest_r04_smoke.mjs",
     "check:r08": "node scripts/forest_revision_release_smoke.mjs",
     "check:r11": "node scripts/forest_r11_smoke.mjs",
-    "check:r14": "node scripts/forest_r14_gate.mjs"
+    "check:r14": "node scripts/forest_r14_gate.mjs",
+    "check:r15:geometry": "node scripts/forest_r15_geometry_gate.mjs",
+    "check:r15:browser": "node scripts/forest_r15_atrium_browser.mjs"
   },
   "devDependencies": {
     "sharp": "0.34.5",

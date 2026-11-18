@@ -43,7 +43,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 **Lulus jika:** galeri, sungai, rumah dapat dibedakan dari siluet dan pola terang-gelap saat thumbnail diberi label tersembunyi; aset lama tetap bisa dipulihkan; inspeksi visual didokumentasikan. **Tidak otomatis mengklaim user-test manusia selesai.**
 
 ### R15 / Tahap 2 — The Atrium sebagai dunia kedua yang menyatu
-**Status:** TODO · **Prasyarat:** R13–R14 · **Prioritas implementasi interaktif: pertama**.
+**Status:** CANDIDATE IMPLEMENTED — gerbang meruncing sesuai poster, hatching pigmen, bayangan pilar diproyeksikan sesuai sumber cahaya, mobile CTA dan QA browser 3 viewport × 2 rute. **Visual manual sign-off / physical phone: NOT VERIFIED**. Lihat [catatan R15](./revision/r15/README.md). · **Prasyarat:** R13–R14 · **Prioritas implementasi interaktif: pertama**.
 
 **Pekerjaan**
 1. Pertahankan poster Atrium dan concept notes yang sudah ada. Perjelas affordance `Enter The Atrium` pada ponsel, tanpa mengorbankan poster Oracle/Archive.

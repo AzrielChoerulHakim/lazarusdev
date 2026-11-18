@@ -1,3 +1,5 @@
+import { projectAtriumLight } from './atrium-lighting.mjs';
+
 /** The Atrium / a second scene reached from an honest concept sheet.
  * Scroll, gallery offset, URL history and triggering focus belong to the visitor.
  * Illustrated masonry is authored SVG; the light is a single local state.
@@ -15,20 +17,34 @@ let pointer = null;
 let entranceTimer = 0;
 let oldBodyOverflow = '';
 let oldHtmlOverflow = '';
-const clamp = number => Math.max(0, Math.min(100, number));
-
+let inertBefore = [];
 function moveLight(number) {
   if (!scene || !slider) return;
-  const value = clamp(Number(number) || 0);
-  slider.value = String(value);
-  readout.value = String(Math.round(value)) + '%';
+  const light = projectAtriumLight(number);
+  slider.value = String(light.value);
+  readout.value = String(Math.round(light.value)) + '%';
   readout.textContent = readout.value;
-  scene.style.setProperty('--lamp-x', String(12 + value * .76) + '%');
-  scene.style.setProperty('--relief-opacity', String(.15 + .84 * (value / 100)));
-  scene.style.setProperty('--shadow-lean', String((50 - value) * 2.8) + 'px');
-  scene.style.setProperty('--shadow-skew', String((50 - value) * .27) + 'deg');
-  description.textContent = value >= 62 ? 'The engraved leaves have appeared in the stone.' :
-    value >= 35 ? 'There are traces of a carved garden.' : 'A shape waits behind the dim stone.';
+  scene.dataset.lightZone = light.value < 34 ? 'left' : light.value > 66 ? 'right' : 'center';
+  scene.style.setProperty('--lamp-x', light.lampPercent + '%');
+  scene.style.setProperty('--relief-opacity', String(light.reliefOpacity));
+  scene.style.setProperty('--relief-raking', String(light.reliefRaking));
+  scene.style.setProperty('--left-column-light', String(light.leftColumnLight));
+  scene.style.setProperty('--right-column-light', String(light.rightColumnLight));
+  for (const [side, geometry] of [['left',light.left],['right',light.right]]) {
+    for (const kind of ['core','penumbra']) {
+      const shadow = scene.querySelector('[data-atrium-shadow="' + side + '-' + kind + '"]');
+      if (shadow) shadow.setAttribute('d', geometry[kind]);
+    }
+  }
+  const beam = scene.querySelector('#atrium-relief-beam');
+  if (beam) {
+    beam.setAttribute('x1', String(light.reliefBeamFrom));
+    beam.setAttribute('x2', String(light.reliefBeamTo));
+  }
+  const message = light.value >= 62 ? 'The engraved leaves have appeared in the stone.' :
+    light.value >= 35 ? 'There are traces of a carved garden.' : 'A shape waits behind the dim stone.';
+  slider.setAttribute('aria-valuetext', Math.round(light.value) + '% — ' + message);
+  description.textContent = message;
 }
 function remember(trigger) {
   const offset = gallery ? gallery.scrollLeft : 0;
@@ -56,6 +72,25 @@ function showRoom(trigger) {
   oldHtmlOverflow = document.documentElement.style.overflow;
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
+  // The visual opening grows from the gold portal on the real folio.
+  // If that folio has scrolled out of view, use the actual activation link.
+  const poster = document.querySelector('.work-hanging[data-open-concept="atrium"] > img');
+  let origin = trigger?.getBoundingClientRect();
+  if (poster) {
+    const bounds = poster.getBoundingClientRect();
+    if (bounds.bottom > 0 && bounds.top < innerHeight) origin = bounds;
+  }
+  if (origin) {
+    const x = Math.max(0, Math.min(innerWidth, origin.left + origin.width * .50));
+    const y = Math.max(0, Math.min(innerHeight, origin.top + origin.height * .37));
+    atrium.style.setProperty('--atrium-entry-x', x + 'px');
+    atrium.style.setProperty('--atrium-entry-y', y + 'px');
+  }
+  // aria-modal alone does not remove underlying chapter controls from
+  // the accessibility tree. Retain and restore each existing inert value.
+  inertBefore = [...document.body.children].filter(node => node !== atrium)
+    .map(node => [node, node.inert]);
+  for (const [node] of inertBefore) node.inert = true;
   atrium.classList.remove('atrium-entering');
   if (!lowMotion.matches && trigger) {
     atrium.classList.add('atrium-entering');
@@ -71,6 +106,8 @@ function hideRoom() {
   clearTimeout(entranceTimer);
   atrium.hidden = true;
   atrium.classList.remove('atrium-entering');
+  for (const [node, wasInert] of inertBefore) node.inert = wasInert;
+  inertBefore = [];
   document.body.style.overflow = oldBodyOverflow;
   document.documentElement.style.overflow = oldHtmlOverflow;
   const restore = saved;
