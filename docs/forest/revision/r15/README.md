@@ -31,3 +31,14 @@ The R13 [rendered visual review](../r13/RENDERED-VISUAL-REVIEW.md) documented an
 - `.github/workflows/forest-r15-visual.yml` — production builds + browser tests + actual 24 screenshot frames (2 routes × 3 screens × poster & 0/50/100) as GitHub artifact; curated six root images and manifest are committed under [evidence](./evidence/) when the workflow succeeds. Generated proof is tied to the source commit, not represented as a drawn concept board.
 
 **Release decision:** R15's engineering gate can be green without declaring the new art final. Review the real browser frames at all three critical sizes and compare the pointed opening, tonal balance and shadow projection to the R13 poster before requesting final artistic sign-off.
+
+## R15 re-audit — touch-direction and light-location hardening
+
+The second R15 pass addresses two gaps **not demonstrated by the earlier mouse-only Chromium capture**:
+
+- Finger gesture intent is now direction-locked: a vertical touch on the illustration remains a native scroll gesture and does not flash or teleport the light; a horizontal swipe moves the raking beam. This preserves touch-action `pan-y` rather than suppressing browser scrolling.
+- Relief highlights now peak near the actual center of the engraving and taper toward both edges. The old formula contained an increasing slider-dependent term that made the relief brighten at the far-right extreme even after the beam moved past it.
+- The entry animation originates from the visible gold opening of the poster and only uses that origin when it is inside the carousel's visible clipped rectangle. When the poster is offscreen it falls back to the real activation link. Coordinates are translated into the animated room frame, not blindly measured from the full viewport.
+- New real-touch Chromium emulation covers `390×844` and `320×720`, both published routes, vertical-vs-horizontal gestures, 44px entry-target geometry and browser Back. This is automated Chrome touch input, **not an on-device user test**.
+
+These updates are additive to the existing R15 engineering scope and do not alter R15A's Paperkeeper assets or subsequent chapter storyboards.

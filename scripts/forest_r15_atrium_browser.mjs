@@ -62,6 +62,15 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
     assert.equal(await page.locator('#atrium-scene [data-portal-silhouette="pointed"]').count(),1);
     assert.equal(await page.locator('#atrium-scene [data-atrium-layer]').count(),4);
     assert.equal(await page.evaluate(()=>document.querySelector('main')?.inert),true,'background must be inert while dialog is open');
+    const entryPoint=await page.locator('#atrium-room').evaluate(room=>{
+      const frame=room.querySelector('.atrium-frame').getBoundingClientRect();
+      return {x:parseFloat(room.style.getPropertyValue('--atrium-entry-x')),
+        y:parseFloat(room.style.getPropertyValue('--atrium-entry-y')),
+        w:frame.width,h:frame.height};
+    });
+    assert.ok(Number.isFinite(entryPoint.x)&&Number.isFinite(entryPoint.y) &&
+      entryPoint.x>=0&&entryPoint.x<=entryPoint.w&&entryPoint.y>=0&&entryPoint.y<=entryPoint.h,
+      'entrance must originate inside the actual room frame '+JSON.stringify(entryPoint));
     await page.waitForTimeout(530); // entry transition completes before recording images
     const states=[];
     for(const value of [0,50,100]) {
@@ -126,6 +135,64 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
   await reduced.locator('[data-atrium-close]').click();
   await reduced.waitForFunction(()=>document.querySelector('#atrium-room')?.hidden===true);
   await reduced.close();
+  // Real Chrome touch input, not dispatched synthetic PointerEvents.
+  // The original R15 mouse-drag check did not prove the mobile gesture.
+  for (const [touchWidth,touchHeight] of [[390,844],[320,720]]) {
+    const context=await browser.newContext({
+      viewport:{width:touchWidth,height:touchHeight},isMobile:true,hasTouch:true,
+      reducedMotion:'reduce'
+    });
+    const touch=await context.newPage();
+    const touchErrors=[];
+    touch.on('pageerror',error=>touchErrors.push(error.message));
+    await touch.goto(origin+route,{waitUntil:'domcontentloaded'});
+    const launch=touch.locator('.atrium-clearing-shortcut');
+    await launch.scrollIntoViewIfNeeded();
+    const ctaBox=await launch.boundingBox();
+    assert.ok(ctaBox && ctaBox.width>=44 && ctaBox.height>=44,
+      'Touch CTA must meet 44px target');
+    await touch.touchscreen.tap(ctaBox.x+ctaBox.width/2,ctaBox.y+ctaBox.height/2);
+    await touch.waitForFunction(()=>document.querySelector('#atrium-room')?.hidden===false);
+    const scene=touch.locator('#atrium-scene');
+    await scene.evaluate(el=>{
+      window.__r15Touched=[];
+      el.addEventListener('pointerdown',event=>window.__r15Touched.push(event.pointerType));
+    });
+    const area=await scene.boundingBox();
+    assert.ok(area && area.width>280 && area.height>260,'touch scene geometry');
+    const client=await context.newCDPSession(touch);
+    const sendTouch=async (type,x,y) => client.send('Input.dispatchTouchEvent',{
+      type,touchPoints:type==='touchEnd'?[]:[{x:Math.round(x),y:Math.round(y),id:1,
+        radiusX:6,radiusY:6,force:.6}]
+    });
+    const swipe=async (x0,y0,x1,y1) => {
+      await sendTouch('touchStart',x0,y0);
+      for(let step=1;step<=10;step++) {
+        const f=step/10;
+        await sendTouch('touchMove',x0+(x1-x0)*f,y0+(y1-y0)*f);
+        await new Promise(r=>setTimeout(r,14));
+      }
+      await sendTouch('touchEnd',x1,y1);
+      await touch.waitForTimeout(80);
+    };
+    await setLight(touch,44);
+    const cx=area.x+area.width*.57;
+    await swipe(cx,area.y+area.height*.78,cx+3,area.y+area.height*.25);
+    assert.equal(await touch.locator('#atrium-light').inputValue(),'44',
+      'vertical touch must NOT change the lamp');
+    await swipe(area.x+area.width*.13,area.y+area.height*.51,
+      area.x+area.width*.90,area.y+area.height*.51);
+    const revealed=Number(await touch.locator('#atrium-light').inputValue());
+    assert.ok(revealed>=80,'one real horizontal finger swipe must reveal carving; got '+revealed);
+    const pointerTypes=await touch.evaluate(()=>window.__r15Touched);
+    assert.ok(pointerTypes?.includes('touch'),'Chrome must deliver trusted touch pointer events');
+    await touch.goBack();
+    await touch.waitForFunction(()=>document.querySelector('#atrium-room')?.hidden===true);
+    assert.deepEqual(touchErrors,[],'touch runtime errors');
+    console.log('PASS R15 real touch',route,touchWidth,touchHeight,
+      'vertical-scroll safe, one horizontal swipe, Back');
+    await context.close();
+  }
   const noJs=await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}});
   const p=await noJs.newPage();await p.goto(origin+route);
   assert.equal(await p.locator('.work-hanging[data-open-concept="atrium"]').count(),1);

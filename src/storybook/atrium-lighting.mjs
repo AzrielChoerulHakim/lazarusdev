@@ -36,8 +36,10 @@ export function projectAtriumLight(input) {
     lampPercent: round(12 + .76 * value),
     left,
     right,
-    reliefOpacity: round(.18 + .62 * Math.max(raking, value / 125)),
-    reliefRaking: round(.1 + .76 * raking),
+    // Relief is only legible where the moving light grazes the carving;
+    // no one-way global fade that simply tracks slider percentage.
+    reliefOpacity: round(.14 + .72 * raking),
+    reliefRaking: round(.08 + .86 * raking),
     leftColumnLight: round(.22 + .64 * (1 - Math.min(1, Math.abs(sourceX - 300) / 980))),
     rightColumnLight: round(.22 + .64 * (1 - Math.min(1, Math.abs(sourceX - 900) / 980))),
     // The etching catches grazing light only around the moving light source.

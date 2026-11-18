@@ -23,6 +23,10 @@ assert.ok(c.right.length<a.right.length,'distant right column shadow grows');
 assert.notEqual(a.left.core,b.left.core);
 assert.notEqual(b.left.core,c.left.core);
 assert.notEqual(a.reliefBeamFrom,c.reliefBeamFrom);
+assert.ok(b.reliefOpacity>a.reliefOpacity && b.reliefOpacity>c.reliefOpacity,
+ 'relief illumination must peak when source crosses carving, not monotonically brighten');
+assert.ok(b.reliefRaking>a.reliefRaking && b.reliefRaking>c.reliefRaking,
+ 'raking highlight must be spatial rather than a fixed opacity control');
 const rootHtml=read('index.html'),nestedHtml=read('storybook/index.html');
 const template='<template id="atrium-room-template">';
 assert.equal(rootHtml.slice(rootHtml.indexOf(template)),nestedHtml.slice(nestedHtml.indexOf(template)),'room template parity');

@@ -41,7 +41,7 @@ function moveLight(number) {
     beam.setAttribute('x1', String(light.reliefBeamFrom));
     beam.setAttribute('x2', String(light.reliefBeamTo));
   }
-  const message = light.value >= 62 ? 'The engraved leaves have appeared in the stone.' :
+  const message = light.value >= 62 ? 'The engraved leaves fade into the stone as the light moves on.' :
     light.value >= 35 ? 'There are traces of a carved garden.' : 'A shape waits behind the dim stone.';
   slider.setAttribute('aria-valuetext', Math.round(light.value) + '% — ' + message);
   description.textContent = message;
@@ -72,17 +72,41 @@ function showRoom(trigger) {
   oldHtmlOverflow = document.documentElement.style.overflow;
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
-  // The visual opening grows from the gold portal on the real folio.
-  // If that folio has scrolled out of view, use the actual activation link.
+  // The entrance originates at the visible portal ON the folio, not the
+  // midpoint of its paper border or an offscreen sheet in the carousel.
+  // Clip the source to the horizontal gallery and viewport before using it.
   const poster = document.querySelector('.work-hanging[data-open-concept="atrium"] > img');
-  let origin = trigger?.getBoundingClientRect();
-  if (poster) {
-    const bounds = poster.getBoundingClientRect();
-    if (bounds.bottom > 0 && bounds.top < innerHeight) origin = bounds;
+  const activateBox = trigger?.getBoundingClientRect();
+  const posterBox = poster?.getBoundingClientRect();
+  const galleryBox = gallery?.getBoundingClientRect();
+  const viewport = {left: 0, top: 0, right: innerWidth, bottom: innerHeight};
+  let entryPoint = activateBox && {
+    x: activateBox.left + activateBox.width / 2,
+    y: activateBox.top + activateBox.height / 2
+  };
+  if (posterBox && galleryBox) {
+    const clipped = {
+      left: Math.max(0, posterBox.left, galleryBox.left),
+      right: Math.min(viewport.right, posterBox.right, galleryBox.right),
+      top: Math.max(0, posterBox.top, galleryBox.top),
+      bottom: Math.min(viewport.bottom, posterBox.bottom, galleryBox.bottom)
+    };
+    const goldPortal = {
+      x: posterBox.left + posterBox.width * .52,
+      y: posterBox.top + posterBox.height * .28
+    };
+    // Skip a folio that is hidden by scrolling or clipped sideways.
+    if (clipped.right - clipped.left >= 28 &&
+        clipped.bottom - clipped.top >= 45 &&
+        goldPortal.x >= clipped.left && goldPortal.x <= clipped.right &&
+        goldPortal.y >= clipped.top && goldPortal.y <= clipped.bottom) {
+      entryPoint = goldPortal;
+    }
   }
-  if (origin) {
-    const x = Math.max(0, Math.min(innerWidth, origin.left + origin.width * .50));
-    const y = Math.max(0, Math.min(innerHeight, origin.top + origin.height * .37));
+  if (entryPoint) {
+    const frame = atrium.querySelector('.atrium-frame').getBoundingClientRect();
+    const x = Math.max(0, Math.min(frame.width, entryPoint.x - frame.left));
+    const y = Math.max(0, Math.min(frame.height, entryPoint.y - frame.top));
     atrium.style.setProperty('--atrium-entry-x', x + 'px');
     atrium.style.setProperty('--atrium-entry-y', y + 'px');
   }
@@ -170,16 +194,36 @@ function bindAtriumControls() {
     moveLight((event.clientX - bounds.left) * 100 / Math.max(bounds.width, 1));
   }
   scene.addEventListener('pointerdown', event => {
-    if (event.button !== 0 && event.pointerType !== 'touch') return;
-    pointer = event.pointerId;
-    scene.setPointerCapture(event.pointerId);
-    drag(event);
+    if ((event.button !== 0 && event.pointerType !== 'touch') || pointer) return;
+    const touch = event.pointerType === 'touch';
+    pointer = { id: event.pointerId, x: event.clientX, y: event.clientY,
+      touch, axis: touch ? 'undecided' : 'horizontal' };
+    // Touch is ambiguous until movement reveals intent. Do not commandeer
+    // a normal vertical page scroll or flash the lamp when a finger lands.
+    if (!touch) {
+      scene.setPointerCapture(event.pointerId);
+      drag(event);
+    }
   });
   scene.addEventListener('pointermove', event => {
-    if (pointer === event.pointerId) drag(event);
+    if (!pointer || pointer.id !== event.pointerId) return;
+    if (pointer.touch && pointer.axis === 'undecided') {
+      const dx = Math.abs(event.clientX - pointer.x);
+      const dy = Math.abs(event.clientY - pointer.y);
+      if (dy > 11 && dy > dx * 1.1) {
+        pointer.axis = 'vertical';
+        return;
+      }
+      if (dx < 12 || dx < dy * 1.3) return;
+      pointer.axis = 'horizontal';
+      if (!scene.hasPointerCapture(event.pointerId)) scene.setPointerCapture(event.pointerId);
+    }
+    if (pointer.axis === 'horizontal') drag(event);
   });
   for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
-    scene.addEventListener(name, () => { pointer = null; });
+    scene.addEventListener(name, event => {
+      if (pointer && pointer.id === event.pointerId) pointer = null;
+    });
   }
   atrium.addEventListener('keydown', event => {
     if (event.key === 'Escape') { event.preventDefault(); leaveAtrium(); return; }
