@@ -262,14 +262,108 @@
     "pose-read.webp",
     "pose-lantern.webp",
     "paperkeeper-journey-r15a.webp",
+    "story-look-down.webp",
+    "story-set-lantern.webp",
+    "story-reach.webp",
+    "story-lift.webp",
+    "story-carry.webp",
+    "narrative-journey-r15a.webp",
     "entrance-r15a.webp",
     "reader-r15a.webp",
     "proof-paper.png",
+    "proof-story-paper.png",
     "proof-dark.png",
+    "proof-story-dark.png",
     "proof-river.png",
-    "proof-black.png"
+    "proof-story-river.png",
+    "proof-black.png",
+    "proof-story-black.png"
   ],
   "sheetSha256": "f797f30a4fde234cf9a71b55beb3a811439645bbcafcab60c03824e933199af3",
+  "storyFrame": {
+    "width": 128,
+    "height": 144,
+    "count": 5,
+    "baselineY": 133,
+    "sheet": [
+      640,
+      144
+    ]
+  },
+  "storySource": {
+    "path": "storybook/assets/characters/r15a/source/narrative-poses-raw.webp",
+    "sha256": "8f16d6f61ee89557b463e7e8ffd6202907c982ee094a59ad89b91483eddf524c",
+    "bytes": 18746,
+    "method": "new AI-assisted colored-pencil storybook drawings, 5 distinct action silhouettes"
+  },
+  "storyPoses": {
+    "look-down": {
+      "slot": 0,
+      "sourceCell": 0,
+      "sha256": "250e5039efc727ee46914d01f8e5b70493fae721cd1bd66fc696ad13a93785e8",
+      "groundline": 133,
+      "alphaRect": [
+        26,
+        11,
+        101,
+        131
+      ],
+      "status": "new-narrative-illustration"
+    },
+    "set-lantern": {
+      "slot": 1,
+      "sourceCell": 1,
+      "sha256": "bea96f55e5b3d763afa4a112456726a5a48b68f0ee102faa7733709c1c92e519",
+      "groundline": 133,
+      "alphaRect": [
+        18,
+        10,
+        110,
+        131
+      ],
+      "status": "new-narrative-illustration"
+    },
+    "reach": {
+      "slot": 2,
+      "sourceCell": 2,
+      "sha256": "b54e719283fd48c269c3b70076e0821f0e712fa4d11deb8b02ded40a1f5e2ea2",
+      "groundline": 133,
+      "alphaRect": [
+        12,
+        10,
+        115,
+        131
+      ],
+      "status": "new-narrative-illustration"
+    },
+    "lift": {
+      "slot": 3,
+      "sourceCell": 3,
+      "sha256": "1853f5fbd6f57b4d45e67924ee42dfeca314d5be35781f38d47ed9eec70110bc",
+      "groundline": 133,
+      "alphaRect": [
+        23,
+        10,
+        105,
+        131
+      ],
+      "status": "new-narrative-illustration"
+    },
+    "carry": {
+      "slot": 4,
+      "sourceCell": 4,
+      "sha256": "2847b34e888c13e08a12ddc1d6bcb0abdf11e365ea768506a33e3601e2434eab",
+      "groundline": 133,
+      "alphaRect": [
+        25,
+        11,
+        102,
+        131
+      ],
+      "status": "new-narrative-illustration"
+    }
+  },
+  "storySheetSha256": "209b5948f3e1c2fe06e34aa2ba20ea591b3114abcfbf87d2a66af66e627d1eef",
   "entrance": {
     "sha256": "12f34ee3e4c425e6e8b2068978af6adba46c3ec1145a2005815898ef8a5d3566",
     "size": [
