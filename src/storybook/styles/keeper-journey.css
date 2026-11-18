@@ -4,10 +4,13 @@
   z-index: 3;
   left: 0;
   bottom: 0;
-  height: clamp(58px, 10vw, 132px);
-  aspect-ratio: 96 / 100;
-  background: url("../../../storybook/assets/characters/paperkeeper-journey.webp") 37.5% bottom / 900% 100% no-repeat;
-  translate: -50% 0;
+  height: clamp(88px, 12vw, 146px);
+  aspect-ratio: 128 / 144;
+  /* The new sheet is nine independent, normalized 128×144 frames, not the
+     old 864×100 red-keyed strip. Keep the y=133 inked foot on the painted
+     groundline and 11px of genuine transparent padding below it. */
+  background: url("../../../storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp") 37.5% bottom / 900% 100% no-repeat;
+  translate: -50% 7.63889%;
   transform-origin: center bottom;
   pointer-events: none;
 }
@@ -91,3 +94,33 @@
 [data-walk="clearing"]:not([data-pose]) { background-position-x: 62.5%; }
 [data-walk="river"]:not([data-pose]) { background-position-x: 87.5%; left: 68%; }
 [data-walk="house"]:not([data-pose]) { background-position-x: 100%; left: 65%; bottom: 32%; }
+
+/* R15A / restored silhouette size, character-safe native scroll and controls.
+   The base landscape and the two earlier art-directed worlds stay untouched. */
+@media(max-width:670px){
+  .journey-walker:is([data-walk="path"],[data-walk="clearing"],
+    [data-walk="river"],[data-walk="house"]){
+    height:clamp(94px,27.5vw,124px);
+  }
+  .journey-walker[data-walk="path"]{filter:drop-shadow(1px 2px 1px rgba(20,45,28,.34))}
+  .journey-walker[data-walk="clearing"]{filter:drop-shadow(1px 2px 1px rgba(28,41,28,.3))}
+  .journey-walker[data-walk="river"]{filter:drop-shadow(0 2px 2px rgba(23,62,65,.36))}
+  .journey-walker[data-walk="house"]{filter:drop-shadow(1px 3px 2px rgba(30,41,26,.3))}
+}
+/* The original desktop stones used to sit on top of the walker just like
+   the portrait buttons did at R13. Now the real links live on paper under
+   the river art, without disabling any anchor or altering their hit boxes. */
+@media(min-width:671px){
+ .chapter-river .river-scene{overflow:visible;margin-bottom:110px}
+ .chapter-river .river-stone-nav{
+   position:absolute;bottom:auto;top:calc(100% + 12px);
+   left:auto;right:0;z-index:5;max-width:100%;
+ }
+ .chapter-river .river-stone-nav a,
+ .chapter-river .river-stone-nav a:nth-child(2){
+   transform:none;min-height:52px;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .journey-walker{transition:none!important;animation:none!important}
+}

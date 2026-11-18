@@ -1,0 +1,73 @@
+name: Forest R15A - integrated Paperkeeper visual QA
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/storybook/styles/keeper-journey.css'
+      - 'src/storybook/keeper-journey.js'
+      - 'index.html'
+      - 'storybook/index.html'
+      - 'scripts/forest_r15a_*.mjs'
+      - '.github/workflows/forest-r15a-browser.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  production-character:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install and test source asset manifest
+        run: |
+          npm install --no-audit --no-fund
+          npm run check:r15a
+      - name: Build both published routes
+        run: npm run build && npm run build:storybook
+      - run: npm install --no-save --no-audit --no-fund playwright@1.56.1
+      - name: Host a faithful GitHub Pages mirror
+        run: |
+          mkdir -p /tmp/forest-r15a-mirror/lazarusdev
+          cp -a dist/. /tmp/forest-r15a-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-r15a-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-r15a-mirror > /tmp/forest-r15a-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/forest-r15a-server.log
+          exit 1
+      - name: Render 40 actual five-chapter screenshots and enforce zero river UI overlap
+        run: npm run check:r15a:browser
+        env:
+          STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+          R15A_CAPTURE_DIR: artifacts/r15a-visual
+          GIT_SHA: ${{ github.sha }}
+          CI: 'true'
+      - name: Upload full real browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r15a-scenes-${{ github.sha }}
+          path: artifacts/r15a-visual/
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Freeze root scene renders and post-change measurements on main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          mkdir -p docs/forest/revision/r15a/evidence
+          cp artifacts/r15a-visual/manifest.json docs/forest/revision/r15a/evidence/manifest.json
+          for dim in 1440x900 390x844 320x720 844x390; do
+            for scene in entrance path clearing river house; do
+              cp "artifacts/r15a-visual/root/$dim/scene-$scene.png" "docs/forest/revision/r15a/evidence/$dim-$scene.png"
+            done
+          done
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/forest/revision/r15a/evidence/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'test(forest-r15a): freeze real five-chapter character scene captures [skip ci]'
+          git push origin HEAD:main
