@@ -2,11 +2,11 @@
  * Scroll, gallery offset, URL history and triggering focus belong to the visitor.
  * Illustrated masonry is authored SVG; the light is a single local state.
  */
-const atrium = document.getElementById('atrium-room');
-const scene = atrium && atrium.querySelector('#atrium-scene');
-const slider = atrium && atrium.querySelector('#atrium-light');
-const readout = atrium && atrium.querySelector('#atrium-light-value');
-const description = atrium && atrium.querySelector('#atrium-light-message');
+let atrium = null;
+let scene = null;
+let slider = null;
+let readout = null;
+let description = null;
 const gallery = document.querySelector('#work-clearing .work-hangings');
 const lowMotion = matchMedia('(prefers-reduced-motion: reduce)');
 let active = false;
@@ -34,7 +34,20 @@ function remember(trigger) {
   const offset = gallery ? gallery.scrollLeft : 0;
   saved = { scroll: window.scrollY, gallery: offset, trigger: trigger || document.querySelector('[data-atrium-enter]') };
 }
+function ensureRoom() {
+  if (atrium) return;
+  const source = document.getElementById('atrium-room-template');
+  if (!source) return;
+  document.body.append(source.content.cloneNode(true));
+  atrium = document.getElementById('atrium-room');
+  scene = atrium && atrium.querySelector('#atrium-scene');
+  slider = atrium && atrium.querySelector('#atrium-light');
+  readout = atrium && atrium.querySelector('#atrium-light-value');
+  description = atrium && atrium.querySelector('#atrium-light-message');
+  if (atrium && slider && scene) bindAtriumControls();
+}
 function showRoom(trigger) {
+  ensureRoom();
   if (!atrium || active) return;
   if (!saved) remember(trigger);
   active = true;
@@ -109,7 +122,7 @@ window.addEventListener('hashchange', () => {
   else if (active) hideRoom();
 });
 if (location.hash === '#atrium') showRoom();
-if (atrium && slider && scene) {
+function bindAtriumControls() {
   slider.addEventListener('input', () => moveLight(slider.value));
   atrium.querySelectorAll('[data-light-step]').forEach(button => button.addEventListener('click', () => {
     moveLight(Number(slider.value) + Number(button.dataset.lightStep));
