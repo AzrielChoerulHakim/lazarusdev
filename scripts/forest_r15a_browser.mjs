@@ -72,7 +72,9 @@ try{
       const nav=document.querySelector('.river-stone-nav');
       const a=walker?.getBoundingClientRect(),b=nav?.getBoundingClientRect();
       return {scene:rect(scene.getBoundingClientRect()),walker:walker?rect(a):null,
-        pose:walker?.dataset.pose||null,navRect:id.includes('river-scene')?rect(b):null,
+        pose:walker?.dataset.pose||null,
+        storySheet:walker?getComputedStyle(walker).backgroundImage.includes('narrative-journey-r15a'):false,
+        navRect:id.includes('river-scene')?rect(b):null,
         viewport:[innerWidth,innerHeight],scrollWidth:document.documentElement.scrollWidth};
       function rect(r){return r?{x:r.x,y:r.y,width:r.width,height:r.height}:null;}
     },selector);
@@ -84,6 +86,10 @@ try{
    }
    assert.ok(info.scrollWidth<=width+3,'horizontal overflow '+bucket+' '+name);
    if(name==='river'){
+     if(width<=390){
+       assert.equal(info.pose,'carry','reduced-motion must show genuine static carry pose');
+       assert.equal(info.storySheet,true,'scene must use actual five illustrated story poses');
+     }
      const covered=intersect(info.walker,info.navRect);
      const fraction=info.walker?covered/Math.max(1,info.walker.width*info.walker.height):0;
      info.riverOverlapFraction=Number(fraction.toFixed(5));

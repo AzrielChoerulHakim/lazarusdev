@@ -79,18 +79,8 @@
 
 .journey-walker:not([data-pose]) { left: 14%; bottom: 6%; }
 
-/* The loose page rises from the bank to the illustrated reader's hands. */
-.journey-walker[data-pose="reach"]::after {
-  content: "";
-  position: absolute;
-  width: 18%;
-  height: 14%;
-  bottom: calc(4% + 24% * var(--page-lift));
-  left: 62%;
-  border: 1px solid #765e40;
-  background: repeating-linear-gradient(#f2deb2 0 3px, #a79570 3px 4px);
-  rotate: -12deg;
-}
+/* The distinct R15A reach/lift/carry drawings replace the synthetic CSS
+   paper that previously floated off an unrelated seated reader pose. */
 [data-walk="clearing"]:not([data-pose]) { background-position-x: 62.5%; }
 [data-walk="river"]:not([data-pose]) { background-position-x: 87.5%; left: 68%; }
 [data-walk="house"]:not([data-pose]) { background-position-x: 100%; left: 65%; bottom: 32%; }
@@ -124,3 +114,21 @@
 @media(prefers-reduced-motion:reduce){
  .journey-walker{transition:none!important;animation:none!important}
 }
+
+/* Newly illustrated action library / 5 individual drawings registered to the
+   same 128×144, y=133 frame contract as the nine walking/standing views.
+   CSS !important is deliberate: the older R11 motion library writes inline
+   frame positions, while story-phase pose identity is authoritative here. */
+.journey-walker[data-walk="river"][data-pose="look-down"],
+.journey-walker[data-walk="river"][data-pose="set-lantern"],
+.journey-walker[data-walk="river"][data-pose="reach"],
+.journey-walker[data-walk="river"][data-pose="lift"],
+.journey-walker[data-walk="river"][data-pose="carry"]{
+ background-image:url("../../../storybook/assets/characters/r15a/narrative-journey-r15a.webp");
+ background-size:500% 100%;
+}
+.journey-walker[data-walk="river"][data-pose="look-down"]{background-position-x:0%!important}
+.journey-walker[data-walk="river"][data-pose="set-lantern"]{background-position-x:25%!important}
+.journey-walker[data-walk="river"][data-pose="reach"]{background-position-x:50%!important}
+.journey-walker[data-walk="river"][data-pose="lift"]{background-position-x:75%!important}
+.journey-walker[data-walk="river"][data-pose="carry"]{background-position-x:100%!important}

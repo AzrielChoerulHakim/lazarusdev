@@ -11,14 +11,15 @@ if (river && house) {
   let completed = false;
   let timer = 0;
   const moments = [];
-  const stagePose = { watch:'look', lantern:'look', reach:'reach', lift:'read', carrying:'read', still:'read' };
+  const stagePose = { watch:'look-down', lantern:'set-lantern', reach:'reach', lift:'lift', carrying:'carry', still:'carry' };
   const poses = ['step-a','step-b','step-c','stand','turn','look','reach','read','lantern'];
   function setScene(phase) {
     river.dataset.rescue = phase;
     const pose = stagePose[phase];
     if (walker && pose) {
       walker.dataset.pose = pose;
-      walker.style.backgroundPositionX = String(poses.indexOf(pose) * 12.5) + '%';
+      if (poses.includes(pose)) walker.style.backgroundPositionX = String(poses.indexOf(pose) * 12.5) + '%';
+      else walker.style.removeProperty('background-position-x');
     }
   }
   function stopTimers() {

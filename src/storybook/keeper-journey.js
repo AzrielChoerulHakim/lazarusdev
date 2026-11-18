@@ -66,7 +66,7 @@ function paint(walker, state, still) {
   // A finite rescue beat takes precedence over ordinary scrolling poses.
   if (kind === 'river' && !seam) {
     const story = walker.closest('.river-scene')?.dataset.rescue;
-    const storyPose = {watch:'look', lantern:'look', reach:'reach', lift:'read', carrying:'read', still:'read'};
+    const storyPose = {watch:'look-down', lantern:'set-lantern', reach:'reach', lift:'lift', carrying:'carry', still:'carry'};
     if (story && storyPose[story]) pose = storyPose[story];
   }
   if (kind === 'river') {
@@ -76,7 +76,10 @@ function paint(walker, state, still) {
   state.distance = point.distance;
   const facing = pose === 'turn' || reduced.matches ? 1 : state.facing;
   walker.style.transform = 'translate3d(' + point.x + 'px,' + -point.y + 'px,0) scale(' + size * facing + ',' + size + ')';
-  walker.style.backgroundPositionX = poses.indexOf(pose) * 12.5 + '%';
+  // R15A's five real action drawings use a separate authored five-cell
+  // sheet. The old nine slots remain source-linked for walking and resting.
+  if (poses.includes(pose)) walker.style.backgroundPositionX = poses.indexOf(pose) * 12.5 + '%';
+  else walker.style.removeProperty('background-position-x');
   walker.dataset.pose = pose;
   if (kind === 'house') walker.parentElement.style.setProperty('--arrival-light', String(.12 + progress * .29));
 }
