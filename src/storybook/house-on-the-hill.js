@@ -50,7 +50,16 @@ if (house) {
       ].join('\n');
     }
 
+    function markComplete(message) {
+      copyStatus.dataset.complete = 'true';
+      copyStatus.textContent = message;
+    }
+
     function updateReview() {
+      if (copyStatus.hasAttribute('data-complete')) {
+        delete copyStatus.dataset.complete;
+        copyStatus.textContent = '';
+      }
       output.textContent = composeLetter() || 'Write a project note above to prepare your letter.';
     }
     field.addEventListener('input', updateReview);
@@ -77,7 +86,7 @@ if (house) {
       try {
         if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') throw new Error('Clipboard unavailable');
         await navigator.clipboard.writeText(letter);
-        copyStatus.textContent = 'Brief copied to your clipboard. Nothing has been sent.';
+        markComplete('Brief copied to your clipboard. Nothing has been sent.');
       } catch (_) {
         // Try copying the *complete assembled letter*, not just the raw note.
         const fallback = document.createElement('textarea');
@@ -92,7 +101,7 @@ if (house) {
         fallback.remove();
         if (copied) {
           copyButton.focus();
-          copyStatus.textContent = 'Your complete brief was copied. Nothing has been sent.';
+          markComplete('Your complete brief was copied. Nothing has been sent.');
         } else {
           review.open = true;
           output.focus();
@@ -114,7 +123,7 @@ if (house) {
       link.click();
       link.remove();
       window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      copyStatus.textContent = 'Your text file is ready to save locally. Nothing has been sent.';
+      markComplete('Your text file is ready to save locally. Nothing has been sent.');
     });
   }
 }

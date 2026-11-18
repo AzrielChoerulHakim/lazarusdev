@@ -26,3 +26,17 @@ if(atlas&&keeper){
   cue?.addEventListener('click',()=>{if(!atlas.open)atlas.open=true;});
   atlas.addEventListener('toggle',()=>{if(atlas.open&&entered)void acting.play();});
 }
+
+// The invitation starts at the painted gate itself. The atlas repeats the
+// gesture on its own page, using the same registered lantern drawings.
+const gateGuide = document.querySelector('.entrance-paperkeeper');
+if (gateGuide && 'IntersectionObserver' in window) {
+  const gateActing = createEntranceActing(gateGuide);
+  const arrival = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting)) {
+      arrival.disconnect();
+      void gateActing.play();
+    }
+  }, {threshold: .45});
+  arrival.observe(gateGuide);
+}

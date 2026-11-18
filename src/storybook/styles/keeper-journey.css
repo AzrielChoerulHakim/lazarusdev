@@ -1,0 +1,75 @@
+/* The same inked character crosses the page margins and the painted scenes. */
+.journey-walker {
+  position: absolute;
+  z-index: 3;
+  left: 12%;
+  bottom: 5%;
+  height: clamp(58px, 10vw, 132px);
+  aspect-ratio: 84 / 95;
+  background: url("../../../storybook/assets/characters/paperkeeper-stride.webp") left bottom / 300% 100% no-repeat;
+  translate: -50% 0;
+  transform-origin: center bottom;
+  pointer-events: none;
+}
+.keeper-crossing {
+  position: relative;
+  width: 100%;
+  max-width: 14rem;
+  height: 4.6rem;
+  align-self: end;
+}
+.keeper-crossing .journey-walker { height: 3.7rem; }
+[data-walk="river"] { left: 57%; bottom: 9%; z-index: 1; }
+.house-scene[data-lit="false"] .house-glow-layer { opacity: var(--arrival-light, .3); }
+.chapter-house .house-contact { background: #f8ebd5; }
+.house-copy-status[data-complete] { border-inline-start: 3px solid var(--forest); padding-inline-start: .7rem; }
+.journey-arrow {
+  display: inline-block;
+  vertical-align: -.12em;
+  width: 1em;
+  height: 1em;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.house-wayfinding a { gap: .5em; }
+.story-opening { max-width: min(60ch, calc(100% - 2 * var(--page-padding))); }
+.work-hanging[data-open-concept="atrium"], #folio-atrium { --folio-ink: #46757a; }
+.work-hanging[data-open-concept="oracle"], #folio-oracle { --folio-ink: #805e29; }
+.work-hanging[data-open-concept="archive"], #folio-archive { --folio-ink: #77574a; }
+.work-folio[open] .folio-body { border-inline-start: 3px solid var(--folio-ink); padding-inline-start: 1rem; }
+.work-hanging[data-active="true"] .work-hanging-title { text-decoration-color: var(--folio-ink); text-decoration-thickness: 2px; }
+.river-stone-nav { z-index: 5; }
+.river-stone-nav a {
+  min-height: 48px;
+  border: 2px solid #35543d;
+  background: #fff3dc;
+  color: #244f3b;
+  font-size: clamp(.88rem, 1.15vw, 1.04rem);
+}
+.river-stone-nav a:is(:hover, :focus-visible, [data-active="true"]) { background: #244f3b; color: #fff3dc; }
+@media (prefers-reduced-motion: no-preference) {
+  .field-atlas[open] .field-atlas-spread, .river-note-fold[open] .river-note-body {
+    transform-origin: top;
+    animation: open-paper .34s ease-out;
+  }
+  @keyframes open-paper {
+    from { transform: perspective(800px) rotateX(-8deg); }
+    to { transform: perspective(800px) rotateX(0); }
+  }
+}
+@media (max-width: 760px) {
+  .keeper-crossing { grid-column: 1; grid-row: 2; max-width: 10rem; height: 3.4rem; }
+  .keeper-crossing .journey-walker { height: 3.1rem; }
+  .forest-seam-inner { padding-block: 1.1rem .65rem; }
+  .forest-seam-origin strong { font-size: clamp(1.1rem, 4.4vw, 1.38rem); }
+  .work-clearing-world .work-hangings { padding-inline: 7%; scroll-padding-inline: 7%; gap: 4%; }
+  .work-hangings .work-hanging { flex: 0 0 65%; scroll-snap-align: start; }
+  .work-hanging-label .work-hanging-type { font-size: .69rem; }
+  .work-clearing-world .work-clearing-woods { object-position: 50% 45%; }
+  .river-scene .river-scene-art { object-position: 48% 50%; }
+  .house-scene-canvas :is(.house-scene-image, .house-window-glow) { object-position: 62% 50%; }
+  .river-stone-nav a { font-size: .86rem; }
+}

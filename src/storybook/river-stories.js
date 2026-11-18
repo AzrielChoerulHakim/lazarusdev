@@ -8,11 +8,14 @@ function unfoldRiverNote(id) {
   const note = riverNotes.get(id);
   if (!note) return;
   note.open = true;
-  for (const link of riverJumps) {
-    link.dataset.active = String(link.getAttribute('data-river-jump') === id);
-  }
 }
+
 for (const link of riverJumps) {
+  const note = riverNotes.get(link.dataset.riverJump);
+  if (!note) continue;
+  const updateLink = () => { link.dataset.active = String(note.open); };
+  note.addEventListener('toggle', updateLink);
+  updateLink();
   link.addEventListener('click', () => unfoldRiverNote(link.dataset.riverJump));
 }
 window.addEventListener('hashchange', () => unfoldRiverNote(location.hash.slice(1)));

@@ -123,21 +123,3 @@
   .forest-seam-next small { display: none; }
   .forest-seam-drawing { grid-column: 1; width: 100%; max-width: 10rem; }
 }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .forest-seam .forest-seam-inner { view-timeline-name: --page-turn; }
-    .forest-seam .forest-seam-origin strong {
-      animation: reading-line 1s linear both;
-      animation-timeline: --page-turn;
-      animation-range: entry 0% cover 35%;
-    }
-    .forest-seam .forest-seam-drawing .seam-trail {
-      stroke-dasharray: 100;
-      animation: reading-trail 1s linear both;
-      animation-timeline: --page-turn;
-      animation-range: entry 0% cover 45%;
-    }
-    @keyframes reading-line { from { translate: 0 .55em; } to { translate: 0 0; } }
-    @keyframes reading-trail { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
-  }
-}
