@@ -1,0 +1,76 @@
+name: Forest R13 - rendered visual baseline
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  visual-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install and build both published routes
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+          npm run build:storybook
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+      - name: Serve the two production outputs
+        run: |
+          mkdir -p /tmp/forest-r13-mirror/lazarusdev
+          cp -a dist/. /tmp/forest-r13-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-r13-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-r13-mirror >/tmp/forest-r13-server.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/forest-r13-server.log
+          exit 1
+      - name: Capture real scenes, posters, Atrium and paper journey
+        run: node scripts/forest_r13_visual_capture.mjs
+        env:
+          STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+          R13_CAPTURE_DIR: artifacts/r13-visual
+          GIT_SHA: ${{ github.sha }}
+      - name: Upload complete PNG baseline and evidence manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r13-visual-${{ github.sha }}
+          path: artifacts/r13-visual/
+          if-no-files-found: warn
+          retention-days: 30
+          compression-level: 5
+      - name: Freeze first successful rendered baseline on main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          if [ -f docs/forest/revision/r13/evidence/manifest.json ]; then
+            echo "Frozen baseline exists; do not overwrite it."
+            exit 0
+          fi
+          mkdir -p docs/forest/revision/r13/evidence
+          for size in 1440x900 390x844; do
+            for name in entrance path clearing river house; do
+              cp "artifacts/r13-visual/root/$size/scene-$name.png" \
+                 "docs/forest/revision/r13/evidence/$size-$name.png"
+            done
+          done
+          for name in atrium-light-0 atrium-light-50 atrium-light-100 poster-atrium river-rescue-carrying house-lit; do
+            if [ -f "artifacts/r13-visual/root/390x844/$name.png" ]; then
+              cp "artifacts/r13-visual/root/390x844/$name.png" \
+                 "docs/forest/revision/r13/evidence/390x844-$name.png"
+            fi
+          done
+          cp artifacts/r13-visual/manifest.json docs/forest/revision/r13/evidence/manifest.json
+          cp artifacts/r13-visual/AUDIT.md docs/forest/revision/r13/evidence/AUDIT.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/forest/revision/r13/evidence/
+          git commit -m "test(forest-r13): freeze Chromium screenshot baseline [skip ci]"
+          git push origin HEAD:main
