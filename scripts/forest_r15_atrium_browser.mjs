@@ -39,7 +39,7 @@ async function geometry(page) {
 }
 try{
 for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
-  for(const [width,height] of [[390,844],[1440,900],[844,390]]) {
+  for(const [width,height] of [[320,720],[390,844],[1440,900],[844,390]]) {
     const page=await browser.newPage({viewport:{width,height},reducedMotion:'no-preference'});
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
@@ -93,6 +93,14 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
     assert.equal(await page.locator('#atrium-light-value').textContent(),'90%');
     await page.locator('[data-light-step="10"]').click();
     assert.equal(await page.locator('#atrium-light-value').textContent(),'100%');
+    if (width===320 && height===720) {
+      const viewport=await page.evaluate(()=>({width:innerWidth,scrollWidth:document.documentElement.scrollWidth}));
+      assert.ok(viewport.scrollWidth<=viewport.width+2,
+        '320px portrait must not introduce horizontal page overflow '+JSON.stringify(viewport));
+      const back=await page.locator('[data-atrium-close]').boundingBox();
+      assert.ok(back && back.width>=44 && back.height>=44,
+        '320px portrait back control must remain touch-accessible '+JSON.stringify(back));
+    }
     if (width===844 && height===390) {
       const controls=await page.locator('#atrium-light').boundingBox();
       assert.ok(controls && controls.y >= 0 && controls.y+controls.height <= height + 2,
@@ -219,6 +227,6 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
 if(capture) {
   await mkdir(capture,{recursive:true});
   await writeFile(join(capture,'manifest.json'),JSON.stringify(captureData,null,2)+'\n');
-  assert.equal(captureData.routes.length,24,'2 routes × 3 viewports × 4 images');
+  assert.equal(captureData.routes.length,32,'2 routes × 4 viewports × 4 images');
 }
-console.log('PASS R15: both routes, 3 viewports, physical scene geometry, one-drag reveal, reduced motion, direct hash, keyboard and Back. ART SIGN-OFF NOT VERIFIED.');
+console.log('PASS R15: both routes, 4 viewports, physical scene geometry, one-drag reveal, reduced motion, direct hash, keyboard and Back. ART SIGN-OFF NOT VERIFIED.');

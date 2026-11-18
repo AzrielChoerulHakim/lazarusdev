@@ -46,3 +46,7 @@ These updates are additive to the existing R15 engineering scope and do not alte
 ### Verification of the R15 re-audit
 
 The extended R15 workflow [run 44274625657](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/44274625657) **PASS** on source `fe4d68d3` for both routes. Automated tests now use **trusted Chromium touch input** for 390×844 and 320×720; they reproduced and fixed an SVG implicit pointer-capture cancellation missed by mouse tests. The newest 24 Chromium frames and six committed source PNGs are recorded in the [QA addendum](./QA-RESULTS.md). Hardware phone testing and final art approval remain **NOT VERIFIED**.
+
+## R15 third verification / 320px rendered production coverage
+
+The narrow 320×720 portrait is now a **full screenshot-captured viewport**, not only a touch-gesture simulation. The production Chromium gate records four states per route at 320×720 (poster, 0%, 50%, 100%) and asserts the narrow page does not introduce horizontal overflow and the Atrium close control remains at least 44×44 CSS pixels. This extends the evidence to **32 actual PNG frames** across two routes and four viewports, while retaining the R13 and R14 frozen images. The real-device and human visual approval limitations remain unchanged.

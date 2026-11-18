@@ -67,6 +67,7 @@ jobs:
           cp artifacts/r15-visual/root/390x844/poster-atrium.png docs/forest/revision/r15/evidence/390x844-poster.png
           cp artifacts/r15-visual/root/1440x900/atrium-light-50.png docs/forest/revision/r15/evidence/1440x900-light-50.png
           cp artifacts/r15-visual/root/844x390/atrium-light-50.png docs/forest/revision/r15/evidence/844x390-light-50.png
+          cp artifacts/r15-visual/root/320x720/atrium-light-50.png docs/forest/revision/r15/evidence/320x720-light-50.png
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add docs/forest/revision/r15/evidence
