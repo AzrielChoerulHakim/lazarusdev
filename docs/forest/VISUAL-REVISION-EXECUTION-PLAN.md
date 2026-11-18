@@ -3,7 +3,7 @@
 **Proyek:** The Forest Between Pages (Lazarus Dev)  
 **Ditetapkan:** 18 November 2026  
 **Target branch:** `main` (commit langsung atas instruksi eksplisit pemilik)  
-**Status:** `R13 CAPTURED + BASELINE REVIEW RECORDED` · R14–R19 `PLANNED`. R13 bukan klaim visual art sign-off.  
+**Status:** `R13 CAPTURED + BASELINE REVIEW RECORDED`; R14, R15, **R15A**, R16–R19 `PLANNED`. R13 bukan klaim visual art sign-off.  
 **Sumber arah:** audit visual lima bab, pengalaman The Atrium, kontinuitas Paperkeeper dan halaman sobek; `ART-DIRECTION-LOCK.md` dan `visual-comparison-r12.md`.
 
 ## Tujuan akhir
@@ -55,8 +55,28 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 **Sentuh:** `src/storybook/atrium-room.js`, `src/storybook/styles/atrium-room.css`, template di `index.html` dan `storybook/index.html`, material ilustrasi Atrium, pengujian browser.  
 **Lulus jika:** pengunjung masuk dari tombol `Explore the work`, dapat menemukan relief dengan **satu usap**, keluar tanpa kehilangan posisi dan fokus; respons pada `390×844`, `1440×900`, `844×390`; kedua rute setara.
 
+### R15A / Tahap 2A — Paperkeeper Asset Cleanup & Pose System
+**Status:** TODO · **Prasyarat:** R13 dan patokan komposisi/groundline R14. **Dikerjakan setelah R15 dan sebelum R16;** tidak menunggu R17/R18.  
+**Prioritas:** P1 / *blocking* untuk R16 dan R18.  
+**Spesifikasi teknis lengkap:** [R15A — Paperkeeper Asset Reconstruction](./revision/r15a/PAPERKEEPER-ASSET-RECONSTRUCTION.md).
+
+**Masalah yang harus diselesaikan:** white fringe/halo pada alpha sprite, crop ketat/tidak konsisten, bounding box dan pijakan pose yang berbeda, karakter terlalu kecil atau tenggelam pada latar, serta Paperkeeper di sungai yang tertutup **sekitar 83%** oleh kotak navigasi pada screenshot R13 390×844.
+
+**Tujuh sub-tahap:**
+1. **R15A.1 — Audit inventaris.** Daftarkan seluruh aset/sprite dan penggunaannya pada lima bab, hitung alpha bounds dan baseline per pose, identifikasi fringe, pemotongan dan ketidakselarasan.
+2. **R15A.2 — Bersihkan alpha dan white matte.** Perbaiki white fringe pada topi/daun/tangan/tas/kaki/lentera, tanpa mengikis goresan krayon atau menghilangkan highlight yang memang bagian dari ilustrasi.
+3. **R15A.3 — Normalisasi crop dan transparent padding.** Kanvas konsisten, ruang aman untuk topi dan lentera, tidak ada kontur yang menyentuh crop, tidak ada bagian karakter terpotong.
+4. **R15A.4 — Normalisasi anchor dan groundline.** Titik pijak kaki konsisten pada setiap pergantian pose, berat tubuh tidak melompat, lentera dan tas tetap terdaftar secara spasial.
+5. **R15A.5 — Pose library produksi.** Pisahkan pose umum \`stand\`, \`look\`, \`walk\`, \`lantern\`, \`read\` dari pose adegan \`look-down\`, \`set-lantern\`, \`reach\`, \`lift\`, \`carry\`; pose adegan yang belum ada harus digambar sebagai aset baru, **bukan diklaim sudah tersedia**.
+6. **R15A.6 — Uji integrasi aktual.** Verifikasi kelima scene pada desktop/portrait/short landscape; bandingkan screenshot sebelum–sesudah, uji alpha pada latar terang, gelap, dan hijau-biru; hilangkan tumpang tindih karakter-kontrol di sungai.
+7. **R15A.7 — Lock sistem karakter.** Tetapkan manifest aset final, ukuran frame, alpha bounds, anchor, naming, sumber/provenance, contoh penggunaan, dan daftar perbuatan yang dilarang.
+
+**Sentuh saat implementasi:** \`storybook/assets/characters/*\`, \`storybook/assets/entrance/r02/exports/paperkeeper.*\`, sumber sprite terkait, \`src/storybook/styles/keeper-journey.css\`, \`src/storybook/keeper-journey.js\`, CSS dan HTML tiap scene jika diperlukan, serta QA visual browser.
+
+**Lulus jika:** semua pose bebas matte/halo putih yang terlihat, karakter utuh dengan padding transparan konsisten, kaki tidak teleport saat berpose, sprite terbaca pada ponsel dalam seluruh scene, navigasi sungai tidak menutup karakter, dan ada bukti screenshot aktual serta manifest audit. **Tidak boleh ditandai selesai hanya karena tes alpha numerik atau build hijau.** Jika file sumber ilustrasi asli tidak tersedia, catat kebutuhan redraw/penelusuran sumber sebagai blocker; jangan mengganti karakter dengan filter generik.
+
 ### R16 / Tahap 3 — Satu kertas, satu tindakan Paperkeeper
-**Status:** TODO · **Prasyarat:** R14 · **Integrasi silang:** R17.
+**Status:** TODO · **Prasyarat:** R14 dan **R15A lulus** · **Integrasi silang:** R17.
 
 **Pekerjaan**
 1. Hilangkan ambiguitas dari **dua kertas yang sudah tergambar** di lukisan sungai dan overlay halaman tambahan. Produksi ulang/retouch lukisan dasar sehingga hanya **satu kertas interaktif** yang menjadi pusat gestur; jangan mengandalkan tempelan CSS untuk menutup objek lama secara kasar.
@@ -81,7 +101,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 **Lulus jika:** rumah terbaca sebagai akhir hari pada thumbnail tanpa label; posisi jendela dan halaman bertahan pada crop portrait/desktop; pengunjung mengenali sobekan identik dan bisa memakai Field Letter.
 
 ### R18 / Tahap 5 — Galeri potret, tipografi, dan kalibrasi lima bab
-**Status:** TODO · **Prasyarat:** R15–R17.
+**Status:** TODO · **Prasyarat:** R15, **R15A**, R16 dan R17.
 
 **Pekerjaan**
 1. Buat ilustrasi potret Work Clearing yang benar-benar **diart-direct untuk ponsel**, bukan hanya crop dari `work-clearing-woods.webp`. Paperkeeper menghadap poster Atrium dan tepi poster berikutnya menjadi petunjuk swipe.
@@ -112,6 +132,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 | R13 | Screenshot browser awal + manifest viewport/sha + daftar masalah | Visual baseline nyata |
 | R14 | 10 komposisi produksi + aturan cahaya/groundline + catatan review | Siluet & focal point |
 | R15 | Atrium art/interaction + screenshot light 0/50/100 + regression | Masuk–cahaya–kembali |
+| R15A | Audit seluruh pose, aset alpha/crop bersih, pose library, screenshot lima scene, manifest anchor | Tidak ada white fringe/crop buruk/pose melompat; karakter tidak tertutup UI |
 | R16 | 1 halaman sumber, pose khusus, screenshot fase rescue + motion tests | Tindakan terbaca |
 | R17 | House twilight, detail jendela dan halaman + before/after mobile | Payoff kertas terbaca |
 | R18 | Clearing potret, final 10-up, typography/contrast notes | Lima bab berbeda |
@@ -119,7 +140,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 
 ## Protokol kerja GitHub untuk revisi berikutnya
 - Sesuai instruksi pengguna, setiap tahap yang dieksekusi kemudian akan diubah **langsung pada branch `main`** dan di-commit dengan pesan spesifik (`feat(forest-r15): ...`, `fix(forest-r16): ...` dan seterusnya). Dokumen ini sendiri juga di-commit ke `main` sekarang.
-- Setiap tahap = satu ruang lingkup yang dapat diuji; hindari menggabungkan seluruh revisi visual sebagai satu commit besar. Verifikasi SHA terakhir dan pemeriksaan sebelum/sesudah; bila gate gagal, perbaiki atau pulihkan baseline sebelum melanjutkan.
+- Setiap tahap (termasuk tujuh sub-tahap R15A) = satu ruang lingkup yang dapat diuji; hindari menggabungkan seluruh revisi visual sebagai satu commit besar. Verifikasi SHA terakhir dan pemeriksaan sebelum/sesudah; bila gate gagal, perbaiki atau pulihkan baseline sebelum melanjutkan.
 - Jangan menyebut revisi yang baru direncanakan sebagai sudah selesai. Pelaksanaan tahap berikutnya membutuhkan instruksi eksekusi baru; tidak ada pekerjaan otomatis atau background di antara percakapan.
 - **Sumber hukum spesifikasi:** `ART-DIRECTION-LOCK.md` tetap mengatur kualitas visual, namun ketentuan lama yang melarang commit ke `main` telah digantikan oleh otorisasi eksplisit pengguna dalam percakapan terbaru. Jangan mengubah riwayat maupun mengklaim tahap art lama sudah tervalidasi.
 - Prioritas desain tidak dapat dikompromikan demi CI hijau: **gambar diam harus sudah bagus, gerak hanya memperkuat maknanya**.
@@ -128,4 +149,4 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 - Sudah tersedia **first-pass** Atrium (ruang, slider, keyboard, back/restoration) dan **first-pass** paper rescue.
 - File `visual-comparison-r12.svg` adalah studi skematis, **bukan** screenshot final dari browser.
 - CI R12 pada `main` telah dilaporkan sukses untuk tes interaksi dan build, tetapi workflow tersebut **tanpa screenshot**; tidak menjadi visual sign-off.
-- R13 sudah diimplementasikan dan bukti screenshot browser direkam. R14–R19 belum dikerjakan. R13 tidak menggantikan sign-off art maupun uji ponsel fisik. Rujuk `docs/forest/revision/r13/RENDERED-VISUAL-REVIEW.md`.
+- R13 sudah diimplementasikan dan bukti screenshot browser direkam. R14–R19, termasuk **R15A**, belum dikerjakan. R15A menjadi prasyarat wajib sebelum produksi adegan R16; R13 tidak menggantikan sign-off art maupun uji ponsel fisik. Rujuk `docs/forest/revision/r13/RENDERED-VISUAL-REVIEW.md`.
