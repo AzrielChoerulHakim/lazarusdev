@@ -104,6 +104,11 @@ document.addEventListener('pointerdown', event => {
     setMenuOpen(false);
   }
 });
+const header = toggle.closest('.header-inner');
+header.addEventListener('focusout', event => {
+  if (nav.dataset.open === 'true' && !header.contains(event.relatedTarget)) setMenuOpen(false);
+});
+header.dataset.menuReady = 'true';
 mobileQuery.addEventListener?.('change', () => setMenuOpen(false));
 
 // Mark the visible chapter in the navigation without overriding scroll or

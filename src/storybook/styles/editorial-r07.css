@@ -28,7 +28,6 @@
  .site-header .header-inner {min-width:0;}
  .site-header .brand {min-width:0;max-width:calc(100% - 104px);}
  .site-header .brand-name {white-space:normal;overflow-wrap:anywhere;line-height:1.1;}
- .site-header .header-actions {flex-shrink:0;}
  .site-header .menu-toggle {flex-shrink:0;}
  .site-header .site-nav {max-width:calc(100% + var(--page-padding)*2);}
 }
