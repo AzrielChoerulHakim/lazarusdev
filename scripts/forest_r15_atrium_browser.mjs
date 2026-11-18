@@ -70,7 +70,9 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
       const state=await geometry(page);
       assert.ok(state.left&&state.right&&state.leftSoft&&state.beamX1&&state.etched);
       states.push(state);
-      await capturePng(page,folder,'atrium-light-'+value,'#atrium-room .atrium-frame');
+      // Capture the fixed viewport, not the oversized inner scroll element:
+      // an element screenshot could include page pixels OUTSIDE the dialog.
+      await capturePng(page,folder,'atrium-light-'+value,'#atrium-room');
     }
     assert.equal(new Set(states.map(x=>x.left)).size,3,'left projection must change with light');
     assert.equal(new Set(states.map(x=>x.right)).size,3,'right projection must change with light');
@@ -82,6 +84,11 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
     assert.equal(await page.locator('#atrium-light-value').textContent(),'90%');
     await page.locator('[data-light-step="10"]').click();
     assert.equal(await page.locator('#atrium-light-value').textContent(),'100%');
+    if (width===844 && height===390) {
+      const controls=await page.locator('#atrium-light').boundingBox();
+      assert.ok(controls && controls.y >= 0 && controls.y+controls.height <= height + 2,
+        'Short-landscape slider must be visible beside the illustrated room '+JSON.stringify(controls));
+    }
     const region=await page.locator('#atrium-scene').boundingBox();
     assert.ok(region&&region.height>=200,'atrium stage too small: '+JSON.stringify(region));
     const y=region.y+Math.min(region.height*.5,Math.max(50,height-region.y-25));
