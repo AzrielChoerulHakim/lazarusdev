@@ -83,6 +83,26 @@ async function shot(page,bucket,name,selector){
   if(data.documentWidth>data.viewport.width+2){
     evidence.warnings.push({file:entry.file,code:'HORIZONTAL_OVERFLOW',by:data.documentWidth-data.viewport.width});
   }
+  // Geometry alone is not an aesthetic verdict, but a walker hidden behind a navigation
+  // panel is a measurable failure of narrative readability. Report rather than alter it.
+  if(name.includes('river')){
+    const intersect=(a,b)=>!a||!b?0:Math.max(0,Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x))*
+      Math.max(0,Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y));
+    const walker=data.walker?.rect;
+    const covered=intersect(walker,data.stoneNav);
+    const walkerArea=walker?.width*walker?.height||0;
+    if(walkerArea&&covered/walkerArea>.2){
+      evidence.warnings.push({file:entry.file,code:'PAPERKEEPER_OBSCURED_BY_RIVER_NAV',
+        overlapPercent:Math.round(100*covered/walkerArea)});
+    }
+    const page=data.pageProp;
+    const pageArea=page?.width*page?.height||0;
+    const pageCovered=intersect(page,data.stoneNav);
+    if(pageArea&&pageCovered/pageArea>.2){
+      evidence.warnings.push({file:entry.file,code:'RESCUE_PAGE_OBSCURED_BY_RIVER_NAV',
+        overlapPercent:Math.round(100*pageCovered/pageArea)});
+    }
+  }
   if(data.images.some(x=>x.visible&&x.complete&&!x.naturalWidth)){
     evidence.failures.push({file:entry.file,code:'BROKEN_VISIBLE_IMAGE'});
   }

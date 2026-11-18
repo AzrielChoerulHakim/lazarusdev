@@ -1,6 +1,6 @@
 # R13 — Baseline visual dari browser sebenarnya
 
-**R13 adalah tahapan pengumpulan bukti visual dan audit, BUKAN revisi ilustrasi R14–R18.**
+**R13 sudah dijalankan: 141 screenshot Chromium dan 16 pemeriksaan interaksi berhasil direkam dari dua rute × empat ukuran layar.** Tahap ini adalah pengumpulan bukti visual dan audit, bukan revisi ilustrasi R14–R18.
 Status akhir art direction tetap **NOT SIGNED OFF** sampai PNG hasil Chromium diperiksa secara manusiawi.
 
 ## Cara melihat
@@ -9,7 +9,7 @@ Status akhir art direction tetap **NOT SIGNED OFF** sampai PNG hasil Chromium di
 2. Download artefak bernama `forest-r13-visual-<SHA>`: screenshot PNG kelima bab, seluruh poster, Atrium pada 0/50/100, galeri sesudah Back, rescue kertas, rumah dalam kondisi terang, dari **dua rute** × **empat viewport** (1440×900, 390×844, 320×720, 844×390).
 3. Baca `manifest.json` untuk SHA sumber, dimensi, SHA-256 tiap PNG, status decode foto, posisi object-fit, posisi Paperkeeper dan kertas, nilai gallery scroll, fokus setelah Back, serta overflow.
 4. Baca `AUDIT.md` untuk temuan otomatis dan catatan yang **belum** diverifikasi secara visual.
-5. Setelah satu eksekusi sukses, 10 screenshot pembanding desktop/ponsel serta beberapa keadaan Atrium dan cerita sungai–rumah dibekukan di [evidence](./evidence/). Versi ini tidak boleh ditimpa oleh sprint berikutnya.
+5. 10 screenshot pembanding desktop/ponsel dan keadaan Atrium serta cerita sungai–rumah telah dibekukan di [evidence](./evidence/), sumber commit `e6c4f80`. Baca juga [rendered visual review](./RENDERED-VISUAL-REVIEW.md) yang mendokumentasikan inspeksi gambar nyata. Versi ini tidak boleh ditimpa oleh sprint berikutnya.
 
 ## Rubrik review gambar
 
@@ -25,3 +25,7 @@ Status akhir art direction tetap **NOT SIGNED OFF** sampai PNG hasil Chromium di
 **Hipotesis audit aset yang harus diverifikasi pada PNG:** lukisan dasar sungai punya beberapa kertas, galeri potret masih memakai crop lukisan landscape, rumah belum benar-benar senja, dan Atrium memakai material SVG geometris. Ini **bukan** klaim bahwa browser screenshot sudah diinspeksi.
 
 Pengujian R12 tetap terpisah. Screenshot otomatis tidak menggantikan uji satu tangan pada ponsel fisik, screen reader, atau uji manusia tanpa instruksi.
+
+## Temuan terukur dari screenshot R13
+
+Pada potret 390×844, kotak Paperkeeper di sungai tertimpa 83% oleh panel navigasi catatan (pengukuran DOM pixel pada output Chromium). Penilaian artistik tetap dipisahkan dari verifikasi otomatis; capture script sekarang melaporkan kejadian ini sebagai `PAPERKEEPER_OBSCURED_BY_RIVER_NAV` agar tidak luput pada regresi berikutnya.

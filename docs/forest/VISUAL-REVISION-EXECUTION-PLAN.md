@@ -3,7 +3,7 @@
 **Proyek:** The Forest Between Pages (Lazarus Dev)  
 **Ditetapkan:** 18 November 2026  
 **Target branch:** `main` (commit langsung atas instruksi eksplisit pemilik)  
-**Status:** `PLANNED` — rencana produksi, bukan klaim implementasi atau sign-off visual.  
+**Status:** `R13 CAPTURED + BASELINE REVIEW RECORDED` · R14–R19 `PLANNED`. R13 bukan klaim visual art sign-off.  
 **Sumber arah:** audit visual lima bab, pengalaman The Atrium, kontinuitas Paperkeeper dan halaman sobek; `ART-DIRECTION-LOCK.md` dan `visual-comparison-r12.md`.
 
 ## Tujuan akhir
@@ -19,7 +19,7 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 ## Tahap dan definition of done
 
 ### R13 / Tahap 0 — Baseline visual yang dapat diaudit
-**Status:** TODO · **Prasyarat:** tidak ada · **Tujuan:** mengubah audit aset menjadi pengujian *halaman yang benar-benar dirender*.
+**Status:** IMPLEMENTED — 141 PNG Chromium / 2 rute × 4 viewport / baseline di GitHub Actions dan repo; skor manual masih provisional dan **NOT SIGNED OFF**. · **Prasyarat:** tidak ada · **Tujuan:** mengubah audit aset menjadi pengujian *halaman yang benar-benar dirender*.
 
 **Pekerjaan**
 1. Tambahkan pengambilan screenshot aktual dari browser pada dua rute, setidaknya pada viewport `1440×900`, `390×844`, `320×720`, dan `844×390`, meliputi lima adegan, poster, Atrium posisi cahaya 0/50/100, dan kondisi rumah. Ambil screenshot sesudah aset selesai decode.
@@ -128,4 +128,4 @@ Pengunjung mengikuti Paperkeeper ke gerbang, menjelajah galeri dan **benar-benar
 - Sudah tersedia **first-pass** Atrium (ruang, slider, keyboard, back/restoration) dan **first-pass** paper rescue.
 - File `visual-comparison-r12.svg` adalah studi skematis, **bukan** screenshot final dari browser.
 - CI R12 pada `main` telah dilaporkan sukses untuk tes interaksi dan build, tetapi workflow tersebut **tanpa screenshot**; tidak menjadi visual sign-off.
-- Semua R13–R19 masih `TODO` sampai perubahan aktual, bukti, dan gate direkam.
+- R13 sudah diimplementasikan dan bukti screenshot browser direkam. R14–R19 belum dikerjakan. R13 tidak menggantikan sign-off art maupun uji ponsel fisik. Rujuk `docs/forest/revision/r13/RENDERED-VISUAL-REVIEW.md`.
