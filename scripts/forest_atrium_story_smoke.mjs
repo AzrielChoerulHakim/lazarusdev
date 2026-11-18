@@ -31,8 +31,10 @@ try {
    assert.match(await page.locator('#atrium-light-message').textContent(),/engraved leaves/);
    await page.goBack();
    await page.waitForFunction(()=>document.querySelector('#atrium-room').hidden);
+   // Scroll restoration occurs on the next animation frame after popstate.
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
    const after=await page.evaluate(()=>({y:scrollY,x:document.querySelector('.work-hangings').scrollLeft,focus:document.activeElement?.matches('[data-atrium-enter]')}));
-   assert.ok(Math.abs(before.y-after.y)<5,'restore chapter offset');
+   assert.ok(Math.abs(before.y-after.y)<5,'restore chapter offset '+JSON.stringify({before,after}));
    assert.equal(before.x,after.x,'restore gallery');
    assert.equal(after.focus,true,'restore triggering focus');
    await page.locator('.river-scene').scrollIntoViewIfNeeded();
