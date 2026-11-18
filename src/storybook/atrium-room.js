@@ -216,13 +216,20 @@ function bindAtriumControls() {
       }
       if (dx < 12 || dx < dy * 1.3) return;
       pointer.axis = 'horizontal';
-      if (!scene.hasPointerCapture(event.pointerId)) scene.setPointerCapture(event.pointerId);
+      // Touch has implicit capture on its initial SVG descendant.
+      // Reparenting capture to the scene dispatches a bubbled
+      // lostpointercapture from the child and aborts the swipe early.
+      // Keep the implicit capture; its pointermove events bubble here.
     }
     if (pointer.axis === 'horizontal') drag(event);
   });
   for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) {
     scene.addEventListener(name, event => {
-      if (pointer && pointer.id === event.pointerId) pointer = null;
+      if (!pointer || pointer.id !== event.pointerId) return;
+      // Capture events from nested artwork bubble to this listener; the
+      // child's loss is not necessarily the scene's loss.
+      if (name === 'lostpointercapture' && event.target !== scene) return;
+      pointer = null;
     });
   }
   atrium.addEventListener('keydown', event => {
