@@ -36,13 +36,13 @@ for file in ROUTES:
     for i,seam in enumerate(parser.seams):
         assert seam.get('data-seam-from') == ids[i], (file,'from order',i)
         assert seam.get('data-seam-to') == ids[i+1], (file,'to order',i)
-    assert 'forest-seams.css' in text and 'forest-seams.js' in text, file
-    assert text.count('class="seam-trail"') == 4, file
+    assert 'forest-seams.css' in text and 'keeper-journey.js' in text, file
+    assert text.count('data-walk="crossing"') == 4, file
     print('PASS',file,'5 chapters, 4 semantic seams, honest native links, 1 H1')
 css = Path('src/storybook/styles/forest-seams.css').read_text()
-js = Path('src/storybook/forest-seams.js').read_text()
+js = Path('src/storybook/keeper-journey.js').read_text()
 assert 'prefers-reduced-motion:reduce' in css
-assert 'IntersectionObserver' in js and 'unobserve' in js
+assert 'IntersectionObserver' in js and 'isIntersecting' in js
 for forbidden in ('.scrollTo(','.scrollIntoView(','.preventDefault(','.screenshot(','.setInterval('):
     assert forbidden not in js, (forbidden,'forbidden in seam interaction')
 print('Stage 12 semantic and motion policy passed.')

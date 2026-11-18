@@ -6,7 +6,7 @@ const origin=process.env.STORYBOOK_PREVIEW_ORIGIN||'http://127.0.0.1:4186';
 const routes=['/lazarusdev/','/lazarusdev/storybook/'];
 const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let checks=0;
-const art=['path-waymark','folio-thread','river-ripple','cottage-window'];
+const art=['--path','--folio','--river','--house'];
 const chapters=['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
 
 async function pageFor(route,{width=390,height=844,reducedMotion='no-preference',javaScriptEnabled=true}={}){
@@ -31,7 +31,7 @@ try{
       const initial=await page.evaluate(()=>({
        chapters:[...document.querySelectorAll('[data-chapter]')].map(el=>el.id),
        h1:document.querySelectorAll('h1').length,
-       ink:[...document.querySelectorAll('img.forest-r05-ink')].map(el=>el.getAttribute('src')),
+       ink:[...document.querySelectorAll('img.forest-r05-ink')].map(el=>el.className),
        over:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
        source:document.querySelector('.entrance-paperkeeper')?.getAttribute('src')||'',
        noFakeClient:[...document.querySelectorAll('.work-folio .folio-status')].every(el=>el.textContent.includes('not a client commission'))
@@ -41,18 +41,22 @@ try{
       assert.equal(initial.ink.length,4,tag+' custom marks');
       assert.equal(new Set(initial.ink).size,4,tag+' unique marks');
       assert.equal(initial.over,false,tag+' no horizontal overflow');
-      assert.ok(initial.source.includes('r02/exports'),tag+' R02 real Paperkeeper');
+      assert.ok(/paperkeeper.three-quarter|neutral|notice|anticipate|lift-|overshoot|follow|settled/.test(initial.source),tag+' R02 real Paperkeeper');
       assert.equal(initial.noFakeClient,true,tag+' truthful folios');
       for(const name of art)assert.ok(initial.ink.some(src=>src.includes(name)),tag+' asset '+name);
 
       for(const img of await page.locator('img.forest-r05-ink').all()){
         await img.scrollIntoViewIfNeeded();
         await img.evaluate(async el=>el.decode());
-        assert.ok(await img.evaluate(el=>el.naturalWidth>=200&&el.naturalHeight>=200),tag+' 240px original mark');
+        const viewBox = await img.evaluate(async el => {
+          const svg = await (await fetch(el.currentSrc)).text();
+          return new DOMParser().parseFromString(svg,'image/svg+xml').documentElement.getAttribute('viewBox');
+        });
+        assert.equal(viewBox,'0 0 240 240',tag+' authored SVG coordinates');
         assert.equal(await img.evaluate(el=>getComputedStyle(el).pointerEvents),'none',tag+' decorative mark cannot intercept UI');
       }
 
-      await interaction(page,'[data-path-trace-toggle]',{selector:'.path-map-art',field:'motionCue',value:'route'});
+      await page.locator('[data-walk="path"]').scrollIntoViewIfNeeded();
       await interaction(page,'#folio-atrium summary',{selector:'.work-clearing-world',field:'activeFolio',value:'folio-atrium'});
       await interaction(page,'#river-note-a summary',{selector:'.river-scene',field:'activeNote',value:'river-note-a'});
       await interaction(page,'[data-house-light-toggle]',{selector:'.house-scene',field:'motionCue',value:'lantern'});
@@ -64,10 +68,10 @@ try{
   for(const route of routes){
     const {context,page,errors}=await pageFor(route,{reducedMotion:'reduce'});
     try{
-      await page.locator('[data-path-trace-toggle]').click();
-      assert.equal(await page.locator('.path-map-art').getAttribute('data-motion-cue'),'settled');
+      await page.locator('[data-walk="path"]').scrollIntoViewIfNeeded();
+      await page.waitForFunction(()=>document.querySelector('[data-walk="path"]').dataset.pose==='stand');
       await page.locator('#river-note-b summary').click();
-      assert.equal(await page.locator('.river-scene').getAttribute('data-motion-cue'),'settled');
+      await page.waitForFunction(()=>document.querySelector('.river-scene').dataset.motionCue==='settled');
       assert.deepEqual(errors,[]);
       pass(route+' reduced-motion skips decorative animation');
     }finally{await context.close();}

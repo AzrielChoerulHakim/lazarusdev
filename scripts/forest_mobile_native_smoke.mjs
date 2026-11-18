@@ -4,7 +4,7 @@ import {chromium} from 'playwright';
 const host=process.env.STORYBOOK_PREVIEW_ORIGIN||'http://127.0.0.1:4186';
 const routes=['/lazarusdev/','/lazarusdev/storybook/'];
 const sizes=[{w:320,h:720},{w:375,h:812},{w:390,h:844},{w:430,h:932},{w:670,h:880},{w:768,h:900},{w:1024,h:768},{w:1440,h:900},{w:844,h:390}];
-const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
+const browser=await chromium.launch({executablePath:process.env.CHROME_PATH,...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let passed=0;
 try {
 for(const route of routes) for(const {w,h} of sizes) {
@@ -21,7 +21,9 @@ for(const route of routes) for(const {w,h} of sizes) {
   const outcome=await page.evaluate(async()=>{
    const paintings=[...document.querySelectorAll('.portrait-native-art')];
    const glow=document.querySelector('.portrait-native-glow');
-   const decode=async(img)=>{img.loading='eager';await img.decode();return [img.naturalWidth,img.naturalHeight];};
+   const decode=async(img)=>{img.loading='eager';await img.decode();
+     const svg=await (await fetch(img.currentSrc)).text();
+     return new DOMParser().parseFromString(svg,'image/svg+xml').documentElement.getAttribute('viewBox');};
    const data=[];
    for(const x of [...paintings,glow]) data.push({natural:await decode(x),visible:getComputedStyle(x).display!=='none',src:x.currentSrc});
    const rect=e=>{const a=e.getBoundingClientRect();return {width:a.width,height:a.height,top:a.top,bottom:a.bottom};};
@@ -39,8 +41,8 @@ for(const route of routes) for(const {w,h} of sizes) {
      },
      stacks:{
        folios:getComputedStyle(document.querySelector('.work-hangings')).zIndex,
-       pathInk:getComputedStyle(document.querySelector('.path-ink--portrait')).zIndex,
-       houseKeeper:getComputedStyle(document.querySelector('.house-paperkeeper')).zIndex
+       pathInk:getComputedStyle(document.querySelector('[data-walk="path"]')).zIndex,
+       houseKeeper:getComputedStyle(document.querySelector('[data-walk="house"]')).zIndex
      },
      copy:document.querySelector('#house-copy-note').textContent,
      nav:document.querySelector('.site-nav a[href="#house-on-the-hill"]').textContent,
@@ -52,9 +54,9 @@ for(const route of routes) for(const {w,h} of sizes) {
   assert.equal(outcome.overflow,false,tag+' no horizontal overflow');
   assert.equal(outcome.pictures.length,5,tag+' images exist');
   for(const [idx,img] of outcome.pictures.entries()){
-   assert.deepEqual(img.natural,[768,1152],tag+' native portrait asset '+idx);
+   assert.equal(img.natural,'0 0 768 1152',tag+' native portrait asset '+idx);
    assert.equal(img.visible,false,tag+' archived simplified SVG must not mask painting '+idx);
-   assert.ok(img.src.includes('/mobile-native/'),tag+' original portrait URL');
+   assert.ok(/(?:-portrait|house-window-glow).*\.svg$|^data:image\/svg/.test(img.src),tag+' portrait SVG source');
   }
   if(w<=670){
     const raster=await page.evaluate(async()=>{
@@ -74,8 +76,8 @@ for(const route of routes) for(const {w,h} of sizes) {
     assert.ok(raster.house.includes('house-mobile'),tag+' original painted house');
     assert.equal(raster.workVisible&&raster.houseVisible,true,tag+' paintings not hidden');
     assert.equal(outcome.stacks.folios,'3',tag+' folio stacking');
-    assert.equal(outcome.stacks.pathInk,'4',tag+' traced path over art');
-    assert.equal(outcome.stacks.houseKeeper,'4',tag+' keeper over art');
+    assert.equal(outcome.stacks.pathInk,'3',tag+' path guide over art');
+    assert.equal(outcome.stacks.houseKeeper,'3',tag+' keeper over art');
     for(const [key,rect] of Object.entries(outcome.bounds))assert.ok(rect.width>260&&rect.height>300,tag+' '+key+' visible image region');
   }
   for(const b of outcome.buttons) if(b.display!=='none')assert.ok(b.bounds.width>=44&&b.bounds.height>=44,tag+' '+b.sel+' tap target');

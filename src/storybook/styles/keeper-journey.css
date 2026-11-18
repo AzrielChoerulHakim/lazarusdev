@@ -2,11 +2,11 @@
 .journey-walker {
   position: absolute;
   z-index: 3;
-  left: 12%;
-  bottom: 5%;
+  left: 0;
+  bottom: 0;
   height: clamp(58px, 10vw, 132px);
-  aspect-ratio: 84 / 95;
-  background: url("../../../storybook/assets/characters/paperkeeper-stride.webp") left bottom / 300% 100% no-repeat;
+  aspect-ratio: 96 / 100;
+  background: url("../../../storybook/assets/characters/paperkeeper-journey.webp") 37.5% bottom / 900% 100% no-repeat;
   translate: -50% 0;
   transform-origin: center bottom;
   pointer-events: none;
@@ -19,7 +19,7 @@
   align-self: end;
 }
 .keeper-crossing .journey-walker { height: 3.7rem; }
-[data-walk="river"] { left: 57%; bottom: 9%; z-index: 1; }
+[data-walk="river"] { z-index: 1; }
 .house-scene[data-lit="false"] .house-glow-layer { opacity: var(--arrival-light, .3); }
 .chapter-house .house-contact { background: #f8ebd5; }
 .house-copy-status[data-complete] { border-inline-start: 3px solid var(--forest); padding-inline-start: .7rem; }
@@ -73,3 +73,21 @@
   .house-scene-canvas :is(.house-scene-image, .house-window-glow) { object-position: 62% 50%; }
   .river-stone-nav a { font-size: .86rem; }
 }
+
+.journey-walker:not([data-pose]) { left: 14%; bottom: 6%; }
+
+/* The loose page rises from the bank to the illustrated reader's hands. */
+.journey-walker[data-pose="reach"]::after {
+  content: "";
+  position: absolute;
+  width: 18%;
+  height: 14%;
+  bottom: calc(4% + 24% * var(--page-lift));
+  left: 62%;
+  border: 1px solid #765e40;
+  background: repeating-linear-gradient(#f2deb2 0 3px, #a79570 3px 4px);
+  rotate: -12deg;
+}
+[data-walk="clearing"]:not([data-pose]) { background-position-x: 62.5%; }
+[data-walk="river"]:not([data-pose]) { background-position-x: 87.5%; left: 68%; }
+[data-walk="house"]:not([data-pose]) { background-position-x: 100%; left: 65%; bottom: 32%; }

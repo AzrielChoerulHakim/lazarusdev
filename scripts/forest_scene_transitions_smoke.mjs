@@ -7,7 +7,7 @@ const routes=['/lazarusdev/','/lazarusdev/storybook/'];
 const sizes=[{w:320,h:720},{w:375,h:812},{w:390,h:844},{w:430,h:932},
   {w:768,h:860},{w:1024,h:768},{w:1440,h:900},{w:844,h:390}];
 const targets=['winding-path','work-clearing','river-stories','house-on-the-hill'];
-const browser=await chromium.launch({...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
+const browser=await chromium.launch({executablePath:process.env.CHROME_PATH,...(process.env.CI?{channel:'chrome'}:{}),headless:true,args:['--no-sandbox']});
 let verified=0;
 try {
  for(const route of routes) for(const s of sizes){
@@ -43,7 +43,7 @@ try {
    for(let i=0;i<targets.length;i++){
      const seam=page.locator('[data-chapter-seam]').nth(i);
      await seam.scrollIntoViewIfNeeded();
-     await page.waitForFunction(i=>document.querySelectorAll('[data-chapter-seam]')[i].dataset.ink==='drawn',i,{timeout:8000});
+     await page.waitForFunction(i=>document.querySelectorAll('[data-chapter-seam]')[i].querySelector('[data-walk]').dataset.pose==='stand',i,{timeout:8000});
    }
    // Native link changes fragment; no custom scrolling or focus hijack.
    const finalLink=page.locator('.forest-seam--house a.forest-seam-link');
@@ -61,8 +61,8 @@ try {
    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
    const reduce=await page.evaluate(()=>{
      const seam=document.querySelector('[data-chapter-seam]');
-     const path=seam.querySelector('.seam-trail');
-     return {line: getComputedStyle(path).strokeDashoffset,links:document.querySelectorAll('.forest-seam-link').length};
+     const path=seam.querySelector('[data-walk]');
+     return {line: getComputedStyle(path).animationDuration,links:document.querySelectorAll('.forest-seam-link').length};
    });
    assert.equal(Number.parseFloat(reduce.line),0,route+' reduced motion no ink draw');
    assert.equal(reduce.links,4);
@@ -76,7 +76,7 @@ try {
      seams:document.querySelectorAll('[data-chapter-seam]').length,
      nojs:document.documentElement.classList.contains('no-js'),
      anchors:[...document.querySelectorAll('a.forest-seam-link')].map(el=>el.hash),
-     line:getComputedStyle(document.querySelector('.seam-trail')).strokeDashoffset
+     line:getComputedStyle(document.querySelector('[data-walk]')).animationDuration
    }));
    assert.equal(fallback.scenes,5,route+' static scenes');
    assert.equal(fallback.seams,4,route+' static seams');

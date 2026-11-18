@@ -45,32 +45,6 @@
 .work-clearing-world[data-motion-cue="folio"] .work-hanging[data-active="true"] {
   animation:r11-folio-hinge 650ms cubic-bezier(.22,.65,.26,1) 1 both;
 }
-.work-folio .folio-main::after {
-  content:"";
-  display:block;
-  flex:none;
-  width:min(260px,100%);
-  height:13px;
-  margin-top:5px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 13'%3E%3Cpath d='M3 7Q36 2 71 8T135 6 197 7 257 5' stroke='%238d7049' stroke-width='2.1' fill='none' stroke-linecap='round'/%3E%3Cpath d='M7 10Q55 6 107 10T215 9' stroke='%23b39866' stroke-width='.8' fill='none'/%3E%3C/svg%3E") left center/100% 100% no-repeat;
-  clip-path:inset(0 100% 0 0);
-  transition:clip-path 620ms steps(13,end);
-}
-.work-folio[open] .folio-main::after {clip-path:inset(0 0 0 0);}
-
-/* Native river notes expose a different ink vocabulary: three uneven
- * waterlines drawn across the opened note's title, not a glowing card. */
-.river-note-fold summary h3::after {
-  content:"";
-  display:block;
-  width:min(225px,100%);
-  height:18px;
-  margin-top:12px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 225 18'%3E%3Cpath d='M2 5Q17 -1 33 5T63 5 93 5 123 5 153 5 183 5 223 5M8 11Q25 6 43 12T78 11 115 11 151 12 190 11 220 12M2 16Q30 13 59 16T124 15 199 16' stroke='%235f8b92' stroke-width='1.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") left center/100% 100% no-repeat;
-  clip-path:inset(0 100% 0 0);
-  transition:clip-path 740ms steps(15,end);
-}
-.river-note-fold[open] summary h3::after {clip-path:inset(0 0 0 0);}
 @media(max-width:920px){
  .work-hanging:nth-child(1){--r11-rest-angle:-2deg;--r11-rest-y:16px;}
  .work-hanging:nth-child(2){--r11-rest-angle:1.4deg;--r11-rest-y:6px;}

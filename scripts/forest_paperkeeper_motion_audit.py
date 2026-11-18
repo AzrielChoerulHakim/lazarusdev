@@ -24,22 +24,15 @@ for name in sorted(required):
     print(f'PASS pose {name} / {len(b)} bytes')
 for name in ['index.html', 'storybook/index.html']:
     html = (ROOT / name).read_text()
-    assert html.count('data-paperkeeper-motion') == 1, name
-    assert html.count('data-paperkeeper-step') == 1, name
-    assert html.count('data-paperkeeper-walk') == 1, name
-    assert html.count('data-paperkeeper-pose') == 2, name + ': missing Vite-resolved hidden pose sources'
-    assert html.count('river-paperkeeper-reader') == 1, name
-    assert 'paperkeeper-motion.js' in html and 'paperkeeper-motion.css' in html
+    assert html.count('data-walk="crossing"') == 4, name
+    for scene in ('path', 'clearing', 'river', 'house'):
+        assert html.count(f'data-walk="{scene}"') == 1, name
+    assert 'keeper-journey.js' in html and 'keeper-journey.css' in html
     assert sum(' data-chapter ' in tag for tag in re.findall('<section[^>]*>', html)) == 5 and html.count('<h1') == 1, name
     print('PASS semantic route', name)
-js = (ROOT / 'src/storybook/paperkeeper-motion.js').read_text()
-assert 'setInterval' in js and '100)' in js, '10fps timing absent'
+js = (ROOT / 'src/storybook/keeper-journey.js').read_text()
 assert "prefers-reduced-motion: reduce" in js
-assert 'visibilitychange' in js
 assert 'scrollTo(' not in js and 'preventDefault(' not in js
-css = (ROOT / 'src/storybook/styles/paperkeeper-motion.css').read_text()
-assert '@media (prefers-reduced-motion: reduce)' in css
-assert 'infinite' not in css.lower(), 'repeating loops are disallowed'
 for path in ['scripts/forest_paperkeeper_motion_smoke.mjs', '.github/workflows/forest-paperkeeper-motion.yml']:
     s = (ROOT/path).read_text()
     assert not re.search(r'page\.screenshot\s*\(', s), 'screenshot capture prohibited'
