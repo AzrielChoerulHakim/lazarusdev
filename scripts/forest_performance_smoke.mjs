@@ -37,12 +37,13 @@ try {
         catch (error) {
           // A finite Entrance acting frame can replace the guide's source during
           // decode; its decoded natural dimensions remain valid evidence.
-          if (hero.naturalWidth > 0 && hero.naturalHeight > 0 && paperkeeper.naturalWidth > 0) return;
-          throw new Error('Critical hero decode failed: ' + JSON.stringify({
+          if (!(hero.naturalWidth > 0 && hero.naturalHeight > 0 && paperkeeper.naturalWidth > 0)) {
+            throw new Error('Critical hero decode failed: ' + JSON.stringify({
             heroSrc:hero.currentSrc,heroComplete:hero.complete,heroNatural:hero.naturalWidth,
             guideSrc:paperkeeper.currentSrc,guideComplete:paperkeeper.complete,
             guideNatural:paperkeeper.naturalWidth
           }) + ' / ' + String(error));
+          }
         }
         const preloads=[...document.querySelectorAll('link[rel="preload"][as="image"]')];
         const mobile=matchMedia('(max-width: 670px)').matches;
