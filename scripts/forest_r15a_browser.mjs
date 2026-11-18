@@ -16,9 +16,9 @@ const chapters=[['entrance','#entrance .entrance-stage'],['path','#winding-path 
  ['house','#house-on-the-hill .house-scene']];
 const sizes=[[1440,900],[390,844],[320,720],[844,390]];
 const routes=[['root','/lazarusdev/'],['storybook','/lazarusdev/storybook/']];
-const evidence={schema:'lazarus-r15a-live-scene-v1',sourceCommit:source,
+const evidence={schema:'lazarus-r15a-live-scene-v2',sourceCommit:source,
  browser:'Chrome / production Vite',sizes,routes:routes.map(r=>r[1]),screenshots:[],metrics:[],failures:[],
- signOff:'USER-APPROVED-DIRECTION / ART-CUTOUT-MANUAL-SIGNOFF-SEPARATE',physicalPhone:'NOT VERIFIED'};
+ signOff:'USER-APPROVED-DIRECTION / ARTWORK-REVIEWED-IN-RENDER',physicalPhone:'NOT VERIFIED'};
 function rect(r){if(!r)return null;return {x:r.x,y:r.y,width:r.width,height:r.height};}
 const intersect=(a,b)=>!a||!b?0:Math.max(0,Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x))*
   Math.max(0,Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y));
@@ -108,9 +108,48 @@ try{
   console.log('PASS R15A',bucket,'5 chapters, no river overlap, 9 frame alpha');
   await page.close();
  }
+  // Finite five-gesture story proof on real runtime, not just source filenames.
+  for(const [routeLabel,route] of routes){
+    const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'no-preference'});
+    const errors=[];page.on('pageerror',error=>errors.push(error.message));
+    await page.goto(origin+route,{waitUntil:'domcontentloaded'});
+    const river=page.locator('#river-stories .river-scene');
+    await river.evaluate(element=>{
+      window.__r15aPhaseLog=[];
+      const collect=()=>{
+        const actor=element.querySelector('[data-walk="river"]');
+        window.__r15aPhaseLog.push({phase:element.dataset.rescue,
+          pose:actor?.dataset.pose||null});
+      };
+      new MutationObserver(collect).observe(element,{attributes:true,attributeFilter:['data-rescue']});
+    });
+    await river.scrollIntoViewIfNeeded();
+    await page.waitForFunction(()=>
+      document.querySelector('#river-stories .river-scene')?.dataset.rescue==='lift',
+      null,{timeout:6500});
+    await capture(page,routeLabel+'/390x844','rescue-lift','#river-stories .river-scene');
+    await page.waitForFunction(()=>
+      document.querySelector('#river-stories .river-scene')?.dataset.rescue==='carrying',
+      null,{timeout:6500});
+    await capture(page,routeLabel+'/390x844','rescue-carrying','#river-stories .river-scene');
+    const history=await page.evaluate(()=>window.__r15aPhaseLog);
+    const expected={watch:'look-down',lantern:'set-lantern',reach:'reach',
+      lift:'lift',carrying:'carry'};
+    for(const [phase,pose] of Object.entries(expected)){
+      assert.ok(history.some(x=>x.phase===phase),
+        'missing actual river phase '+phase+' '+JSON.stringify(history));
+      assert.ok(history.some(x=>x.phase===phase&&x.pose===pose),
+        'missing registered illustrated action '+pose+' '+JSON.stringify(history));
+    }
+    assert.deepEqual(errors,[],'rescue animation errors');
+    evidence.metrics.push({route,viewport:[390,844],chapter:'rescue-action',
+      history,expected,source:'actual browser DOM mutation / 5 action phases'});
+    console.log('PASS R15A real 5-phase rescue',route,history.map(x=>x.phase+':'+x.pose).join(' -> '));
+    await page.close();
+  }
 }finally{await browser.close();}
 await mkdir(dest,{recursive:true});
 await writeFile(join(dest,'manifest.json'),JSON.stringify(evidence,null,2)+'\n');
-assert.equal(evidence.screenshots.length,40);
+assert.equal(evidence.screenshots.length,44);
 console.log('R15A actual scene frames',evidence.screenshots.length,'overlap checks',
  evidence.metrics.filter(x=>x.chapter==='river').map(x=>x.riverOverlapFraction));

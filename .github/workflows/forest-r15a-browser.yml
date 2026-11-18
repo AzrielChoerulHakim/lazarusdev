@@ -40,7 +40,7 @@ jobs:
           done
           cat /tmp/forest-r15a-server.log
           exit 1
-      - name: Render 40 actual five-chapter screenshots and enforce zero river UI overlap
+      - name: Render 44 real scene/rescue screenshots and enforce zero river UI overlap
         run: npm run check:r15a:browser
         env:
           STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
@@ -64,6 +64,9 @@ jobs:
             for scene in entrance path clearing river house; do
               cp "artifacts/r15a-visual/root/$dim/scene-$scene.png" "docs/forest/revision/r15a/evidence/$dim-$scene.png"
             done
+          done
+          for phase in lift carrying; do
+            cp "artifacts/r15a-visual/root/390x844/rescue-${phase}.png" "docs/forest/revision/r15a/evidence/390x844-rescue-${phase}.png"
           done
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
