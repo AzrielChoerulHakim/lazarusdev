@@ -24,7 +24,7 @@ npm run build:storybook
 npm run preview
 ```
 
-The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK.md`. Production HTML is `index.html` and `storybook/index.html`; chapter visuals are in `storybook/assets/`, and behavior/styles live in `src/storybook/`. The pipeline includes automated, **text-only** browser QA across chapter invariants, keyboard, screen-reader semantics via axe, viewport constraints, motion policy, asset and performance budgets, and launch metadata. **No browser screenshots or videos are automatically captured or uploaded.**
+The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK.md`. Production HTML is `index.html` and `storybook/index.html`; chapter visuals are in `storybook/assets/`, and behavior/styles live in `src/storybook/`. The pipeline includes automated, **text-only** browser QA across chapter invariants, keyboard, screen-reader semantics via axe, viewport constraints, motion policy, asset and performance budgets, and launch metadata. **Exception:** the dedicated R13 baseline and R15 Atrium workflows now capture actual Chromium PNG screenshots and upload evidence artifacts to GitHub Actions; other automated QA workflows remain text-only.
 
 ## Public claims and launch boundaries
 
@@ -60,3 +60,12 @@ The current **Forest Between Pages** is built on the full five-chapter Stage18 b
 **Art acceptance remains honest:** A complete new pair of separately illustrated desktop/portrait paintings for Chapters 02–05, new anatomically drawn gesture sprites, and subjective human visual signoff have **not** been completed by this revision track. The original chapter paintings remain in production. All concept works remain labeled as concepts, and Field Letter remains local-only because no verified inbox exists. Automated CI does not certify non-generic artistic quality.
 
 The canonical GitHub Pages source is `main`; `/storybook/` is a linked, non-indexed alternate. Revision source material and QA notes are in `docs/forest/revision/`.
+
+
+## R14–R15 composition and Atrium implementation (18 November 2026)
+
+The later [visual revision roadmap](docs/forest/VISUAL-REVISION-EXECUTION-PLAN.md) builds on the earlier forest-book release without replacing the source paper illustrations.
+
+- **R14:** a ten-scene-frame comparison drawn from real frozen R13 Chromium captures, a machine-readable composition/light/groundline contract, candidate non-destructive tonal grading, and a mobile river safe zone. [R14 evidence](docs/forest/revision/r14/README.md).
+- **R15:** The Atrium now enters via a pointed stone/gold threshold following the existing concept poster, with a directional pencil-hatched material treatment, four physically linked scene layers and individually projected left/right pillar shadows. A one-swipe interaction, modal focus/scroll restoration, desktop/portrait/short-landscape layout and both routes have browser tests and rendered evidence. [R15 notes](docs/forest/revision/r15/README.md) · [R15 verified runs](docs/forest/revision/r15/QA-RESULTS.md).
+- **Art sign-off remains pending:** scripted SVG pigment does not automatically equal the density of the existing AI-assisted crayon-raster folio. The human blind-thumbnail review, real-phone gesture test, and final authored material approval are not replaced by passing CI. R15A's independent Paperkeeper alpha/pose remediation and R16–R19 remain separate scopes.
