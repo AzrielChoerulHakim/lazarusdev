@@ -1,0 +1,40 @@
+name: Forest R15A - Paperkeeper production asset export
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/forest_r15a_export.mjs
+      - .github/workflows/forest-r15a-assets.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  normalize-character:
+    runs-on: ubuntu-latest
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Derive and quality-measure R15A source-preserving asset library
+        run: npm run assets:r15a
+      - name: Upload normalized sprites and alpha proofs for visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: forest-r15a-asset-proofs-${{ github.sha }}
+          path: |
+            storybook/assets/characters/r15a/
+            docs/forest/revision/r15a/ASSET-AUDIT.json
+            docs/forest/revision/r15a/ANCHOR-MANIFEST.json
+          if-no-files-found: error
+      - name: Commit original-source-preserving final assets to main
+        if: success() && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add storybook/assets/characters/r15a/ docs/forest/revision/r15a/ASSET-AUDIT.json docs/forest/revision/r15a/ANCHOR-MANIFEST.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'art(forest-r15a): freeze cleaned alpha frame library and proof backgrounds [skip ci]'
+          git push origin HEAD:main
