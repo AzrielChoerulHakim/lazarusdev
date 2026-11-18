@@ -40,6 +40,7 @@ try {
    assert.equal(await page.locator('.river-scene').getAttribute('data-rescue'),'carrying');
    assert.equal(await page.locator('.kept-page-window .kept-page-art').count(),1);
    await page.emulateMedia({reducedMotion:'reduce'});
+   await page.waitForFunction(()=>document.querySelector('.river-scene').dataset.rescue==='still');
    assert.equal(await page.locator('.river-scene').getAttribute('data-rescue'),'still');
    await page.goto(origin+route+'#atrium');
    assert.equal(await page.locator('#atrium-room').isVisible(),true);

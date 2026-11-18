@@ -33,7 +33,14 @@ try {
       const pageData=await page.evaluate(async()=>{
         const hero=document.querySelector('.entrance-backdrop');
         const paperkeeper=document.querySelector('.entrance-paperkeeper');
-        await Promise.all([hero.decode(),paperkeeper.decode()]);
+        try { await Promise.all([hero.decode(),paperkeeper.decode()]); }
+        catch (error) {
+          throw new Error('Critical hero decode failed: ' + JSON.stringify({
+            heroSrc:hero.currentSrc,heroComplete:hero.complete,heroNatural:hero.naturalWidth,
+            guideSrc:paperkeeper.currentSrc,guideComplete:paperkeeper.complete,
+            guideNatural:paperkeeper.naturalWidth
+          }) + ' / ' + String(error));
+        }
         const preloads=[...document.querySelectorAll('link[rel="preload"][as="image"]')];
         const mobile=matchMedia('(max-width: 670px)').matches;
         const matching=preloads.filter(x=>matchMedia(x.media).matches);

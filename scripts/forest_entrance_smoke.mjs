@@ -37,9 +37,9 @@ try{
           const hero=document.querySelector('#entrance');
           const pic=hero.querySelector('picture .entrance-backdrop');
           const person=hero.querySelector('.entrance-paperkeeper');
-          const leaf=hero.querySelector('.entrance-leaf-link img');
+          const cue=hero.querySelector('.hero-atlas-cue');
           // eagerly ensure decode despite later browser scrolling
-          for(const img of [pic,person,leaf]){
+          for(const img of [pic,person]){
             img.loading='eager';
             if(!img.complete)await new Promise((ok,fail)=>{img.addEventListener('load',ok,{once:true});img.addEventListener('error',fail,{once:true});});
             await img.decode();
@@ -51,21 +51,21 @@ try{
             stage03:document.body.dataset.storybookStage,
             chapterCount:document.querySelectorAll('section[data-chapter]').length,
             h1:document.querySelectorAll('h1').length,
-            imageSizes:[pic.naturalWidth,pic.naturalHeight,person.naturalWidth,person.naturalHeight,leaf.naturalWidth,leaf.naturalHeight],
+            imageSizes:[pic.naturalWidth,pic.naturalHeight,person.naturalWidth,person.naturalHeight],
             background:pic.currentSrc,
             person:person.currentSrc,
-            leaf:leaf.currentSrc,
+            atlasCue:Boolean(cue),
             heroText:hero.querySelector('h1').textContent,
             hasLiveCta:role('#entrance .button-primary[href="#work-clearing"]'),
             hasPath:role('#entrance .text-link[href="#winding-path"]'),
-            hasLeafPath:role('#entrance .entrance-leaf-link[href="#winding-path"]'),
+            hasAtlasCue:role('#entrance .hero-atlas-cue[href="#field-atlas"]'),
             noCanvas:!role('canvas'),
             noPlaceholder:!role('.art-reserve-entrance'),
             overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
             text:bounds('.hero-copy'),
             character:bounds('.entrance-paperkeeper'),
             cta:bounds('#entrance .button-primary'),
-            leafBox:bounds('.entrance-leaf-link'),
+            cueBox:bounds('.hero-atlas-cue'),
             tailIndex:{ height:bounds('.entrance-tail-index').height, whiteSpace:getComputedStyle(document.querySelector('.entrance-tail-index')).whiteSpace },
             pictureHidden:pic.getAttribute('alt')==='' && pic.parentElement.getAttribute('aria-hidden')==='true',
             personAlt:person.getAttribute('alt')||'',
@@ -79,15 +79,15 @@ try{
         assert.ok(audit.imageSizes.every(x=>x>0),context+' decoded assets '+audit.imageSizes);
         assert.equal(audit.background.includes('entrance-mobile'),p.w<=670,context+' correct art-directed composition: '+audit.background);
         assert.ok(audit.person.includes('paperkeeper.three-quarter'),context+' approved character');
-        assert.ok(audit.leaf.includes('entrance-leaf-cue'),context+' independent leaf art');
+        assert.ok(audit.atlasCue,context+' native illustrated field-atlas invitation');
         assert.ok(audit.heroText.includes('Different worlds.'),context);
-        assert.ok(audit.hasLiveCta&&audit.hasPath&&audit.hasLeafPath,context+' CTA must be native anchors');
+        assert.ok(audit.hasLiveCta&&audit.hasPath&&audit.hasAtlasCue,context+' CTA must be native anchors');
         assert.ok(audit.noCanvas&&audit.noPlaceholder,context+' old placeholder or canvas');
         assert.equal(audit.overflow,false,context+' horizontal overflow');
         assert.ok(audit.pictureHidden,context+' decorative image must be screen-reader hidden');
         assert.ok(audit.personAlt.includes('Paperkeeper'),context+' meaningful hero alt');
         assert.ok(audit.cta.height>=44&&audit.cta.width>=44,context+' CTA touch target');
-        assert.ok(audit.leafBox.height>=44&&audit.leafBox.width>=44,context+' leaf touch target');
+        assert.ok(audit.cueBox.height>=44&&audit.cueBox.width>=44,context+' atlas touch target');
         if(p.w<=390){
           assert.equal(audit.tailIndex.whiteSpace,'nowrap',context+' chapter index no-wrap');
           assert.ok(audit.tailIndex.height<25,context+' chapter index must remain one line');
@@ -103,11 +103,11 @@ try{
         await primary.click();
         assert.equal(new URL(page.url()).hash,'#work-clearing',context+' Work navigation');
         await page.locator('.brand').click();
-        await page.locator('#entrance .entrance-leaf-link').click();
-        assert.equal(new URL(page.url()).hash,'#winding-path',context+' leaf cue navigation');
+        await page.locator('#entrance .hero-atlas-cue').click();
+        assert.equal(new URL(page.url()).hash,'#field-atlas',context+' atlas cue navigation');
         await page.emulateMedia({reducedMotion:'reduce'});
-        const motion=await page.locator('.entrance-leaf-link img').evaluate(n=>({animation:getComputedStyle(n).animationDuration,transition:getComputedStyle(n).transitionDuration}));
-        assert.ok(parseFloat(motion.transition)<=.005,context+' leaf motion must stop on reduced motion');
+        const motion=await page.locator('.hero-atlas-cue').evaluate(n=>({animation:getComputedStyle(n).animationDuration,transition:getComputedStyle(n).transitionDuration}));
+        assert.ok(parseFloat(motion.transition)<=.005,context+' atlas cue motion must stop on reduced motion');
         console.log('PASS STAGE06 '+context+' assets '+audit.imageSizes.join('x')+' no overflow');
         passed++;
       }finally{await page.close();}
