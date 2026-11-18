@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="board-title board-desc">
+<title id="board-title">The Forest Between Pages — ten composition thumbnails</title>
+<desc id="board-desc">Five landscape and five portrait visual studies, from the gateway through the winding path, gallery, river and house. These are schematic art-direction thumbnails, not finished paintings.</desc>
+<defs>
+ <pattern id="pencil-r12" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M0 13L13 0M9 15L15 9" stroke="#394a3c" stroke-width=".6" opacity=".17"/></pattern>
+ <linearGradient id="dusk-r12" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#74738c"/><stop offset="1" stop-color="#d9a57a"/></linearGradient>
+ <linearGradient id="morning-r12" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c8d9c1"/><stop offset="1" stop-color="#f6e7b9"/></linearGradient>
+</defs>
+<rect width="1800" height="1120" fill="#f4e7d1"/>
+<path d="M56 102H1744M56 561H1744M56 1049H1744" stroke="#8d916f" stroke-width="1"/>
+<text x="58" y="55" fill="#294c37" font-family="Georgia,serif" font-size="35">THE FOREST BETWEEN PAGES</text>
+<text x="58" y="85" fill="#50664c" font-family="Arial,sans-serif" font-size="16" letter-spacing="2">R12 / VISUAL COMPOSITION STUDIES · NOT FINAL ARTWORK</text>
+<text x="58" y="136" fill="#38513d" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">01 / LANDSCAPE FRAMES — 5 SCENES</text>
+<text x="58" y="596" fill="#38513d" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">02 / PORTRAIT FRAMES — 5 SCENES</text><g transform="translate(58 164)">
+   <rect x="-5" y="-5" width="321" height="343" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="311" height="333" viewBox="0 0 311 333" preserveAspectRatio="xMidYMid slice"><rect width="311" height="333" fill="url(#morning-r12)"/><path d="M0 333Q155.5 183.15 311 333Z" fill="#a2af7c"/><path d="M2 333Q72 179.82000000000002 44 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="54.5" cy="46.620000000000005" rx="70" ry="73.26" fill="#557358" opacity=".68"/><path d="M311 333Q221 179.82000000000002 257 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="243.5" cy="46.620000000000005" rx="67" ry="73.26" fill="#557358" opacity=".68"/>
+  <path d="M90.19 229.76999999999998V103.23Q155.5 9.99 220.81 103.23V229.76999999999998" stroke="#a4824f" stroke-width="11" fill="#dfe4bf"/>
+  <path d="M139.95000000000002 333Q149.28 226.44000000000003 161.72 196.47" stroke="#dac08a" stroke-width="26" fill="none"/><g transform="translate(111.96 239.76) scale(0.55)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="311" height="333" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="367" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">01 GATEWAY</text>
+   <text x="0" y="386" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">DESKTOP / 16:10</text>
+  </g>
+<g transform="translate(405 164)">
+   <rect x="-5" y="-5" width="321" height="343" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="311" height="333" viewBox="0 0 311 333" preserveAspectRatio="xMidYMid slice"><rect width="311" height="333" fill="url(#morning-r12)"/><path d="M0 229.76999999999998Q155.5 156.51 311 269.73V333H0Z" fill="#8aa47f"/>
+  <path d="M62.2 333Q208.37 249.75 146.17 176.49T223.92 99.89999999999999" fill="none" stroke="#e1cea0" stroke-width="63"/>
+  <path d="M27.99 333L143.06 216.45000000000002M283.01 333L174.16000000000003 246.42" stroke="#654d37" stroke-width="13" stroke-linecap="round"/>
+  <path d="M0 333Q35 179.82000000000002 21 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="26.25" cy="46.620000000000005" rx="51" ry="73.26" fill="#557358" opacity=".68"/><path d="M311 333Q281 179.82000000000002 293 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="288.5" cy="46.620000000000005" rx="48" ry="73.26" fill="#557358" opacity=".68"/><g transform="translate(152.39 229.76999999999998) scale(0.58)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="311" height="333" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="367" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">02 WINDING PATH</text>
+   <text x="0" y="386" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">DESKTOP / 16:10</text>
+  </g>
+<g transform="translate(752 164)">
+   <rect x="-5" y="-5" width="321" height="343" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="311" height="333" viewBox="0 0 311 333" preserveAspectRatio="xMidYMid slice"><rect width="311" height="333" fill="url(#morning-r12)"/><path d="M0 246.42Q155.5 213.12 311 253.08V333H0Z" fill="#b7b48b"/>
+  <path d="M0 333Q45 179.82000000000002 27 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="33.75" cy="46.620000000000005" rx="53" ry="73.26" fill="#557358" opacity=".68"/><path d="M311 333Q263 179.82000000000002 282.2 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="275" cy="46.620000000000005" rx="53" ry="73.26" fill="#557358" opacity=".68"/>
+  <path d="M31.1 59.94H279.90000000000003" stroke="#5b4c2f" stroke-width="3"/>
+  <g transform="translate(62.2 69.92999999999999)"><rect width="62.2" height="143.19" fill="#eedbbb" stroke="#a17e51" stroke-width="5"/><rect x="14" y="14" width="34.2" height="109.89" fill="#677e69"/></g>
+  <g transform="translate(133.73 49.949999999999996)"><rect width="77.75" height="173.16" fill="#f6e7c8" stroke="#967444" stroke-width="6"/><path d="M13 156.51V66.60000000000001Q38.875 6.66 64.75 66.60000000000001V156.51" stroke="#c8a55c" stroke-width="9" fill="#526a65"/></g>
+  <g transform="translate(227.03 73.26)"><rect width="52.870000000000005" height="136.53" fill="#eedbbb" stroke="#a17e51" stroke-width="5"/><path d="M14 15v93.24000000000001" stroke="#746a61" stroke-width="7"/></g>
+  <g transform="translate(65.31 253.08) scale(0.5)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="311" height="333" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="367" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">03 WORK CLEARING</text>
+   <text x="0" y="386" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">DESKTOP / 16:10</text>
+  </g>
+<g transform="translate(1099 164)">
+   <rect x="-5" y="-5" width="321" height="343" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="311" height="333" viewBox="0 0 311 333" preserveAspectRatio="xMidYMid slice"><rect width="311" height="333" fill="#acced0"/><path d="M0 159.84Q155.5 133.20000000000002 311 189.80999999999997L311 333H0Z" fill="#699baa"/>
+  <path d="M0 213.12Q105.74000000000001 186.48000000000002 186.6 226.44000000000003T311 223.11M0 259.74Q124.4 226.44000000000003 311 269.73" stroke="#c9dfd2" fill="none" stroke-width="6"/>
+  <path d="M0 253.08Q46.65 199.79999999999998 93.3 253.08V333H0Z" fill="#7e9872"/>
+  <path d="M0 333Q21 179.82000000000002 12.6 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="15.75" cy="46.620000000000005" rx="37" ry="73.26" fill="#557358" opacity=".68"/>
+  <g transform="translate(211.48000000000002 219.78) rotate(15)"><path d="M0 0H37V36L25 32L15 42L8 32L0 34Z" fill="#fae7c1" stroke="#957856" stroke-width="3"/></g>
+  <g transform="translate(124.4 243.09) scale(0.58)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><circle cx="143.06" cy="276.39" r="12" fill="#edc975" stroke="#8b6542" stroke-width="5"/><rect width="311" height="333" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="367" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">04 RIVER</text>
+   <text x="0" y="386" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">DESKTOP / 16:10</text>
+  </g>
+<g transform="translate(1446 164)">
+   <rect x="-5" y="-5" width="321" height="343" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="311" height="333" viewBox="0 0 311 333" preserveAspectRatio="xMidYMid slice"><rect width="311" height="333" fill="url(#dusk-r12)"/><path d="M0 266.40000000000003Q155.5 219.78 311 266.40000000000003V333H0Z" fill="#3b5546"/>
+  <path d="M0 333Q22 179.82000000000002 13.2 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="16.5" cy="46.620000000000005" rx="43" ry="73.26" fill="#557358" opacity=".68"/><path d="M311 333Q279 179.82000000000002 291.8 0" stroke="#355442" stroke-width="47" fill="none" stroke-linecap="round"/><ellipse cx="287" cy="46.620000000000005" rx="35" ry="73.26" fill="#557358" opacity=".68"/>
+  <path d="M93.3 229.76999999999998V126.54L167.94 79.92L245.69 133.20000000000002V233.1" fill="#5a4e44" stroke="#363d3a" stroke-width="9"/>
+  <rect x="174.16000000000003" y="133.20000000000002" width="40.43" height="63.27" fill="#f5ca82" stroke="#ad8955" stroke-width="7"/>
+  <path d="M181.935 139.85999999999999v46.620000000000005M175.71499999999997 163.17H211.48000000000002" stroke="#8b6649" stroke-width="3"/>
+  <path d="M189.71 166.5h18v25l-8-5-5 8-5-6z" fill="#f8e9c9" stroke="#8c795b" stroke-width="2"/>
+  <g transform="translate(133.73 269.73) scale(0.53)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#efb569" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="311" height="333" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="367" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">05 HOUSE</text>
+   <text x="0" y="386" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">DESKTOP / 16:10</text>
+  </g>
+<g transform="translate(58 623)">
+   <rect x="-5" y="-5" width="200" height="365" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="190" height="355" viewBox="0 0 235 370" preserveAspectRatio="xMidYMid slice"><rect width="235" height="370" fill="url(#morning-r12)"/><path d="M0 370Q117.5 203.50000000000003 235 370Z" fill="#a2af7c"/><path d="M2 370Q72 199.8 44 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="54.5" cy="51.800000000000004" rx="70" ry="81.4" fill="#557358" opacity=".68"/><path d="M235 370Q145 199.8 181 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="167.5" cy="51.800000000000004" rx="67" ry="81.4" fill="#557358" opacity=".68"/>
+  <path d="M68.14999999999999 255.29999999999998V114.7Q117.5 11.1 166.85 114.7V255.29999999999998" stroke="#a4824f" stroke-width="11" fill="#dfe4bf"/>
+  <path d="M105.75 370Q112.8 251.60000000000002 122.2 218.29999999999998" stroke="#dac08a" stroke-width="26" fill="none"/><g transform="translate(84.6 266.4) scale(0.55)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="235" height="370" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="389" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">01 GATEWAY</text>
+   <text x="0" y="408" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">MOBILE / 9:16</text>
+  </g>
+<g transform="translate(405 623)">
+   <rect x="-5" y="-5" width="200" height="365" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="190" height="355" viewBox="0 0 235 370" preserveAspectRatio="xMidYMid slice"><rect width="235" height="370" fill="url(#morning-r12)"/><path d="M0 255.29999999999998Q117.5 173.89999999999998 235 299.70000000000005V370H0Z" fill="#8aa47f"/>
+  <path d="M47 370Q157.45000000000002 277.5 110.44999999999999 196.10000000000002T169.2 111" fill="none" stroke="#e1cea0" stroke-width="48"/>
+  <path d="M21.15 370L108.10000000000001 240.5M213.85 370L131.60000000000002 273.8" stroke="#654d37" stroke-width="13" stroke-linecap="round"/>
+  <path d="M0 370Q35 199.8 21 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="26.25" cy="51.800000000000004" rx="51" ry="81.4" fill="#557358" opacity=".68"/><path d="M235 370Q205 199.8 217 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="212.5" cy="51.800000000000004" rx="48" ry="81.4" fill="#557358" opacity=".68"/><g transform="translate(115.14999999999999 255.29999999999998) scale(0.58)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="235" height="370" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="389" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">02 WINDING PATH</text>
+   <text x="0" y="408" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">MOBILE / 9:16</text>
+  </g>
+<g transform="translate(752 623)">
+   <rect x="-5" y="-5" width="200" height="365" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="190" height="355" viewBox="0 0 235 370" preserveAspectRatio="xMidYMid slice"><rect width="235" height="370" fill="url(#morning-r12)"/><path d="M0 273.8Q117.5 236.8 235 281.2V370H0Z" fill="#b7b48b"/>
+  <path d="M0 370Q45 199.8 27 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="33.75" cy="51.800000000000004" rx="53" ry="81.4" fill="#557358" opacity=".68"/><path d="M235 370Q187 199.8 206.2 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="199" cy="51.800000000000004" rx="53" ry="81.4" fill="#557358" opacity=".68"/>
+  <path d="M23.5 66.6H211.5" stroke="#5b4c2f" stroke-width="3"/>
+  <g transform="translate(47 77.7)"><rect width="47" height="159.1" fill="#eedbbb" stroke="#a17e51" stroke-width="5"/><rect x="14" y="14" width="19" height="122.10000000000001" fill="#677e69"/></g>
+  <g transform="translate(101.05 55.5)"><rect width="58.75" height="192.4" fill="#f6e7c8" stroke="#967444" stroke-width="6"/><path d="M13 173.89999999999998V74Q29.375 7.4 45.75 74V173.89999999999998" stroke="#c8a55c" stroke-width="9" fill="#526a65"/></g>
+  <g transform="translate(171.54999999999998 81.4)"><rect width="39.95" height="151.7" fill="#eedbbb" stroke="#a17e51" stroke-width="5"/><path d="M14 15v103.60000000000001" stroke="#746a61" stroke-width="7"/></g>
+  <g transform="translate(49.35 281.2) scale(0.5)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="235" height="370" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="389" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">03 WORK CLEARING</text>
+   <text x="0" y="408" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">MOBILE / 9:16</text>
+  </g>
+<g transform="translate(1099 623)">
+   <rect x="-5" y="-5" width="200" height="365" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="190" height="355" viewBox="0 0 235 370" preserveAspectRatio="xMidYMid slice"><rect width="235" height="370" fill="#acced0"/><path d="M0 177.6Q117.5 148 235 210.89999999999998L235 370H0Z" fill="#699baa"/>
+  <path d="M0 236.8Q79.9 207.20000000000002 141 251.60000000000002T235 247.9M0 288.6Q94 251.60000000000002 235 299.70000000000005" stroke="#c9dfd2" fill="none" stroke-width="6"/>
+  <path d="M0 281.2Q35.25 222 70.5 281.2V370H0Z" fill="#7e9872"/>
+  <path d="M0 370Q21 199.8 12.6 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="15.75" cy="51.800000000000004" rx="37" ry="81.4" fill="#557358" opacity=".68"/>
+  <g transform="translate(159.8 244.20000000000002) rotate(15)"><path d="M0 0H37V36L25 32L15 42L8 32L0 34Z" fill="#fae7c1" stroke="#957856" stroke-width="3"/></g>
+  <g transform="translate(94 270.09999999999997) scale(0.58)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#e9ca74" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><circle cx="108.10000000000001" cy="307.09999999999997" r="12" fill="#edc975" stroke="#8b6542" stroke-width="5"/><rect width="235" height="370" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="389" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">04 RIVER</text>
+   <text x="0" y="408" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">MOBILE / 9:16</text>
+  </g>
+<g transform="translate(1446 623)">
+   <rect x="-5" y="-5" width="200" height="365" fill="#fffae9" stroke="#a2a68a" stroke-width="2"/>
+   <svg x="0" y="0" width="190" height="355" viewBox="0 0 235 370" preserveAspectRatio="xMidYMid slice"><rect width="235" height="370" fill="url(#dusk-r12)"/><path d="M0 296Q117.5 244.20000000000002 235 296V370H0Z" fill="#3b5546"/>
+  <path d="M0 370Q22 199.8 13.2 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="16.5" cy="51.800000000000004" rx="43" ry="81.4" fill="#557358" opacity=".68"/><path d="M235 370Q203 199.8 215.8 0" stroke="#355442" stroke-width="38" fill="none" stroke-linecap="round"/><ellipse cx="211" cy="51.800000000000004" rx="35" ry="81.4" fill="#557358" opacity=".68"/>
+  <path d="M70.5 255.29999999999998V140.6L126.9 88.8L185.65 148V259" fill="#5a4e44" stroke="#363d3a" stroke-width="9"/>
+  <rect x="131.60000000000002" y="148" width="30.55" height="70.3" fill="#f5ca82" stroke="#ad8955" stroke-width="7"/>
+  <path d="M137.475 155.4v51.800000000000004M132.77499999999998 181.29999999999998H159.8" stroke="#8b6649" stroke-width="3"/>
+  <path d="M143.35 185h18v25l-8-5-5 8-5-6z" fill="#f8e9c9" stroke="#8c795b" stroke-width="2"/>
+  <g transform="translate(101.05 299.70000000000005) scale(0.53)"><path d="M-17 8Q-26 55-18 65H18Q25 28 16 8Z" fill="#547150" stroke="#354d40" stroke-width="3"/><circle cx="0" cy="0" r="23" fill="#efe2b7" stroke="#34493a" stroke-width="3"/><path d="M-30-17Q-2-56 31-18L12-11Z" fill="#517a42"/><rect x="19" y="23" width="18" height="27" rx="5" fill="#d1b178" stroke="#725c3b" stroke-width="2"/><circle cx="30" cy="64" r="11" fill="#efb569" opacity=".88"/><circle cx="8" cy="-2" r="3" fill="#34493a"/></g><rect width="235" height="370" fill="url(#pencil-r12)" pointer-events="none"/></svg>
+   <text x="0" y="389" fill="#344d3c" font-family="Arial,sans-serif" font-size="17" font-weight="700">05 HOUSE</text>
+   <text x="0" y="408" fill="#5c6a55" font-family="Arial,sans-serif" font-size="12">MOBILE / 9:16</text>
+  </g><text x="58" y="1092" fill="#425a44" font-family="Georgia,serif" font-size="19">Gate → bend → gold door → rescued corner → illuminated window</text></svg>

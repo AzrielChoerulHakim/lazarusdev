@@ -1,0 +1,26 @@
+name: Forest R12 - Atrium and paper-rescue journey
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  atrium-rescue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build && npm run build:storybook
+      - run: npm install --no-save --no-audit --no-fund playwright@1.56.1
+      - name: Test integrated browser journeys without screenshots
+        run: |
+          mkdir -p /tmp/forest-r12-mirror/lazarusdev
+          cp -a dist/. /tmp/forest-r12-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/forest-r12-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-r12-mirror >/tmp/forest-r12-server.log 2>&1 &
+          for i in {1..30}; do if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then break; fi; sleep 2; done
+          node scripts/forest_atrium_story_smoke.mjs

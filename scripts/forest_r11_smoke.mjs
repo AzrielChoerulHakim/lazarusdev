@@ -43,7 +43,18 @@ try {
       for (const [scene, progress, pose] of [['clearing',.95,'look'],['river',.83,'reach'],['river',.97,'read'],['house',.97,'lantern']]) {
         const walker = page.locator('[data-walk="'+scene+'"]');
         await place(walker, progress);
-        assert.equal(await walker.getAttribute('data-pose'), pose);
+        if (scene === 'river') {
+          // Scroll can land inside the new finite rescue beat; assert that
+          // the visible pose belongs to the current narrative phase.
+          const phase = await page.locator('.river-scene').getAttribute('data-rescue');
+          const actual = await walker.getAttribute('data-pose');
+          const expected = { idle:[pose], watch:['look'], lantern:['look'],
+            reach:['reach'], lift:['read'], carrying:['read'], still:['read'] };
+          assert.ok((expected[phase]||[pose]).includes(actual),
+            'river phase ' + phase + ' has unexpected pose ' + actual);
+        } else {
+          assert.equal(await walker.getAttribute('data-pose'), pose);
+        }
       }
       const light = page.locator('.house-glow-layer');
       assert.ok(Number(await light.evaluate(el => getComputedStyle(el).opacity)) < .5);
