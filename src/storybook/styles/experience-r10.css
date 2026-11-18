@@ -102,3 +102,42 @@
  .forest-seam-drawing {height:38px;}
 }
 @media(prefers-reduced-motion:reduce){.field-atlas-paperkeeper{transition:none!important;}}
+
+/* A line of narration on the cover and at each turn of the trail. */
+.story-opening {
+  width: min(calc(100% - 2 * var(--page-padding)), var(--content-width));
+  margin: 0 auto 1.25rem;
+  color: var(--forest);
+  font: italic 400 clamp(1.18rem, 2vw, 1.65rem)/1.45 var(--font-reading);
+  text-wrap: pretty;
+}
+.story-opening::first-line { color: var(--ink); }
+.forest-seam-inner {
+  grid-template-columns: minmax(0, 1.65fr) minmax(100px, .65fr) minmax(0, 1fr);
+}
+.forest-seam-origin strong { max-width: 42ch; line-height: 1.35; text-wrap: pretty; }
+@media (max-width: 760px) {
+  .forest-seam-inner { grid-template-columns: minmax(0, 1fr) auto; gap: 0 1rem; }
+  .forest-seam-origin { grid-column: 1 / -1; padding-block: .5rem; }
+  .forest-seam-next { grid-row: 2; }
+  .forest-seam-next small { display: none; }
+  .forest-seam-drawing { grid-column: 1; width: 100%; max-width: 10rem; }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .forest-seam .forest-seam-inner { view-timeline-name: --page-turn; }
+    .forest-seam .forest-seam-origin strong {
+      animation: reading-line 1s linear both;
+      animation-timeline: --page-turn;
+      animation-range: entry 0% cover 35%;
+    }
+    .forest-seam .forest-seam-drawing .seam-trail {
+      stroke-dasharray: 100;
+      animation: reading-trail 1s linear both;
+      animation-timeline: --page-turn;
+      animation-range: entry 0% cover 45%;
+    }
+    @keyframes reading-line { from { translate: 0 .55em; } to { translate: 0 0; } }
+    @keyframes reading-trail { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  }
+}
