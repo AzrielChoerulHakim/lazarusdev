@@ -206,6 +206,41 @@ const assembled=await encode(composite);
 await writeFile(join(output,'paperkeeper-journey-r15a.webp'),assembled);
 manifest.sheetSha256=sha(assembled);
 manifest.releaseAssets.push('paperkeeper-journey-r15a.webp');
+// Five new scene-specific illustrated action drawings, generated as distinct
+// R15A concept source from the approved Paperkeeper art direction. A real
+// picture with different limb/lantern/page silhouettes, not frame renaming.
+const narrativeSource=join(output,'source','narrative-poses-raw.webp');
+const narrativeBytes=await readFile(narrativeSource);
+const narrativeMeta=await sharp(narrativeBytes).metadata();
+if(narrativeMeta.width!==560||narrativeMeta.height!==136)
+ throw Error('Expected five illustrated 112×136 action cells; got '+
+   narrativeMeta.width+'×'+narrativeMeta.height);
+const storyNames=['look-down','set-lantern','reach','lift','carry'];
+manifest.storyFrame={width:128,height:144,count:5,baselineY:133,sheet:[640,144]};
+manifest.storySource={path:'storybook/assets/characters/r15a/source/narrative-poses-raw.webp',
+ sha256:sha(narrativeBytes),bytes:narrativeBytes.length,method:'new AI-assisted colored-pencil storybook drawings, 5 distinct action silhouettes'};
+manifest.storyPoses={};
+const storyRaw={data:Buffer.alloc(640*144*4),width:640,height:144};
+for(let i=0;i<storyNames.length;i++){
+ const name=storyNames[i];
+ const cell=await sharp(narrativeBytes).extract({left:i*112,top:0,width:112,height:136})
+   .ensureAlpha().raw().toBuffer({resolveWithObject:true});
+ const candidate=fix({data:Buffer.from(cell.data),width:112,height:136});
+ const rect=bounds(candidate).rect;
+ if(!rect)throw Error('Blank art in new pose '+name);
+ const cut=cropData(candidate,rect,2);
+ const pose=await renderOnFrame(cut,128,144,125,133);
+ for(let y=0;y<144;y++)pose.data.copy(storyRaw.data,y*640*4+i*128*4,y*128*4,(y+1)*128*4);
+ const bytes=await encode(pose,{quality:85});
+ await writeFile(join(output,'story-'+name+'.webp'),bytes);
+ manifest.storyPoses[name]={slot:i,sourceCell:i,sha256:sha(bytes),
+  groundline:133,alphaRect:bounds(pose).rect,status:'new-narrative-illustration'};
+ manifest.releaseAssets.push('story-'+name+'.webp');
+}
+const storySheet=await encode(storyRaw,{quality:88});
+await writeFile(join(output,'narrative-journey-r15a.webp'),storySheet);
+manifest.storySheetSha256=sha(storySheet);
+manifest.releaseAssets.push('narrative-journey-r15a.webp');
 const entranceCrop=cropData(read.hero,bounds(read.hero).rect,4);
 const entranceFrame=await renderOnFrame(entranceCrop,622,960,911,938);
 const entrance=await encode(entranceFrame,{quality:91});
@@ -226,9 +261,18 @@ for(const [kind,color] of Object.entries({
  const png=await sharp(base).composite([{input:await toRgba(composite),top:0,left:0}]).png().toBuffer();
  await writeFile(join(output,'proof-'+kind+'.png'),png);
  manifest.releaseAssets.push('proof-'+kind+'.png');
+ const storyBackdrop=Buffer.alloc(storyRaw.width*storyRaw.height*4);
+ for(let i=0;i<storyBackdrop.length;i+=4){
+  storyBackdrop[i]=color[0];storyBackdrop[i+1]=color[1];storyBackdrop[i+2]=color[2];storyBackdrop[i+3]=255;
+ }
+ const storyPng=await sharp(storyBackdrop,{raw:{width:storyRaw.width,height:storyRaw.height,channels:4}})
+   .png().toBuffer();
+ const composited=await sharp(storyPng).composite([{input:await toRgba(storyRaw),left:0,top:0}]).png().toBuffer();
+ await writeFile(join(output,'proof-story-'+kind+'.png'),composited);
+ manifest.releaseAssets.push('proof-story-'+kind+'.png');
 }
 await writeFile(join(doc,'ASSET-AUDIT.json'),JSON.stringify(audit,null,2)+'\n');
 await writeFile(join(doc,'ANCHOR-MANIFEST.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log('R15A OUTPUT',JSON.stringify({count:manifest.releaseAssets.length,poses:Object.keys(manifest.poses),
   flags:Object.entries(manifest.poses).filter(([,v])=>v.status.includes('needs')),
-  sheet:manifest.frame,hero:manifest.entrance},null,2));
+  sheet:manifest.frame,story:manifest.storyFrame,hero:manifest.entrance},null,2));
