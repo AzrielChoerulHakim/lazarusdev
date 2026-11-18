@@ -180,10 +180,24 @@ for(const route of ['/lazarusdev/','/lazarusdev/storybook/']) {
     await swipe(cx,area.y+area.height*.78,cx+3,area.y+area.height*.25);
     assert.equal(await touch.locator('#atrium-light').inputValue(),'44',
       'vertical touch must NOT change the lamp');
-    await swipe(area.x+area.width*.13,area.y+area.height*.51,
-      area.x+area.width*.90,area.y+area.height*.51);
+    // Native vertical panning may scroll the illustrated canvas out of its
+    // previous viewport coordinates. Reacquire its live box before a new
+    // finger swipe, as a real visitor does by returning the image into view.
+    await scene.scrollIntoViewIfNeeded();
+    const horizontalArea=await scene.boundingBox();
+    assert.ok(horizontalArea,'scene available after native scroll');
+    const horizontalY=Math.max(15,Math.min(touchHeight-15,
+      horizontalArea.y+horizontalArea.height*.51));
+    await swipe(horizontalArea.x+horizontalArea.width*.13,horizontalY,
+      horizontalArea.x+horizontalArea.width*.90,horizontalY);
     const revealed=Number(await touch.locator('#atrium-light').inputValue());
-    assert.ok(revealed>=80,'one real horizontal finger swipe must reveal carving; got '+revealed);
+    const touchLog=await touch.evaluate(()=>({
+      types:window.__r15Touched,
+      scrollTop:document.querySelector('#atrium-room')?.scrollTop,
+      room:document.querySelector('#atrium-scene')?.getBoundingClientRect().toJSON()
+    }));
+    assert.ok(revealed>=80,'one real horizontal finger swipe must reveal carving; got '+
+      revealed+' / '+JSON.stringify({horizontalArea,horizontalY,touchLog}));
     const pointerTypes=await touch.evaluate(()=>window.__r15Touched);
     assert.ok(pointerTypes?.includes('touch'),'Chrome must deliver trusted touch pointer events');
     await touch.goBack();
