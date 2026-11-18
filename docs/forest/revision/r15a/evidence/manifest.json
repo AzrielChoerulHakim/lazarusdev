@@ -1,0 +1,1162 @@
+{
+  "schema": "lazarus-r15a-live-scene-v1",
+  "sourceCommit": "87366b7cfaef950f971267de375a3d1bc09b7a25",
+  "browser": "Chrome / production Vite",
+  "sizes": [
+    [
+      1440,
+      900
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      720
+    ],
+    [
+      844,
+      390
+    ]
+  ],
+  "routes": [
+    "/lazarusdev/",
+    "/lazarusdev/storybook/"
+  ],
+  "screenshots": [
+    {
+      "file": "root/1440x900/scene-entrance.png",
+      "bytes": 552353,
+      "sha256": "ef79cf697e2633b830c7a1752beea3c91f9eb6956bf17605c020fbcc587bdcdb"
+    },
+    {
+      "file": "root/1440x900/scene-path.png",
+      "bytes": 2410416,
+      "sha256": "298a8a4843e62167c940c556bb9ac642b28858fab418ce6b4f08bfe5033f4133"
+    },
+    {
+      "file": "root/1440x900/scene-clearing.png",
+      "bytes": 2202285,
+      "sha256": "c0c8dd006ac663f7516fd22513bd17eedf3a83d07550c266421f6f2621148230"
+    },
+    {
+      "file": "root/1440x900/scene-river.png",
+      "bytes": 2104056,
+      "sha256": "fac4fb9dc0b317308b2493b571db0032a2a53641b39dee2d8b6c5e19dd99de1e"
+    },
+    {
+      "file": "root/1440x900/scene-house.png",
+      "bytes": 2147019,
+      "sha256": "e5c9f8e875282ea18cc1a13c0646c5c86b3d3b9d18ef2d5bbbc6622b40dc2bb9"
+    },
+    {
+      "file": "root/390x844/scene-entrance.png",
+      "bytes": 243634,
+      "sha256": "0c8ea4891539255943464f2db0be9f7443289a5a6dbe585da15c8c7690850775"
+    },
+    {
+      "file": "root/390x844/scene-path.png",
+      "bytes": 461099,
+      "sha256": "efe7e5732ebc1236b51ab15eaee1bd983e10cb7f59007548c195b3f2a3c108ae"
+    },
+    {
+      "file": "root/390x844/scene-clearing.png",
+      "bytes": 364034,
+      "sha256": "801bdf53b1883a50ef10113fc39dc42d9e39bed9d669c66c324ba760aa0fac95"
+    },
+    {
+      "file": "root/390x844/scene-river.png",
+      "bytes": 344223,
+      "sha256": "e5e9b76f04bad7ecaf2354acc8635586ba1a28652dfa2bdebc71f6c65ee627a6"
+    },
+    {
+      "file": "root/390x844/scene-house.png",
+      "bytes": 399275,
+      "sha256": "1d0fe71a0b01ae5474635375bd809644e3acf4108ab11d76bc47179522ae1319"
+    },
+    {
+      "file": "root/320x720/scene-entrance.png",
+      "bytes": 168161,
+      "sha256": "65e743e6c77c580090fe92e26bf92a1a32e3b07bbcbf2b7aa6a0ca22cbb637ec"
+    },
+    {
+      "file": "root/320x720/scene-path.png",
+      "bytes": 323168,
+      "sha256": "f3bb2d79257ccdbfaac8b57e4f0e31690c177c806849b058e000598f76f938d5"
+    },
+    {
+      "file": "root/320x720/scene-clearing.png",
+      "bytes": 284111,
+      "sha256": "2e2daab4bbc4b4ea30a5131787db1e94e161ea9562bde429888a1cd8c06ff2cf"
+    },
+    {
+      "file": "root/320x720/scene-river.png",
+      "bytes": 257959,
+      "sha256": "29970a6486e948664cf53eb2312f947d956ffd97cae786de64972b83600b63ab"
+    },
+    {
+      "file": "root/320x720/scene-house.png",
+      "bytes": 282886,
+      "sha256": "34dd8d46014d72cd2050f5cf8fcbb23a0609442edbae51d6efa2623ef1099180"
+    },
+    {
+      "file": "root/844x390/scene-entrance.png",
+      "bytes": 167541,
+      "sha256": "690447a8352c93c0972be2e7cae90cc9db70e96e5b315f1ca606d2f2c30e24c8"
+    },
+    {
+      "file": "root/844x390/scene-path.png",
+      "bytes": 890930,
+      "sha256": "6a89cc8eaf91d3276a8a338422004efef0bc56c04f7737ab0b4e866f7517239c"
+    },
+    {
+      "file": "root/844x390/scene-clearing.png",
+      "bytes": 1085522,
+      "sha256": "53cbccb81b286e68b3f03d5a5b5e2cab3f178a7de23631524066ce9d3a6f3996"
+    },
+    {
+      "file": "root/844x390/scene-river.png",
+      "bytes": 759289,
+      "sha256": "39b238f72e89b9a3029d4c001eb7f6ddc0550fd3c57cf9f46853ee1f94125921"
+    },
+    {
+      "file": "root/844x390/scene-house.png",
+      "bytes": 800917,
+      "sha256": "f57e351fd0964df0767ebb8445a042cbe7494de0fe697b94186d2ab8fd230cb7"
+    },
+    {
+      "file": "storybook/1440x900/scene-entrance.png",
+      "bytes": 552353,
+      "sha256": "ef79cf697e2633b830c7a1752beea3c91f9eb6956bf17605c020fbcc587bdcdb"
+    },
+    {
+      "file": "storybook/1440x900/scene-path.png",
+      "bytes": 2410416,
+      "sha256": "298a8a4843e62167c940c556bb9ac642b28858fab418ce6b4f08bfe5033f4133"
+    },
+    {
+      "file": "storybook/1440x900/scene-clearing.png",
+      "bytes": 2202285,
+      "sha256": "c0c8dd006ac663f7516fd22513bd17eedf3a83d07550c266421f6f2621148230"
+    },
+    {
+      "file": "storybook/1440x900/scene-river.png",
+      "bytes": 2104056,
+      "sha256": "fac4fb9dc0b317308b2493b571db0032a2a53641b39dee2d8b6c5e19dd99de1e"
+    },
+    {
+      "file": "storybook/1440x900/scene-house.png",
+      "bytes": 2147019,
+      "sha256": "e5c9f8e875282ea18cc1a13c0646c5c86b3d3b9d18ef2d5bbbc6622b40dc2bb9"
+    },
+    {
+      "file": "storybook/390x844/scene-entrance.png",
+      "bytes": 243634,
+      "sha256": "0c8ea4891539255943464f2db0be9f7443289a5a6dbe585da15c8c7690850775"
+    },
+    {
+      "file": "storybook/390x844/scene-path.png",
+      "bytes": 461099,
+      "sha256": "efe7e5732ebc1236b51ab15eaee1bd983e10cb7f59007548c195b3f2a3c108ae"
+    },
+    {
+      "file": "storybook/390x844/scene-clearing.png",
+      "bytes": 364034,
+      "sha256": "801bdf53b1883a50ef10113fc39dc42d9e39bed9d669c66c324ba760aa0fac95"
+    },
+    {
+      "file": "storybook/390x844/scene-river.png",
+      "bytes": 344223,
+      "sha256": "e5e9b76f04bad7ecaf2354acc8635586ba1a28652dfa2bdebc71f6c65ee627a6"
+    },
+    {
+      "file": "storybook/390x844/scene-house.png",
+      "bytes": 399275,
+      "sha256": "1d0fe71a0b01ae5474635375bd809644e3acf4108ab11d76bc47179522ae1319"
+    },
+    {
+      "file": "storybook/320x720/scene-entrance.png",
+      "bytes": 168161,
+      "sha256": "65e743e6c77c580090fe92e26bf92a1a32e3b07bbcbf2b7aa6a0ca22cbb637ec"
+    },
+    {
+      "file": "storybook/320x720/scene-path.png",
+      "bytes": 323168,
+      "sha256": "f3bb2d79257ccdbfaac8b57e4f0e31690c177c806849b058e000598f76f938d5"
+    },
+    {
+      "file": "storybook/320x720/scene-clearing.png",
+      "bytes": 284111,
+      "sha256": "2e2daab4bbc4b4ea30a5131787db1e94e161ea9562bde429888a1cd8c06ff2cf"
+    },
+    {
+      "file": "storybook/320x720/scene-river.png",
+      "bytes": 257959,
+      "sha256": "29970a6486e948664cf53eb2312f947d956ffd97cae786de64972b83600b63ab"
+    },
+    {
+      "file": "storybook/320x720/scene-house.png",
+      "bytes": 282886,
+      "sha256": "34dd8d46014d72cd2050f5cf8fcbb23a0609442edbae51d6efa2623ef1099180"
+    },
+    {
+      "file": "storybook/844x390/scene-entrance.png",
+      "bytes": 167541,
+      "sha256": "690447a8352c93c0972be2e7cae90cc9db70e96e5b315f1ca606d2f2c30e24c8"
+    },
+    {
+      "file": "storybook/844x390/scene-path.png",
+      "bytes": 890930,
+      "sha256": "6a89cc8eaf91d3276a8a338422004efef0bc56c04f7737ab0b4e866f7517239c"
+    },
+    {
+      "file": "storybook/844x390/scene-clearing.png",
+      "bytes": 1085522,
+      "sha256": "53cbccb81b286e68b3f03d5a5b5e2cab3f178a7de23631524066ce9d3a6f3996"
+    },
+    {
+      "file": "storybook/844x390/scene-river.png",
+      "bytes": 759289,
+      "sha256": "39b238f72e89b9a3029d4c001eb7f6ddc0550fd3c57cf9f46853ee1f94125921"
+    },
+    {
+      "file": "storybook/844x390/scene-house.png",
+      "bytes": 800917,
+      "sha256": "f57e351fd0964df0767ebb8445a042cbe7494de0fe697b94186d2ab8fd230cb7"
+    }
+  ],
+  "metrics": [
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 661.71875,
+        "y": 190.84375,
+        "width": 678.28125,
+        "height": 452.1875
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 100,
+        "y": 36.796875,
+        "width": 1240,
+        "height": 914.109375
+      },
+      "walker": {
+        "x": 840.8428955078125,
+        "y": 386.9989013671875,
+        "width": 80.7142333984375,
+        "height": 90.81201171875
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 100,
+        "y": 3.828125,
+        "width": 1240,
+        "height": 979.53125
+      },
+      "walker": {
+        "x": 717.1171875,
+        "y": 621.2380981445312,
+        "width": 129.765625,
+        "height": 146
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 100,
+        "y": 80.640625,
+        "width": 1240,
+        "height": 826.65625
+      },
+      "walker": {
+        "x": 996.9171752929688,
+        "y": 649.7177734375,
+        "width": 129.76568603515625,
+        "height": 146
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 869.3125,
+        "y": 912.296875,
+        "width": 463.6875,
+        "height": 52
+      },
+      "scrollWidth": 1440,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 100,
+        "y": 26.34375,
+        "width": 1240,
+        "height": 936.046875
+      },
+      "walker": {
+        "x": 961.3392333984375,
+        "y": 434.7942810058594,
+        "width": 87.7215576171875,
+        "height": 98.69601440429688
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 21.0625,
+        "y": 465.140625,
+        "width": 347.875,
+        "height": 347.875
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 21.0625,
+        "y": 144.59375,
+        "width": 347.875,
+        "height": 643.3125
+      },
+      "walker": {
+        "x": 189.27523803710938,
+        "y": 390.3720397949219,
+        "width": 60.15203857421875,
+        "height": 67.67474365234375
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 21.0625,
+        "y": 124.46875,
+        "width": 347.875,
+        "height": 683.28125
+      },
+      "walker": {
+        "x": 189.0809326171875,
+        "y": 466.7239685058594,
+        "width": 95.328125,
+        "height": 107.25003051757812
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 21.0625,
+        "y": 234.0625,
+        "width": 347.875,
+        "height": 463.828125
+      },
+      "walker": {
+        "x": 241.783447265625,
+        "y": 525.2591552734375,
+        "width": 95.328125,
+        "height": 107.25
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 25.0625,
+        "y": 708.890625,
+        "width": 339.875,
+        "height": 56
+      },
+      "scrollWidth": 390,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 21.0625,
+        "y": 109.078125,
+        "width": 347.875,
+        "height": 713.625
+      },
+      "walker": {
+        "x": 239.74057006835938,
+        "y": 348.3863220214844,
+        "width": 63.5838623046875,
+        "height": 71.53573608398438
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 18,
+        "y": 435.5,
+        "width": 284,
+        "height": 284
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 18,
+        "y": 123.4375,
+        "width": 284,
+        "height": 561.96875
+      },
+      "walker": {
+        "x": 153.52096557617188,
+        "y": 320.5140686035156,
+        "width": 52.71807861328125,
+        "height": 59.313995361328125
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 18,
+        "y": 83.6875,
+        "width": 284,
+        "height": 641.59375
+      },
+      "walker": {
+        "x": 152.3065643310547,
+        "y": 399.82806396484375,
+        "width": 83.546875,
+        "height": 94
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 18,
+        "y": 193.921875,
+        "width": 284,
+        "height": 420
+      },
+      "walker": {
+        "x": 196.06655883789062,
+        "y": 460.1024169921875,
+        "width": 83.546875,
+        "height": 94
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 22,
+        "y": 624.921875,
+        "width": 276,
+        "height": 109
+      },
+      "scrollWidth": 320,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 18,
+        "y": 95.453125,
+        "width": 284,
+        "height": 617.8125
+      },
+      "walker": {
+        "x": 194.6171112060547,
+        "y": 287.01568603515625,
+        "width": 55.72576904296875,
+        "height": 62.697998046875
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 431,
+        "y": 145.265625,
+        "width": 367.421875,
+        "height": 244.9375
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 45.578125,
+        "y": -53.640625,
+        "width": 752.84375,
+        "height": 585.875
+      },
+      "walker": {
+        "x": 491.87969970703125,
+        "y": 152.09085083007812,
+        "width": 55.98004150390625,
+        "height": 62.987213134765625
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 45.578125,
+        "y": -184.8125,
+        "width": 752.84375,
+        "height": 847.3125
+      },
+      "walker": {
+        "x": 414.6421813964844,
+        "y": 336.07806396484375,
+        "width": 90,
+        "height": 101.265625
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 45.578125,
+        "y": -11.78125,
+        "width": 752.84375,
+        "height": 501.890625
+      },
+      "walker": {
+        "x": 587.267822265625,
+        "y": 319.31463623046875,
+        "width": 90,
+        "height": 101.265625
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 381.359375,
+        "y": 495.109375,
+        "width": 410.0625,
+        "height": 52
+      },
+      "scrollWidth": 844,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 45.578125,
+        "y": -95.828125,
+        "width": 752.84375,
+        "height": 669.28125
+      },
+      "walker": {
+        "x": 564.7340698242188,
+        "y": 144.5862579345703,
+        "width": 60.84002685546875,
+        "height": 68.45555114746094
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 661.71875,
+        "y": 190.84375,
+        "width": 678.28125,
+        "height": 452.1875
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 100,
+        "y": 36.796875,
+        "width": 1240,
+        "height": 914.109375
+      },
+      "walker": {
+        "x": 840.8428955078125,
+        "y": 386.9989013671875,
+        "width": 80.7142333984375,
+        "height": 90.81201171875
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 100,
+        "y": 3.828125,
+        "width": 1240,
+        "height": 979.53125
+      },
+      "walker": {
+        "x": 717.1171875,
+        "y": 621.2380981445312,
+        "width": 129.765625,
+        "height": 146
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 100,
+        "y": 80.640625,
+        "width": 1240,
+        "height": 826.65625
+      },
+      "walker": {
+        "x": 996.9171752929688,
+        "y": 649.7177734375,
+        "width": 129.76568603515625,
+        "height": 146
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 869.3125,
+        "y": 912.296875,
+        "width": 463.6875,
+        "height": 52
+      },
+      "scrollWidth": 1440,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        1440,
+        900
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 100,
+        "y": 26.34375,
+        "width": 1240,
+        "height": 936.046875
+      },
+      "walker": {
+        "x": 961.3392333984375,
+        "y": 434.7942810058594,
+        "width": 87.7215576171875,
+        "height": 98.69601440429688
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 1440
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 21.0625,
+        "y": 465.140625,
+        "width": 347.875,
+        "height": 347.875
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 21.0625,
+        "y": 144.59375,
+        "width": 347.875,
+        "height": 643.3125
+      },
+      "walker": {
+        "x": 189.27523803710938,
+        "y": 390.3720397949219,
+        "width": 60.15203857421875,
+        "height": 67.67474365234375
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 21.0625,
+        "y": 124.46875,
+        "width": 347.875,
+        "height": 683.28125
+      },
+      "walker": {
+        "x": 189.0809326171875,
+        "y": 466.7239685058594,
+        "width": 95.328125,
+        "height": 107.25003051757812
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 21.0625,
+        "y": 234.0625,
+        "width": 347.875,
+        "height": 463.828125
+      },
+      "walker": {
+        "x": 241.783447265625,
+        "y": 525.2591552734375,
+        "width": 95.328125,
+        "height": 107.25
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 25.0625,
+        "y": 708.890625,
+        "width": 339.875,
+        "height": 56
+      },
+      "scrollWidth": 390,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        390,
+        844
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 21.0625,
+        "y": 109.078125,
+        "width": 347.875,
+        "height": 713.625
+      },
+      "walker": {
+        "x": 239.74057006835938,
+        "y": 348.3863220214844,
+        "width": 63.5838623046875,
+        "height": 71.53573608398438
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 390
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 18,
+        "y": 435.5,
+        "width": 284,
+        "height": 284
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 18,
+        "y": 123.4375,
+        "width": 284,
+        "height": 561.96875
+      },
+      "walker": {
+        "x": 153.52096557617188,
+        "y": 320.5140686035156,
+        "width": 52.71807861328125,
+        "height": 59.313995361328125
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 18,
+        "y": 83.6875,
+        "width": 284,
+        "height": 641.59375
+      },
+      "walker": {
+        "x": 152.3065643310547,
+        "y": 399.82806396484375,
+        "width": 83.546875,
+        "height": 94
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 18,
+        "y": 193.921875,
+        "width": 284,
+        "height": 420
+      },
+      "walker": {
+        "x": 196.06655883789062,
+        "y": 460.1024169921875,
+        "width": 83.546875,
+        "height": 94
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 22,
+        "y": 624.921875,
+        "width": 276,
+        "height": 109
+      },
+      "scrollWidth": 320,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        320,
+        720
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 18,
+        "y": 95.453125,
+        "width": 284,
+        "height": 617.8125
+      },
+      "walker": {
+        "x": 194.6171112060547,
+        "y": 287.01568603515625,
+        "width": 55.72576904296875,
+        "height": 62.697998046875
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 320
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "entrance",
+      "scene": {
+        "x": 431,
+        "y": 145.265625,
+        "width": 367.421875,
+        "height": 244.9375
+      },
+      "walker": null,
+      "pose": null,
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "path",
+      "scene": {
+        "x": 45.578125,
+        "y": -53.640625,
+        "width": 752.84375,
+        "height": 585.875
+      },
+      "walker": {
+        "x": 491.87969970703125,
+        "y": 152.09085083007812,
+        "width": 55.98004150390625,
+        "height": 62.987213134765625
+      },
+      "pose": "stand",
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "clearing",
+      "scene": {
+        "x": 45.578125,
+        "y": -184.8125,
+        "width": 752.84375,
+        "height": 847.3125
+      },
+      "walker": {
+        "x": 414.6421813964844,
+        "y": 336.07806396484375,
+        "width": 90,
+        "height": 101.265625
+      },
+      "pose": "look",
+      "navRect": null,
+      "scrollWidth": 844
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "river",
+      "scene": {
+        "x": 45.578125,
+        "y": -11.78125,
+        "width": 752.84375,
+        "height": 501.890625
+      },
+      "walker": {
+        "x": 587.267822265625,
+        "y": 319.31463623046875,
+        "width": 90,
+        "height": 101.265625
+      },
+      "pose": "read",
+      "navRect": {
+        "x": 381.359375,
+        "y": 495.109375,
+        "width": 410.0625,
+        "height": 52
+      },
+      "scrollWidth": 844,
+      "riverOverlapFraction": 0
+    },
+    {
+      "route": "/lazarusdev/storybook/",
+      "viewport": [
+        844,
+        390
+      ],
+      "chapter": "house",
+      "scene": {
+        "x": 45.578125,
+        "y": -95.828125,
+        "width": 752.84375,
+        "height": 669.28125
+      },
+      "walker": {
+        "x": 564.7340698242188,
+        "y": 144.5862579345703,
+        "width": 60.84002685546875,
+        "height": 68.45555114746094
+      },
+      "pose": "lantern",
+      "navRect": null,
+      "scrollWidth": 844
+    }
+  ],
+  "failures": [],
+  "signOff": "USER-APPROVED-DIRECTION / ART-CUTOUT-MANUAL-SIGNOFF-SEPARATE",
+  "physicalPhone": "NOT VERIFIED"
+}
