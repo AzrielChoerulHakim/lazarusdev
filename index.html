@@ -55,6 +55,7 @@
   <link rel="stylesheet" href="./src/storybook/styles/experience-r10.css">
   <link rel="stylesheet" href="./src/storybook/styles/ink-r11.css">
   <link rel="stylesheet" href="./src/storybook/styles/keeper-journey.css">
+  <link rel="stylesheet" href="./src/storybook/styles/atrium-room.css">
   <script type="module" src="./src/storybook/main.js"></script>
   <script type="module" src="./src/storybook/entrance-acting-integration.js"></script>
   <script type="module" src="./src/storybook/work-clearing.js"></script>
@@ -62,6 +63,7 @@
   <script type="module" src="./src/storybook/house-on-the-hill.js"></script>
   <script type="module" src="./src/storybook/chapter-attention.js"></script>
   <script type="module" src="./src/storybook/keeper-journey.js"></script>
+  <script type="module" src="./src/storybook/atrium-room.js"></script>
 </head>
 <body class="forest-site">
   <a class="skip-link" href="#page-content">Skip to main content</a>
@@ -100,6 +102,7 @@
           <span class="entrance-grounding" aria-hidden="true"></span>
           <img class="entrance-paperkeeper" src="./storybook/assets/entrance/r02/exports/paperkeeper.three-quarter.webp" width="622" height="960" decoding="async" loading="eager" fetchpriority="high" alt="The Paperkeeper, a tiny forest guide in a leaf cloak and asymmetric leaf hat, carrying a paper satchel and glowing acorn lantern beside the gateway.">
           <figcaption class="entrance-figcaption">A moss-covered stone arch opens into a forest path. Paperkeeper invites visitors to explore Lazarus Dev.</figcaption>
+          <a class="atrium-clearing-shortcut" href="#folio-atrium" data-atrium-enter>Step through the golden door / Enter The Atrium ↗</a>
         </figure>
         <a class="hero-atlas-cue" href="#field-atlas"><span aria-hidden="true">✳</span> A map for the curious <span aria-hidden="true"><svg class="journey-arrow" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path transform="rotate(45 8 8)" d="M2 8h11M8 3l5 5-5 5"/></svg></span></a>
       </div>
@@ -265,7 +268,7 @@
         </figure>
 
         <div class="work-columns"><div class="work-label"><span>THREE STUDIO EXPLORATIONS</span><span>SELECTED / 2026</span></div><div class="work-folios">
-          <details class="work-folio" data-concept="the-atrium" id="folio-atrium" tabindex="-1"><summary><span class="folio-number">01</span><span class="folio-main"><span class="folio-type" data-project-label="the-atrium">Experience concept</span><span class="folio-title">The Atrium</span><span class="folio-caption" data-project-caption="the-atrium">A place for the beautifully impossible.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-atrium">A conceptual destination for art and architecture. Monumental portals transform navigation into an act of discovery, while carefully staged light and typography make each interaction feel considered.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
+          <details class="work-folio" data-concept="the-atrium" id="folio-atrium" tabindex="-1"><summary><span class="folio-number">01</span><span class="folio-main"><span class="folio-type" data-project-label="the-atrium">Experience concept</span><span class="folio-title">The Atrium</span><span class="folio-caption" data-project-caption="the-atrium">A place for the beautifully impossible.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-atrium">A conceptual destination for art and architecture. Monumental portals transform navigation into an act of discovery, while carefully staged light and typography make each interaction feel considered.</p><p class="folio-status">Concept study / not a client commission</p><a href="#folio-atrium" class="atrium-note-entry" data-atrium-enter>Enter The Atrium <span aria-hidden="true">↗</span></a></div></details>
           <details class="work-folio" data-concept="the-oracle" id="folio-oracle" tabindex="-1"><summary><span class="folio-number">02</span><span class="folio-main"><span class="folio-type" data-project-label="the-oracle">Product exploration</span><span class="folio-title">The Oracle</span><span class="folio-caption" data-project-caption="the-oracle">Intelligence, with a sense of wonder.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-oracle">An experimental interface for human-centered intelligence. Information becomes a constellation of connected ideas, guiding people toward understanding without reducing complexity to a dashboard.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
           <details class="work-folio" data-concept="the-archive" id="folio-archive" tabindex="-1"><summary><span class="folio-number">03</span><span class="folio-main"><span class="folio-type" data-project-label="the-archive">Editorial exploration</span><span class="folio-title">The Archive</span><span class="folio-caption" data-project-caption="the-archive">A digital monument to ideas.</span></span><span class="folio-toggle" aria-hidden="true">+</span></summary><div class="folio-body"><p data-project-description="the-archive">An editorial concept for culture, ideas, and memory. A digital library envisioned as a monumental place rather than an endless feed, where reading feels like exploration.</p><p class="folio-status">Concept study / not a client commission</p></div></details>
         </div></div>
@@ -469,5 +472,74 @@
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><p class="footer-brand">LAZARUS <em>DEV.</em></p><p>Independent by design.<br>Built with intention.</p><nav aria-label="Footer navigation"><a href="#winding-path">Approach</a><a href="#work-clearing">Work</a><a href="#river-stories">Field Notes</a><a href="#house-on-the-hill">Studio</a></nav><p class="footer-note">© <span data-year>2026</span> LAZARUS DEV <span aria-hidden="true">·</span> THE FOREST BETWEEN PAGES / FIVE CHAPTERS</p></div></footer>
+
+<div class="atrium-room" id="atrium-room" role="dialog" aria-modal="true" aria-labelledby="atrium-room-heading" aria-describedby="atrium-room-intro" hidden>
+  <div class="atrium-frame">
+    <header class="atrium-room-header"><span class="atrium-sigil">L / FIELD WORLD 01</span><button type="button" class="atrium-back" data-atrium-close>← <span>Back to the clearing</span></button></header>
+    <div class="atrium-scene" id="atrium-scene" aria-label="Illustrated atrium. Drag across the room to change the light." >
+      <div class="atrium-light-orb" aria-hidden="true"></div>
+      <svg class="atrium-art" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="atrium-wall-tone" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#4d615c"/><stop offset=".5" stop-color="#68746a"/><stop offset="1" stop-color="#a6a18a"/></linearGradient>
+          <linearGradient id="atrium-floor-tone" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#606c61"/><stop offset="1" stop-color="#373c37"/></linearGradient>
+          <linearGradient id="atrium-stone-tone" x1="0" y1="0" x2="1" y2=".15"><stop stop-color="#576660"/><stop offset=".34" stop-color="#c2bba4"/><stop offset=".7" stop-color="#7d8477"/><stop offset="1" stop-color="#3e504b"/></linearGradient>
+          <linearGradient id="atrium-gold-tone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e6c37c"/><stop offset=".5" stop-color="#8c683c"/><stop offset="1" stop-color="#f3d38b"/></linearGradient>
+          <pattern id="atrium-grain" width="17" height="19" patternUnits="userSpaceOnUse"><path d="M3 6l2-2M11 15l2-3" stroke="#e5d7af" stroke-opacity=".19" stroke-width=".8"/><circle cx="14" cy="4" r=".9" fill="#172a2a" opacity=".24"/></pattern>
+          <pattern id="atrium-blocks" width="120" height="92" patternUnits="userSpaceOnUse"><path d="M0 90H120M60 0V45M0 45H120M25 45V90" stroke="#283b35" stroke-width="1" opacity=".25" fill="none"/></pattern>
+          <clipPath id="atrium-wall-clip"><rect x="0" y="0" width="1200" height="610"/></clipPath>
+        </defs>
+        <rect width="1200" height="800" fill="url(#atrium-wall-tone)"/>
+        <rect width="1200" height="610" fill="url(#atrium-blocks)" opacity=".9"/>
+        <rect width="1200" height="800" fill="url(#atrium-grain)"/>
+        <g opacity=".5" stroke="#263b34" stroke-width="4" fill="none"><path d="M-40 84Q230 45 390 82T1230 78"/><path d="M-40 143H1240"/><path d="M-40 573H1240"/></g>
+        <g class="atrium-relief" clip-path="url(#atrium-wall-clip)" stroke="#dfcfaa" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path d="M600 160v390M433 361h334" stroke-width="2" opacity=".5"/>
+          <circle cx="600" cy="360" r="166" stroke-width="7"/><circle cx="600" cy="360" r="148" stroke-width="1.4" stroke-dasharray="3 13"/><circle cx="600" cy="360" r="106" stroke-width="2.5"/>
+          <path d="M600 255C570 291 563 335 600 360c39-33 30-80 0-105ZM600 360C532 334 503 375 531 416c35 25 62 3 69-56ZM600 360c60-44 105-18 79 35-13 28-53 23-79-35ZM600 363c-25 41-22 84 0 101 27-21 28-70 0-101Z" stroke-width="5"/>
+          <path d="M600 195V163M600 526v-30M432 360h-27M792 360h-28M478 242l-25-25M746 503l-24-24M479 480l-25 25M744 220l-24 25" stroke-width="6"/>
+          <path d="M450 360c38-31 44-78 21-112M750 360c-38-31-44-78-21-112M445 361c26 55 55 90 97 107M754 361c-26 55-55 90-97 107" stroke-width="3"/>
+          <path d="M70 160Q190 240 105 380Q190 470 93 570M1110 160Q1010 255 1101 380Q1005 460 1120 570" stroke-width="8" opacity=".65"/>
+          <path d="M170 203q90 96 16 187q-63 87 0 147M1030 203q-90 96-16 187q63 87 0 147" stroke-width="2" opacity=".65"/>
+          <path d="M470 162l20 22 20-22m180 0l20 22 20-22" stroke-width="3"/>
+        </g>
+        <path d="M0 590H1200V800H0Z" fill="url(#atrium-floor-tone)"/>
+        <g stroke="#d4c09a" stroke-width="2" fill="none" opacity=".4"><path d="M0 625H1200M0 710H1200M600 590L160 800M600 590L1040 800M600 590L425 800M600 590L775 800M0 774H1200"/></g>
+        <g class="atrium-cast-shadows" fill="#172926" opacity=".67">
+          <path d="M255 600L344 600L545 800L140 800Z"/><path d="M857 600L943 600L1145 800L740 800Z"/>
+        </g>
+        <g class="atrium-columns">
+          <g transform="translate(200 0)">
+            <path d="M14 602h167v24H14z" fill="#454c43"/><path d="M27 569h143v37H27z" fill="url(#atrium-stone-tone)"/>
+            <path d="M42 213H157V571H42Z" fill="url(#atrium-stone-tone)" stroke="#303e38" stroke-width="4"/>
+            <path d="M53 219V566M79 219V566M120 219V566M146 219V566" stroke="#d5c8ad" stroke-width="7" opacity=".35"/>
+            <path d="M30 184H170v33H30zM18 168h164v17H18zM28 152h144v16H28z" fill="url(#atrium-stone-tone)" stroke="#4b5a50" stroke-width="2"/>
+            <path d="M31 162q34 25 68 0q35 25 70 0M31 198q34 18 68 0q35 18 70 0" fill="none" stroke="#e0ce9e" stroke-opacity=".6" stroke-width="3"/>
+          </g>
+          <g transform="translate(800 0)">
+            <path d="M14 602h167v24H14z" fill="#454c43"/><path d="M27 569h143v37H27z" fill="url(#atrium-stone-tone)"/>
+            <path d="M42 213H157V571H42Z" fill="url(#atrium-stone-tone)" stroke="#303e38" stroke-width="4"/>
+            <path d="M53 219V566M79 219V566M120 219V566M146 219V566" stroke="#d5c8ad" stroke-width="7" opacity=".35"/>
+            <path d="M30 184H170v33H30zM18 168h164v17H18zM28 152h144v16H28z" fill="url(#atrium-stone-tone)" stroke="#4b5a50" stroke-width="2"/>
+            <path d="M31 162q34 25 68 0q35 25 70 0M31 198q34 18 68 0q35 18 70 0" fill="none" stroke="#e0ce9e" stroke-opacity=".6" stroke-width="3"/>
+          </g>
+        </g>
+        <g class="atrium-arch-foreground">
+          <path fill="#263b35" fill-rule="evenodd" d="M0 0H1200V800H0Z M170 800V330A430 430 0 0 1 1030 330V800Z"/>
+          <path d="M170 800V330A430 430 0 0 1 1030 330V800" fill="none" stroke="#171f1c" stroke-width="94"/>
+          <path d="M170 800V330A430 430 0 0 1 1030 330V800" fill="none" stroke="url(#atrium-gold-tone)" stroke-width="17"/>
+          <path d="M132 800V330A468 468 0 0 1 1068 330V800" fill="none" stroke="#d4af67" stroke-opacity=".5" stroke-width="3"/>
+          <path d="M0 100H270M930 100H1200M0 660H170M1030 660H1200" stroke="#ad956a" stroke-opacity=".38" stroke-width="4"/>
+          <g fill="#dbbc7d" opacity=".75"><circle cx="600" cy="10" r="8"/><circle cx="170" cy="330" r="7"/><circle cx="1030" cy="330" r="7"/></g>
+        </g>
+      </svg>
+      <div class="atrium-light-wash" aria-hidden="true"></div>
+      <div class="atrium-depth-label" aria-hidden="true">THE CARVED WALL / 01</div>
+    </div>
+    <div class="atrium-console">
+      <div class="atrium-editorial"><p class="atrium-index">01 / STUDIO EXPERIMENT — AN ENTERABLE CONCEPT</p><h2 id="atrium-room-heading">THE <em>ATRIUM.</em></h2><p id="atrium-room-intro">A room that remembers light. Move the lantern across the stone; discover what was always there.</p></div>
+      <div class="atrium-controls"><label for="atrium-light">MOVE THE LIGHT <output id="atrium-light-value" for="atrium-light">32%</output></label><div class="atrium-control-row"><button type="button" data-light-step="-10" aria-label="Move light to the left">←</button><input id="atrium-light" type="range" min="0" max="100" value="32" step="1" aria-describedby="atrium-light-help"><button type="button" data-light-step="10" aria-label="Move light to the right">→</button></div><p id="atrium-light-help">Drag across the room, use the slider, or press ← → while focused on it.</p><p class="atrium-light-message" aria-live="polite" id="atrium-light-message">A shape waits behind the dim stone.</p></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

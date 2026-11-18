@@ -1,0 +1,47 @@
+/* THE ATRIUM / the forest opens into a second, entered canvas. No 3D runtime. */
+.atrium-room[hidden]{display:none!important}
+.atrium-room{position:fixed;z-index:1000;inset:0;overflow:auto;overscroll-behavior:contain;background:#1e302b;color:#f2e4c9;font-family:var(--font-ui);contain:layout style}
+.atrium-frame{min-height:100svh;display:grid;grid-template-rows:auto minmax(310px,1fr) auto;max-width:1700px;margin:auto;background:#273b37;box-shadow:0 0 0 1px #bb9f65}
+.atrium-room-header{position:relative;z-index:2;min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:15px;padding:9px clamp(17px,3.7vw,60px);background:#1e302b;border-bottom:1px solid #a18f62}
+.atrium-sigil{font:700 .68rem/1.5 var(--font-ui);letter-spacing:.15em;color:#d8bd7f}
+.atrium-back{min-height:48px;display:inline-flex;align-items:center;gap:11px;background:transparent;border:1px solid #b3a072;padding:9px 16px;color:#f1e3c4;font:700 .87rem/1.25 var(--font-ui)}
+.atrium-back:hover,.atrium-back:focus-visible{background:#e4cb94;color:#253930}
+.atrium-scene{position:relative;isolation:isolate;overflow:hidden;min-height:310px;background:#4e6660;cursor:ew-resize;touch-action:pan-y;--lamp-x:36%;--shadow-lean:0px;--relief-opacity:.28}
+.atrium-art{position:absolute;width:100%;height:100%;inset:0}
+.atrium-relief{opacity:var(--relief-opacity);transition:opacity .22s linear}
+.atrium-cast-shadows{transform:translateX(var(--shadow-lean)) skewX(var(--shadow-skew,0deg));transform-origin:50% 75%;transition:transform .23s ease-out}
+.atrium-light-orb{position:absolute;z-index:1;top:-28%;left:var(--lamp-x);width:70%;height:122%;transform:translateX(-50%);pointer-events:none;background:radial-gradient(ellipse at 50% 38%,rgba(253,220,155,.42),rgba(241,203,131,.17) 26%,transparent 66%);mix-blend-mode:screen;transition:left .13s linear}
+.atrium-light-wash{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 42% 89% at var(--lamp-x) 48%,rgba(255,219,152,.19),transparent 75%),linear-gradient(90deg,rgba(12,25,25,.47),transparent 27%,transparent 73%,rgba(12,25,25,.47));mix-blend-mode:screen}
+.atrium-depth-label{position:absolute;bottom:17px;left:clamp(17px,3.7vw,60px);font:700 .62rem/1.4 var(--font-ui);letter-spacing:.18em;color:#ead7b2;pointer-events:none;text-shadow:0 1px 3px #273b37}
+.atrium-console{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:clamp(24px,5vw,88px);padding:clamp(22px,4vw,55px) clamp(18px,4vw,67px);background:#efe3ca;color:#273b37;border-top:8px solid #b6934e}
+.atrium-editorial{max-width:650px}.atrium-index{font:700 .68rem/1.5 var(--font-ui);letter-spacing:.15em;color:#715c40}.atrium-editorial h2{margin:9px 0 10px;font:600 clamp(2.8rem,6.5vw,6.4rem)/.92 var(--font-display);letter-spacing:-.055em}.atrium-editorial h2 em{color:#9b7641;font-weight:400}
+.atrium-editorial #atrium-room-intro{font:400 clamp(1.04rem,1.5vw,1.35rem)/1.48 var(--font-reading);max-width:43ch}
+.atrium-controls{align-self:center;max-width:560px;width:100%}.atrium-controls label{display:flex;justify-content:space-between;gap:15px;align-items:center;font:700 .78rem/1.5 var(--font-ui);letter-spacing:.1em}
+.atrium-controls output{font-variant-numeric:tabular-nums;color:#8b6336}
+.atrium-control-row{display:flex;gap:10px;align-items:center;margin-top:12px}
+.atrium-control-row button{flex:0 0 50px;min-height:50px;border:1px solid #526356;background:transparent;color:#273b37;font:700 1.4rem var(--font-ui)}
+.atrium-control-row button:hover,.atrium-control-row button:focus-visible{background:#273b37;color:#fff8ea}
+#atrium-light{width:100%;min-width:0;accent-color:#8e6e3b;height:44px;cursor:ew-resize}
+#atrium-light-help{margin:12px 0 0;font:400 .78rem/1.52 var(--font-ui);color:#435349}
+.atrium-light-message{min-height:1.8em;margin:13px 0 0;color:#795d34;font:italic 400 1.1rem/1.35 var(--font-reading)}
+.atrium-clearing-shortcut{display:inline-flex;align-items:center;min-height:48px;padding:11px 15px;margin:17px 0 0;background:#284a3e;color:#fff1d9;font:700 .9rem/1.3 var(--font-ui);border:2px solid #284a3e}
+.atrium-clearing-shortcut:hover{background:#a77a40;border-color:#a77a40;color:white}
+.atrium-note-entry{display:inline-flex;align-items:center;min-height:48px;gap:14px;padding:12px 18px;margin:16px 0 0;border:2px solid #a7834b;background:#f1dfb9;color:#2d493e;font:700 .9rem/1.25 var(--font-ui)}
+.atrium-note-entry:hover{background:#a7834b;color:#fff}
+.atrium-entering .atrium-arch-foreground{animation:atrium-arrive .48s cubic-bezier(.2,.85,.28,1) both}
+@keyframes atrium-arrive{from{transform:scale(1.3);transform-origin:50% 45%;opacity:.3}to{transform:scale(1);opacity:1}}
+@media(max-width:760px){
+ .atrium-frame{grid-template-rows:auto minmax(340px,52svh) auto}
+ .atrium-console{grid-template-columns:1fr;gap:20px}
+ .atrium-editorial h2{font-size:clamp(2.65rem,11vw,4.1rem)}
+ .atrium-room-header{min-height:58px}.atrium-sigil{font-size:.55rem;letter-spacing:.08em}
+ .atrium-back{font-size:.73rem;padding:8px 10px}
+ .atrium-depth-label{font-size:.54rem}
+ .atrium-controls{max-width:none}
+ .atrium-clearing-shortcut{width:fit-content}
+}
+@media(max-height:620px) and (orientation:landscape){.atrium-frame{grid-template-rows:auto minmax(280px,65svh) auto}.atrium-scene{min-height:280px}}
+@media(prefers-reduced-motion:reduce){
+ .atrium-room *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+@media(forced-colors:active){.atrium-back,.atrium-note-entry,.atrium-clearing-shortcut{border:2px solid ButtonText}}
