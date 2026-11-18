@@ -64,7 +64,7 @@ if (house) {
     function requireLetter() {
       const letter = composeLetter();
       if (!letter) {
-        copyStatus.textContent = 'Write a short note first, then copy it to your own device.';
+        copyStatus.textContent = 'Write a short note before copying or saving your brief.';
         field.focus();
         return '';
       }
@@ -91,10 +91,13 @@ if (house) {
         try { copied = typeof document.execCommand === 'function' && document.execCommand('copy'); } catch (_) { /* manual fallback */ }
         fallback.remove();
         if (copied) {
+          copyButton.focus();
           copyStatus.textContent = 'Your complete brief was copied. Nothing has been sent.';
         } else {
           review.open = true;
           output.focus();
+          const selection = window.getSelection();
+          if (selection) selection.selectAllChildren(output);
           copyStatus.textContent = 'Clipboard access is unavailable. Your complete letter is shown under “Read the complete letter” for manual copying, or save it as a text file. Nothing was sent.';
         }
       }
