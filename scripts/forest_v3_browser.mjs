@@ -20,6 +20,18 @@ try{
   const response=await page.goto(origin+route,{waitUntil:'domcontentloaded',timeout:45000});
   assert.equal(response.status(),200,route+' returned non-200');
   await page.waitForFunction(()=>document.body.dataset.narrativeVersion==='3',{timeout:12000});
+  // A real painting must be decoded before visual sign-off frames.
+  // A screenshot at DOMContentLoaded can otherwise show Paperkeeper floating
+  // on bare paper while the responsive gateway WebP is still fetching.
+  if(mode==='no-preference'&&[1440,390].includes(width)){
+    await page.evaluate(async()=>{
+      const backdrop=document.querySelector('.entrance-backdrop');
+      if(!backdrop)throw Error('Entrance painting missing');
+      await backdrop.decode();
+      if(!backdrop.naturalWidth)throw Error('Entrance painting failed to decode');
+      await document.fonts.ready;
+    });
+  }
   const initial=await page.evaluate(()=>{
    const ids=[...document.querySelectorAll('main [data-chapter]')].map(x=>x.id);
    return {
