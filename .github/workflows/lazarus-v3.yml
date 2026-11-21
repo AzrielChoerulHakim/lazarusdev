@@ -1,0 +1,58 @@
+name: Lazarus V3 - cinematic narrative verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/storybook/narrative-*.js'
+      - 'src/storybook/styles/narrative-v3.css'
+      - 'index.html'
+      - 'storybook/index.html'
+      - 'scripts/forest_v3_*.mjs'
+      - '.github/workflows/lazarus-v3.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  narrative-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install and validate narrative source
+        run: |
+          npm install --no-audit --no-fund
+          node scripts/forest_v3_smoke.mjs
+          npm run build
+          npm run build:storybook
+      - name: Install browser assertion runner
+        run: npm install --no-save --no-audit --no-fund playwright@1.56.1
+      - name: Host GitHub Pages equivalent
+        run: |
+          mkdir -p /tmp/lazarus-v3-mirror/lazarusdev
+          cp -a dist/. /tmp/lazarus-v3-mirror/lazarusdev/
+          cp -a dist-storybook/. /tmp/lazarus-v3-mirror/lazarusdev/
+          python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/lazarus-v3-mirror >/tmp/lazarus-v3-http.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then exit 0; fi
+            sleep 2
+          done
+          cat /tmp/lazarus-v3-http.log
+          exit 1
+      - name: Verify 16 real-browser states and visual evidence
+        run: node scripts/forest_v3_browser.mjs
+        env:
+          STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
+          V3_CAPTURE_DIR: artifacts/v3
+          GIT_SHA: ${{ github.sha }}
+          CI: 'true'
+      - name: Upload genuine browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lazarus-v3-${{ github.sha }}
+          path: artifacts/v3/
+          retention-days: 30
+          if-no-files-found: warn
