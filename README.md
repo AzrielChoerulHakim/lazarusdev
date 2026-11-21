@@ -24,7 +24,17 @@ npm run build:storybook
 npm run preview
 ```
 
-The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK.md`. Production HTML is `index.html` and `storybook/index.html`; chapter visuals are in `storybook/assets/`, and behavior/styles live in `src/storybook/`. The pipeline includes automated, **text-only** browser QA across chapter invariants, keyboard, screen-reader semantics via axe, viewport constraints, motion policy, asset and performance budgets, and launch metadata. **Exception:** the dedicated R13 baseline and R15 Atrium workflows now capture actual Chromium PNG screenshots and upload evidence artifacts to GitHub Actions; other automated QA workflows remain text-only.
+The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK.md`. Production HTML is `index.html` and `storybook/index.html`; chapter visuals are in `storybook/assets/`, and behavior/styles live in `src/storybook/`. The QA pipeline combines source-level gates and real Chromium browser verification across chapter invariants, keyboard accessibility, axe semantics, viewports, motion preferences, asset budgets, and release metadata. The dedicated R13, R15 and V3 workflows capture genuine browser PNGs as GitHub Actions evidence; automated checks do not replace subjective visual art review.
+
+## V3 narrative reconstruction — 22 November 2026
+
+V3 is now integrated directly on main for both published routes. It introduces a single cinematic scene director, authored SVG trail tracing across chapter seams, Entrance camera/lantern progression, progressive path/river scenery, editorial hierarchy and a gradual House dusk composition. It preserves original illustrations, the R15A Paperkeeper poses, the interactive Atrium, native chapter anchors and honest concept-study descriptions.
+
+The cinematic staging is **selective**, not mandatory: narrow mobile and short landscape screens read linearly, and visitors requesting reduced motion or disabling JavaScript keep the entire readable site. Existing character gestures and visitor-controlled light remain separate from the new scenery director.
+
+Run the dedicated V3 source gate using **npm run check:v3**. The **Lazarus V3 - cinematic narrative verification** GitHub Actions workflow builds the two routes, verifies 16 real Chromium states and a no-JS fallback, and uploads rendered screenshots. The full implementation ledger is in docs/forest/V3-NARRATIVE-EXECUTION.md.
+
+**Boundary:** The V3 code and automated checks are not a claim of completed subjective art approval, freshly illustrated replacement art, or a functioning lead-delivery backend.
 
 ## Public claims and launch boundaries
 
