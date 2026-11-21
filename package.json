@@ -1,7 +1,7 @@
 {
   "name": "lazarus-dev-forest-storybook",
   "private": true,
-  "version": "2.0.0-foundation",
+  "version": "3.0.0-narrative.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -23,7 +23,9 @@
     "check:r15:browser": "node scripts/forest_r15_atrium_browser.mjs",
     "assets:r15a": "node scripts/forest_r15a_export.mjs",
     "check:r15a": "node scripts/forest_r15a_verify.mjs",
-    "check:r15a:browser": "node scripts/forest_r15a_browser.mjs"
+    "check:r15a:browser": "node scripts/forest_r15a_browser.mjs",
+    "check:v3": "node scripts/forest_v3_smoke.mjs",
+    "check:v3:browser": "node scripts/forest_v3_browser.mjs"
   },
   "devDependencies": {
     "sharp": "0.34.5",
