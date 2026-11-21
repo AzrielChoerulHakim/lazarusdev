@@ -38,25 +38,47 @@ try{
   assert.ok(initial.scrollOverhang<=2,'horizontal overflow '+routeName+' '+width+' '+height+' '+initial.scrollOverhang);
   if(mode==='reduce'||height<=650||width<=670)assert.notEqual(initial.sticky,'sticky','static, narrow or short viewport should not pin');
   else assert.equal(initial.sticky,'sticky','cinematic scene should pin');
+  const visual=mode==='no-preference'&&[1440,390].includes(width);
+  const snap=async suffix=>{
+    const name=routeName+'-'+width+'x'+height+'-'+suffix+'.png';
+    await page.screenshot({path:join(folder,name),animations:'disabled'});
+    manifest.screenshots.push(name);
+  };
+  if(visual)await snap('entrance-start');
   if(mode==='no-preference'&&height>650){
    await page.evaluate(()=>{
     const item=document.querySelector('.v3-entrance-scroll');
-    scrollTo({top:item.getBoundingClientRect().top+scrollY+item.getBoundingClientRect().height*.56,behavior:'instant'});
+    const travel=item.getBoundingClientRect().height-innerHeight;
+    const offset=travel>0 ? travel*.45 : item.getBoundingClientRect().height*.56;
+    scrollTo({top:item.getBoundingClientRect().top+scrollY+offset,behavior:'instant'});
    });
    await page.waitForTimeout(140);
    const state=await page.evaluate(()=>{
     const stage=document.querySelector('.v3-entrance-scroll');
+    const hero=document.querySelector('.v3-entrance-scroll .hero-layout').getBoundingClientRect();
     return {progress:Number.parseFloat(stage.style.getPropertyValue('--v3-progress')||'0'),
       beat:document.querySelector('#entrance').dataset.v3Beat,
-      label:document.querySelector('#entrance .v3-beat-text')?.textContent};
+      label:document.querySelector('#entrance .v3-beat-text')?.textContent,
+      stickyTop:hero.top};
    });
    assert.ok(state.progress>.05,'scene progress never advanced '+JSON.stringify(state));
    assert.ok(state.beat!==undefined&&Boolean(state.label),'story annotation not updated');
+   if(width>670)assert.ok(Math.abs(state.stickyTop)<8,'actual sticky geometry failed '+JSON.stringify(state));
   }
-  if(mode==='no-preference'&&[1440,390].includes(width)){
-   const name=routeName+'-'+width+'x'+height+'-entrance.png';
-   await page.screenshot({path:join(folder,name),animations:'disabled'});
-   manifest.screenshots.push(name);
+  if(visual){
+   await snap('entrance-progress');
+   for(const [name,selector] of [
+    ['path','.path-map-art'],
+    ['clearing','.work-clearing-world'],
+    ['river','.river-scene'],
+    ['house','.house-scene']]){
+    await page.evaluate(target=>{
+      const el=document.querySelector(target);
+      scrollTo({top:el.getBoundingClientRect().top+scrollY-innerHeight*.12,behavior:'instant'});
+    },selector);
+    await page.waitForTimeout(110);
+    await snap(name);
+   }
   }
   if(errors.length)manifest.errors.push({route,width,height,mode,errors});
   manifest.checks.push({route:routeName,width,height,mode,initial});
