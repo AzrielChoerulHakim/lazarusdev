@@ -63,6 +63,13 @@ function addCue(actor) {
   actor.activeBeat = -1;
 }
 actors.forEach(addCue);
+// The four original pencil seams are a continuous map: draw their actual
+// authored SVG strokes as they enter the reading window, never a stock line.
+const seams = [...document.querySelectorAll('.forest-seam')].map(node => ({
+  node,
+  strokes: [...node.querySelectorAll('.seam-trail')].filter(path => typeof path.getTotalLength === 'function')
+    .map(path => ({path, length:path.getTotalLength()}))
+}));
 root.classList.add('v3-enhanced');
 document.body.dataset.narrativeVersion = '3';
 
@@ -89,6 +96,20 @@ function render() {
   if (currentIndex !== index) {
     currentIndex = index;
     markerText.textContent = String(index+1).padStart(2,'0') + ' / 05';
+  }
+  for (const seam of seams) {
+    const rect=seam.node.getBoundingClientRect();
+    if(rect.top>vh*1.7 || rect.bottom < -vh)continue;
+    const progress=progressWithin(rect.top,rect.height,vh);
+    for(const {path,length} of seam.strokes) {
+      if(still) {
+        path.style.removeProperty('stroke-dasharray');
+        path.style.removeProperty('stroke-dashoffset');
+      }else{
+        path.style.strokeDasharray=String(length);
+        path.style.strokeDashoffset=String(length*(1-progress));
+      }
+    }
   }
   for (const actor of actors) {
     if (!actor.host) continue;
