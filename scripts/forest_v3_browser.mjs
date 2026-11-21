@@ -36,7 +36,7 @@ try{
   assert.ok(initial.wrappers.every(Boolean)&&initial.marker,'V3 scene wrappers missing');
   assert.equal(initial.reduced,mode==='reduce');
   assert.ok(initial.scrollOverhang<=2,'horizontal overflow '+routeName+' '+width+' '+height+' '+initial.scrollOverhang);
-  if(mode==='reduce'||height<=650)assert.notEqual(initial.sticky,'sticky','static/short viewport should not pin');
+  if(mode==='reduce'||height<=650||width<=670)assert.notEqual(initial.sticky,'sticky','static, narrow or short viewport should not pin');
   else assert.equal(initial.sticky,'sticky','cinematic scene should pin');
   if(mode==='no-preference'&&height>650){
    await page.evaluate(()=>{
