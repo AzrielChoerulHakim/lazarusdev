@@ -169,6 +169,23 @@ html.v3-enhanced .section-intro .lead {max-width:34ch;}
   html.v3-enhanced .v3-beat-text {font-size:.94rem;}
   html.v3-enhanced :is(.chapter-path,.chapter-river,.chapter-clearing,.chapter-house) .v3-beat-note {display:none;}
 }
+/* Below 671px the illustrated figure is taller than the available reading
+   window. Keep native sequential reading instead of a clipped sticky trap. */
+@media (max-width:670px) {
+  html.v3-enhanced .v3-entrance-scroll,
+  html.v3-enhanced .v3-path-scroll,
+  html.v3-enhanced .v3-river-scroll {min-height:0;}
+  html.v3-enhanced .v3-entrance-scroll .hero-layout,
+  html.v3-enhanced .v3-path-scroll .path-map,
+  html.v3-enhanced .v3-river-scroll .river-scene {position:relative;top:auto;min-height:0;}
+  html.v3-enhanced .chapter-entrance .hero-copy h1 {font-size:clamp(2.65rem,10.6vw,3.8rem);}
+}
+@media (max-width:360px) {
+  html.v3-enhanced :is(.chapter-path,.chapter-clearing,.chapter-river,.chapter-house) h2 {
+    font-size:clamp(2.55rem,10.7vw,3.1rem);
+  }
+  html.v3-enhanced .chapter-entrance .hero-copy h1 {font-size:2.6rem;}
+}
 @media (max-height:650px) {
   html.v3-enhanced .v3-entrance-scroll,html.v3-enhanced .v3-path-scroll,html.v3-enhanced .v3-river-scroll {min-height:0;}
   html.v3-enhanced .v3-entrance-scroll .hero-layout,html.v3-enhanced .v3-path-scroll .path-map,html.v3-enhanced .v3-river-scroll .river-scene {
