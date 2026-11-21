@@ -30,9 +30,9 @@ const river = wrap(document.querySelector('#river-stories .river-scene'), 'v3-ri
 const actors = [
   { id:'entrance', chapter:chapters[0], host:entrance, stage:entrance?.querySelector('.entrance-stage'), cues:['THE INVITATION','THE LANTERN','THE THRESHOLD','THE CROSSING'], keys:[0,.24,.54,.82] },
   { id:'path', chapter:chapters[1], host:path, stage:path?.querySelector('.path-map-art'), cues:['THE FIRST MARK','FOLLOW THE LINE','A DIRECTION FORMS','THE NEXT TURN'], keys:[0,.25,.52,.82] },
-  { id:'clearing', chapter:chapters[2], host:chapters[2], stage:document.querySelector('.work-clearing-world'), cues:['THE CLEARING','WORLDS IN PROGRESS','COME CLOSER'], keys:[0,.43,.78] },
+  { id:'clearing', chapter:chapters[2], host:document.querySelector('.work-clearing-world'), stage:document.querySelector('.work-clearing-world'), cues:['THE CLEARING','WORLDS IN PROGRESS','COME CLOSER'], keys:[0,.43,.78] },
   { id:'river', chapter:chapters[3], host:river, stage:river?.querySelector('.river-scene'), cues:['THE RIVER','SOMETHING ADRIFT','THE ACT OF CARE','CARRY IT HOME'], keys:[0,.25,.52,.82] },
-  { id:'house', chapter:chapters[4], host:chapters[4], stage:document.querySelector('.house-scene'), cues:['THE ARRIVAL','THE KEPT PAGE','LIGHT IN THE WINDOW'], keys:[0,.42,.76] }
+  { id:'house', chapter:chapters[4], host:document.querySelector('.house-scene'), stage:document.querySelector('.house-scene'), cues:['THE ARRIVAL','THE KEPT PAGE','LIGHT IN THE WINDOW'], keys:[0,.42,.76] }
 ];
 
 const marker = document.createElement('div');
@@ -68,7 +68,6 @@ document.body.dataset.narrativeVersion = '3';
 
 let pending = 0;
 let currentIndex = -1;
-let disposed = false;
 
 function setVar(node,name,value) {
   if (node) node.style.setProperty(name, value);
@@ -76,7 +75,7 @@ function setVar(node,name,value) {
 
 function render() {
   pending = 0;
-  if (disposed || document.hidden) return;
+  if (document.hidden) return;
   const vh = Math.max(1,innerHeight);
   const still = motion.matches;
   const small = compact.matches;
@@ -94,7 +93,6 @@ function render() {
   for (const actor of actors) {
     if (!actor.host) continue;
     const rect=actor.host.getBoundingClientRect();
-    const distance=Math.min(Math.abs(rect.top),Math.abs(rect.bottom-vh));
     if (rect.bottom < -vh || rect.top > vh*2) continue;
     // Pinned scenes traverse their actual extra scroll distance.
     const pinned = actor.id==='entrance'||actor.id==='path'||actor.id==='river';
@@ -135,7 +133,7 @@ function render() {
 }
 
 function schedule() {
-  if (!pending && !disposed) pending=requestAnimationFrame(render);
+  if (!pending) pending=requestAnimationFrame(render);
 }
 addEventListener('scroll',schedule,{passive:true});
 addEventListener('resize',schedule,{passive:true});
