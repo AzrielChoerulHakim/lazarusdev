@@ -1,0 +1,195 @@
+/*
+ LAZARUS V3 / THE FOREST BETWEEN PAGES
+ Narrative art direction layer — deliberately last in the cascade.
+ This is spatial editorial composition, NOT a generic UI-card theme.
+ All scroll staging is progressive enhancement; original static reading
+ survives without JS and reduced-motion users never enter a pinned scene.
+*/
+html.v3-enhanced { --v3-page-progress:0; }
+html.v3-enhanced .chapter { position:relative; isolation:isolate; }
+html.v3-enhanced .site-header { z-index:60; }
+html.v3-enhanced .site-nav a { letter-spacing:.015em; }
+html.v3-enhanced .section-signature {
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-top:1px solid currentColor;padding-top:1rem;
+}
+html.v3-enhanced .section-counter {
+  font-family:var(--font-display);font-style:italic;
+  letter-spacing:-.07em;font-size:clamp(1.9rem,3.3vw,3.5rem);
+}
+html.v3-enhanced .section-name {
+  letter-spacing:.22em;font-size:.68rem;font-weight:700;
+}
+html.v3-enhanced :is(.chapter-path,.chapter-clearing,.chapter-river,.chapter-house) h2 {
+  letter-spacing:-.065em;line-height:.99;
+  font-size:clamp(3.6rem,7.1vw,8.5rem);
+  max-width:14ch;
+}
+html.v3-enhanced :is(.chapter-path,.chapter-clearing,.chapter-river,.chapter-house) h2 em {
+  font-weight:400;
+}
+html.v3-enhanced .chapter-entrance .hero-copy h1 {
+  max-width:11ch;
+  font-size:clamp(3.6rem,7.15vw,8.15rem);
+  letter-spacing:-.073em;line-height:.96;
+}
+html.v3-enhanced .chapter-entrance .hero-copy h1 em { font-weight:400; }
+html.v3-enhanced .chapter-entrance .hero-lead { max-width:31ch;font-size:clamp(1.1rem,1.6vw,1.55rem); }
+html.v3-enhanced .chapter-entrance .hero-layout {
+  grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);
+  gap:clamp(16px,3.6vw,65px);
+  min-height:0;
+}
+html.v3-enhanced .chapter-entrance .entrance-stage {
+  box-shadow:15px 18px 0 rgba(67,78,52,.085);
+  overflow:hidden;
+}
+html.v3-enhanced .chapter-entrance .entrance-stage::after {
+  content:'';position:absolute;z-index:2;pointer-events:none;
+  width:36%;height:36%;left:13%;bottom:9%;
+  background:radial-gradient(ellipse,rgba(253,211,112,.34),transparent 65%);
+  opacity:var(--v3-light-alpha,.13);mix-blend-mode:screen;
+}
+html.v3-enhanced .v3-entrance-scroll {
+  --v3-progress:0;position:relative;min-height:178svh;
+}
+html.v3-enhanced .v3-entrance-scroll .hero-layout {
+  position:sticky;top:0;min-height:100svh;
+  padding-block:clamp(45px,7svh,90px);
+  align-content:center;
+}
+html.v3-enhanced .v3-entrance-scroll .hero-copy {
+  transform:translate3d(0,var(--v3-type-shift,0px),0);
+}
+html.v3-enhanced .v3-entrance-scroll .entrance-canvas {
+  transform:translate3d(var(--v3-camera-x,0px),var(--v3-camera-y,0px),0) scale(var(--v3-camera-scale,1));
+  transform-origin:50% 58%;
+  will-change:transform;
+}
+html.v3-enhanced .v3-entrance-scroll .entrance-paperkeeper {
+  transform:translate3d(var(--v3-keeper-x,0px),var(--v3-keeper-y,0px),0);
+  transform-origin:center 94%;will-change:transform;
+}
+html.v3-enhanced .chapter-entrance .story-opening {
+  margin-block:clamp(36px,6vw,98px);
+  font-size:clamp(1.5rem,2.6vw,3.3rem);
+  max-width:27ch;line-height:1.14;
+  letter-spacing:-.04em;
+}
+html.v3-enhanced .v3-path-scroll { position:relative;min-height:167svh; }
+html.v3-enhanced .v3-path-scroll .path-map {
+  position:sticky;top:4svh;margin-top:0;
+}
+html.v3-enhanced .v3-path-scroll .path-map-art>picture {
+  display:block;transform:translate3d(0,var(--v3-map-y,0px),0) scale(var(--v3-map-scale,1));
+  transform-origin:center 53%;will-change:transform;
+}
+html.v3-enhanced .chapter-path .path-intro { gap:clamp(24px,4vw,88px); }
+html.v3-enhanced .chapter-path .path-map-caption {
+  background:var(--paper);padding-inline:clamp(13px,2vw,28px);
+}
+html.v3-enhanced .chapter-clearing .work-clearing-woods {
+  transform:translate3d(var(--v3-world-x,0px),0,0) scale(var(--v3-world-scale,1));
+  transform-origin:50% 50%;
+}
+html.v3-enhanced .chapter-clearing .work-clearing-installation {
+  margin-top:clamp(28px,5vw,84px);
+}
+html.v3-enhanced .v3-river-scroll {position:relative;min-height:168svh;}
+html.v3-enhanced .v3-river-scroll .river-scene {
+  position:sticky;top:4svh;
+}
+html.v3-enhanced .v3-river-scroll .river-scene > picture {
+  display:block;transform:translate3d(0,var(--v3-river-pan,0px),0) scale(var(--v3-river-scale,1));
+  transform-origin:50% 55%;will-change:transform;
+}
+html.v3-enhanced .chapter-house .house-scene-image {
+  filter:saturate(.82) contrast(1.08) brightness(var(--v3-dusk,.87));
+}
+html.v3-enhanced .chapter-house .house-preface {
+  grid-template-columns:minmax(0,1.65fr) minmax(190px,.45fr);
+}
+html.v3-enhanced .chapter-house .house-statement blockquote {
+  font-size:clamp(1.4rem,2.5vw,2.9rem);
+  line-height:1.23;letter-spacing:-.026em;
+}
+.v3-reading-marker {
+  position:fixed;z-index:46;left:clamp(9px,1.45vw,23px);top:50%;
+  transform:translateY(-50%);display:flex;flex-direction:column;
+  align-items:center;gap:17px;pointer-events:none;color:#254d39;
+  font:700 .69rem/1.3 var(--font-ui);
+}
+.v3-reading-number {writing-mode:vertical-rl;letter-spacing:.14em;}
+.v3-reading-track {width:2px;height:min(24svh,190px);background:rgba(36,79,59,.18);position:relative;display:block;}
+.v3-reading-track::before {
+  content:'';position:absolute;inset:0;background:#bc6a48;
+  transform:scaleY(var(--v3-page-progress,0));transform-origin:center top;
+}
+.v3-beat-note {
+  position:absolute;right:clamp(12px,2.2vw,32px);bottom:clamp(13px,2vw,30px);
+  z-index:5;display:flex;flex-direction:column;align-items:flex-start;
+  padding:12px 16px;gap:3px;pointer-events:none;
+  background:rgba(247,233,214,.9);border-left:3px solid #a05c3b;
+  color:#254733;max-width:min(260px,44%);
+  box-shadow:3px 4px 0 rgba(38,56,39,.08);
+}
+.v3-beat-index {font:700 .65rem/1.4 var(--font-ui);letter-spacing:.2em;}
+.v3-beat-text {font:italic 500 clamp(.97rem,1.5vw,1.4rem)/1.12 var(--font-display);letter-spacing:-.04em;}
+html.v3-enhanced .work-clearing-world .v3-beat-note {top:15px;right:15px;bottom:auto;}
+html.v3-enhanced .house-scene .v3-beat-note {top:15px;right:15px;bottom:auto;}
+html.v3-enhanced .section-intro .lead {max-width:34ch;}
+@media (max-width:1100px) {
+  .v3-reading-marker {display:none;}
+  html.v3-enhanced .chapter-entrance .hero-copy h1 {font-size:clamp(3.15rem,7vw,5.7rem);}
+  html.v3-enhanced :is(.chapter-path,.chapter-clearing,.chapter-river,.chapter-house) h2 {
+    font-size:clamp(3rem,7vw,6.1rem);
+  }
+}
+@media (max-width:760px) {
+  html.v3-enhanced .chapter-entrance .hero-layout {grid-template-columns:1fr;gap:15px;}
+  html.v3-enhanced .chapter-entrance .hero-copy h1 {font-size:clamp(3.12rem,11.2vw,5rem);line-height:.96;}
+  html.v3-enhanced .chapter-entrance .hero-lead {font-size:1.07rem;}
+  html.v3-enhanced .v3-entrance-scroll {min-height:145svh;}
+  html.v3-enhanced .v3-entrance-scroll .hero-layout {
+    min-height:100svh;padding-block:15px 24px;
+    align-content:start;
+  }
+  html.v3-enhanced .v3-entrance-scroll .entrance-stage {box-shadow:7px 8px 0 rgba(67,78,52,.085);}
+  html.v3-enhanced .v3-path-scroll,html.v3-enhanced .v3-river-scroll {min-height:125svh;}
+  html.v3-enhanced .v3-path-scroll .path-map,html.v3-enhanced .v3-river-scroll .river-scene {top:3svh;}
+  html.v3-enhanced .chapter-house .house-preface {grid-template-columns:1fr;}
+  html.v3-enhanced :is(.chapter-path,.chapter-clearing,.chapter-river,.chapter-house) h2 {
+    font-size:clamp(3.1rem,11vw,5.7rem);
+  }
+  html.v3-enhanced .v3-beat-note {
+    right:8px;bottom:8px;max-width:56%;
+    padding:7px 9px;border-width:2px;
+  }
+  html.v3-enhanced .v3-beat-index {font-size:.55rem;}
+  html.v3-enhanced .v3-beat-text {font-size:.94rem;}
+  html.v3-enhanced :is(.chapter-path,.chapter-river,.chapter-clearing,.chapter-house) .v3-beat-note {display:none;}
+}
+@media (max-height:650px) {
+  html.v3-enhanced .v3-entrance-scroll,html.v3-enhanced .v3-path-scroll,html.v3-enhanced .v3-river-scroll {min-height:0;}
+  html.v3-enhanced .v3-entrance-scroll .hero-layout,html.v3-enhanced .v3-path-scroll .path-map,html.v3-enhanced .v3-river-scroll .river-scene {
+    position:relative;top:auto;
+  }
+  html.v3-enhanced .v3-entrance-scroll .hero-layout {min-height:0;}
+}
+@media (prefers-reduced-motion:reduce) {
+  html.v3-enhanced .v3-entrance-scroll,html.v3-enhanced .v3-path-scroll,html.v3-enhanced .v3-river-scroll {min-height:0;}
+  html.v3-enhanced .v3-entrance-scroll .hero-layout,
+  html.v3-enhanced .v3-path-scroll .path-map,
+  html.v3-enhanced .v3-river-scroll .river-scene {
+    position:relative;top:auto;min-height:0;
+  }
+  html.v3-enhanced .v3-entrance-scroll :is(.hero-copy,.entrance-canvas,.entrance-paperkeeper),
+  html.v3-enhanced .v3-path-scroll .path-map-art>picture,
+  html.v3-enhanced .v3-river-scroll .river-scene>picture,
+  html.v3-enhanced .chapter-clearing .work-clearing-woods {transform:none!important;will-change:auto;}
+}
+@media (forced-colors:active) {
+  .v3-beat-note {background:Canvas;color:CanvasText;border-color:CanvasText;}
+  .v3-reading-track::before {background:CanvasText;}
+  html.v3-enhanced .chapter-house .house-scene-image {filter:none;}
+}
