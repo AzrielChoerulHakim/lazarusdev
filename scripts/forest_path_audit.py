@@ -29,7 +29,7 @@ for html in [ROOT/'index.html',ROOT/'storybook/index.html']:
     assert t.count('section class="chapter')==5
     assert 'path-map' in t and 'data-path-map' in t
     assert 'winding-path-mobile.webp' in t and 'winding-path-desktop.webp' in t
-    assert 'paperkeeper.three-quarter.webp' in t and 'moth.guide.webp' in t
+    assert 'moth.guide.webp' in t and 'living-paperkeeper.js' in t
     assert 'data-walk="path"' in t
     assert 'href="#work-clearing"' in t
     assert 'Discover' in t and 'Define' in t and 'Make' in t and 'Refine' in t
@@ -37,6 +37,8 @@ for html in [ROOT/'index.html',ROOT/'storybook/index.html']:
     assert 'src/storybook/styles/winding-path.css' in t
 for p in ['storybook/assets/characters/paperkeeper.three-quarter.webp', 'storybook/assets/characters/moth.guide.webp']:
     assert (ROOT/p).exists(),p
+assert 'paperkeeper-journey-r15a.webp' in (ROOT/'src/storybook/styles/living-paperkeeper.css').read_text()
+assert (ROOT/'storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp').exists()
 for file in ['src/storybook/keeper-journey.js','src/storybook/styles/winding-path.css']:
     assert (ROOT/file).exists()
 print('STAGE07 ASSET & SEMANTIC AUDIT PASS', [(a['role'],a['bytes']) for a in man['files']])

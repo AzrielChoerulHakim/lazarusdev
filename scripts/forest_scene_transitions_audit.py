@@ -42,7 +42,9 @@ for file in ROUTES:
 css = Path('src/storybook/styles/forest-seams.css').read_text()
 js = Path('src/storybook/keeper-journey.js').read_text()
 assert 'prefers-reduced-motion:reduce' in css
-assert 'IntersectionObserver' in js and 'isIntersecting' in js
+assert 'lazarus:storyframe' in js and 'snapshot.progress[kind]' in js
+living=Path('src/storybook/living-paperkeeper.js').read_text()
+assert 'safePosition' in living and 'lazarus:storyframe' in living
 for forbidden in ('.scrollTo(','.scrollIntoView(','.preventDefault(','.screenshot(','.setInterval('):
     assert forbidden not in js, (forbidden,'forbidden in seam interaction')
 print('Stage 12 semantic and motion policy passed.')
