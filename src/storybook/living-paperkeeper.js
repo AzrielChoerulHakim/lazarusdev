@@ -35,22 +35,29 @@ function trailPoint(points, progress) {
   return [points[i][0] + (points[i+1][0]-points[i][0])*t,
           points[i][1] + (points[i+1][1]-points[i][1])*t];
 }
-function collision(x,foot,size) {
-  const w=size*128/144, left=x-w*.57, right=x+w*.57, top=foot-size*.93;
-  // Only *visible* interactive/content blocks qualify. Do not measure entire
-  // chapters on each scroll frame or a fixed overlay would always collide.
+function visibleBlockingRects() {
+  // Read visible layout only ONCE per storyframe, then test candidate lanes
+  // in memory. This avoids repeated forced layout at every fallback point.
+  const active=[];
   for(const el of obstacles) {
     const rect=el.getBoundingClientRect();
-    if(rect.bottom<0 || rect.top>innerHeight || rect.right<0 || rect.left>innerWidth) continue;
-    if (left<rect.right+5 && right>rect.left-5 && top<rect.bottom+5 && foot>rect.top-5) return true;
+    if(rect.bottom<0 || rect.top>innerHeight || rect.right<0 || rect.left>innerWidth)continue;
+    active.push(rect);
   }
-  return false;
+  return active;
+}
+function collision(x,foot,size,rects) {
+  const w=size*128/144, left=x-w*.57, right=x+w*.57, top=foot-size*.93;
+  return rects.some(rect=>
+    left<rect.right+5 && right>rect.left-5 &&
+    top<rect.bottom+5 && foot>rect.top-5);
 }
 function safePosition(x,y,size,chapter) {
   const width=innerWidth, height=innerHeight;
   const minX=Math.max(20,size*.48), maxX=width-minX;
   const base=[clamp(x,minX,maxX),clamp(y,size+12,height-16)];
-  if (!collision(base[0],base[1],size)) return base;
+  const rects=visibleBlockingRects();
+  if (!collision(base[0],base[1],size,rects)) return base;
   const candidates=width<=670 ?
     [[width*.50,height*.84],[width*.12,height*.87],[width*.88,height*.87],
      [width*.50,height*.67],[width*.12,height*.68],[width*.88,height*.68]] :
@@ -60,7 +67,7 @@ function safePosition(x,y,size,chapter) {
      [width*.09,height*.62],[width*.91,height*.62]];
   for(const [cx,cy] of candidates) {
     const test=[clamp(cx,minX,maxX),clamp(cy,size+12,height-16)];
-    if (!collision(test[0],test[1],size)) return test;
+    if (!collision(test[0],test[1],size,rects)) return test;
   }
   // Never cover a link, text block or keyboard focus just to keep an actor visible.
   return null;
