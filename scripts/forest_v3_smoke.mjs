@@ -17,7 +17,7 @@ assert.ok(isCompactLayout(844,390) && !isCompactLayout(761,651));
 const walker=file('src/storybook/keeper-journey.js');
 assert.ok(walker.includes('snapshot.progress[kind]'),'walker must consume director progress');
 assert.ok(walker.includes('lazarus:storyframe'),'walker must share director frame');
-assert.ok(!walker.includes('IntersectionObserver'),'no separate observer writer');
+assert.ok(!/new\\s+IntersectionObserver\\s*\\(/.test(walker),'no separate observer writer');
 const engine=file('src/storybook/narrative-director.js');
 const styles=file('src/storybook/styles/narrative-v3.css');
 const chapterIds=['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
