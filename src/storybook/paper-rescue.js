@@ -1,79 +1,56 @@
-/** A single small act of care. It plays through after touch, never arrests scroll.
- * An intentional revisit above the river prepares it to play again.
- * Static props tell the same story when scripting or motion is unavailable.
- */
-const river = document.querySelector('#river-stories .river-scene');
-const house = document.querySelector('#house-on-the-hill .house-scene');
-if (river && house) {
-  const walker = river.querySelector('[data-walk="river"]');
-  const calm = matchMedia('(prefers-reduced-motion: reduce)');
-  let started = false;
-  let completed = false;
-  let timer = 0;
-  const moments = [];
-  const stagePose = { watch:'look-down', lantern:'set-lantern', reach:'reach', lift:'lift', carrying:'carry', still:'carry' };
-  const poses = ['step-a','step-b','step-c','stand','turn','look','reach','read','lantern'];
-  function setScene(phase) {
-    river.dataset.rescue = phase;
-    const pose = stagePose[phase];
-    if (walker && pose) {
-      walker.dataset.pose = pose;
-      if (poses.includes(pose)) walker.style.backgroundPositionX = String(poses.indexOf(pose) * 12.5) + '%';
-      else walker.style.removeProperty('background-position-x');
-    }
+/** One torn page, one narrative owner. The director supplies all scroll
+ * progress; only a committed short act uses finite timers. */
+const river=document.querySelector('#river-stories .river-scene');
+const house=document.querySelector('#house-on-the-hill .house-scene');
+if(river&&house){
+ const walker=river.querySelector('[data-walk="river"]');
+ const calm=matchMedia('(prefers-reduced-motion: reduce)');
+ const pageId='forest-torn-page-01';
+ const poses={watch:'look-down',lantern:'set-lantern',reach:'reach',lift:'lift',carrying:'carry',still:'carry'};
+ let started=false,completed=false,delivered=false,armed=true;
+ const moments=[];
+ river.dataset.pageId=pageId;house.dataset.pageId=pageId;
+ function stopTimers(){while(moments.length)clearTimeout(moments.pop());}
+ function publish(phase){
+  river.dataset.rescue=phase;
+  const owner=delivered?'window':(completed||phase==='lift'||phase==='carrying'||phase==='still')?'keeper':'river';
+  document.body.dataset.pageOwner=owner;
+  house.dataset.pageOwner=owner;
+  river.dataset.pageOwner=owner;
+  if(walker&&poses[phase]){
+   walker.dataset.pose=poses[phase];
+   const ordinary=['step-a','step-b','step-c','stand','turn','look','reach','read','lantern'];
+   if(ordinary.includes(poses[phase]))walker.style.backgroundPositionX=(ordinary.indexOf(poses[phase])*12.5)+'%';
+   else walker.style.removeProperty('background-position-x');
   }
-  function stopTimers() {
-    clearTimeout(timer);
-    while (moments.length) clearTimeout(moments.pop());
+  dispatchEvent(new CustomEvent('lazarus:storychange',{detail:{pageId,phase,owner,completed,delivered}}));
+ }
+ function complete(){stopTimers();started=false;completed=true;armed=false;publish(calm.matches?'still':'carrying');}
+ function start(){
+  if(!armed||started||completed||calm.matches||document.hidden)return;
+  started=true;armed=false;publish('watch');
+  for(const [phase,delay] of [['lantern',260],['reach',550],['lift',1120]])
+   moments.push(setTimeout(()=>publish(phase),delay));
+  moments.push(setTimeout(complete,1940));
+ }
+ function reset(){stopTimers();started=false;completed=false;delivered=false;armed=true;publish('idle');}
+ function onFrame(event){
+  if(document.hidden)return;
+  const s=event.detail, rect=river.getBoundingClientRect(),vh=innerHeight;
+  const visible=rect.bottom>vh*.16&&rect.top<vh*.86;
+  const wrapper=river.closest('.v3-river-scroll')||river;
+  if(completed&&s.direction<0&&wrapper.getBoundingClientRect().top>vh*1.12){reset();return;}
+  if(calm.matches){if(visible&&(s.progress.river??0)>=.45&&!completed)complete();}
+  else if(visible&&(s.progress.river??0)>=.48&&!started&&armed)start();
+  const h=house.getBoundingClientRect();
+  if(completed&&!delivered&&h.top<vh*.78&&h.bottom>vh*.18){
+   delivered=true;publish(calm.matches?'still':'carrying');
   }
-  function runAct() {
-    if (started || completed || calm.matches) return;
-    started = true;
-    setScene('watch');
-    moments.push(setTimeout(() => setScene('lantern'), 260));
-    moments.push(setTimeout(() => setScene('reach'), 550));
-    moments.push(setTimeout(() => setScene('lift'), 1120));
-    moments.push(setTimeout(() => {
-      setScene('carrying');
-      completed = true;
-      started = false;
-    }, 1940));
-  }
-  function atRiver() {
-    if (calm.matches) { stopTimers(); started = false; setScene('still'); return; }
-    const r = river.getBoundingClientRect();
-    // Below: don't replay or stop a genuine gesture that already began.
-    if (r.bottom < 0) return;
-    // Fully returned above the illustrated river: a deliberate revisit resets it.
-    if (r.top > innerHeight * 1.05) {
-      if (completed) { completed = false; started = false; stopTimers(); river.dataset.rescue = 'idle'; }
-      return;
-    }
-    const exposed = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(0, r.top));
-    const fraction = exposed / Math.min(Math.max(r.height,1), Math.max(innerHeight,1));
-    if (fraction >= .45 && !completed && !started && !timer) {
-      timer = setTimeout(() => {
-        timer = 0;
-        const now = river.getBoundingClientRect();
-        const overlap = Math.max(0, Math.min(now.bottom, innerHeight) - Math.max(0,now.top));
-        if (overlap / Math.min(Math.max(now.height,1),Math.max(innerHeight,1)) >= .35) runAct();
-      }, 160);
-    } else if (fraction < .25 && timer) { clearTimeout(timer); timer = 0; }
-  }
-  if (calm.matches) setScene('still'); else river.dataset.rescue = 'idle';
-  let requested = false;
-  function schedule() {
-    if (requested) return;
-    requested = true;
-    requestAnimationFrame(() => { requested = false; atRiver(); });
-  }
-  addEventListener('scroll', schedule, {passive:true});
-  addEventListener('resize', schedule, {passive:true});
-  calm.addEventListener('change', () => {
-    stopTimers();
-    started = false;
-    if (calm.matches) setScene('still');
-    else { completed = false; river.dataset.rescue = 'idle'; schedule(); }
-  });
-  schedule();
+ }
+ function onHidden(){if(started)complete();else stopTimers();}
+ calm.addEventListener('change',()=>{if(calm.matches&&started)complete();else publish(completed?'carrying':'idle');});
+ addEventListener('lazarus:storyframe',onFrame);
+ addEventListener('pagehide',onHidden);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)onHidden();});
+ publish('idle');
 }

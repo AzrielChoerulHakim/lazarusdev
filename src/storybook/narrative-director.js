@@ -11,6 +11,13 @@ const motion = matchMedia('(prefers-reduced-motion: reduce)');
 const compact = matchMedia('(max-width: 670px), (max-height: 650px)');
 const chapters = [...document.querySelectorAll('main [data-chapter]')];
 const chaptersExpected = ['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
+const storySentences={
+ entrance:['A little light. A way in.','He lifts the lantern so the first step can be seen.','The path begins beyond the painted arch.','There is room for one more traveler.'],
+ path:['Not every mark is a road.','The moth knows where the roots turn.','Every turn begins with a choice.','The clearing is near.'],
+ clearing:['Three unfinished worlds hang among the trees.','Each sheet has its own small possibility.','Look closer; a door might be waiting.'],
+ river:['The roundbird notices a page drifting at the bank.','He slows and sets his lantern down.','He reaches for what the current almost kept.','The page is safe enough to carry.'],
+ house:['A square of light waits up the hill.','A page has found a place to dry.','The next page is yours to begin.']
+};
 if (chapters.length !== 5 || chapters.some((c,i) => c.id !== chaptersExpected[i])) {
   throw new Error('Lazarus V3 requires the intact five-chapter source.');
 }
@@ -61,6 +68,12 @@ function addCue(actor) {
   actor.stage.append(label);
   actor.label = text;
   actor.activeBeat = -1;
+  const sentence=document.createElement('p');
+  sentence.className='v3-story-sentence';
+  sentence.textContent=storySentences[actor.id][0];
+  const after=actor.id==='clearing'?actor.stage.closest('figure'):actor.host;
+  after?.insertAdjacentElement('afterend',sentence);
+  actor.sentence=sentence;
 }
 actors.forEach(addCue);
 // The four original pencil seams are a continuous map: draw their actual
@@ -129,11 +142,24 @@ function render() {
     setVar(actor.host,'--v3-progress',p);
     setVar(actor.chapter,'--v3-progress',p);
     const beat=phaseAt(progress,actor.keys);
-    if (beat !== actor.activeBeat) {
+    const phase=actor.id==='river'?actor.stage?.dataset.rescue:'';
+    const rescueCues={
+      watch:['SOMETHING ADRIFT',storySentences.river[0]],
+      lantern:['THE LANTERN RESTS',storySentences.river[1]],
+      reach:['THE ACT OF CARE',storySentences.river[2]],
+      lift:['THE PAGE IS LIFTED','He lifts the torn page above the water.'],
+      carrying:['CARRY IT HOME',storySentences.river[3]],
+      still:['THE PAGE IS KEPT',storySentences.river[3]]
+    };
+    const override=rescueCues[phase];
+    const cue=override?override[0]:actor.cues[beat];
+    const sentence=override?override[1]:storySentences[actor.id][beat];
+    if(beat!==actor.activeBeat||actor.label?.textContent!==cue){
       actor.activeBeat=beat;
-      if (actor.label) actor.label.textContent=actor.cues[beat];
+      if(actor.label)actor.label.textContent=cue;
       actor.chapter.dataset.v3Beat=String(beat);
     }
+    if(actor.sentence&&actor.sentence.textContent!==sentence)actor.sentence.textContent=sentence;
     if (still) continue;
     if(actor.id==='entrance'){
       setVar(actor.host,'--v3-camera-scale',(1+progress*.18).toFixed(4));
@@ -158,7 +184,8 @@ function render() {
   }
   // One authoritative snapshot; walking, camera and scene prose share a frame.
   dispatchEvent(new CustomEvent('lazarus:storyframe', {
-    detail: { progress: storyProgress, direction, compact: small, reduced: still, chapter: chapters[index].id }
+    detail: { progress: storyProgress, direction, compact: small, reduced: still,
+      chapter: chapters[index].id, pageOwner: document.body.dataset.pageOwner||'river' }
   }));
 }
 
@@ -173,6 +200,7 @@ addEventListener('pageshow',schedule);
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden)schedule(); });
 motion.addEventListener('change',schedule);
 compact.addEventListener('change',schedule);
+addEventListener('lazarus:storychange',schedule);
 addEventListener('pagehide',()=>{
   if(pending)cancelAnimationFrame(pending);
   pending=0;
