@@ -46,7 +46,7 @@ if(river&&house){
   // A direct chapter anchor or rapid leap never leaves the visitor at a
   // contradictory final caption with the canonical page still in the river.
   // Resolve skipped acts immediately, with no catch-up animations.
-  if(!completed&&s.chapter==='house-on-the-hill'&&h.top<vh*.78&&h.bottom>vh*.18){
+  if(!completed&&s.chapter==='house-on-the-hill'){
    stopTimers();started=false;completed=true;armed=false;delivered=true;
    publish(calm.matches?'still':'carrying');return;
   }

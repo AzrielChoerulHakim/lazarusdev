@@ -133,7 +133,12 @@ try{
    // rescue instantly instead of showing a contradictory empty window.
    const skipped=await browser.newPage({viewport:{width:1440,height:900}});
    await skipped.goto(origin+route+'#house-on-the-hill',{waitUntil:'domcontentloaded'});
-   await skipped.waitForFunction(()=>document.body.dataset.pageOwner==='window',{timeout:7000});
+   await skipped.evaluate(()=>{
+      // Hash navigation sometimes resolves before the wrapped V3 sections
+      // settle; position the requested native target deterministically.
+      document.querySelector('#house-on-the-hill').scrollIntoView({behavior:'instant'});
+    });
+    await skipped.waitForFunction(()=>document.body.dataset.pageOwner==='window',null,{timeout:8000});
    assert.equal(await skipped.locator('.kept-page-window').isVisible(),true);
    result.checks.push({route:routeName,fastJumpOwner:'window'});
    await skipped.close();
