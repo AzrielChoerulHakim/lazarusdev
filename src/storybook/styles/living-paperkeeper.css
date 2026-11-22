@@ -31,3 +31,17 @@ html.living-guide-ready .entrance-stage.guide-departing .entrance-paperkeeper{op
  html.living-guide-ready .journey-walker{visibility:visible!important}
  html.living-guide-ready .entrance-stage .entrance-paperkeeper{opacity:1!important}
 }
+
+/* Atlas greeting is brief, tied to the actual <details> control, and
+   independent of the roaming figure's viewport position. */
+.field-atlas-paperkeeper{transition:translate .42s ease,filter .42s ease}
+.field-atlas[data-motion-cue="acknowledge"] .field-atlas-paperkeeper{
+ translate:0 -5px;
+ filter:drop-shadow(0 1px 8px rgba(202,150,68,.48));
+}
+@media(prefers-reduced-motion:reduce){
+ .field-atlas-paperkeeper{transition:none!important}
+ .field-atlas[data-motion-cue="acknowledge"] .field-atlas-paperkeeper{
+  translate:none;filter:none
+ }
+}

@@ -85,3 +85,9 @@ addEventListener('lazarus:storychange',event=>{
 addEventListener('pagehide',()=>{
  guided=false;moth?.removeAttribute('data-cue');bird?.removeAttribute('data-cue');
 });
+
+/* The printed Atlas Paperkeeper acknowledges an unfolding leaf in place.
+   This stays meaningful while the roaming guide has not left the Entrance. */
+const atlas=document.querySelector('#field-atlas');
+const atlasCue=finite(atlas,'acknowledge',820);
+atlas?.addEventListener('toggle',()=>{if(atlas.open)atlasCue?.();});

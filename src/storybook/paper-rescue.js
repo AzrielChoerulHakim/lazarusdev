@@ -43,6 +43,13 @@ if(river&&house){
   if(calm.matches){if(visible&&(s.progress.river??0)>=.45&&!completed)complete();}
   else if(visible&&(s.progress.river??0)>=.48&&!started&&armed)start();
   const h=house.getBoundingClientRect();
+  // A direct chapter anchor or rapid leap never leaves the visitor at a
+  // contradictory final caption with the canonical page still in the river.
+  // Resolve skipped acts immediately, with no catch-up animations.
+  if(!completed&&s.chapter==='house-on-the-hill'&&h.top<vh*.78&&h.bottom>vh*.18){
+   stopTimers();started=false;completed=true;armed=false;delivered=true;
+   publish(calm.matches?'still':'carrying');return;
+  }
   if(completed&&!delivered&&h.top<vh*.78&&h.bottom>vh*.18){
    delivered=true;publish(calm.matches?'still':'carrying');
   }
