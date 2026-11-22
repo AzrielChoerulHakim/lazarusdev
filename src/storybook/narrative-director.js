@@ -4,11 +4,11 @@
  * semantic chapter content. Existing character acting and interactions
  * remain authoritative; V3 owns only camera, typography and scene rhythm.
  */
-import { clamp01, progressWithin, phaseAt } from './narrative-math.js';
+import { clamp01, progressWithin, phaseAt, stageProgress } from './narrative-math.js';
 
 const root = document.documentElement;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
-const compact = matchMedia('(max-width: 760px), (max-height: 650px)');
+const compact = matchMedia('(max-width: 670px), (max-height: 650px)');
 const chapters = [...document.querySelectorAll('main [data-chapter]')];
 const chaptersExpected = ['entrance','winding-path','work-clearing','river-stories','house-on-the-hill'];
 if (chapters.length !== 5 || chapters.some((c,i) => c.id !== chaptersExpected[i])) {
@@ -75,6 +75,7 @@ document.body.dataset.narrativeVersion = '3';
 
 let pending = 0;
 let currentIndex = -1;
+let previousScroll = scrollY;
 
 function setVar(node,name,value) {
   if (node) node.style.setProperty(name, value);
@@ -86,6 +87,11 @@ function render() {
   const vh = Math.max(1,innerHeight);
   const still = motion.matches;
   const small = compact.matches;
+  const delta = scrollY - previousScroll;
+  const direction = Math.abs(delta) < 1.5 ? 0 : Math.sign(delta);
+  previousScroll = scrollY;
+  const storyProgress = {};
+  root.dataset.storyDirection = direction < 0 ? 'backward' : direction > 0 ? 'forward' : 'still';
   root.dataset.v3Motion = still ? 'reduced' : small ? 'compact' : 'full';
   const documentTravel = Math.max(1, document.documentElement.scrollHeight - vh);
   setVar(root,'--v3-page-progress', (scrollY/documentTravel).toFixed(4));
@@ -117,9 +123,8 @@ function render() {
     if (rect.bottom < -vh || rect.top > vh*2) continue;
     // Pinned scenes traverse their actual extra scroll distance.
     const pinned = actor.id==='entrance'||actor.id==='path'||actor.id==='river';
-    const progress = still ? 0.5 : pinned && !small
-      ? clamp01(-rect.top / Math.max(1,rect.height-vh))
-      : progressWithin(rect.top,rect.height,vh);
+    const progress = still ? 0.5 : stageProgress(rect.top,rect.height,vh,pinned && !small);
+    storyProgress[actor.id] = progress;
     const p=progress.toFixed(4);
     setVar(actor.host,'--v3-progress',p);
     setVar(actor.chapter,'--v3-progress',p);
@@ -151,6 +156,10 @@ function render() {
       setVar(actor.chapter,'--v3-dusk',(.87+progress*.13).toFixed(4));
     }
   }
+  // One authoritative snapshot; walking, camera and scene prose share a frame.
+  dispatchEvent(new CustomEvent('lazarus:storyframe', {
+    detail: { progress: storyProgress, direction, compact: small, reduced: still, chapter: chapters[index].id }
+  }));
 }
 
 function schedule() {
@@ -167,5 +176,6 @@ compact.addEventListener('change',schedule);
 addEventListener('pagehide',()=>{
   if(pending)cancelAnimationFrame(pending);
   pending=0;
+  previousScroll=scrollY;
 });
 schedule();

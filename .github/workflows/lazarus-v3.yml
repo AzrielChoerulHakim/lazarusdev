@@ -4,6 +4,11 @@ on:
     branches: [main]
     paths:
       - 'src/storybook/narrative-*.js'
+      - 'src/storybook/keeper-journey.js'
+      - 'src/storybook/paper-rescue.js'
+      - 'src/storybook/chapter-attention.js'
+      - 'src/storybook/styles/keeper-journey.css'
+      - 'src/storybook/styles/paper-rescue.css'
       - 'src/storybook/styles/narrative-v3.css'
       - 'index.html'
       - 'storybook/index.html'

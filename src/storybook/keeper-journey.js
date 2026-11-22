@@ -21,8 +21,7 @@ const arrivalPose = { path: 'stand', clearing: 'look', river: 'read', house: 'la
 const poses = ['step-a', 'step-b', 'step-c', 'stand', 'turn', 'look', 'reach', 'read', 'lantern'];
 const strides = ['step-a', 'step-b', 'step-c', 'step-b'];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-const visible = new Map();
-let frame = 0;
+const visible = new Map([...document.querySelectorAll('[data-walk]')].map(node => [node, { facing: 1, height: node.offsetHeight || 95 }]));
 let settleTimer;
 
 function groundPoint(points, width, height, progress) {
@@ -37,30 +36,31 @@ function groundPoint(points, width, height, progress) {
   return { x: x * width / 100, y: y * height / 100, elevation: y, distance };
 }
 
-function paint(walker, state, still) {
+function paint(walker, state, still, snapshot) {
   const rect = walker.parentElement.getBoundingClientRect();
   const kind = walker.dataset.walk;
   const seam = walker.closest('[data-seam-to]');
   const route = seam ? crossings[seam.dataset.seamTo] : (rect.height > rect.width ? portrait : routes)[kind];
-  const progress = reduced.matches ? 1 : Math.max(0, Math.min(1,
-    (innerHeight * .86 - rect.top) / (innerHeight * .54 + rect.height * .56)));
+  // The director computes pinned progress from its scrolling WRAPPER, not
+  // this sticky artwork's frozen viewport rectangle. A seam uses ordinary
+  // unpinned progress but still shares the same animation frame.
+  const progress = reduced.matches ? 1 : seam
+    ? Math.max(0, Math.min(1, (innerHeight*.84 - seam.getBoundingClientRect().top) /
+       (seam.getBoundingClientRect().height + innerHeight*.22)))
+    : (snapshot.progress[kind] ?? 0);
   // Leave the last portion of each painted scene for the destination gesture.
   const arrival = seam ? 1 : .79;
   const point = groundPoint(route, rect.width, rect.height, Math.min(1, progress / arrival));
   const size = kind === 'path' || kind === 'house' ? 1 - (point.elevation - route[0][1]) * .009 : 1;
   const now = performance.now();
-  if (state.extreme === undefined) state.extreme = point.x;
-  const retreat = (state.extreme - point.x) * state.facing;
-  if (retreat > 8 && !reduced.matches) {
-    state.facing *= -1;
-    state.extreme = point.x;
-    state.turnUntil = now + 90;
+  if (snapshot.direction && snapshot.direction !== state.facing && !reduced.matches) {
+    state.facing = snapshot.direction;
+    state.turnUntil = now + 95;
   }
-  state.extreme = state.facing > 0 ? Math.max(state.extreme, point.x) : Math.min(state.extreme, point.x);
   let pose = 'stand';
   if (!seam && progress >= arrival) {
     pose = kind === 'river' && progress < .88 ? 'reach' : arrivalPose[kind];
-  } else if (!still && !reduced.matches && state.distance !== undefined && progress > 0 && progress < 1) {
+  } else if (!still && !reduced.matches && state.distance !== undefined && Math.abs(point.distance-state.distance)>1 && progress > 0 && progress < 1) {
     pose = now < state.turnUntil ? 'turn' : strides[Math.floor(point.distance / (state.height * size * .18)) % strides.length];
   }
   // A finite rescue beat takes precedence over ordinary scrolling poses.
@@ -84,35 +84,34 @@ function paint(walker, state, still) {
   if (kind === 'house') walker.parentElement.style.setProperty('--arrival-light', String(.12 + progress * .29));
 }
 
-function update(still = false) {
-  for (const [walker, state] of visible) paint(walker, state, still);
-}
-function schedule() {
-  if (frame || !visible.size) return;
-  frame = requestAnimationFrame(() => {
-    frame = 0;
-    update();
-    clearTimeout(settleTimer);
-    settleTimer = setTimeout(() => update(true), 120);
-  });
-}
-if ('IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      const walker = entry.target.querySelector('[data-walk]');
-      if (entry.isIntersecting) visible.set(walker, { facing: 1, height: walker.offsetHeight || 95 });
-      else visible.delete(walker);
-    }
-    schedule();
-  }, { rootMargin: '12% 0px' });
-  for (const walker of document.querySelectorAll('[data-walk]')) observer.observe(walker.parentElement);
-  addEventListener('scroll', () => { if (!reduced.matches) schedule(); }, { passive: true });
-  addEventListener('resize', () => {
+// Called after the director's one passive scroll/resize RAF. No competing
+// IntersectionObserver, per-walker frame loops or sticky-rectangle progress.
+function onStoryFrame(event) {
+  const snapshot = event.detail;
+  if (document.hidden) return;
+  for (const [walker, state] of visible) {
+    if (!walker.isConnected) continue;
+    const rect = walker.parentElement.getBoundingClientRect();
+    if (rect.bottom < -innerHeight || rect.top > innerHeight*2) continue;
+    paint(walker, state, false, snapshot);
+  }
+  clearTimeout(settleTimer);
+  settleTimer = setTimeout(() => {
+    if (document.hidden) return;
     for (const [walker, state] of visible) {
-      state.height = walker.offsetHeight || 95;
-      state.extreme = undefined;
+      const rect = walker.parentElement.getBoundingClientRect();
+      if (rect.bottom < -innerHeight || rect.top > innerHeight*2) continue;
+      paint(walker, state, true, snapshot);
     }
-    schedule();
-  });
-  reduced.addEventListener('change', schedule);
+  }, 130);
 }
+addEventListener('lazarus:storyframe', onStoryFrame);
+addEventListener('pagehide', () => clearTimeout(settleTimer));
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) clearTimeout(settleTimer);
+});
+addEventListener('resize', () => {
+  for (const [walker, state] of visible) {
+    state.height = walker.offsetHeight || 95;
+  }
+});
