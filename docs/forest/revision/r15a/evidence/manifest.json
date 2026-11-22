@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "09e12121fbdb95d24109fceda7783421a0a1b41b",
+  "sourceCommit": "4e9d687c65fd857309e03ebe0f8001a3c54a96be",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -27,23 +27,23 @@
   "screenshots": [
     {
       "file": "root/1440x900/scene-entrance.png",
-      "bytes": 473679,
-      "sha256": "ac5fa0dea6b6e24bad553cf97d3a4e24356ca91d35a6d5b4a6dddd7f76991ee3"
+      "bytes": 473661,
+      "sha256": "6ea1ec61bf6f66b3ad92ac57ba17e80d8dbf3dbe45d9f0539ce97c7cd0a60d70"
     },
     {
       "file": "root/1440x900/scene-path.png",
-      "bytes": 2404258,
-      "sha256": "de3d92e6f26b9f89cc875cf6f779881b92e3b20ea714524e5521cbaa7d70afc2"
+      "bytes": 2404242,
+      "sha256": "f3e755dc04fe4a8624bd6fd229fdbfcc6f62dca5a105ba316cb6f4358fc48805"
     },
     {
       "file": "root/1440x900/scene-clearing.png",
-      "bytes": 2192850,
-      "sha256": "5b8b86bc8579620178ac804d2bd1e59469191bc4743e2784f68b94d775080077"
+      "bytes": 2192935,
+      "sha256": "250bef0046b7b31b71851964414eba2188e68ada3010d13c9f98058e1e02318d"
     },
     {
       "file": "root/1440x900/scene-river.png",
-      "bytes": 2100438,
-      "sha256": "1152944fd8d6361dce2f2c9820835eacf40ca89fe2e4cc2bacb47beac5e47d2d"
+      "bytes": 2100455,
+      "sha256": "0ba14f6ebd3831e96f659b2721770138a68ac4be96b1157c39f0ee9d3d955566"
     },
     {
       "file": "root/1440x900/scene-house.png",
@@ -77,8 +77,8 @@
     },
     {
       "file": "root/320x720/scene-entrance.png",
-      "bytes": 163753,
-      "sha256": "1210c532cc3a9d4433a5a65e3c1d91d70dda22779fb6ab2ca930ba06dcc4fe9a"
+      "bytes": 163743,
+      "sha256": "750013c0aa154bf10e929a38dc1242cb8f68cc9ebc9042c1a84e56970fcee0fb"
     },
     {
       "file": "root/320x720/scene-path.png",
@@ -87,8 +87,8 @@
     },
     {
       "file": "root/320x720/scene-clearing.png",
-      "bytes": 284111,
-      "sha256": "969d85e7b49cf6cf9c32075d41c87af0d0e489ced1ab5f58e852c87181af5e55"
+      "bytes": 284116,
+      "sha256": "f49f5e76848d8d82a18225bf73bfe7faf7fcdc199a99db9c7706a25963e0e5a2"
     },
     {
       "file": "root/320x720/scene-river.png",
@@ -102,8 +102,8 @@
     },
     {
       "file": "root/844x390/scene-entrance.png",
-      "bytes": 172138,
-      "sha256": "b7732b8a676b07dd682c3b501bb45b8957976383f2426e557af70bee1c133153"
+      "bytes": 172147,
+      "sha256": "e53cc5e6b475051a36300dd0ce1eaddcff1f45b0aa040a5ed6524b365a9e1a40"
     },
     {
       "file": "root/844x390/scene-path.png",
@@ -202,8 +202,8 @@
     },
     {
       "file": "storybook/844x390/scene-entrance.png",
-      "bytes": 172138,
-      "sha256": "b7732b8a676b07dd682c3b501bb45b8957976383f2426e557af70bee1c133153"
+      "bytes": 172147,
+      "sha256": "e53cc5e6b475051a36300dd0ce1eaddcff1f45b0aa040a5ed6524b365a9e1a40"
     },
     {
       "file": "storybook/844x390/scene-path.png",
@@ -227,23 +227,23 @@
     },
     {
       "file": "root/390x844/rescue-lift.png",
-      "bytes": 324225,
-      "sha256": "5b9e2b2ef26a7941e50d18b38f394e14c77243ebc4c9f7f0dc3354b7f86679e2"
+      "bytes": 323771,
+      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
     },
     {
       "file": "root/390x844/rescue-carrying.png",
-      "bytes": 324187,
-      "sha256": "3749934bb6373dd3b1812b9e7e3d82062f82182c0f206632e79ab10d8ff3f0d5"
+      "bytes": 323771,
+      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
     },
     {
       "file": "storybook/390x844/rescue-lift.png",
-      "bytes": 324225,
-      "sha256": "5b9e2b2ef26a7941e50d18b38f394e14c77243ebc4c9f7f0dc3354b7f86679e2"
+      "bytes": 323771,
+      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
     },
     {
       "file": "storybook/390x844/rescue-carrying.png",
-      "bytes": 324187,
-      "sha256": "3749934bb6373dd3b1812b9e7e3d82062f82182c0f206632e79ab10d8ff3f0d5"
+      "bytes": 323771,
+      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
     }
   ],
   "metrics": [
