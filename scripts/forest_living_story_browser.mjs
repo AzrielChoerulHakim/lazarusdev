@@ -162,11 +162,18 @@ try{
        const link=nearest?.querySelector('.forest-seam-link')?.getBoundingClientRect();
        return {scene:document.documentElement.dataset.livingScene,
          opacity:getComputedStyle(guide).opacity,guide:{x:g.left,y:g.top,w:g.width,h:g.height},
-         linkOverlap:Boolean(link&&g.left<link.right&&g.right>link.left&&g.top<link.bottom&&g.bottom>link.top)};
+         linkOverlap:Boolean(link&&g.left<link.right&&g.right>link.left&&g.top<link.bottom&&g.bottom>link.top),
+         textOverlap:[...document.querySelectorAll('.section-counter,.section-name,.eyebrow,.forest-seam-origin')]
+           .filter(el=>{
+              const q=el.getBoundingClientRect();
+              return q.bottom>0&&q.top<innerHeight&&g.left<q.right+2&&g.right>q.left-2&&
+                g.top<q.bottom+2&&g.bottom>q.top-2;
+           }).map(el=>el.className)};
      });
      assert.equal(seamState.scene,'seam','guide must cross every chapter margin '+i);
      assert.ok(Number(seamState.opacity)>.4,'guide disappeared at seam '+i+': '+JSON.stringify(seamState));
      assert.equal(seamState.linkOverlap,false,'guide obscured a seam navigation link '+i);
+     assert.deepEqual(seamState.textOverlap,[],'guide obscured chapter or seam narration '+i+': '+JSON.stringify(seamState));
      if(i===0||i===3)await capture(transitions,routeName+'-seam-'+i);
      result.checks.push({route:routeName,seam:i,state:seamState});
    }
