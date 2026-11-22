@@ -33,6 +33,9 @@ try{
    assert.equal(response.status(),200);
    await page.waitForFunction(()=>document.documentElement.classList.contains('living-guide-ready'),{timeout:20000});
    assert.equal(await page.locator('.living-guide').count(),1,'one persistent enhanced guide');
+   await page.locator('#field-atlas summary').click();
+   await page.waitForFunction(()=>document.querySelector('#field-atlas')?.dataset.motionCue==='acknowledge');
+   assert.equal(await page.locator('#field-atlas').getAttribute('open'),'','opening Atlas remains native');
    await at(page,'.v3-path-scroll',.3828);
    const first=await page.evaluate(()=>{
      const walker=document.querySelector('[data-walk="path"]');
@@ -126,6 +129,14 @@ try{
    await capture(mobile,routeName+'-mobile-kept-page');
    result.checks.push({route:routeName,mobileDelivery:portrait});
    await mobile.close();
+   // Direct anchors are intentional skips: the last chapter resolves the
+   // rescue instantly instead of showing a contradictory empty window.
+   const skipped=await browser.newPage({viewport:{width:1440,height:900}});
+   await skipped.goto(origin+route+'#house-on-the-hill',{waitUntil:'domcontentloaded'});
+   await skipped.waitForFunction(()=>document.body.dataset.pageOwner==='window',{timeout:7000});
+   assert.equal(await skipped.locator('.kept-page-window').isVisible(),true);
+   result.checks.push({route:routeName,fastJumpOwner:'window'});
+   await skipped.close();
    for(const width of [670,671,760,761]){
       const compactPage=await browser.newPage({viewport:{width,height:900},reducedMotion:'no-preference'});
       await compactPage.goto(origin+route,{waitUntil:'domcontentloaded'});
