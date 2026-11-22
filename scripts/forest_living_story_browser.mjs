@@ -52,7 +52,7 @@ try{
    });
    await capture(page,routeName+'-path-76');
    assert.ok(first.p>.33&&first.p<.44&&second.p>.70&&second.p<.82,JSON.stringify({first,second}));
-   assert.notEqual(first.old,second.old,'original synced walker must advance through sticky interval');
+   // The source walkers are purposefully frozen once the external guide takes over.
    assert.notEqual(first.render,second.render,'the one external Paperkeeper must travel');
    assert.ok(first.oldHidden,'old scene walkers should not form multiple active protagonists');
    await page.waitForTimeout(220);
@@ -113,9 +113,20 @@ try{
  await reduced.goto(origin+'/lazarusdev/',{waitUntil:'domcontentloaded'});
  await reduced.waitForFunction(()=>document.body.dataset.narrativeVersion==='3');
  assert.equal(await reduced.locator('.v3-story-sentence').count(),5);
- assert.equal(await reduced.locator('.living-guide').count(),0,'reduced motion must keep native painted fallback');
+ assert.equal(await reduced.locator('.living-guide').isVisible(),false,'reduced motion must keep native painted fallback');
  assert.equal(await reduced.locator('main [data-chapter]').count(),5);
  await reduced.close();
+ const fallback=await browser.newPage({viewport:{width:1440,height:900}});
+ await fallback.route('**/*paperkeeper-journey-r15a*.webp',request=>request.abort());
+ await fallback.goto(origin+'/lazarusdev/',{waitUntil:'domcontentloaded'});
+ await fallback.waitForFunction(()=>document.body.dataset.narrativeVersion==='3');
+ await at(fallback,'.v3-path-scroll',.3828);
+ const sourceBefore=await fallback.locator('[data-walk="path"]').evaluate(node=>node.style.transform);
+ await at(fallback,'.v3-path-scroll',.7559);
+ const sourceAfter=await fallback.locator('[data-walk="path"]').evaluate(node=>node.style.transform);
+ assert.notEqual(sourceBefore,sourceAfter,'fallback Paperkeeper must advance during sticky scroll');
+ assert.equal(await fallback.evaluate(()=>document.documentElement.classList.contains('living-guide-ready')),false);
+ await fallback.close();
  const blocked=await browser.newPage({viewport:{width:390,height:844}});
  await blocked.route('**/*paperkeeper-journey-r15a*.webp',route=>route.abort());
  await blocked.goto(origin+'/lazarusdev/',{waitUntil:'domcontentloaded'});
