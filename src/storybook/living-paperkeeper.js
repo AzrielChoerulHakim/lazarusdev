@@ -9,7 +9,7 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const sheet = new URL('../../storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp', import.meta.url).href;
 const routes = {
   entrance: { element: '.entrance-stage', frames: [[36,10],[48,12],[60,15],[74,17],[89,18]], key: 'entrance' },
-  'winding-path': { element: '.path-map-art', frames: [[13,6],[32,18],[43,29],[56,37],[63,48]], key: 'path' },
+  'winding-path': { element: '.path-map-art', frames: [[14,8],[22,23],[36,39],[55,53],[74,79]], mobile: [[16,7],[28,21],[49,42],[66,57],[83,80]], key: 'path' },
   'work-clearing': { element: '.work-clearing-world', frames: [[9,4],[28,6],[47,5],[55,9]], key: 'clearing' },
   'river-stories': { element: '.river-scene', frames: [[47,5],[61,8],[70,12],[77,14]], key: 'river' },
   'house-on-the-hill': { element: '.house-scene-canvas', frames: [[12,4],[34,13],[45,20],[59,30],[73,40]], key: 'house' }
@@ -77,7 +77,7 @@ function phaseForChapter(chapter, snapshot) {
   // On the river the coherent short act takes precedence over walking.
   const event=document.querySelector('#river-stories .river-scene')?.dataset.rescue;
   const action=chapter==='river-stories' && ['watch','lantern','reach','lift','carrying','still'].includes(event) ? event : '';
-  const point=trailPoint(config.frames,progress);
+  const point=trailPoint(innerWidth<=670 && config.mobile ? config.mobile : config.frames,progress);
   let x=rect.left+rect.width*point[0]/100;
   let y=rect.bottom-rect.height*point[1]/100;
   if(!inView) {
