@@ -45,3 +45,10 @@ html.living-guide-ready .entrance-stage.guide-departing .entrance-paperkeeper{op
   translate:none;filter:none
  }
 }
+
+/* Quiet ink-ground contact: no additional animation or expensive blur layer. */
+.living-guide::after{
+ content:'';position:absolute;left:27%;right:27%;bottom:5%;
+ height:3px;border-radius:50%;background:rgba(59,60,35,.23);
+ filter:blur(1.15px);pointer-events:none;
+}
