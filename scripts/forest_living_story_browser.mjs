@@ -137,6 +137,35 @@ try{
    assert.equal(await skipped.locator('.kept-page-window').isVisible(),true);
    result.checks.push({route:routeName,fastJumpOwner:'window'});
    await skipped.close();
+   // Seam transitions must stage the SAME actor outside each painted clipping
+   // boundary. A successful section-progress test alone does not establish it.
+   const transitions=await browser.newPage({viewport:{width:1440,height:900}});
+   await transitions.goto(origin+route,{waitUntil:'domcontentloaded'});
+   await transitions.waitForFunction(()=>document.documentElement.classList.contains('living-guide-ready'));
+   for(let i=0;i<4;i++){
+     await transitions.evaluate(index=>{
+       const seam=document.querySelectorAll('[data-chapter-seam]')[index];
+       scrollTo({top:scrollY+seam.getBoundingClientRect().top-innerHeight*.41,behavior:'instant'});
+     },i);
+     await transitions.waitForTimeout(240);
+     const seamState=await transitions.evaluate(()=>{
+       const guide=document.querySelector('.living-guide');
+       const g=guide.getBoundingClientRect();
+       const nearest=[...document.querySelectorAll('[data-chapter-seam]')].find(el=>{
+         const r=el.getBoundingClientRect();return r.top<innerHeight*.72&&r.bottom>innerHeight*.28;
+       });
+       const link=nearest?.querySelector('.forest-seam-link')?.getBoundingClientRect();
+       return {scene:document.documentElement.dataset.livingScene,
+         opacity:getComputedStyle(guide).opacity,guide:{x:g.left,y:g.top,w:g.width,h:g.height},
+         linkOverlap:Boolean(link&&g.left<link.right&&g.right>link.left&&g.top<link.bottom&&g.bottom>link.top)};
+     });
+     assert.equal(seamState.scene,'seam','guide must cross every chapter margin '+i);
+     assert.ok(Number(seamState.opacity)>.4,'guide disappeared at seam '+i+': '+JSON.stringify(seamState));
+     assert.equal(seamState.linkOverlap,false,'guide obscured a seam navigation link '+i);
+     if(i===0||i===3)await capture(transitions,routeName+'-seam-'+i);
+     result.checks.push({route:routeName,seam:i,state:seamState});
+   }
+   await transitions.close();
    for(const width of [670,671,760,761]){
       const compactPage=await browser.newPage({viewport:{width,height:900},reducedMotion:'no-preference'});
       await compactPage.goto(origin+route,{waitUntil:'domcontentloaded'});
