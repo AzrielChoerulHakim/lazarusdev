@@ -20,7 +20,10 @@ guide.className = 'living-guide';
 guide.setAttribute('aria-hidden','true');
 guide.dataset.pose = 'stand';
 const seamNodes = [...document.querySelectorAll('.forest-seam[data-seam-to]')];
-const obstacles = [...document.querySelectorAll('a,button,input,textarea,summary,h1,h2,h3,blockquote,.hero-copy,.work-hangings,.house-contact')];
+const obstacles = [...document.querySelectorAll(
+ 'a,button,input,textarea,summary,h1,h2,h3,blockquote,.hero-copy,.work-hangings,.house-contact,'+
+ '.section-counter,.section-name,.eyebrow,.lead,.forest-seam-origin,.v3-story-sentence'
+)];
 let ready = false;
 let last = null, previousX = 0, previousY = 0, facing = 1, settle = 0, cueTimer = 0, cuePose = '';
 let walkingDistance = 0;
@@ -49,8 +52,12 @@ function safePosition(x,y,size,chapter) {
   const base=[clamp(x,minX,maxX),clamp(y,size+12,height-16)];
   if (!collision(base[0],base[1],size)) return base;
   const candidates=width<=670 ?
-    [[width*.12,height*.87],[width*.88,height*.87],[width*.12,height*.68],[width*.88,height*.68]] :
-    [[width*.09,height*.82],[width*.91,height*.82],[width*.09,height*.62],[width*.91,height*.62]];
+    [[width*.50,height*.84],[width*.12,height*.87],[width*.88,height*.87],
+     [width*.50,height*.67],[width*.12,height*.68],[width*.88,height*.68]] :
+    [[width*.50,height*.82],[width*.30,height*.82],[width*.70,height*.82],
+     [width*.09,height*.82],[width*.91,height*.82],
+     [width*.50,height*.62],[width*.30,height*.62],[width*.70,height*.62],
+     [width*.09,height*.62],[width*.91,height*.62]];
   for(const [cx,cy] of candidates) {
     const test=[clamp(cx,minX,maxX),clamp(cy,size+12,height-16)];
     if (!collision(test[0],test[1],size)) return test;
@@ -91,7 +98,14 @@ function phaseForChapter(chapter, snapshot) {
 function sceneForSeam(node) {
   const rect=node.getBoundingClientRect(),vh=innerHeight;
   const progress=clamp((vh*.84-rect.top)/(rect.height+vh*.22),0,1);
-  const point=trailPoint([[12,7],[32,9],[55,6],[78,9]],progress);
+  // Bridge the preceding painted exit and the next physical entrance.
+  const bridges={
+    'winding-path':[[86,8],[66,10],[43,9],[19,11]],
+    'work-clearing':[[76,8],[55,9],[34,8],[15,7]],
+    'river-stories':[[56,9],[53,10],[50,8],[47,6]],
+    'house-on-the-hill':[[77,12],[57,11],[36,10],[16,9]]
+  };
+  const point=trailPoint(bridges[node.dataset.seamTo]||[[82,8],[62,9],[40,9],[18,10]],progress);
   return {x:rect.left+rect.width*point[0]/100,
     y:rect.bottom-rect.height*point[1]/100,
     progress,kind:'seam',action:''};
@@ -116,10 +130,12 @@ function render(snapshot, settling=false) {
   if(!place){guide.style.opacity='0';return;}
   const [x,y]=place;
   const motion=Math.hypot(x-previousX,y-previousY);
-  if(last && snapshot.direction && snapshot.direction!==facing) {
-    facing=snapshot.direction;
+  // Face the actual horizontal travel vector, including reversed scrolling.
+  const horizontal=x-previousX;
+  if(last && Math.abs(horizontal)>4 && Math.sign(horizontal)!==facing){
+    facing=Math.sign(horizontal);
     guide.dataset.turn='true';
-  } else guide.dataset.turn='false';
+  }else guide.dataset.turn='false';
   const travel=last && target.kind===last.kind && motion>1;
   if(travel)walkingDistance+=motion;
   let pose='stand';
@@ -145,7 +161,7 @@ function render(snapshot, settling=false) {
   guide.style.opacity='1';
   root.dataset.guideOutside=target.kind;
   document.querySelector('.entrance-stage')?.classList.toggle('guide-departing',
-    snapshot.chapter==='entrance' && (snapshot.progress.entrance??0)>.76);
+    snapshot.chapter==='entrance' && (snapshot.progress.entrance??0)>.65);
   previousX=x;previousY=y;last=target;
 }
 function cue(pose,ms=750) {
