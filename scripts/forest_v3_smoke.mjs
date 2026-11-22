@@ -14,6 +14,10 @@ assert.ok(Math.abs(stageProgress(-206.7,1440,900,true)-.3828)<.001);
 assert.ok(Math.abs(stageProgress(-408.2,1440,900,true)-.7559)<.001);
 assert.deepEqual([670,671,760,761].map(width=>isCompactLayout(width,900)),[true,false,false,false]);
 assert.ok(isCompactLayout(844,390) && !isCompactLayout(761,651));
+const rescue=file('src/storybook/paper-rescue.js');
+assert.ok(rescue.includes('lazarus:storyframe')&&rescue.includes('lazarus:storychange'));
+assert.ok(rescue.includes('pageOwner')&&rescue.includes('pageId'));
+assert.ok(!rescue.includes("addEventListener('scroll'"),'rescue must use director scroll progress');
 const living=file('src/storybook/living-paperkeeper.js');
 assert.ok(living.includes('lazarus:storyframe') && living.includes('document.body.append(guide)'));
 assert.ok(living.includes('safePosition') && living.includes('collision'));
@@ -39,7 +43,7 @@ for(const [htmlPath,prefix] of [['index.html','./src/storybook'],['storybook/ind
  const html=file(htmlPath);
  assert.equal((html.match(/<h1\b/g)||[]).length,1,htmlPath+' H1 contract');
  for(const id of chapterIds)assert.ok(html.includes('id="'+id+'"'),htmlPath+' missing '+id);
- for(const src of [prefix+'/styles/narrative-v3.css',prefix+'/narrative-director.js']){
+ for(const src of [prefix+'/styles/narrative-v3.css',prefix+'/narrative-director.js',prefix+'/styles/living-paperkeeper.css',prefix+'/living-paperkeeper.js']){
    assert.equal(html.split(src).length-1,1,htmlPath+' missing/duplicate '+src);
  }
  for(const id of ['field-atlas','atrium-room-template','studio-inquiry'])assert.ok(html.includes('id="'+id+'"'));

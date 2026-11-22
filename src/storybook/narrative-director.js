@@ -153,7 +153,10 @@ function render() {
     };
     const override=rescueCues[phase];
     const cue=override?override[0]:actor.cues[beat];
-    const sentence=override?override[1]:storySentences[actor.id][beat];
+    const sentence=override?override[1] :
+      actor.id==='house' && document.body.dataset.pageOwner!=='window' && beat>=1
+        ? 'The window waits for a page from the river.'
+        : storySentences[actor.id][beat];
     if(beat!==actor.activeBeat||actor.label?.textContent!==cue){
       actor.activeBeat=beat;
       if(actor.label)actor.label.textContent=cue;
