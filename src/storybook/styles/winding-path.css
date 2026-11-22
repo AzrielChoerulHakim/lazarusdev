@@ -43,3 +43,6 @@
 @media (prefers-reduced-motion: reduce) {
   .path-map, .path-ink path { animation: none !important; transition: none !important; }
 }
+.path-map-moth{transition:transform .72s cubic-bezier(.22,1,.36,1)}
+.path-map-moth[data-cue="turn"]{transform:translate3d(22px,-10px,0) rotate(-12deg)}
+@media(prefers-reduced-motion:reduce){.path-map-moth{transition:none!important;transform:none!important}}

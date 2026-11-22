@@ -190,3 +190,8 @@
 @media (prefers-reduced-motion: reduce) {
   .river-stone-nav a, .river-note-fold *, .river-roundbird { transition: none !important; animation: none !important; }
 }
+
+.river-roundbird{transition:transform .42s cubic-bezier(.22,1,.36,1)}
+.river-roundbird[data-cue="notice"]{transform:translate3d(-6px,-7px,0) rotate(-9deg)}
+.river-roundbird[data-cue="lift"]{transform:translate3d(3px,-12px,0) rotate(5deg)}
+@media(prefers-reduced-motion:reduce){.river-roundbird{transition:none!important;transform:none!important}}

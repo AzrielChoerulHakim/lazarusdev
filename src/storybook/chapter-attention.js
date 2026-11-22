@@ -63,3 +63,25 @@ document.querySelector('[data-house-light-toggle]')?.addEventListener('click',()
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden)for(const item of controllers)item.stop();
 });
+
+/* Two companions, two small event cues. Neither starts a permanent loop. */
+const moth=document.querySelector('.path-map-moth');
+const bird=document.querySelector('.river-roundbird');
+let guided=false;
+addEventListener('lazarus:storyframe',event=>{
+ if(still.matches||document.hidden)return;
+ const p=event.detail.progress.path;
+ if(p===undefined)return;
+ if(p>.41&&p<.83&&!guided){guided=true;moth?.setAttribute('data-cue','turn');}
+ if(p<.17&&guided){guided=false;moth?.removeAttribute('data-cue');}
+});
+addEventListener('lazarus:storychange',event=>{
+ if(still.matches||document.hidden)return;
+ const phase=event.detail.phase;
+ if(['watch','lantern','reach'].includes(phase))bird?.setAttribute('data-cue','notice');
+ else if(phase==='lift')bird?.setAttribute('data-cue','lift');
+ else bird?.removeAttribute('data-cue');
+});
+addEventListener('pagehide',()=>{
+ guided=false;moth?.removeAttribute('data-cue');bird?.removeAttribute('data-cue');
+});

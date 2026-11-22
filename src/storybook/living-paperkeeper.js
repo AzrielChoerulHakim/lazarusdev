@@ -123,7 +123,9 @@ function render(snapshot, settling=false) {
   const travel=last && target.kind===last.kind && motion>1;
   if(travel)walkingDistance+=motion;
   let pose='stand';
-  if(target.kind==='river-stories'){
+  if(snapshot.pageOwner==='keeper' && target.kind!=='river-stories'){
+    pose='carry';
+  }else if(target.kind==='river-stories'){
     pose=({watch:'look-down',lantern:'set-lantern',reach:'reach',lift:'lift',carrying:'carry',still:'carry'})[target.action] || 'look';
   }else if(cuePose)pose=cuePose;
   else if(travel&&!settling) {
@@ -135,7 +137,7 @@ function render(snapshot, settling=false) {
   if(guide.dataset.turn==='true' && !cuePose && !target.action)pose='turn';
   setPose(pose);
   guide.dataset.storyAction=target.action;
-  guide.dataset.carrying= snapshot.pageOwner==='carry' ? 'true' : 'false';
+  guide.dataset.carrying= snapshot.pageOwner==='keeper' ? 'true' : 'false';
   guide.style.height=size+'px';
   guide.style.transform='translate3d('+x+'px,'+y+'px,0) scaleX('+facing+')';
   // Slow handoff across chapter seams, short settling on ordinary scroll.
@@ -162,6 +164,12 @@ function onFrame(event) {
 }
 function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';}
 addEventListener('lazarus:storyframe',onFrame);
+addEventListener('lazarus:storychange',event=>{
+  if(lastSnapshot){
+    lastSnapshot={...lastSnapshot,pageOwner:event.detail.owner};
+    render(lastSnapshot,true);
+  }
+});
 addEventListener('pagehide',stop);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else if(lastSnapshot)render(lastSnapshot,true);});
 reduced.addEventListener('change',()=>{
