@@ -61,7 +61,7 @@ function safePosition(x,y,size,chapter) {
   const candidates=width<=670 ?
     [[width*.50,height*.84],[width*.12,height*.87],[width*.88,height*.87],
      [width*.50,height*.67],[width*.12,height*.68],[width*.88,height*.68]] :
-    [[width*.50,height*.82],[width*.30,height*.82],[width*.70,height*.82],
+    [[width*.50,height*.76],[width*.30,height*.76],[width*.70,height*.76],
      [width*.09,height*.82],[width*.91,height*.82],
      [width*.50,height*.62],[width*.30,height*.62],[width*.70,height*.62],
      [width*.09,height*.62],[width*.91,height*.62]];
