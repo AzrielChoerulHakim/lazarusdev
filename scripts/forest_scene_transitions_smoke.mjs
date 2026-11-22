@@ -43,7 +43,14 @@ try {
    for(let i=0;i<targets.length;i++){
      const seam=page.locator('[data-chapter-seam]').nth(i);
      await seam.scrollIntoViewIfNeeded();
-     await page.waitForFunction(i=>document.querySelectorAll('[data-chapter-seam]')[i].querySelector('[data-walk]').dataset.pose==='stand',i,{timeout:8000});
+     await page.waitForFunction(i=>{
+        const walker=document.querySelectorAll('[data-chapter-seam]')[i].querySelector('[data-walk]');
+        // The original seam miniature is a fallback, not an independently
+        // acting second protagonist once the persistent guide is available.
+        return document.documentElement.classList.contains('living-guide-ready')
+          ? document.querySelectorAll('.living-guide').length===1
+          : Boolean(walker?.dataset.pose);
+      },i,{timeout:8000});
    }
    // Native link changes fragment; no custom scrolling or focus hijack.
    const finalLink=page.locator('.forest-seam--house a.forest-seam-link');
