@@ -1,0 +1,33 @@
+/* The only enhanced guide lives above painted overflow boundaries, never
+   above navigation, dialogs, links or input hit targets. Original figures
+   remain available for reduced motion, disabled JS or failed asset decode. */
+.living-guide{
+  position:fixed;left:0;top:0;bottom:auto;width:auto;
+  aspect-ratio:128/144;z-index:42;pointer-events:none;
+  translate:-50% -92.3611%;transform-origin:50% 100%;
+  background:url("../../../storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp") 37.5% bottom / 900% 100% no-repeat;
+  opacity:0;transition:transform .1s linear,opacity .16s ease-out;
+  filter:drop-shadow(1px 3px 2px rgba(29,47,28,.28));
+  contain:paint;will-change:transform;
+}
+html.living-guide-ready .journey-walker{visibility:hidden}
+html.living-guide-ready .entrance-stage.guide-departing .entrance-paperkeeper{opacity:0;transition:opacity .24s ease-out}
+.living-guide[data-pose="look-down"],
+.living-guide[data-pose="set-lantern"],
+.living-guide[data-pose="reach"],
+.living-guide[data-pose="lift"],
+.living-guide[data-pose="carry"]{
+ background-image:url("../../../storybook/assets/characters/r15a/narrative-journey-r15a.webp");
+ background-size:500% 100%;
+}
+.living-guide[data-pose="look-down"]{background-position-x:0%!important}
+.living-guide[data-pose="set-lantern"]{background-position-x:25%!important}
+.living-guide[data-pose="reach"]{background-position-x:50%!important}
+.living-guide[data-pose="lift"]{background-position-x:75%!important}
+.living-guide[data-pose="carry"]{background-position-x:100%!important}
+@media(max-width:670px){.living-guide{z-index:40;filter:drop-shadow(1px 2px 1px rgba(21,43,25,.3))}}
+@media(prefers-reduced-motion:reduce){
+ .living-guide{display:none!important}
+ html.living-guide-ready .journey-walker{visibility:visible!important}
+ html.living-guide-ready .entrance-stage .entrance-paperkeeper{opacity:1!important}
+}

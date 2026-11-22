@@ -87,6 +87,8 @@ function paint(walker, state, still, snapshot) {
 // Called after the director's one passive scroll/resize RAF. No competing
 // IntersectionObserver, per-walker frame loops or sticky-rectangle progress.
 function onStoryFrame(event) {
+  // While the decoded external guide is active, there is only one sprite writer.
+  if (document.documentElement.classList.contains('living-guide-ready')) return;
   const snapshot = event.detail;
   if (document.hidden) return;
   for (const [walker, state] of visible) {

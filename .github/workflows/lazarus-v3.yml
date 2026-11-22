@@ -5,6 +5,8 @@ on:
     paths:
       - 'src/storybook/narrative-*.js'
       - 'src/storybook/keeper-journey.js'
+      - 'src/storybook/living-paperkeeper.js'
+      - 'src/storybook/styles/living-paperkeeper.css'
       - 'src/storybook/paper-rescue.js'
       - 'src/storybook/chapter-attention.js'
       - 'src/storybook/styles/keeper-journey.css'
