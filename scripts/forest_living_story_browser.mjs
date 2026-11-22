@@ -78,10 +78,16 @@ try{
    await page.waitForTimeout(260);
    const house=await page.evaluate(()=>({owner:document.body.dataset.pageOwner,
       pageId:document.querySelector('.house-scene').dataset.pageId,
-      visibility:getComputedStyle(document.querySelector('.kept-page-window')).visibility}));
+      visibility:getComputedStyle(document.querySelector('.kept-page-window')).visibility,
+      pagePosition:(()=>{
+        const c=document.querySelector('.house-scene-canvas').getBoundingClientRect();
+        const p=document.querySelector('.kept-page-window').getBoundingClientRect();
+        return {x:(p.left-c.left)/c.width,y:(p.top-c.top)/c.height};
+      })()}));
    assert.equal(house.owner,'window');
    assert.equal(house.pageId,lifted.pageId);
    assert.equal(house.visibility,'visible','window page needs actual rescue completion');
+   assert.ok(house.pagePosition.x>.77&&house.pagePosition.x<.86&&house.pagePosition.y>.18&&house.pagePosition.y<.29,'desktop page must hang in attic window: '+JSON.stringify(house));
    await capture(page,routeName+'-house-page');
    await page.evaluate(()=>{
       const host=document.querySelector('.v3-river-scroll');
@@ -93,6 +99,33 @@ try{
    result.checks.push({route:routeName,pathProgress:[first.p,second.p],positionChanged:true,settled,
      rescueStarted:started,rescueFinished:lifted,house,upstreamReset:true});
    await page.close();
+   // Portrait uses a different real painting crop; validate the page reaches
+   // the actual upper window and keep a real mobile screenshot for art review.
+   const mobile=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'no-preference'});
+   await mobile.goto(origin+route,{waitUntil:'domcontentloaded'});
+   await mobile.waitForFunction(()=>document.body.dataset.narrativeVersion==='3');
+   await mobile.evaluate(()=>{
+     const river=document.querySelector('.river-scene');
+     scrollTo({top:scrollY+river.getBoundingClientRect().top-innerHeight*.12,behavior:'instant'});
+   });
+   await mobile.waitForTimeout(2400);
+   await mobile.evaluate(()=>{
+     const house=document.querySelector('.house-scene');
+     scrollTo({top:scrollY+house.getBoundingClientRect().top-innerHeight*.12,behavior:'instant'});
+   });
+   await mobile.waitForTimeout(280);
+   const portrait=await mobile.evaluate(()=>{
+     const canvas=document.querySelector('.house-scene-canvas').getBoundingClientRect();
+     const page=document.querySelector('.kept-page-window').getBoundingClientRect();
+     return {owner:document.body.dataset.pageOwner,
+       x:(page.left-canvas.left)/canvas.width,
+       y:(page.top-canvas.top)/canvas.height};
+   });
+   assert.equal(portrait.owner,'window','portrait must carry river page to the cottage');
+   assert.ok(portrait.x>.67&&portrait.x<.77&&portrait.y>.18&&portrait.y<.29,'portrait attic window: '+JSON.stringify(portrait));
+   await capture(mobile,routeName+'-mobile-kept-page');
+   result.checks.push({route:routeName,mobileDelivery:portrait});
+   await mobile.close();
    for(const width of [670,671,760,761]){
       const compactPage=await browser.newPage({viewport:{width,height:900},reducedMotion:'no-preference'});
       await compactPage.goto(origin+route,{waitUntil:'domcontentloaded'});
