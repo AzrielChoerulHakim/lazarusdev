@@ -22,4 +22,4 @@ jobs:
           cp -a dist-storybook/. /tmp/forest-r12-mirror/lazarusdev/
           python3 -m http.server 4186 --bind 127.0.0.1 --directory /tmp/forest-r12-mirror >/tmp/forest-r12-server.log 2>&1 &
           for i in {1..30}; do if curl -fsS http://127.0.0.1:4186/lazarusdev/ >/dev/null; then break; fi; sleep 2; done
-          node scripts/forest_atrium_story_smoke.mjs
+          node scripts/forest_paperkeeper_story_smoke.mjs
