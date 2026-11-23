@@ -55,7 +55,12 @@ if(river&&house){
   }
  }
  function onHidden(){if(started)complete();else stopTimers();}
- calm.addEventListener('change',()=>{if(calm.matches&&started)complete();else publish(completed?'carrying':'idle');});
+ calm.addEventListener('change',()=>{
+  if(calm.matches){
+   if(started)complete();
+   else publish(completed?'still':'idle');
+  }else publish(completed?'carrying':'idle');
+ });
  addEventListener('lazarus:storyframe',onFrame);
  addEventListener('pagehide',onHidden);
  document.addEventListener('visibilitychange',()=>{if(document.hidden)onHidden();});
