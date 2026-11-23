@@ -9,6 +9,9 @@ on:
       - src/storybook/styles/paperkeeper-motion.css
       - scripts/forest_paperkeeper_motion_audit.py
       - scripts/forest_paperkeeper_motion_smoke.mjs
+      - scripts/forest_r11_smoke.mjs
+      - src/storybook/living-paperkeeper.js
+      - src/storybook/paperkeeper-pacing.mjs
       - docs/forest/11-paperkeeper-motion.md
       - .github/workflows/forest-paperkeeper-motion.yml
   workflow_dispatch:
