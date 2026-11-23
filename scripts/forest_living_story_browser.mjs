@@ -46,6 +46,18 @@ try{
        active:getComputedStyle(guide).opacity};
    });
    await capture(page,routeName+'-path-38');
+   // True user pacing: a tiny scroll may never turn into a big character leap.
+   const measuredBefore=await page.locator('.living-guide').evaluate(g=>({x:g.getBoundingClientRect().x,y:g.getBoundingClientRect().y}));
+   await page.evaluate(()=>scrollBy({top:40,behavior:'instant'}));
+   await page.waitForTimeout(130);
+   const measuredAfter=await page.locator('.living-guide').evaluate(g=>({x:g.getBoundingClientRect().x,y:g.getBoundingClientRect().y}));
+   const pacedDistance=Math.hypot(measuredAfter.x-measuredBefore.x,measuredAfter.y-measuredBefore.y);
+   assert.ok(pacedDistance<=15.7,'40px scroll moved Paperkeeper '+pacedDistance+'px; pacing limit is 13.6px + rounding');
+   await page.waitForTimeout(240);
+   const measuredRest=await page.locator('.living-guide').evaluate(g=>({x:g.getBoundingClientRect().x,y:g.getBoundingClientRect().y}));
+   assert.ok(Math.hypot(measuredRest.x-measuredAfter.x,measuredRest.y-measuredAfter.y)<1.8,
+     'Paperkeeper must not continue walking after scroll stops');
+   await capture(page,routeName+'-paperkeeper-pacing');
    await at(page,'.v3-path-scroll',.7559);
    const second=await page.evaluate(()=>{
      const walker=document.querySelector('[data-walk="path"]'),guide=document.querySelector('.living-guide');

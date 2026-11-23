@@ -4,6 +4,7 @@
  * The V3 director is the sole scroll frame source. If art fails to decode,
  * the original in-scene figures remain intact as a complete fallback.
  */
+import { paceTowards } from './paperkeeper-pacing.mjs';
 const root = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 const sheet = new URL('../../storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp', import.meta.url).href;
@@ -27,6 +28,7 @@ const obstacles = [...document.querySelectorAll(
 let ready = false;
 let last = null, previousX = 0, previousY = 0, facing = 1, settle = 0, cueTimer = 0, cuePose = '';
 let walkingDistance = 0;
+let previousScroll = scrollY, previousWidth = innerWidth, previousHeight = innerHeight;
 const clamp = (v, a, b) => Math.max(a,Math.min(b,v));
 function trailPoint(points, progress) {
   const distance = clamp(progress,0,1) * (points.length-1);
@@ -65,6 +67,17 @@ function safePosition(x,y,size,chapter) {
      [width*.09,height*.82],[width*.91,height*.82],
      [width*.50,height*.62],[width*.30,height*.62],[width*.70,height*.62],
      [width*.09,height*.62],[width*.91,height*.62]];
+  // Keep the previously safe lane first; never teleport across the page
+  // just because a caption intersects the newly computed waypoint.
+  if(last && previousX>=minX && previousX<=maxX &&
+     previousY>=size+12 && previousY<=height-16 &&
+     !collision(previousX,previousY,size,rects)) {
+    candidates.unshift([previousX,previousY]);
+  }
+  const anchor=last?[previousX,previousY]:base;
+  candidates.sort((a,b)=>
+    Math.hypot(a[0]-anchor[0],a[1]-anchor[1])-
+    Math.hypot(b[0]-anchor[0],b[1]-anchor[1]));
   for(const [cx,cy] of candidates) {
     const test=[clamp(cx,minX,maxX),clamp(cy,size+12,height-16)];
     if (!collision(test[0],test[1],size,rects)) return test;
@@ -125,17 +138,27 @@ function setPose(pose) {
 }
 function render(snapshot, settling=false) {
   if(!ready || reduced.matches || document.hidden)return;
+  const deltaScroll=Math.abs(scrollY-previousScroll);
+  const viewportChanged=previousWidth!==innerWidth||previousHeight!==innerHeight;
+  previousScroll=scrollY;previousWidth=innerWidth;previousHeight=innerHeight;
   const seam=activeSeam();
   const target=seam ? sceneForSeam(seam) : phaseForChapter(snapshot.chapter,snapshot);
   root.dataset.livingScene=target?.kind||'resting';
-  if(!target || document.getElementById('atrium-room')?.hidden===false) {
+  if(!target) {
     guide.style.opacity='0';
     return;
   }
   const size=innerWidth<=670 ? 83 : clamp(innerWidth*.10,105,155);
   const place=safePosition(target.x,target.y,size,target.kind);
   if(!place){guide.style.opacity='0';return;}
-  const [x,y]=place;
+  // A genuine anchor jump repositions the actor without a sprint animation.
+  // Ordinary wheel/touch progress is limited to a fraction of actual scroll
+  // distance. At rest there is zero autonomous catch-up movement.
+  const jump=Boolean(last)&&deltaScroll>innerHeight*.85&&
+    Math.hypot(place[0]-previousX,place[1]-previousY)>innerWidth*.34;
+  const [x,y]=!last||viewportChanged||jump
+    ?place
+    :paceTowards([previousX,previousY],place,deltaScroll,innerWidth<=670?.27:.34);
   const motion=Math.hypot(x-previousX,y-previousY);
   // Face the actual horizontal travel vector, including reversed scrolling.
   const horizontal=x-previousX;
@@ -143,7 +166,7 @@ function render(snapshot, settling=false) {
     facing=Math.sign(horizontal);
     guide.dataset.turn='true';
   }else guide.dataset.turn='false';
-  const travel=last && target.kind===last.kind && motion>1;
+  const travel=last && !jump && !viewportChanged && deltaScroll>1 && motion>1;
   if(travel)walkingDistance+=motion;
   let pose='stand';
   if(snapshot.pageOwner==='keeper' && target.kind!=='river-stories'){
@@ -163,9 +186,12 @@ function render(snapshot, settling=false) {
   guide.dataset.carrying= snapshot.pageOwner==='keeper' ? 'true' : 'false';
   guide.style.height=size+'px';
   guide.style.transform='translate3d('+x+'px,'+y+'px,0) scaleX('+facing+')';
-  // Slow handoff across chapter seams, short settling on ordinary scroll.
-  guide.style.transitionDuration=last&&target.kind!==last.kind?'320ms':'100ms';
-  guide.style.opacity='1';
+  // Never animate the distance on a clock: a stationary finger or wheel
+  // means stationary feet. Only opacity is eased during discontinuities.
+  if(jump) {
+    guide.style.opacity='0';
+    requestAnimationFrame(()=>{if(guide.isConnected&&!reduced.matches)guide.style.opacity='1';});
+  }else guide.style.opacity='1';
   root.dataset.guideOutside=target.kind;
   document.querySelector('.entrance-stage')?.classList.toggle('guide-departing',
     snapshot.chapter==='entrance' && (snapshot.progress.entrance??0)>.65);
@@ -185,7 +211,7 @@ function onFrame(event) {
   clearTimeout(settle);
   settle=setTimeout(()=>render(lastSnapshot,true),150);
 }
-function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';}
+function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';last=null;previousScroll=scrollY;}
 addEventListener('lazarus:storyframe',onFrame);
 addEventListener('lazarus:storychange',event=>{
   if(lastSnapshot){
@@ -206,7 +232,6 @@ for(const folio of document.querySelectorAll('#work-clearing .work-folio'))folio
 for(const link of document.querySelectorAll('#work-clearing [data-open-concept]'))link.addEventListener('click',()=>cue('look',720));
 document.querySelector('[data-house-light-toggle]')?.addEventListener('click',()=>cue('lantern',680));
 document.querySelector('#house-brief')?.addEventListener('focus',()=>cue('read',700));
-document.querySelector('[data-atrium-enter]')?.addEventListener('click',stop);
 source.onload=async()=>{
   try {
     await source.decode();

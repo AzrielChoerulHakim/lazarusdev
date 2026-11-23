@@ -6,7 +6,7 @@
   aspect-ratio:128/144;z-index:42;pointer-events:none;
   translate:-50% -92.3611%;transform-origin:50% 100%;
   background:url("../../../storybook/assets/characters/r15a/paperkeeper-journey-r15a.webp") 37.5% bottom / 900% 100% no-repeat;
-  opacity:0;transition:transform .1s linear,opacity .16s ease-out;
+  opacity:0;transition:opacity .2s ease-out;
   filter:drop-shadow(1px 3px 2px rgba(29,47,28,.28));
   contain:paint;will-change:transform;
 }
