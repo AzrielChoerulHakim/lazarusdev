@@ -57,7 +57,7 @@ try{
       }
 
       await page.locator('[data-walk="path"]').scrollIntoViewIfNeeded();
-      await interaction(page,'#folio-atrium summary',{selector:'.work-clearing-world',field:'activeFolio',value:'folio-atrium'});
+      await interaction(page,'#folio-paperkeeper summary',{selector:'.work-clearing-world',field:'activeFolio',value:'folio-atrium'});
       await interaction(page,'#river-note-a summary',{selector:'.river-scene',field:'activeNote',value:'river-note-a'});
       await interaction(page,'[data-house-light-toggle]',{selector:'.house-scene',field:'motionCue',value:'lantern'});
       assert.equal(await page.locator('[data-house-scene]').getAttribute('data-lit'),'true',tag+' house window toggles');

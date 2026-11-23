@@ -63,7 +63,7 @@ async function metrics(page,selector){
       gallery:gallery?{left:gallery.scrollLeft,scrollWidth:gallery.scrollWidth,clientWidth:gallery.clientWidth}:null,
       samePageCut:document.querySelector('.rescue-page .kept-page-art path')?.getAttribute('d')===
         document.querySelector('.kept-page-window .kept-page-art path')?.getAttribute('d'),
-      lightValue:document.querySelector('#atrium-light-value')?.textContent||null};
+      character:document.querySelector('.living-guide')?.dataset.pose||null};
   },selector);
 }
 async function shot(page,bucket,name,selector){
@@ -133,44 +133,24 @@ try{
           await shot(page,bucket,'scene-'+name,selector);
           if(width===1440||width===390)await shot(page,bucket,'viewport-'+name,null);
         }
-        for(const name of ['atrium','oracle','archive']){
+        for(const name of ['paperkeeper','oracle','archive']){
           await shot(page,bucket,'poster-'+name,'[data-open-concept="'+name+'"]');
         }
-        // Preserve a non-zero horizontal gallery offset for the return-path audit.
-        await page.locator('.work-hangings').evaluate(el=>{
-          if(el.scrollWidth>el.clientWidth+10)el.scrollLeft=Math.min(90,el.scrollWidth-el.clientWidth);
+        await page.locator('.work-hanging[data-open-concept="paperkeeper"]').click();
+        await page.waitForFunction(()=>document.querySelector('#folio-paperkeeper')?.open);
+        await shot(page,bucket,'paperkeeper-study','#folio-paperkeeper');
+        await page.evaluate(()=>{
+          const river=document.querySelector('.river-scene');
+          const wrap=document.querySelector('.v3-river-scroll')||river;
+          const compact=innerWidth<=670||innerHeight<=650;
+          const top=wrap.getBoundingClientRect().top+scrollY;
+          scrollTo({top:compact?river.getBoundingClientRect().top+scrollY-innerHeight*.12:
+            top+Math.max(1,wrap.offsetHeight-innerHeight)*.62,behavior:'instant'});
         });
-        const enter=page.locator('.atrium-clearing-shortcut');
-        await enter.scrollIntoViewIfNeeded();
-        const before=await page.evaluate(()=>({y:scrollY,x:document.querySelector('.work-hangings').scrollLeft}));
-        await enter.click();
-        await page.waitForFunction(()=>document.querySelector('#atrium-room')?.hidden===false,null,{timeout:12000});
-        for(const n of [0,50,100]){
-          await page.locator('#atrium-light').evaluate((el,value)=>{
-            el.value=String(value);
-            el.dispatchEvent(new Event('input',{bubbles:true}));
-          },n);
-          await page.waitForTimeout(280);
-          await shot(page,bucket,'atrium-light-'+n,'#atrium-room .atrium-frame');
-        }
-        await page.goBack({waitUntil:'domcontentloaded',timeout:12000});
-        await page.waitForFunction(()=>document.querySelector('#atrium-room')?.hidden===true,null,{timeout:12000});
-        await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
-        const after=await page.evaluate(()=>({
-          y:scrollY,x:document.querySelector('.work-hangings').scrollLeft,
-          focus:document.activeElement?.matches('[data-atrium-enter]')||false
-        }));
-        const pass=Math.abs(before.y-after.y)<5&&Math.abs(before.x-after.x)<2&&after.focus;
-        evidence.checks.push({route,viewport:width+'x'+height,
-          name:'atrium-return',before,after,pass});
-        if(!pass)evidence.failures.push({route,viewport:width+'x'+height,code:'ATRIUM_RETURN'});
-        await shot(page,bucket,'gallery-return','#work-clearing .work-clearing-installation');
-        await shot(page,bucket,'river-after-entry','#river-stories .river-scene');
-        try{
-          await page.waitForFunction(()=>document.querySelector('.river-scene')?.dataset.rescue==='carrying',
-            null,{timeout:5000});
+        await page.waitForTimeout(2150);
+        if(await page.locator('.river-scene').getAttribute('data-rescue')==='carrying'){
           await shot(page,bucket,'river-rescue-carrying','#river-stories .river-scene');
-        }catch{
+        }else{
           evidence.warnings.push({route,viewport:width+'x'+height,code:'RIVER_CARRY_NOT_CAPTURED'});
         }
         const light=page.locator('[data-house-light-toggle]');
@@ -219,10 +199,10 @@ const report=[
  ...(evidence.warnings.length?[]:['- None detected.']),
  '','## Pending human inspection of actual screenshots',
  '- Figure and text cropping, focus hierarchy, control overlap, and Paperkeeper foot contact.',
- '- Gallery should privilege Atrium and show the edge of its next poster on mobile.',
+ '- Work Clearing should foreground the Paperkeeper character study while keeping the other two folios legible.',
  '- Source river paintings contain multiple paper illustrations plus an interactive page overlay.',
  '- House still requires genuine twilight lighting and a physically aligned drying page.',
- '- Atrium thresholds, relief and cast-shadow physical plausibility must be reviewed at 0/50/100.',
+ '- Paperkeeper's stride pace and story handoff must be inspected at slow and reversed scroll speeds.',
  '- Manual scores per chapter cannot be generated by DOM measurements or green CI.','',
  '## Automated errors',
  ...evidence.failures.map(x=>'- '+JSON.stringify(x)),

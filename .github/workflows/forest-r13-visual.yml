@@ -34,7 +34,7 @@ jobs:
           done
           cat /tmp/forest-r13-server.log
           exit 1
-      - name: Capture real scenes, posters, Atrium and paper journey
+      - name: Capture real scenes, character study and page journey
         run: node scripts/forest_r13_visual_capture.mjs
         env:
           STORYBOOK_PREVIEW_ORIGIN: http://127.0.0.1:4186
@@ -63,7 +63,7 @@ jobs:
                  "docs/forest/revision/r13/evidence/$size-$name.png"
             done
           done
-          for name in atrium-light-0 atrium-light-50 atrium-light-100 poster-atrium river-rescue-carrying house-lit; do
+          for name in poster-paperkeeper paperkeeper-study river-rescue-carrying house-lit; do
             if [ -f "artifacts/r13-visual/root/390x844/$name.png" ]; then
               cp "artifacts/r13-visual/root/390x844/$name.png" \
                  "docs/forest/revision/r13/evidence/390x844-$name.png"

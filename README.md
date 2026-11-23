@@ -8,7 +8,7 @@ Lazarus Dev is an independent creative development and digital product studio. T
 
 1. **Entrance:** an illustrated gateway, the Paperkeeper character, and a fold-out Field Atlas.
 2. **Winding Path:** the studio's creative development practice and a visitor-controlled pencil trail.
-3. **Work Clearing:** three explicitly labeled *concept explorations* and a real, inspectable specimen of this website's own design decisions.
+3. **Work Clearing:** a live Paperkeeper character study and two explicitly labeled *concept explorations* and a real, inspectable specimen of this website's own design decisions.
 4. **River Stories:** unpublished field-note outlines; no fabricated published articles.
 5. **House on the Hill:** studio manifesto, intentional window-light interaction and a local-only Field Letter editor.
 
@@ -28,7 +28,7 @@ The source of truth for illustration identity is `docs/forest/ART-DIRECTION-LOCK
 
 ## V3 narrative reconstruction — 22 November 2026
 
-V3 is now integrated directly on main for both published routes. It introduces a single cinematic scene director, authored SVG trail tracing across chapter seams, Entrance camera/lantern progression, progressive path/river scenery, editorial hierarchy and a gradual House dusk composition. It preserves original illustrations, the R15A Paperkeeper poses, the interactive Atrium, native chapter anchors and honest concept-study descriptions.
+V3 is now integrated directly on main for both published routes. It introduces a single cinematic scene director, authored SVG trail tracing across chapter seams, Entrance camera/lantern progression, progressive path/river scenery, editorial hierarchy and a gradual House dusk composition. It preserves original illustrations, the R15A Paperkeeper poses, the native Work Clearing folios, native chapter anchors and honest concept-study descriptions.
 
 The cinematic staging is **selective**, not mandatory: narrow mobile and short landscape screens read linearly, and visitors requesting reduced motion or disabling JavaScript keep the entire readable site. Existing character gestures and visitor-controlled light remain separate from the new scenery director.
 
@@ -77,5 +77,5 @@ The canonical GitHub Pages source is `main`; `/storybook/` is a linked, non-inde
 The later [visual revision roadmap](docs/forest/VISUAL-REVISION-EXECUTION-PLAN.md) builds on the earlier forest-book release without replacing the source paper illustrations.
 
 - **R14:** a ten-scene-frame comparison drawn from real frozen R13 Chromium captures, a machine-readable composition/light/groundline contract, candidate non-destructive tonal grading, and a mobile river safe zone. [R14 evidence](docs/forest/revision/r14/README.md).
-- **R15:** The Atrium now enters via a pointed stone/gold threshold following the existing concept poster, with a directional pencil-hatched material treatment, four physically linked scene layers and individually projected left/right pillar shadows. A one-swipe interaction, modal focus/scroll restoration, desktop/portrait/short-landscape layout and both routes have browser tests and rendered evidence. [R15 notes](docs/forest/revision/r15/README.md) · [R15 verified runs](docs/forest/revision/r15/QA-RESULTS.md).
+- **R15 (historical):** The retired Atrium was once tested for lighting, scene geometry and keyboard access. The standalone room and its entry points were removed from the public experience on 23 November 2026, replacing its first Work Clearing folio with a real Paperkeeper character study. [Archived R15 evidence](docs/forest/revision/r15/README.md).
 - **Art sign-off remains pending:** scripted SVG pigment does not automatically equal the density of the existing AI-assisted crayon-raster folio. The human blind-thumbnail review, real-phone gesture test, and final authored material approval are not replaced by passing CI. R15A's independent Paperkeeper alpha/pose remediation and R16–R19 remain separate scopes.

@@ -153,15 +153,15 @@ export const storybookContent = {
 
   projects: [
     {
-      id: "the-atrium",
-      title: "THE ATRIUM",
-      kind: "experience-concept",
-      label: "Experience concept",
+      id: "paperkeeper-journey",
+      title: "PAPERKEEPER",
+      kind: "character-study",
+      label: "Character study",
       status: "concept-not-client-commission",
-      caption: "A place for the beautifully impossible.",
-      description: "A conceptual destination for art and architecture. Monumental portals transform navigation into an act of discovery, while carefully staged light and typography make each interaction feel considered.",
+      caption: "A guide who travels at your pace.",
+      description: "An original studio character study implemented in this very website. Paperkeeper follows the visitor's scroll through five painted chapters, notices the other creatures, and carries a rescued page from the river to the cottage. The experience remains readable without animation.",
       href: null,
-      origin: "existing-index-and-src-main",
+      origin: "source-controlled-live-storybook",
     },
     {
       id: "the-oracle",

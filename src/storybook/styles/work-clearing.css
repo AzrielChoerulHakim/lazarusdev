@@ -132,3 +132,11 @@
   .work-hanging { transition: none !important; }
   .work-hanging:hover, .work-hanging:focus-visible { transform: none !important; }
 }
+/* The first folio is a living guide study, not the retired portal poster.
+   Keep the actual authored Paperkeeper figure framed as ink on parchment. */
+.work-hanging[data-open-concept="paperkeeper"] > img {
+  object-fit:contain;
+  box-sizing:border-box;
+  padding:clamp(14px,2.2vw,30px) clamp(16px,3vw,38px) clamp(36px,5vw,58px);
+  background:radial-gradient(ellipse at 48% 41%,#f2e5c9 0%,#e0c9a6 76%,#d0ae80 100%);
+}

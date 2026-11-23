@@ -51,7 +51,8 @@ for(const [htmlPath,prefix] of [['index.html','./src/storybook'],['storybook/ind
  for(const src of [prefix+'/styles/narrative-v3.css',prefix+'/narrative-director.js',prefix+'/styles/living-paperkeeper.css',prefix+'/living-paperkeeper.js']){
    assert.equal(html.split(src).length-1,1,htmlPath+' missing/duplicate '+src);
  }
- for(const id of ['field-atlas','atrium-room-template','studio-inquiry'])assert.ok(html.includes('id="'+id+'"'));
+ for(const id of ['field-atlas','folio-paperkeeper','studio-inquiry'])assert.ok(html.includes('id="'+id+'"'));
  assert.ok(html.includes('concept work — not client commissions.'),'concept provenance lost');
+ assert.ok(!/atrium-room|data-atrium-enter|folio-atrium/.test(html),'retired Atrium cannot remain in public HTML');
 }
 console.log('PASS V3: native scroll, five chapters, two routes, motion fallback, retained actions.');

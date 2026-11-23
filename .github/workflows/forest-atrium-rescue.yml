@@ -1,4 +1,4 @@
-name: Forest R12 - Atrium and paper-rescue journey
+name: Forest R12 - Paperkeeper and native Work Clearing
 on:
   push:
     branches: [main]
@@ -15,7 +15,7 @@ jobs:
       - run: npm install --no-audit --no-fund
       - run: npm run build && npm run build:storybook
       - run: npm install --no-save --no-audit --no-fund playwright@1.56.1
-      - name: Test integrated browser journeys without screenshots
+      - name: Test Paperkeeper folio and paper-ownership continuity without Atrium
         run: |
           mkdir -p /tmp/forest-r12-mirror/lazarusdev
           cp -a dist/. /tmp/forest-r12-mirror/lazarusdev/
