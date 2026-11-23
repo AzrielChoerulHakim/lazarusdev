@@ -32,14 +32,18 @@ for page in (ROOT/'index.html',ROOT/'storybook/index.html'):
     assert text.count('<h1 ')==1,page
     assert 'styles/work-clearing.css' in text and 'storybook/work-clearing.js' in text,page
     assert section.count('data-open-concept=')==3, page
-    for slug in ('atrium','oracle','archive'):
+    for slug in ('oracle','archive'):
         assert f'data-open-concept="{slug}" href="#folio-{slug}"' in section,page
         assert f'data-concept="the-{slug}" id="folio-{slug}"' in section,page
         assert f'folio-{slug}.webp' in section,page
+    assert 'data-open-concept="paperkeeper" href="#folio-paperkeeper"' in section, page
+    assert 'data-concept="paperkeeper-journey" id="folio-paperkeeper"' in section, page
+    assert 'paperkeeper.three-quarter.webp' in section, page
+    assert 'folio-atrium' not in section and 'data-atrium-enter' not in section, page
     assert 'not client commissions' in section and 'not a client commission' in section, page
-    assert 'href="#folio-atrium"' in section and 'href="#folio-oracle"' in section and 'href="#folio-archive"' in section
+    assert 'href="#folio-paperkeeper"' in section and 'href="#folio-oracle"' in section and 'href="#folio-archive"' in section
     assert 'illustration-deferred' not in section
     assert 'work-clearing-woods.webp' in section
     assert text.count('src="')>0
 assert '.screenshot(' not in (ROOT/'scripts/forest_work_smoke.mjs').read_text().lower()
-print('PASS STAGE08: 5 original source/exports, 3 unique project folios, both semantic routes, provenance/alpha/SHA-256, no screenshot capture')
+print('PASS STAGE08: archived source/exports, Paperkeeper character study plus 2 concept folios, verified asset provenance')

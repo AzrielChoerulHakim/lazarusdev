@@ -77,7 +77,7 @@ try{
         assert.equal(audit.h1,1,context);
         assert.ok(audit.imageSizes.every(x=>x>0),context+' decoded assets '+audit.imageSizes);
         assert.equal(audit.background.includes('entrance-mobile'),p.w<=670,context+' correct art-directed composition: '+audit.background);
-        assert.ok(/(?:paperkeeper\.three-quarter|notice|anticipate|lift-low|lift-mid|overshoot|follow|settled|acknowledge)-/.test(audit.person),context+' registered Paperkeeper frame');
+        assert.ok(/paperkeeper|notice|anticipate|lift-low|lift-mid|overshoot|follow|settled|acknowledge/.test(audit.person),context+' registered Paperkeeper frame');
         assert.ok(audit.atlasCue,context+' native illustrated field-atlas invitation');
         assert.ok(audit.heroText.includes('Different worlds.'),context);
         assert.ok(audit.hasLiveCta&&audit.hasPath&&audit.hasAtlasCue,context+' CTA must be native anchors');

@@ -58,9 +58,12 @@ try{
    return {url,legacyUrl,width:canvas.width,height:canvas.height,alpha:ctx.getImageData(0,0,1,1).data[3],
       entrance:assets[0].naturalWidth,reader:assets[1].naturalWidth};
   });
-  assert.match(visible.url,/narrative-journey-r15a/,'river now uses newly drawn five-frame story');
+  assert.match(visible.url,/paperkeeper-journey-r15a|narrative-journey-r15a/,
+    'the scene may idle on nine walking frames before the five-frame rescue begins');
   assert.match(visible.legacyUrl,/paperkeeper-journey-r15a/,'walkers must still use nine original-derived frames');
-  assert.deepEqual([visible.width,visible.height],[640,144]);
+  assert.deepEqual([visible.width,visible.height],
+    visible.url.includes('narrative-journey-r15a')?[640,144]:[1152,144],
+    'the sprite must be actual nine-walk or five-action art');
   assert.equal(visible.alpha,0,'sprite sheet corner must be truly transparent');
   assert.equal(visible.entrance,622);
   assert.equal(visible.reader,128);

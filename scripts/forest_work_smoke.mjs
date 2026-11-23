@@ -55,21 +55,21 @@ try{
    assert.ok(check.intro.bottom<=check.stage.y+3,tag+' no heading/art overlap');
    assert.equal(check.woods,'1536x1024');assert.equal(check.page,'426x656');
    assert.equal(check.printCount,3,tag);
-   assert.deepEqual(check.nativeDetails,['folio-atrium','folio-oracle','folio-archive']);
+   assert.deepEqual(check.nativeDetails,['folio-paperkeeper','folio-oracle','folio-archive']);
    assert.ok(check.disclosure.includes('not client commissions'),tag+' truthful status');
    assert.ok(check.linkLabels.every(Boolean),tag+' descriptive link names');
    assert.ok(check.linkSizes.every(r=>r.w>=44&&r.h>=44),tag+' 44px hit targets');
-   assert.ok(check.srcs[0].includes('folio-atrium.webp')&&check.srcs[1].includes('folio-oracle.webp')&&check.srcs[2].includes('folio-archive.webp'),tag+' separate art');
+   assert.ok(check.srcs[0].includes('paperkeeper.three-quarter.webp')&&check.srcs[1].includes('folio-oracle.webp')&&check.srcs[2].includes('folio-archive.webp'),tag+' separate art');
    assert.equal(check.horizontalGallery,sz.w<=920?'auto':'visible',tag+' mobile art-directed scroll');
    assert.equal(check.captures,0,tag+' no canvas');
    assert.equal(check.imageOnly,true,tag+' meaningful figcaption');
    // Direct project-sheet link opens a REAL native details destination.
-   await page.locator('#work-clearing a[href="#folio-atrium"]').click();
-   assert.equal(new URL(page.url()).hash,'#folio-atrium',tag+' anchor destination');
-   assert.equal(await page.locator('#folio-atrium').evaluate(e=>e.open),true,tag+' notes open');
-   assert.equal(await page.locator('#folio-atrium').isVisible(),true,tag+' notes visible');
-   const desc=await page.locator('#folio-atrium .folio-body p').first().textContent();
-   assert.ok(desc.includes('conceptual destination'),tag+' meaningful content');
+   await page.locator('#work-clearing a[href="#folio-paperkeeper"]').click();
+   assert.equal(new URL(page.url()).hash,'#folio-paperkeeper',tag+' anchor destination');
+   assert.equal(await page.locator('#folio-paperkeeper').evaluate(e=>e.open),true,tag+' notes open');
+   assert.equal(await page.locator('#folio-paperkeeper').isVisible(),true,tag+' notes visible');
+   const desc=await page.locator('#folio-paperkeeper .folio-body p').first().textContent();
+   assert.ok(desc.includes('original studio character study'),tag+' meaningful content');
    await page.locator('#work-clearing a[href="#folio-oracle"]').focus();
    await page.keyboard.press('Enter');
    assert.equal(await page.locator('#folio-oracle').evaluate(e=>e.open),true,tag+' keyboard project opens');
@@ -77,7 +77,7 @@ try{
    await page.emulateMedia({reducedMotion:'reduce'});
    const trans=await page.locator('#work-clearing .work-hanging').first().evaluate(e=>getComputedStyle(e).transitionDuration);
    assert.ok(parseFloat(trans)<=.01,tag+' reduced motion');
-   console.log('PASS STAGE08 '+tag+' native work links and actual 3 concept details, no document overflow');
+   console.log('PASS STAGE08 '+tag+' native work links and actual character study and two concept details, no document overflow');
    count++;
   }finally{await page.close();}
  }
@@ -89,8 +89,8 @@ try{
  assert.equal(await fallback.locator('#folio-archive summary').isVisible(),true);
  await fallback.locator('#folio-archive summary').click();
  assert.equal(await fallback.locator('#folio-archive').getAttribute('open'),'');
- await fallback.locator('#work-clearing a[href="#folio-atrium"]').click();
- assert.equal(new URL(fallback.url()).hash,'#folio-atrium');
+ await fallback.locator('#work-clearing a[href="#folio-paperkeeper"]').click();
+ assert.equal(new URL(fallback.url()).hash,'#folio-paperkeeper');
  await fallback.close();
  console.log('PASS STAGE08 no-JS/no-images native summary and links');
 }finally{await browser.close();}
