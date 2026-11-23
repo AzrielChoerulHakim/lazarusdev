@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "4e9d687c65fd857309e03ebe0f8001a3c54a96be",
+  "sourceCommit": "dcc38559aafae238258642ad643327e51c76d2b3",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -32,23 +32,23 @@
     },
     {
       "file": "root/1440x900/scene-path.png",
-      "bytes": 2404242,
-      "sha256": "f3e755dc04fe4a8624bd6fd229fdbfcc6f62dca5a105ba316cb6f4358fc48805"
+      "bytes": 2404192,
+      "sha256": "5bd091e86bdd7a20c2d0a2bd931ae413b7c65ddea0d3f927e4f96e9f4f1230ae"
     },
     {
       "file": "root/1440x900/scene-clearing.png",
-      "bytes": 2192935,
-      "sha256": "250bef0046b7b31b71851964414eba2188e68ada3010d13c9f98058e1e02318d"
+      "bytes": 2097446,
+      "sha256": "76bdf4ce40ec153b10c667741b839688209852a28fac0d7ee65374615649148b"
     },
     {
       "file": "root/1440x900/scene-river.png",
-      "bytes": 2100455,
-      "sha256": "0ba14f6ebd3831e96f659b2721770138a68ac4be96b1157c39f0ee9d3d955566"
+      "bytes": 2101915,
+      "sha256": "eb3b7d88c557531f34b5284cf12ca63355250b88cb3d752801694a5aa7345df3"
     },
     {
       "file": "root/1440x900/scene-house.png",
-      "bytes": 2193757,
-      "sha256": "d7b8d9b42349d1c0e88dd8c03288ea33e7b0057246bfa8d94901bec0fe919bf0"
+      "bytes": 2193402,
+      "sha256": "2b1ca453ec559c07e801e120f8532146774f30b98569617fedabc0303dd8dd3a"
     },
     {
       "file": "root/390x844/scene-entrance.png",
@@ -57,48 +57,48 @@
     },
     {
       "file": "root/390x844/scene-path.png",
-      "bytes": 461137,
-      "sha256": "e081c284abb4694ce58df7a10c66fb8e0cab01e9617f49a3e3b65ce6b40ca604"
+      "bytes": 461146,
+      "sha256": "d4ec52a95f444a0287811721def12d813a64842d9f0bb35d58063641425fb617"
     },
     {
       "file": "root/390x844/scene-clearing.png",
-      "bytes": 364044,
-      "sha256": "4dab8c7014632f3a9a4f5a5e7202dc660a856dae4d9eeefff395cef4a0ccbd87"
+      "bytes": 328313,
+      "sha256": "0095517817e38aa447101fe9ac1410b8b8d0d6400f7d83d224813bbadd4ee209"
     },
     {
       "file": "root/390x844/scene-river.png",
-      "bytes": 344630,
-      "sha256": "675a44a2d9fa3cad546e0e85b14f9f7310831e1433aa97e3afccc0f96b84918a"
+      "bytes": 345039,
+      "sha256": "1b60b5ff442ae516ddbc5669233ce60f9544f4e1743f2232123b9cd3a195c235"
     },
     {
       "file": "root/390x844/scene-house.png",
-      "bytes": 407682,
-      "sha256": "7c08ce26a1c8a604eb12ecfb7f35e0a361aeba2c7e4e62b93bc8c49198e52a6a"
+      "bytes": 408642,
+      "sha256": "165f83eee28e899fa0a951e2ac6baa751213e10a458abd7d6b760865db2142ff"
     },
     {
       "file": "root/320x720/scene-entrance.png",
-      "bytes": 163743,
-      "sha256": "750013c0aa154bf10e929a38dc1242cb8f68cc9ebc9042c1a84e56970fcee0fb"
+      "bytes": 163753,
+      "sha256": "1210c532cc3a9d4433a5a65e3c1d91d70dda22779fb6ab2ca930ba06dcc4fe9a"
     },
     {
       "file": "root/320x720/scene-path.png",
-      "bytes": 323207,
-      "sha256": "c1a8729d1ee05da936ba3e6bf4fdff88ca2d1e7401e2e8cdecc48ed5f6e272d3"
+      "bytes": 323202,
+      "sha256": "f48d9c3d67837d7226c0feb92d379ad472ef962d1cbc2b8cc8cd06075895c449"
     },
     {
       "file": "root/320x720/scene-clearing.png",
-      "bytes": 284116,
-      "sha256": "f49f5e76848d8d82a18225bf73bfe7faf7fcdc199a99db9c7706a25963e0e5a2"
+      "bytes": 253922,
+      "sha256": "24a2cd331ee6fd8acbe2b9a00c0d7e01c2a61afadba20682d75b6d645941ca0e"
     },
     {
       "file": "root/320x720/scene-river.png",
-      "bytes": 233811,
-      "sha256": "a32bb8d71e01f0e657c36cc87836aeac941a2cf43fcf7a487a8858b14ec149ed"
+      "bytes": 234213,
+      "sha256": "00c909722ed895ddb80aca7c56354d386004489fc1fa5ca3089dccf3bbd17b2d"
     },
     {
       "file": "root/320x720/scene-house.png",
-      "bytes": 287993,
-      "sha256": "aeea50f7315119555a95ad41aeb810d56640e0e3ea0e040406b8c740ab47e012"
+      "bytes": 288457,
+      "sha256": "705ea74ef4572c75c89493eb2da94fc638e890ef0a45bbc7a94b1613474f2e4b"
     },
     {
       "file": "root/844x390/scene-entrance.png",
@@ -107,23 +107,23 @@
     },
     {
       "file": "root/844x390/scene-path.png",
-      "bytes": 885705,
-      "sha256": "94677181263169d99201c606c388cbd1653098d47be5ecf283f8a7edd22ae078"
+      "bytes": 885747,
+      "sha256": "45aa704ce32faeb5a3303fe1ee4bb1001b6d86b3553e16b55c637a0e9bf9f502"
     },
     {
       "file": "root/844x390/scene-clearing.png",
-      "bytes": 1079001,
-      "sha256": "411ca156f9b11ef57bc78cb587cf9399482021ba3a2f676d543224c9fa55913f"
+      "bytes": 1021596,
+      "sha256": "ad15d39b9b00d17016fe0a98f205ebb4693105eaaee811d6349e9d1530fa8bdd"
     },
     {
       "file": "root/844x390/scene-river.png",
-      "bytes": 754085,
-      "sha256": "2e5ce82c27e4e2b86ac7256986a5a74828c71e04d0798e44f1a0b8367060ee65"
+      "bytes": 755302,
+      "sha256": "4764dd289549808cc9e1a33393b58125cd843681fc789789a6fea71123d1b1fa"
     },
     {
       "file": "root/844x390/scene-house.png",
-      "bytes": 817041,
-      "sha256": "9180ab7047a1fd08871ac92c07b798a7c6985635f2c15cc24b121e55d1b1cf77"
+      "bytes": 816823,
+      "sha256": "1df4a2afcba1908a73455189a6b473e7c8e4281bdd89fb9427d0bd03b61b0cb6"
     },
     {
       "file": "storybook/1440x900/scene-entrance.png",
@@ -132,23 +132,23 @@
     },
     {
       "file": "storybook/1440x900/scene-path.png",
-      "bytes": 2404242,
-      "sha256": "f3e755dc04fe4a8624bd6fd229fdbfcc6f62dca5a105ba316cb6f4358fc48805"
+      "bytes": 2404192,
+      "sha256": "5bd091e86bdd7a20c2d0a2bd931ae413b7c65ddea0d3f927e4f96e9f4f1230ae"
     },
     {
       "file": "storybook/1440x900/scene-clearing.png",
-      "bytes": 2192935,
-      "sha256": "250bef0046b7b31b71851964414eba2188e68ada3010d13c9f98058e1e02318d"
+      "bytes": 2097446,
+      "sha256": "76bdf4ce40ec153b10c667741b839688209852a28fac0d7ee65374615649148b"
     },
     {
       "file": "storybook/1440x900/scene-river.png",
-      "bytes": 2100455,
-      "sha256": "0ba14f6ebd3831e96f659b2721770138a68ac4be96b1157c39f0ee9d3d955566"
+      "bytes": 2101915,
+      "sha256": "eb3b7d88c557531f34b5284cf12ca63355250b88cb3d752801694a5aa7345df3"
     },
     {
       "file": "storybook/1440x900/scene-house.png",
-      "bytes": 2193757,
-      "sha256": "d7b8d9b42349d1c0e88dd8c03288ea33e7b0057246bfa8d94901bec0fe919bf0"
+      "bytes": 2193402,
+      "sha256": "2b1ca453ec559c07e801e120f8532146774f30b98569617fedabc0303dd8dd3a"
     },
     {
       "file": "storybook/390x844/scene-entrance.png",
@@ -157,48 +157,48 @@
     },
     {
       "file": "storybook/390x844/scene-path.png",
-      "bytes": 461137,
-      "sha256": "e081c284abb4694ce58df7a10c66fb8e0cab01e9617f49a3e3b65ce6b40ca604"
+      "bytes": 461146,
+      "sha256": "d4ec52a95f444a0287811721def12d813a64842d9f0bb35d58063641425fb617"
     },
     {
       "file": "storybook/390x844/scene-clearing.png",
-      "bytes": 364044,
-      "sha256": "4dab8c7014632f3a9a4f5a5e7202dc660a856dae4d9eeefff395cef4a0ccbd87"
+      "bytes": 328313,
+      "sha256": "0095517817e38aa447101fe9ac1410b8b8d0d6400f7d83d224813bbadd4ee209"
     },
     {
       "file": "storybook/390x844/scene-river.png",
-      "bytes": 344630,
-      "sha256": "675a44a2d9fa3cad546e0e85b14f9f7310831e1433aa97e3afccc0f96b84918a"
+      "bytes": 345039,
+      "sha256": "1b60b5ff442ae516ddbc5669233ce60f9544f4e1743f2232123b9cd3a195c235"
     },
     {
       "file": "storybook/390x844/scene-house.png",
-      "bytes": 407682,
-      "sha256": "7c08ce26a1c8a604eb12ecfb7f35e0a361aeba2c7e4e62b93bc8c49198e52a6a"
+      "bytes": 408642,
+      "sha256": "165f83eee28e899fa0a951e2ac6baa751213e10a458abd7d6b760865db2142ff"
     },
     {
       "file": "storybook/320x720/scene-entrance.png",
-      "bytes": 163753,
-      "sha256": "1210c532cc3a9d4433a5a65e3c1d91d70dda22779fb6ab2ca930ba06dcc4fe9a"
+      "bytes": 163743,
+      "sha256": "750013c0aa154bf10e929a38dc1242cb8f68cc9ebc9042c1a84e56970fcee0fb"
     },
     {
       "file": "storybook/320x720/scene-path.png",
-      "bytes": 323207,
-      "sha256": "c1a8729d1ee05da936ba3e6bf4fdff88ca2d1e7401e2e8cdecc48ed5f6e272d3"
+      "bytes": 323202,
+      "sha256": "f48d9c3d67837d7226c0feb92d379ad472ef962d1cbc2b8cc8cd06075895c449"
     },
     {
       "file": "storybook/320x720/scene-clearing.png",
-      "bytes": 284111,
-      "sha256": "969d85e7b49cf6cf9c32075d41c87af0d0e489ced1ab5f58e852c87181af5e55"
+      "bytes": 253921,
+      "sha256": "a40c63984e9576500316e3f148c438193e6b5dd547bc24bce7b37e71e07b10f0"
     },
     {
       "file": "storybook/320x720/scene-river.png",
-      "bytes": 233811,
-      "sha256": "a32bb8d71e01f0e657c36cc87836aeac941a2cf43fcf7a487a8858b14ec149ed"
+      "bytes": 234213,
+      "sha256": "00c909722ed895ddb80aca7c56354d386004489fc1fa5ca3089dccf3bbd17b2d"
     },
     {
       "file": "storybook/320x720/scene-house.png",
-      "bytes": 287993,
-      "sha256": "aeea50f7315119555a95ad41aeb810d56640e0e3ea0e040406b8c740ab47e012"
+      "bytes": 288457,
+      "sha256": "705ea74ef4572c75c89493eb2da94fc638e890ef0a45bbc7a94b1613474f2e4b"
     },
     {
       "file": "storybook/844x390/scene-entrance.png",
@@ -207,43 +207,43 @@
     },
     {
       "file": "storybook/844x390/scene-path.png",
-      "bytes": 885705,
-      "sha256": "94677181263169d99201c606c388cbd1653098d47be5ecf283f8a7edd22ae078"
+      "bytes": 885747,
+      "sha256": "45aa704ce32faeb5a3303fe1ee4bb1001b6d86b3553e16b55c637a0e9bf9f502"
     },
     {
       "file": "storybook/844x390/scene-clearing.png",
-      "bytes": 1079001,
-      "sha256": "411ca156f9b11ef57bc78cb587cf9399482021ba3a2f676d543224c9fa55913f"
+      "bytes": 1021596,
+      "sha256": "ad15d39b9b00d17016fe0a98f205ebb4693105eaaee811d6349e9d1530fa8bdd"
     },
     {
       "file": "storybook/844x390/scene-river.png",
-      "bytes": 754085,
-      "sha256": "2e5ce82c27e4e2b86ac7256986a5a74828c71e04d0798e44f1a0b8367060ee65"
+      "bytes": 755302,
+      "sha256": "4764dd289549808cc9e1a33393b58125cd843681fc789789a6fea71123d1b1fa"
     },
     {
       "file": "storybook/844x390/scene-house.png",
-      "bytes": 817041,
-      "sha256": "9180ab7047a1fd08871ac92c07b798a7c6985635f2c15cc24b121e55d1b1cf77"
+      "bytes": 816823,
+      "sha256": "1df4a2afcba1908a73455189a6b473e7c8e4281bdd89fb9427d0bd03b61b0cb6"
     },
     {
       "file": "root/390x844/rescue-lift.png",
-      "bytes": 323771,
-      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
+      "bytes": 323057,
+      "sha256": "dff152c9bcd29ed295d08c69dd6ac177dba51f13cfaa8d120dab577e13a2c515"
     },
     {
       "file": "root/390x844/rescue-carrying.png",
-      "bytes": 323771,
-      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
+      "bytes": 323234,
+      "sha256": "7ac7f53648995d2072696bc038c68d31f47a486c172fbaebd2cb0b47d51aca25"
     },
     {
       "file": "storybook/390x844/rescue-lift.png",
-      "bytes": 323771,
-      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
+      "bytes": 323057,
+      "sha256": "dff152c9bcd29ed295d08c69dd6ac177dba51f13cfaa8d120dab577e13a2c515"
     },
     {
       "file": "storybook/390x844/rescue-carrying.png",
-      "bytes": 323771,
-      "sha256": "7df2358ac29386e3630fead9320ec32074505025937c45512cfdff88d20efae0"
+      "bytes": 323234,
+      "sha256": "7ac7f53648995d2072696bc038c68d31f47a486c172fbaebd2cb0b47d51aca25"
     }
   ],
   "metrics": [
@@ -275,13 +275,13 @@
       "chapter": "path",
       "scene": {
         "x": 100,
-        "y": 36.828125,
+        "y": 37.015625,
         "width": 1240,
         "height": 914.109375
       },
       "walker": {
         "x": 840.8428955078125,
-        "y": 387.0301513671875,
+        "y": 387.2176513671875,
         "width": 80.7142333984375,
         "height": 90.81201171875
       },
@@ -299,13 +299,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 100,
-        "y": 4.71875,
+        "y": 49.09375,
         "width": 1240,
-        "height": 979.53125
+        "height": 889.421875
       },
       "walker": {
         "x": 717.1171875,
-        "y": 622.1287231445312,
+        "y": 666.5037231445312,
         "width": 129.765625,
         "height": 146
       },
@@ -323,13 +323,13 @@
       "chapter": "river",
       "scene": {
         "x": 100,
-        "y": 81.109375,
+        "y": 80.5625,
         "width": 1240,
         "height": 826.65625
       },
       "walker": {
         "x": 996.9171752929688,
-        "y": 650.1865234375,
+        "y": 649.6396484375,
         "width": 129.76568603515625,
         "height": 146
       },
@@ -337,7 +337,7 @@
       "storySheet": true,
       "navRect": {
         "x": 869.3125,
-        "y": 912.765625,
+        "y": 912.21875,
         "width": 463.6875,
         "height": 52
       },
@@ -353,13 +353,13 @@
       "chapter": "house",
       "scene": {
         "x": 100,
-        "y": 26.234375,
+        "y": 25.671875,
         "width": 1240,
         "height": 936.046875
       },
       "walker": {
         "x": 961.3392333984375,
-        "y": 434.6849060058594,
+        "y": 434.1224060058594,
         "width": 87.7215576171875,
         "height": 98.69601440429688
       },
@@ -396,13 +396,13 @@
       "chapter": "path",
       "scene": {
         "x": 21.0625,
-        "y": 144.421875,
+        "y": 144.671875,
         "width": 347.875,
         "height": 643.3125
       },
       "walker": {
         "x": 189.27523803710938,
-        "y": 390.2001647949219,
+        "y": 390.4501647949219,
         "width": 60.15203857421875,
         "height": 67.67474365234375
       },
@@ -420,15 +420,15 @@
       "chapter": "clearing",
       "scene": {
         "x": 21.0625,
-        "y": 124.546875,
+        "y": 175.046875,
         "width": 347.875,
-        "height": 683.28125
+        "height": 582.484375
       },
       "walker": {
         "x": 189.0809326171875,
-        "y": 466.8020935058594,
+        "y": 517.3021240234375,
         "width": 95.328125,
-        "height": 107.25003051757812
+        "height": 107.25
       },
       "pose": "look",
       "storySheet": false,
@@ -444,13 +444,13 @@
       "chapter": "river",
       "scene": {
         "x": 21.0625,
-        "y": 234.390625,
+        "y": 233.8125,
         "width": 347.875,
         "height": 463.828125
       },
       "walker": {
         "x": 241.783447265625,
-        "y": 525.5872802734375,
+        "y": 525.0091552734375,
         "width": 95.328125,
         "height": 107.25
       },
@@ -458,7 +458,7 @@
       "storySheet": true,
       "navRect": {
         "x": 25.0625,
-        "y": 709.21875,
+        "y": 708.640625,
         "width": 339.875,
         "height": 56
       },
@@ -474,13 +474,13 @@
       "chapter": "house",
       "scene": {
         "x": 21.0625,
-        "y": 109.25,
+        "y": 108.921875,
         "width": 347.875,
         "height": 713.625
       },
       "walker": {
         "x": 239.74057006835938,
-        "y": 348.5581970214844,
+        "y": 348.2300720214844,
         "width": 63.5838623046875,
         "height": 71.53573608398438
       },
@@ -517,13 +517,13 @@
       "chapter": "path",
       "scene": {
         "x": 18,
-        "y": 122.90625,
+        "y": 123.40625,
         "width": 284,
         "height": 561.96875
       },
       "walker": {
         "x": 153.52096557617188,
-        "y": 319.9828186035156,
+        "y": 320.4828186035156,
         "width": 52.71807861328125,
         "height": 59.313995361328125
       },
@@ -541,13 +541,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 18,
-        "y": 82.96875,
+        "y": 133.96875,
         "width": 284,
-        "height": 641.59375
+        "height": 540.796875
       },
       "walker": {
         "x": 152.3065643310547,
-        "y": 399.10931396484375,
+        "y": 450.10931396484375,
         "width": 83.546875,
         "height": 94
       },
@@ -565,13 +565,13 @@
       "chapter": "river",
       "scene": {
         "x": 18,
-        "y": 214.1875,
+        "y": 214.890625,
         "width": 284,
         "height": 378.65625
       },
       "walker": {
         "x": 196.06655883789062,
-        "y": 445.2258605957031,
+        "y": 445.9289855957031,
         "width": 83.546875,
         "height": 93.99996948242188
       },
@@ -579,7 +579,7 @@
       "storySheet": true,
       "navRect": {
         "x": 22,
-        "y": 603.84375,
+        "y": 604.546875,
         "width": 276,
         "height": 109
       },
@@ -595,13 +595,13 @@
       "chapter": "house",
       "scene": {
         "x": 18,
-        "y": 95.140625,
+        "y": 95.09375,
         "width": 284,
         "height": 617.8125
       },
       "walker": {
         "x": 194.6171112060547,
-        "y": 286.70318603515625,
+        "y": 286.65631103515625,
         "width": 55.72576904296875,
         "height": 62.697998046875
       },
@@ -638,13 +638,13 @@
       "chapter": "path",
       "scene": {
         "x": 45.578125,
-        "y": -53.890625,
+        "y": -54.40625,
         "width": 752.84375,
         "height": 585.875
       },
       "walker": {
         "x": 491.87969970703125,
-        "y": 151.84085083007812,
+        "y": 151.32522583007812,
         "width": 55.98004150390625,
         "height": 62.987213134765625
       },
@@ -662,13 +662,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 45.578125,
-        "y": -184.234375,
+        "y": -139.265625,
         "width": 752.84375,
-        "height": 847.3125
+        "height": 757.203125
       },
       "walker": {
         "x": 414.6421813964844,
-        "y": 336.65618896484375,
+        "y": 381.62493896484375,
         "width": 90,
         "height": 101.265625
       },
@@ -686,13 +686,13 @@
       "chapter": "river",
       "scene": {
         "x": 45.578125,
-        "y": -12.40625,
+        "y": -12.0625,
         "width": 752.84375,
         "height": 501.890625
       },
       "walker": {
         "x": 587.267822265625,
-        "y": 318.68963623046875,
+        "y": 319.03338623046875,
         "width": 90,
         "height": 101.265625
       },
@@ -700,7 +700,7 @@
       "storySheet": true,
       "navRect": {
         "x": 381.359375,
-        "y": 494.484375,
+        "y": 494.828125,
         "width": 410.0625,
         "height": 52
       },
@@ -716,13 +716,13 @@
       "chapter": "house",
       "scene": {
         "x": 45.578125,
-        "y": -95.390625,
+        "y": -95.15625,
         "width": 752.84375,
         "height": 669.28125
       },
       "walker": {
         "x": 564.7340698242188,
-        "y": 145.0237579345703,
+        "y": 145.2581329345703,
         "width": 60.84002685546875,
         "height": 68.45555114746094
       },
@@ -759,13 +759,13 @@
       "chapter": "path",
       "scene": {
         "x": 100,
-        "y": 36.828125,
+        "y": 37.015625,
         "width": 1240,
         "height": 914.109375
       },
       "walker": {
         "x": 840.8428955078125,
-        "y": 387.0301513671875,
+        "y": 387.2176513671875,
         "width": 80.7142333984375,
         "height": 90.81201171875
       },
@@ -783,13 +783,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 100,
-        "y": 4.71875,
+        "y": 49.09375,
         "width": 1240,
-        "height": 979.53125
+        "height": 889.421875
       },
       "walker": {
         "x": 717.1171875,
-        "y": 622.1287231445312,
+        "y": 666.5037231445312,
         "width": 129.765625,
         "height": 146
       },
@@ -807,13 +807,13 @@
       "chapter": "river",
       "scene": {
         "x": 100,
-        "y": 81.109375,
+        "y": 80.5625,
         "width": 1240,
         "height": 826.65625
       },
       "walker": {
         "x": 996.9171752929688,
-        "y": 650.1865234375,
+        "y": 649.6396484375,
         "width": 129.76568603515625,
         "height": 146
       },
@@ -821,7 +821,7 @@
       "storySheet": true,
       "navRect": {
         "x": 869.3125,
-        "y": 912.765625,
+        "y": 912.21875,
         "width": 463.6875,
         "height": 52
       },
@@ -837,13 +837,13 @@
       "chapter": "house",
       "scene": {
         "x": 100,
-        "y": 26.234375,
+        "y": 25.671875,
         "width": 1240,
         "height": 936.046875
       },
       "walker": {
         "x": 961.3392333984375,
-        "y": 434.6849060058594,
+        "y": 434.1224060058594,
         "width": 87.7215576171875,
         "height": 98.69601440429688
       },
@@ -880,13 +880,13 @@
       "chapter": "path",
       "scene": {
         "x": 21.0625,
-        "y": 144.421875,
+        "y": 144.671875,
         "width": 347.875,
         "height": 643.3125
       },
       "walker": {
         "x": 189.27523803710938,
-        "y": 390.2001647949219,
+        "y": 390.4501647949219,
         "width": 60.15203857421875,
         "height": 67.67474365234375
       },
@@ -904,15 +904,15 @@
       "chapter": "clearing",
       "scene": {
         "x": 21.0625,
-        "y": 124.546875,
+        "y": 175.046875,
         "width": 347.875,
-        "height": 683.28125
+        "height": 582.484375
       },
       "walker": {
         "x": 189.0809326171875,
-        "y": 466.8020935058594,
+        "y": 517.3021240234375,
         "width": 95.328125,
-        "height": 107.25003051757812
+        "height": 107.25
       },
       "pose": "look",
       "storySheet": false,
@@ -928,13 +928,13 @@
       "chapter": "river",
       "scene": {
         "x": 21.0625,
-        "y": 234.390625,
+        "y": 233.8125,
         "width": 347.875,
         "height": 463.828125
       },
       "walker": {
         "x": 241.783447265625,
-        "y": 525.5872802734375,
+        "y": 525.0091552734375,
         "width": 95.328125,
         "height": 107.25
       },
@@ -942,7 +942,7 @@
       "storySheet": true,
       "navRect": {
         "x": 25.0625,
-        "y": 709.21875,
+        "y": 708.640625,
         "width": 339.875,
         "height": 56
       },
@@ -958,13 +958,13 @@
       "chapter": "house",
       "scene": {
         "x": 21.0625,
-        "y": 109.25,
+        "y": 108.921875,
         "width": 347.875,
         "height": 713.625
       },
       "walker": {
         "x": 239.74057006835938,
-        "y": 348.5581970214844,
+        "y": 348.2300720214844,
         "width": 63.5838623046875,
         "height": 71.53573608398438
       },
@@ -1001,13 +1001,13 @@
       "chapter": "path",
       "scene": {
         "x": 18,
-        "y": 122.90625,
+        "y": 123.40625,
         "width": 284,
         "height": 561.96875
       },
       "walker": {
         "x": 153.52096557617188,
-        "y": 319.9828186035156,
+        "y": 320.4828186035156,
         "width": 52.71807861328125,
         "height": 59.313995361328125
       },
@@ -1025,13 +1025,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 18,
-        "y": 82.96875,
+        "y": 133.96875,
         "width": 284,
-        "height": 641.59375
+        "height": 540.796875
       },
       "walker": {
         "x": 152.3065643310547,
-        "y": 399.10931396484375,
+        "y": 450.10931396484375,
         "width": 83.546875,
         "height": 94
       },
@@ -1049,13 +1049,13 @@
       "chapter": "river",
       "scene": {
         "x": 18,
-        "y": 214.1875,
+        "y": 214.890625,
         "width": 284,
         "height": 378.65625
       },
       "walker": {
         "x": 196.06655883789062,
-        "y": 445.2258605957031,
+        "y": 445.9289855957031,
         "width": 83.546875,
         "height": 93.99996948242188
       },
@@ -1063,7 +1063,7 @@
       "storySheet": true,
       "navRect": {
         "x": 22,
-        "y": 603.84375,
+        "y": 604.546875,
         "width": 276,
         "height": 109
       },
@@ -1079,13 +1079,13 @@
       "chapter": "house",
       "scene": {
         "x": 18,
-        "y": 95.140625,
+        "y": 95.09375,
         "width": 284,
         "height": 617.8125
       },
       "walker": {
         "x": 194.6171112060547,
-        "y": 286.70318603515625,
+        "y": 286.65631103515625,
         "width": 55.72576904296875,
         "height": 62.697998046875
       },
@@ -1122,13 +1122,13 @@
       "chapter": "path",
       "scene": {
         "x": 45.578125,
-        "y": -53.890625,
+        "y": -54.40625,
         "width": 752.84375,
         "height": 585.875
       },
       "walker": {
         "x": 491.87969970703125,
-        "y": 151.84085083007812,
+        "y": 151.32522583007812,
         "width": 55.98004150390625,
         "height": 62.987213134765625
       },
@@ -1146,13 +1146,13 @@
       "chapter": "clearing",
       "scene": {
         "x": 45.578125,
-        "y": -184.234375,
+        "y": -139.265625,
         "width": 752.84375,
-        "height": 847.3125
+        "height": 757.203125
       },
       "walker": {
         "x": 414.6421813964844,
-        "y": 336.65618896484375,
+        "y": 381.62493896484375,
         "width": 90,
         "height": 101.265625
       },
@@ -1170,13 +1170,13 @@
       "chapter": "river",
       "scene": {
         "x": 45.578125,
-        "y": -12.40625,
+        "y": -12.0625,
         "width": 752.84375,
         "height": 501.890625
       },
       "walker": {
         "x": 587.267822265625,
-        "y": 318.68963623046875,
+        "y": 319.03338623046875,
         "width": 90,
         "height": 101.265625
       },
@@ -1184,7 +1184,7 @@
       "storySheet": true,
       "navRect": {
         "x": 381.359375,
-        "y": 494.484375,
+        "y": 494.828125,
         "width": 410.0625,
         "height": 52
       },
@@ -1200,13 +1200,13 @@
       "chapter": "house",
       "scene": {
         "x": 45.578125,
-        "y": -95.390625,
+        "y": -95.15625,
         "width": 752.84375,
         "height": 669.28125
       },
       "walker": {
         "x": 564.7340698242188,
-        "y": 145.0237579345703,
+        "y": 145.2581329345703,
         "width": 60.84002685546875,
         "height": 68.45555114746094
       },
