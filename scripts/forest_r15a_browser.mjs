@@ -18,7 +18,7 @@ const sizes=[[1440,900],[390,844],[320,720],[844,390]];
 const routes=[['root','/lazarusdev/'],['storybook','/lazarusdev/storybook/']];
 const evidence={schema:'lazarus-r15a-live-scene-v2',sourceCommit:source,
  browser:'Chrome / production Vite',sizes,routes:routes.map(r=>r[1]),screenshots:[],metrics:[],failures:[],
- signOff:'USER-APPROVED-DIRECTION / ARTWORK-REVIEWED-IN-RENDER',physicalPhone:'NOT VERIFIED'};
+ signOff:'AUTOMATED-RENDER-EVIDENCE / FINAL-HUMAN-ART-APPROVAL-PENDING',physicalPhone:'NOT VERIFIED'};
 function rect(r){if(!r)return null;return {x:r.x,y:r.y,width:r.width,height:r.height};}
 const intersect=(a,b)=>!a||!b?0:Math.max(0,Math.min(a.x+a.width,b.x+b.width)-Math.max(a.x,b.x))*
   Math.max(0,Math.min(a.y+a.height,b.y+b.height)-Math.max(a.y,b.y));
@@ -79,6 +79,8 @@ try{
       return {scene:rect(scene.getBoundingClientRect()),walker:walker?rect(a):null,
         pose:walker?.dataset.pose||null,
         storySheet:walker?getComputedStyle(walker).backgroundImage.includes('narrative-journey-r15a'):false,
+        frameX:walker?getComputedStyle(walker).backgroundPositionX:null,
+        sheetSize:walker?getComputedStyle(walker).backgroundSize:null,
         navRect:id.includes('river-scene')?rect(b):null,
         viewport:[innerWidth,innerHeight],scrollWidth:document.documentElement.scrollWidth};
       function rect(r){return r?{x:r.x,y:r.y,width:r.width,height:r.height}:null;}
@@ -94,6 +96,8 @@ try{
      if(width<=390){
        assert.equal(info.pose,'carry','reduced-motion must show genuine static carry pose');
        assert.equal(info.storySheet,true,'scene must use actual five illustrated story poses');
+       assert.equal(info.frameX,'100%','carry must show only the final cell, not a split sprite');
+       assert.equal(info.sheetSize,'500% 100%','five registered frames require five-cell scaling');
        const duplicate=await page.evaluate(()=>{
          const river=document.querySelector('.river-scene');
          return {lantern:getComputedStyle(river.querySelector('.rescue-lantern')).visibility,

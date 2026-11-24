@@ -44,6 +44,14 @@ The earlier cinematic workflow passed at `6866b088d6a5b3ddf363fa58dc2069a24dbfae
 
 Remaining acceptance: rendered continuity and performance review on real phones, final human artistic approval, and a verified delivery destination for Field Letter if commercial inquiries are required. Do not restart the already implemented narrative or revive the retired Atrium.
 
+## Release checkpoint — 25 November 2026 (Jakarta)
+
+The last implementation checkpoint `4b23ac86e66133fb6ec68407fb73aa3146884515` passed all nine triggered workflows, including [V3 living-story browser QA](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/45442806502), [R15A rendered QA](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/45442806746), [public launch gate](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/45442806408), and [Pages deployment](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/45442805276). The evidence-only successor `6fdb1b97` stores actual captures from that tested SHA.
+
+Review of the frozen 320px River render revealed a split sprite in reduced motion: the old nine-cell 87.5% background offset conflicted with the five-cell carry artwork. The final frame now follows the single registered 100% offset, and R15A checks computed frame position and sheet size, not only the asset filename. Performance and visual workflows now trigger on their relevant runtime/asset changes. The new revision still requires its own CI evidence.
+
+Release scope is frozen: keep the existing five chapters, concept labels, native controls and local-only letter. Further artistic repainting, physical-phone sign-off, verified contact destination and field performance telemetry are not represented as complete. The River background contains pre-existing painted scraps distinct from the controlled DOM page; removing them would require artwork remediation, not a claim about DOM state.
+
 ## Public claims and launch boundaries
 
 - The folio studies are **concepts, not client commissions**. The page itself is a studio-made experiment, not a fabricated client case study.

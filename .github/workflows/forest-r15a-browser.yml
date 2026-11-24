@@ -4,6 +4,11 @@ on:
     branches: [main]
     paths:
       - 'src/storybook/styles/keeper-journey.css'
+      - 'src/storybook/styles/paper-rescue.css'
+      - 'src/storybook/styles/living-paperkeeper.css'
+      - 'src/storybook/paper-rescue.js'
+      - 'src/storybook/living-paperkeeper.js'
+      - 'storybook/assets/characters/**'
       - 'src/storybook/keeper-journey.js'
       - 'index.html'
       - 'storybook/index.html'

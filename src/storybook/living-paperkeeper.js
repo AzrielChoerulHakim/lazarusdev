@@ -1,6 +1,6 @@
 /**
  * The living Paperkeeper: ONE painted sprite above chapter clipping boundaries.
- * Visual only; reading, scrolling, links, input and Atrium retain native control.
+ * Visual only; reading, scrolling, links and input retain native control.
  * The V3 director is the sole scroll frame source. If art fails to decode,
  * the original in-scene figures remain intact as a complete fallback.
  */

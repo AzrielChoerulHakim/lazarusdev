@@ -5,7 +5,10 @@ on:
     paths:
       - index.html
       - storybook/index.html
-      - src/storybook/styles/render-budget.css
+      - 'src/storybook/**'
+      - 'storybook/assets/**'
+      - package.json
+      - 'vite*.config.js'
       - scripts/forest_performance_smoke.mjs
       - .github/workflows/forest-performance.yml
   workflow_dispatch:
