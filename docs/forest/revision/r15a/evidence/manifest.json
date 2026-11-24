@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "dcc38559aafae238258642ad643327e51c76d2b3",
+  "sourceCommit": "4b23ac86e66133fb6ec68407fb73aa3146884515",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -177,8 +177,8 @@
     },
     {
       "file": "storybook/320x720/scene-entrance.png",
-      "bytes": 163743,
-      "sha256": "750013c0aa154bf10e929a38dc1242cb8f68cc9ebc9042c1a84e56970fcee0fb"
+      "bytes": 163753,
+      "sha256": "1210c532cc3a9d4433a5a65e3c1d91d70dda22779fb6ab2ca930ba06dcc4fe9a"
     },
     {
       "file": "storybook/320x720/scene-path.png",
@@ -187,8 +187,8 @@
     },
     {
       "file": "storybook/320x720/scene-clearing.png",
-      "bytes": 253921,
-      "sha256": "a40c63984e9576500316e3f148c438193e6b5dd547bc24bce7b37e71e07b10f0"
+      "bytes": 253922,
+      "sha256": "24a2cd331ee6fd8acbe2b9a00c0d7e01c2a61afadba20682d75b6d645941ca0e"
     },
     {
       "file": "storybook/320x720/scene-river.png",
