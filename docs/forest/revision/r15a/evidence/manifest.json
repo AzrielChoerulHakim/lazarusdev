@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "4b23ac86e66133fb6ec68407fb73aa3146884515",
+  "sourceCommit": "c5644d14d45dd48b33b80b15cf9a195380746d78",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -42,8 +42,8 @@
     },
     {
       "file": "root/1440x900/scene-river.png",
-      "bytes": 2101915,
-      "sha256": "eb3b7d88c557531f34b5284cf12ca63355250b88cb3d752801694a5aa7345df3"
+      "bytes": 2101698,
+      "sha256": "16cdbda037ee4455502a8a1e0c46ff0bb487a641d216271dda347fdadb283089"
     },
     {
       "file": "root/1440x900/scene-house.png",
@@ -67,8 +67,8 @@
     },
     {
       "file": "root/390x844/scene-river.png",
-      "bytes": 345039,
-      "sha256": "1b60b5ff442ae516ddbc5669233ce60f9544f4e1743f2232123b9cd3a195c235"
+      "bytes": 345069,
+      "sha256": "f3f7eeaf5f949da74a1da4c74586f05538f9a9a0d5d9121c2ce5bdd2fe29b3aa"
     },
     {
       "file": "root/390x844/scene-house.png",
@@ -92,8 +92,8 @@
     },
     {
       "file": "root/320x720/scene-river.png",
-      "bytes": 234213,
-      "sha256": "00c909722ed895ddb80aca7c56354d386004489fc1fa5ca3089dccf3bbd17b2d"
+      "bytes": 234183,
+      "sha256": "51a0838cc263e3615f1f15f32b4b00df8f2038f89cc4cee4e2ce79d0e04d0de2"
     },
     {
       "file": "root/320x720/scene-house.png",
@@ -117,8 +117,8 @@
     },
     {
       "file": "root/844x390/scene-river.png",
-      "bytes": 755302,
-      "sha256": "4764dd289549808cc9e1a33393b58125cd843681fc789789a6fea71123d1b1fa"
+      "bytes": 755277,
+      "sha256": "dee99e90ec40161078840f284b3ec3bf0376ae211ee163ba08b5f19aca913e04"
     },
     {
       "file": "root/844x390/scene-house.png",
@@ -142,8 +142,8 @@
     },
     {
       "file": "storybook/1440x900/scene-river.png",
-      "bytes": 2101915,
-      "sha256": "eb3b7d88c557531f34b5284cf12ca63355250b88cb3d752801694a5aa7345df3"
+      "bytes": 2101698,
+      "sha256": "16cdbda037ee4455502a8a1e0c46ff0bb487a641d216271dda347fdadb283089"
     },
     {
       "file": "storybook/1440x900/scene-house.png",
@@ -167,8 +167,8 @@
     },
     {
       "file": "storybook/390x844/scene-river.png",
-      "bytes": 345039,
-      "sha256": "1b60b5ff442ae516ddbc5669233ce60f9544f4e1743f2232123b9cd3a195c235"
+      "bytes": 345069,
+      "sha256": "f3f7eeaf5f949da74a1da4c74586f05538f9a9a0d5d9121c2ce5bdd2fe29b3aa"
     },
     {
       "file": "storybook/390x844/scene-house.png",
@@ -192,8 +192,8 @@
     },
     {
       "file": "storybook/320x720/scene-river.png",
-      "bytes": 234213,
-      "sha256": "00c909722ed895ddb80aca7c56354d386004489fc1fa5ca3089dccf3bbd17b2d"
+      "bytes": 234183,
+      "sha256": "51a0838cc263e3615f1f15f32b4b00df8f2038f89cc4cee4e2ce79d0e04d0de2"
     },
     {
       "file": "storybook/320x720/scene-house.png",
@@ -217,8 +217,8 @@
     },
     {
       "file": "storybook/844x390/scene-river.png",
-      "bytes": 755302,
-      "sha256": "4764dd289549808cc9e1a33393b58125cd843681fc789789a6fea71123d1b1fa"
+      "bytes": 755277,
+      "sha256": "dee99e90ec40161078840f284b3ec3bf0376ae211ee163ba08b5f19aca913e04"
     },
     {
       "file": "storybook/844x390/scene-house.png",
@@ -227,13 +227,13 @@
     },
     {
       "file": "root/390x844/rescue-lift.png",
-      "bytes": 323057,
-      "sha256": "dff152c9bcd29ed295d08c69dd6ac177dba51f13cfaa8d120dab577e13a2c515"
+      "bytes": 318006,
+      "sha256": "f8a53722e64f09a9777a0d95ef3b64317cfbcb1e810126c3e64ddf72204b2ab5"
     },
     {
       "file": "root/390x844/rescue-carrying.png",
-      "bytes": 323234,
-      "sha256": "7ac7f53648995d2072696bc038c68d31f47a486c172fbaebd2cb0b47d51aca25"
+      "bytes": 318220,
+      "sha256": "ea203e727f1dd9728f1238c218b995e51cc85b0da55616cc57cc5ea645ebd317"
     },
     {
       "file": "storybook/390x844/rescue-lift.png",
@@ -263,6 +263,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -287,6 +289,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -311,6 +315,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -335,6 +341,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 869.3125,
         "y": 912.21875,
@@ -365,6 +373,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -384,6 +394,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 390
     },
@@ -408,6 +420,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -432,6 +446,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -456,6 +472,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 25.0625,
         "y": 708.640625,
@@ -486,6 +504,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -505,6 +525,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 320
     },
@@ -529,6 +551,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -553,6 +577,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -577,6 +603,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 22,
         "y": 604.546875,
@@ -607,6 +635,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -626,6 +656,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 844
     },
@@ -650,6 +682,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -674,6 +708,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -698,6 +734,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 381.359375,
         "y": 494.828125,
@@ -728,6 +766,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -747,6 +787,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -771,6 +813,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -795,6 +839,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -819,6 +865,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 869.3125,
         "y": 912.21875,
@@ -849,6 +897,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 1440
     },
@@ -868,6 +918,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 390
     },
@@ -892,6 +944,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -916,6 +970,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -940,6 +996,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 25.0625,
         "y": 708.640625,
@@ -970,6 +1028,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 390
     },
@@ -989,6 +1049,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 320
     },
@@ -1013,6 +1075,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -1037,6 +1101,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -1061,6 +1127,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 22,
         "y": 604.546875,
@@ -1091,6 +1159,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 320
     },
@@ -1110,6 +1180,8 @@
       "walker": null,
       "pose": null,
       "storySheet": false,
+      "frameX": null,
+      "sheetSize": null,
       "navRect": null,
       "scrollWidth": 844
     },
@@ -1134,6 +1206,8 @@
       },
       "pose": "stand",
       "storySheet": false,
+      "frameX": "37.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -1158,6 +1232,8 @@
       },
       "pose": "look",
       "storySheet": false,
+      "frameX": "62.5%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -1182,6 +1258,8 @@
       },
       "pose": "carry",
       "storySheet": true,
+      "frameX": "100%",
+      "sheetSize": "500% 100%",
       "navRect": {
         "x": 381.359375,
         "y": 494.828125,
@@ -1212,6 +1290,8 @@
       },
       "pose": "lantern",
       "storySheet": false,
+      "frameX": "100%",
+      "sheetSize": "900% 100%",
       "navRect": null,
       "scrollWidth": 844
     },
@@ -1293,6 +1373,6 @@
     }
   ],
   "failures": [],
-  "signOff": "USER-APPROVED-DIRECTION / ARTWORK-REVIEWED-IN-RENDER",
+  "signOff": "AUTOMATED-RENDER-EVIDENCE / FINAL-HUMAN-ART-APPROVAL-PENDING",
   "physicalPhone": "NOT VERIFIED"
 }
