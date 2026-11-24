@@ -104,6 +104,19 @@ try{
    assert.equal(house.visibility,'visible','window page needs actual rescue completion');
    assert.ok(house.pagePosition.x>.77&&house.pagePosition.x<.86&&house.pagePosition.y>.18&&house.pagePosition.y<.29,'desktop page must hang in attic window: '+JSON.stringify(house));
    await capture(page,routeName+'-house-page');
+   // A completed delivery survives a return to the river until the upstream
+   // reset boundary, and must not show the page in the guide's hands again.
+   await at(page,'.v3-river-scroll',.60);
+   await page.waitForTimeout(250);
+   const revisit=await page.evaluate(()=>({
+     owner:document.body.dataset.pageOwner,
+     pose:document.querySelector('.living-guide').dataset.pose,
+     carrying:document.querySelector('.living-guide').dataset.carrying
+   }));
+   assert.equal(revisit.owner,'window','return to river must preserve delivered page');
+   assert.notEqual(revisit.pose,'carry','delivered page must not reappear in hand');
+   assert.equal(revisit.carrying,'false');
+   result.checks.push({route:routeName,deliveredRiverRevisit:revisit});
    await page.evaluate(()=>{
       const host=document.querySelector('.v3-river-scroll');
       scrollTo({top:scrollY+host.getBoundingClientRect().top-innerHeight*1.5,behavior:'instant'});
@@ -189,6 +202,10 @@ try{
      if(i===0||i===3)await capture(transitions,routeName+'-seam-'+i);
      result.checks.push({route:routeName,seam:i,state:seamState});
    }
+   // Reverse navigation must restore the original Entrance character.
+   await transitions.evaluate(()=>scrollTo({top:0,behavior:'instant'}));
+   await transitions.waitForTimeout(300);
+   assert.equal(await transitions.locator('.entrance-stage').evaluate(el=>el.classList.contains('guide-departing')),false,'Entrance must restore its painted character on return');
    await transitions.close();
    for(const width of [670,671,760,761]){
       const compactPage=await browser.newPage({viewport:{width,height:900},reducedMotion:'no-preference'});

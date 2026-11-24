@@ -18,9 +18,10 @@ if(river&&house){
   house.dataset.pageOwner=owner;
   river.dataset.pageOwner=owner;
   if(walker&&poses[phase]){
-   walker.dataset.pose=poses[phase];
+   const pose=owner==='window'?'look':poses[phase];
+   walker.dataset.pose=pose;
    const ordinary=['step-a','step-b','step-c','stand','turn','look','reach','read','lantern'];
-   if(ordinary.includes(poses[phase]))walker.style.backgroundPositionX=(ordinary.indexOf(poses[phase])*12.5)+'%';
+   if(ordinary.includes(pose))walker.style.backgroundPositionX=(ordinary.indexOf(pose)*12.5)+'%';
    else walker.style.removeProperty('background-position-x');
   }
   dispatchEvent(new CustomEvent('lazarus:storychange',{detail:{pageId,phase,owner,completed,delivered}}));

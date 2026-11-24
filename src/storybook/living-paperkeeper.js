@@ -141,16 +141,18 @@ function render(snapshot, settling=false) {
   const deltaScroll=Math.abs(scrollY-previousScroll);
   const viewportChanged=previousWidth!==innerWidth||previousHeight!==innerHeight;
   previousScroll=scrollY;previousWidth=innerWidth;previousHeight=innerHeight;
+  const entranceStage=document.querySelector('.entrance-stage');
   const seam=activeSeam();
   const target=seam ? sceneForSeam(seam) : phaseForChapter(snapshot.chapter,snapshot);
   root.dataset.livingScene=target?.kind||'resting';
   if(!target) {
+    entranceStage?.classList.remove('guide-departing');
     guide.style.opacity='0';
     return;
   }
   const size=innerWidth<=670 ? 83 : clamp(innerWidth*.10,105,155);
   const place=safePosition(target.x,target.y,size,target.kind);
-  if(!place){guide.style.opacity='0';return;}
+  if(!place){entranceStage?.classList.remove('guide-departing');guide.style.opacity='0';return;}
   // A genuine anchor jump repositions the actor without a sprint animation.
   // Ordinary wheel/touch progress is limited to a fraction of actual scroll
   // distance. At rest there is zero autonomous catch-up movement.
@@ -171,6 +173,9 @@ function render(snapshot, settling=false) {
   let pose='stand';
   if(snapshot.pageOwner==='keeper' && target.kind!=='river-stories'){
     pose='carry';
+  }else if(target.kind==='river-stories' && snapshot.pageOwner==='window'){
+    // Returning to the river after delivery cannot put the same page back in hand.
+    pose='look';
   }else if(target.kind==='river-stories'){
     pose=({watch:'look-down',lantern:'set-lantern',reach:'reach',lift:'lift',carrying:'carry',still:'carry'})[target.action] || 'look';
   }else if(cuePose)pose=cuePose;
@@ -193,7 +198,7 @@ function render(snapshot, settling=false) {
     requestAnimationFrame(()=>{if(guide.isConnected&&!reduced.matches)guide.style.opacity='1';});
   }else guide.style.opacity='1';
   root.dataset.guideOutside=target.kind;
-  document.querySelector('.entrance-stage')?.classList.toggle('guide-departing',
+  entranceStage?.classList.toggle('guide-departing',
     snapshot.chapter==='entrance' && (snapshot.progress.entrance??0)>.65);
   previousX=x;previousY=y;last=target;
 }
@@ -206,12 +211,12 @@ function cue(pose,ms=750) {
 }
 let lastSnapshot=null;
 function onFrame(event) {
-  lastSnapshot=event.detail;
+  lastSnapshot={...event.detail,pageOwner:document.body.dataset.pageOwner||event.detail.pageOwner};
   render(lastSnapshot);
   clearTimeout(settle);
   settle=setTimeout(()=>render(lastSnapshot,true),150);
 }
-function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';last=null;previousScroll=scrollY;}
+function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';document.querySelector('.entrance-stage')?.classList.remove('guide-departing');last=null;previousScroll=scrollY;}
 addEventListener('lazarus:storyframe',onFrame);
 addEventListener('lazarus:storychange',event=>{
   if(lastSnapshot){

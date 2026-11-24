@@ -3,19 +3,17 @@ on:
   push:
     branches: [main]
     paths:
-      - 'src/storybook/narrative-*.js'
-      - 'src/storybook/keeper-journey.js'
-      - 'src/storybook/living-paperkeeper.js'
-      - 'src/storybook/styles/living-paperkeeper.css'
-      - 'src/storybook/paper-rescue.js'
-      - 'src/storybook/chapter-attention.js'
-      - 'src/storybook/styles/keeper-journey.css'
-      - 'src/storybook/styles/paper-rescue.css'
-      - 'src/storybook/styles/narrative-v3.css'
+      - 'src/storybook/**'
+      - 'storybook/assets/**'
+      - 'package.json'
+      - 'vite*.config.js'
       - 'index.html'
       - 'storybook/index.html'
       - 'scripts/forest_v3_*.mjs'
       - 'scripts/forest_living_story_browser.mjs'
+      - 'scripts/forest_paperkeeper_story_smoke.mjs'
+      - 'scripts/forest_paperkeeper_motion_smoke.mjs'
+      - 'scripts/forest_entrance_smoke.mjs'
       - '.github/workflows/lazarus-v3.yml'
   workflow_dispatch:
 permissions:

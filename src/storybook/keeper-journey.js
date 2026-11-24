@@ -67,7 +67,8 @@ function paint(walker, state, still, snapshot) {
   if (kind === 'river' && !seam) {
     const story = walker.closest('.river-scene')?.dataset.rescue;
     const storyPose = {watch:'look-down', lantern:'set-lantern', reach:'reach', lift:'lift', carrying:'carry', still:'carry'};
-    if (story && storyPose[story]) pose = storyPose[story];
+    if (document.body.dataset.pageOwner === 'window') pose = 'look';
+    else if (story && storyPose[story]) pose = storyPose[story];
   }
   if (kind === 'river') {
     const lift = Math.min(1, Math.max(0, (progress - arrival) / (.88 - arrival)));
@@ -99,7 +100,7 @@ function onStoryFrame(event) {
   }
   clearTimeout(settleTimer);
   settleTimer = setTimeout(() => {
-    if (document.hidden) return;
+    if (document.hidden || document.documentElement.classList.contains('living-guide-ready')) return;
     for (const [walker, state] of visible) {
       const rect = walker.parentElement.getBoundingClientRect();
       if (rect.bottom < -innerHeight || rect.top > innerHeight*2) continue;

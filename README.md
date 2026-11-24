@@ -36,6 +36,14 @@ Run the dedicated V3 source gate using **npm run check:v3**. The **Lazarus V3 - 
 
 **Boundary:** The V3 code and automated checks are not a claim of completed subjective art approval, freshly illustrated replacement art, or a functioning lead-delivery backend.
 
+## Living Paperkeeper — 23–24 November 2026
+
+The [Living Paperkeeper plan](docs/forest/LIVING-PAPERKEEPER-EXECUTION-PLAN.md) is the historical audit, not the current backlog. Main now contains the shared scroll snapshot, one decoded exterior guide, distance-limited footsteps, native-control gestures, causal river-to-window page ownership, and responsive story tests. The retired Atrium is not part of the public experience. Both routes still use the original painted world.
+
+The earlier cinematic workflow passed at `6866b088d6a5b3ddf363fa58dc2069a24dbfae0e` ([run 45105310159](https://github.com/AzrielChoerulHakim/lazarusdev/actions/runs/45105310159)). This is historical evidence, not verification of future commits. The V3 workflow now covers story source, assets, build configuration and relevant tests; the living-story browser gate includes reverse Entrance navigation and the delivered-page revisit. A new run is required for the current revision.
+
+Remaining acceptance: rendered continuity and performance review on real phones, final human artistic approval, and a verified delivery destination for Field Letter if commercial inquiries are required. Do not restart the already implemented narrative or revive the retired Atrium.
+
 ## Public claims and launch boundaries
 
 - The folio studies are **concepts, not client commissions**. The page itself is a studio-made experiment, not a fabricated client case study.
