@@ -25,6 +25,11 @@ try {
   await page.locator('.estimate [data-plan]').click();
   assert.match(await page.locator('#order-output').inputValue(),/Business \/ UMKM/);
   assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  const contact=new URL(await page.locator('#whatsapp-order').getAttribute('href'));
+  assert.equal(contact.origin,'https://wa.me');
+  assert.equal(contact.pathname,'/6285111507037');
+  assert.match(contact.searchParams.get('text'),/1[.]149[.]000/);
+  assert.equal(await page.locator('.footer-social a').count(),3);
   await page.locator('#ketentuan details').last().locator('summary').click();
   assert.equal(await page.locator('#ketentuan details').last().getAttribute('open'),'');
   await page.locator('#personal').scrollIntoViewIfNeeded();

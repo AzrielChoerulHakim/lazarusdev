@@ -7,3 +7,6 @@ Content: 13 portfolio comparison rows, business base setup, 10 add-ons, 7 SOP st
 Hosting caveat: Vercel Hobby is personal/noncommercial only (https://vercel.com/docs/limits/fair-use-guidelines and https://vercel.com/legal/terms). The source's unconditional Permanent Free Hosting wording is qualified rather than advertised as a vendor guarantee; owner must confirm compliant hosting and economics before accepting orders. Prices and all other commercial conditions retained. Domain legalities retained as supplied; not independently verified.
 
 Release acceptance: browser QA, real phone testing, Pages deployment verification, official contact configuration, hosting plan and policy approval remain necessary. Legacy source/assets retained for rollback.
+
+## Contact configuration
+Owner supplied WhatsApp destination, Instagram and TikTok on 25 November 2026. Public catalogue now links those destinations and prepares a WhatsApp draft only on deliberate visitor action. This supersedes the earlier missing-contact note; briefing forms remain admin-provided. Account activation and delivery are not independently verified. No messages are sent by the website itself.
