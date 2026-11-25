@@ -63,6 +63,14 @@ try {
   await page.locator('#order-plan').selectOption('Business / UMKM');
   assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
   assert.equal(await page.locator('#edit-addons').isVisible(),true);
+  await page.locator('#order-note').fill('catatan sementara');
+  await page.locator('.design-preview[href="./desain/monograph.html"]').click();
+  await page.locator('.choose').click();
+  assert.equal(await page.locator('#order-plan').inputValue(),'Business / UMKM');
+  assert.equal(await page.locator('#order-design').inputValue(),'monograph');
+  assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  assert.equal(await page.locator('#order-note').inputValue(),'');
+  assert.ok(await page.evaluate(()=>!new URL(location.href).searchParams.has('design')));
   await page.locator('#kontak').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/commercial/'+width+'-contact.png'});
   await page.locator('#ketentuan details').last().locator('summary').click();
@@ -126,6 +134,8 @@ try {
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'preview overflow '+slug+' '+width);
    assert.equal(await p.locator('main figure img').getAttribute('src'),'./assets/'+slug+'.webp');
    await p.screenshot({path:'artifacts/commercial/preview-'+slug+'-'+width+'.png',fullPage:true});
+   await p.locator('.preview-top a[href="../#desain"]').click();await p.locator('#desain').waitFor();
+   await p.goto(new URL(link,origin).href);
    await p.locator('.choose').click();await p.locator('#order-design').waitFor();assert.equal(await p.locator('#order-design').inputValue(),slug);
    assert.equal(await p.locator('#pesan').count(),1);
    await p.goto(origin+'#desain');await p.locator('#desain').waitFor();
