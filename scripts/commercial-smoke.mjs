@@ -2,10 +2,10 @@ import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'n
 const html=readFileSync('index.html','utf8');
 for(const id of ['personal','business','addons','alur','ketentuan','kontak','pesan','site-nav','menu-toggle','total','dp','balance','order-output'])assert.ok(html.includes('id="'+id+'"'),id);
 assert.equal((html.match(/data-addon data-price=/g)||[]).length,10);
-assert.equal((html.match(/<li><h3>/g)||[]).length,7);
+assert.equal((html.match(/<li data-stage-title=/g)||[]).length,7);
 assert.equal((html.match(/<details(?: open)?>/g)||[]).length,12);
 for(const p of ['179.000','249.000','899.000','449.500'])assert.ok(html.includes(p));
-assert.ok(!html.includes('src/storybook/'));assert.ok(!html.includes('requestAnimationFrame'));
+assert.ok(!html.includes('src/storybook/'));assert.equal((html.match(/requestAnimationFrame\(/g)||[]).length,1,'one event-coalesced scroll scheduler');
 for(const m of html.matchAll(/(?:src|srcset|href)="\.\/(storybook\/assets\/[^"]+)"/g))assert.ok(existsSync(m[1]),m[1]);
 for(const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(m[1]);
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
@@ -16,4 +16,6 @@ assert.ok(!html.includes('href="./storybook/"'),'no public legacy navigation bra
 assert.ok(!/<svg\b/i.test(html),'no inline SVG in commercial root');
 assert.ok(!/[↗↓↑→]/.test(html),'no ornamental arrows');
 assert.ok(!/Plate 01|Chapter [IVX]+ \/|Ruang digital untuk cerita Anda|Lebih dari<br>/.test(html),'no retired generic copy');
+assert.ok(html.includes('id="process-evidence" hidden'),'static baseline');
+assert.ok(html.includes('aria-current'));
 console.log('Commercial catalogue static content and script syntax checks passed');

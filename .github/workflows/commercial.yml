@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'scroll-plan.json'
       - 'scripts/commercial-*.mjs'
       - 'storybook/assets/entrance/**'
       - 'storybook/assets/characters/paperkeeper.front.webp'
@@ -20,6 +21,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Check Design OS scroll decision against pinned registry
+        run: |
+          git clone --quiet https://github.com/AzrielChoerulHakim/lazarus-design-os.git /tmp/lazarus-design-os
+          git -C /tmp/lazarus-design-os checkout --quiet 39c41d6528bfdf2005e3a29d2d37e8d0a71a493a
+          node /tmp/lazarus-design-os/scripts/scroll-director.mjs check "$GITHUB_WORKSPACE/scroll-plan.json" --stage decision
       - run: node scripts/commercial-smoke.mjs
       - run: npm install --no-save --no-audit --no-fund playwright@1.56.1
       - name: Serve actual GitHub Pages source

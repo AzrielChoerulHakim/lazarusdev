@@ -66,5 +66,31 @@ try {
  }
  const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
  await nojs.goto(origin);assert.equal(await nojs.locator('.steps li').count(),7);assert.equal(await nojs.locator('.terms details').count(),12);assert.equal(await nojs.locator('#site-nav').isVisible(),true);assert.equal(await nojs.locator('.contact-directory a').count(),3);assert.equal(await nojs.locator('#copy-order').isVisible(),false);await nojs.close();
+ const scroll=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
+ const scrollErrors=[];scroll.on('pageerror',e=>scrollErrors.push(e.message));
+ await scroll.goto(origin+'#alur');
+ await scroll.waitForFunction(()=>document.querySelector('#site-nav [aria-current="location"]')?.hash==='#alur');
+ assert.equal(await scroll.locator('#process-evidence').isVisible(),true);
+ const visitStep=async index=>{
+   await scroll.evaluate(i=>{const h=document.querySelector('.mast').getBoundingClientRect().height,line=h+(innerHeight-h)*.42,step=document.querySelectorAll('#alur .steps li')[i];window.scrollTo(0,scrollY+step.getBoundingClientRect().top-line+10)},index);
+   await scroll.waitForFunction(i=>document.querySelectorAll('#alur .steps li')[i].dataset.active==='true',index);
+   assert.equal(await scroll.locator('#process-count').innerText(),'Tahap '+(index+1)+' dari 7');
+ };
+ for(const i of [0,3,6,2,0]){await visitStep(i);await scroll.screenshot({path:'artifacts/commercial/scroll-stage-'+i+'.png'});}
+ await scroll.locator('#site-nav a[href="#business"]').click();
+ await scroll.waitForFunction(()=>document.querySelector('#site-nav [aria-current="location"]')?.hash==='#business');
+ await scroll.locator('#site-nav a[href="#ketentuan"]').click();
+ await scroll.waitForFunction(()=>document.querySelector('#site-nav [aria-current="location"]')?.hash==='#ketentuan');
+ await scroll.goBack();
+ await scroll.waitForFunction(()=>document.querySelector('#site-nav [aria-current="location"]')?.hash==='#business');
+ await scroll.emulateMedia({reducedMotion:'reduce'});
+ assert.equal(await scroll.locator('#process-evidence').isVisible(),false);
+ assert.equal(await scroll.locator('.mast').evaluate(el=>getComputedStyle(el).position),'static');
+ await scroll.emulateMedia({reducedMotion:'no-preference'});
+ await scroll.setViewportSize({width:390,height:844});
+ assert.equal(await scroll.locator('#process-evidence').isVisible(),false);
+ assert.equal(await scroll.locator('.steps li').count(),7);
+ assert.deepEqual(scrollErrors,[]);
+ await scroll.close();
  console.log('Commercial browser QA passed');
 }finally{await browser.close();}
