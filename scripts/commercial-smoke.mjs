@@ -20,5 +20,9 @@ assert.ok(html.includes('id="process-evidence" hidden'),'static baseline');
 assert.ok(html.includes('aria-current'));
 assert.equal((html.match(/class="design-preview"/g)||[]).length,7);
 for(const m of html.matchAll(/href="\.\/(desain\/[^"]+\.html)"/g))assert.ok(existsSync(m[1]),m[1]);
-new vm.Script(readFileSync('desain/app.js','utf8'));
+const pictures=[...html.matchAll(/class="design-image" src="\.\/(desain\/assets\/[^"]+\.webp)"/g)];
+assert.equal(pictures.length,7);
+for(const m of pictures){const bytes=readFileSync(m[1]);assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<125000);}
+for(const m of html.matchAll(/href="\.\/(desain\/[^"]+\.html)"/g)){const preview=readFileSync(m[1],'utf8');assert.ok(!/<svg\b|<script\b|<iframe\b/i.test(preview));assert.ok(preview.includes('href="../#desain"'));}
+assert.ok(!html.includes('class="mini mini-'));
 console.log('Commercial catalogue static content and script syntax checks passed');

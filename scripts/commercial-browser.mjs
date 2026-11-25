@@ -97,11 +97,17 @@ try {
   const p=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});const errs=[];p.on('pageerror',e=>errs.push(e.message));
   await p.goto(origin+'#desain');assert.equal(await p.locator('.design-preview').count(),7);
   for(const slug of designs){
-   const link=await p.locator('.design-preview[href="./desain/'+slug+'.html"]').getAttribute('href');
+   const tile=p.locator('.design-preview[href="./desain/'+slug+'.html"]');
+   await tile.scrollIntoViewIfNeeded();await tile.locator('img').evaluate(img=>img.decode());
+   assert.ok(await tile.locator('img').evaluate(img=>img.naturalWidth===959));
+   const link=await tile.getAttribute('href');
    const response=await p.goto(new URL(link,origin).href);assert.equal(response.status(),200);
-   assert.equal(await p.locator('#stage .concept').count(),1);
+   assert.equal(await p.locator('main figure img').count(),1);
+   await p.locator('main figure img').evaluate(img=>img.decode());
+   assert.ok(await p.locator('main figure img').evaluate(img=>img.naturalWidth===959&&img.naturalHeight===600));
+   assert.equal(await p.locator('svg, iframe, script').count(),0);
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'preview overflow '+slug+' '+width);
-   const target=p.locator('#stage button').last();if(await target.count()){await target.click();assert.equal(await target.getAttribute('aria-pressed'),'true');}
+   assert.equal(await p.locator('main figure img').getAttribute('src'),'./assets/'+slug+'.webp');
    await p.screenshot({path:'artifacts/commercial/preview-'+slug+'-'+width+'.png',fullPage:true});
    await p.locator('.preview-top a').click();await p.locator('#desain').waitFor();
   }
