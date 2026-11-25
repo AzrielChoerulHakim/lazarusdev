@@ -1,3 +1,9 @@
+# Lazarus Dev — Commercial catalogue
+
+Root: https://azrielchoerulhakim.github.io/lazarusdev/ — Indonesian service catalogue. Legacy forest experience: /storybook/. See [commercial reconstruction](docs/COMMERCIAL-RECONSTRUCTION.md). Run `node scripts/commercial-smoke.mjs` for the new static gate. The following earlier documentation is historical and describes the retained storybook, not the new root.
+
+---
+
 # LAZARUS DEV — The Forest Between Pages
 
 **Website:** https://azrielchoerulhakim.github.io/lazarusdev/

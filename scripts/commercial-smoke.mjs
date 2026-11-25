@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';
+const html=readFileSync('index.html','utf8');
+for(const id of ['personal','business','addons','alur','ketentuan','pesan','total','dp','balance','order-output'])assert.ok(html.includes('id="'+id+'"'),id);
+assert.equal((html.match(/data-addon data-price=/g)||[]).length,10);
+assert.equal((html.match(/<li><h3>/g)||[]).length,7);
+assert.equal((html.match(/<details(?: open)?>/g)||[]).length,12);
+for(const p of ['179.000','249.000','899.000','449.500'])assert.ok(html.includes(p));
+assert.ok(!html.includes('src/storybook/'));assert.ok(!html.includes('requestAnimationFrame'));
+for(const m of html.matchAll(/(?:src|srcset|href)="\.\/(storybook\/assets\/[^"]+)"/g))assert.ok(existsSync(m[1]),m[1]);
+for(const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(m[1]);
+console.log('Commercial catalogue static content and script syntax checks passed');
