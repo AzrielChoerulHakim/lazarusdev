@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'desain/**'
+      - 'vite.config.js'
       - 'scroll-plan.json'
       - 'scripts/commercial-*.mjs'
       - 'storybook/assets/entrance/**'

@@ -1,0 +1,9 @@
+# Seven Visual Directions — commercial preview integration
+
+Source: Lazarus Design OS `concepts/` at 39c41d6528bfdf2005e3a29d2d37e8d0a71a493a. Source README explicitly identifies seven original artboards using fictional ATELIER SERA; this integration treats them as the confirmed preview basis, not as commissioned work or proof of an external exhibition award. Reference Atlas third-party source code/assets are not redistributed.
+
+The root catalogue uses seven lightweight CSS composition sketches (not screenshots). Every link opens a dedicated standalone page containing the corresponding original source artboard, adapted to mobile and with nonfunctional UI labels removed where identified. Existing meaningful illustrative SVG maps, technical elevations and architectural models are retained inside previews only. The root remains SVG-free. External Google Fonts import removed; installed fallback fonts are used. Source interaction logic reused for Cartography, Film Sequence, Blueprint, Public Index and Object Gallery; Monograph and Material Journal are reading compositions. Object Gallery's model and Blueprint's drawing are illustrative shared shapes with varying labels, not separate real projects or verified drawings. No new animation mechanism or third-party library. No simultaneous iframe loading.
+
+Navigation remains a single nav; #desain added as a native anchor and active chapter. The old "seven styles in curation" text replaced. Core prices, payment, SOP and ToS preserved. All preview pages return to the gallery. Vite inputs include seven previews.
+
+CI checks seven links, three preview widths, available local interactions and return paths. Human review of actual appearance, physical phone, text resize, contrast and source-bound release evidence remains outstanding; no claim of complete Design OS certification.

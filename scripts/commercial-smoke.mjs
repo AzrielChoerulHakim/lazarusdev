@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';
 const html=readFileSync('index.html','utf8');
-for(const id of ['personal','business','addons','alur','ketentuan','kontak','pesan','site-nav','menu-toggle','total','dp','balance','order-output'])assert.ok(html.includes('id="'+id+'"'),id);
+for(const id of ['personal','desain','business','addons','alur','ketentuan','kontak','pesan','site-nav','menu-toggle','total','dp','balance','order-output'])assert.ok(html.includes('id="'+id+'"'),id);
 assert.equal((html.match(/data-addon data-price=/g)||[]).length,10);
 assert.equal((html.match(/<li data-stage-title=/g)||[]).length,7);
 assert.equal((html.match(/<details(?: open)?>/g)||[]).length,12);
@@ -18,4 +18,7 @@ assert.ok(!/[↗↓↑→]/.test(html),'no ornamental arrows');
 assert.ok(!/Plate 01|Chapter [IVX]+ \/|Ruang digital untuk cerita Anda|Lebih dari<br>/.test(html),'no retired generic copy');
 assert.ok(html.includes('id="process-evidence" hidden'),'static baseline');
 assert.ok(html.includes('aria-current'));
+assert.equal((html.match(/class="design-preview"/g)||[]).length,7);
+for(const m of html.matchAll(/href="\.\/(desain\/[^"]+\.html)"/g))assert.ok(existsSync(m[1]),m[1]);
+new vm.Script(readFileSync('desain/app.js','utf8'));
 console.log('Commercial catalogue static content and script syntax checks passed');

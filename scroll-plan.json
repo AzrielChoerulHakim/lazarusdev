@@ -26,8 +26,8 @@
     },
     {
       "id": "catalogue-sections",
-      "claim": "Five named sections: personal, business, order process, terms, contact.",
-      "source": "index.html at 39eae938fb730d3655b24862ad101ba1906a0160",
+      "claim": "Six named sections: personal, design previews, business, order process, terms, contact.",
+      "source": "Existing index.html plus this commercial gallery integration",
       "status": "verified",
       "tags": [
         "verified-sections"
@@ -59,7 +59,7 @@
     },
     {
       "systemId": "chapter-index-sync",
-      "why": "Five substantive catalogue sections are long enough that desktop readers need a clear indication of their current section.",
+      "why": "Six substantive catalogue sections are long enough that desktop readers need a clear indication of their current section.",
       "readerBenefit": "Find pricing, procedure, legal terms and contact without creating a second navigation branch.",
       "implementation": "Existing single navigation receives aria-current=location from one active section; desktop sticky header only when sufficient width and height.",
       "stateSource": "Ordered main section IDs and the same coalesced scroll snapshot; anchors remain native, no hash rewriting.",

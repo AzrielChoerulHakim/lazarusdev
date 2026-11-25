@@ -55,7 +55,7 @@ try {
   await page.locator('#personal').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/commercial/'+width+'-pricing.png'});
   assert.equal(await page.locator('svg').count(),0);
-  for(const id of ['personal','business','alur','ketentuan','kontak']){
+  for(const id of ['personal','desain','business','alur','ketentuan','kontak']){
    const section=page.locator('#'+id);
    await section.scrollIntoViewIfNeeded();
    assert.ok(await section.evaluate(el=>el.getBoundingClientRect().width<=innerWidth+1),'section width '+id);
@@ -92,5 +92,20 @@ try {
  assert.equal(await scroll.locator('.steps li').count(),7);
  assert.deepEqual(scrollErrors,[]);
  await scroll.close();
+ const designs=["monograph","cartography","film-sequence","blueprint","public-index","object-gallery","material-journal"];
+ for(const width of [320,390,1440]){
+  const p=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});const errs=[];p.on('pageerror',e=>errs.push(e.message));
+  await p.goto(origin+'#desain');assert.equal(await p.locator('.design-preview').count(),7);
+  for(const slug of designs){
+   const link=await p.locator('.design-preview[href="./desain/'+slug+'.html"]').getAttribute('href');
+   const response=await p.goto(new URL(link,origin).href);assert.equal(response.status(),200);
+   assert.equal(await p.locator('#stage .concept').count(),1);
+   assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'preview overflow '+slug+' '+width);
+   const target=p.locator('#stage button').last();if(await target.count()){await target.click();assert.equal(await target.getAttribute('aria-pressed'),'true');}
+   await p.screenshot({path:'artifacts/commercial/preview-'+slug+'-'+width+'.png',fullPage:true});
+   await p.locator('.preview-top a').click();await p.locator('#desain').waitFor();
+  }
+  assert.deepEqual(errs,[]);await p.close();
+ }
  console.log('Commercial browser QA passed');
 }finally{await browser.close();}
