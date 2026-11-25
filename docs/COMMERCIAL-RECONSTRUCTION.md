@@ -10,3 +10,6 @@ Release acceptance: browser QA, real phone testing, Pages deployment verificatio
 
 ## Contact configuration
 Owner supplied WhatsApp destination, Instagram and TikTok on 25 November 2026. Public catalogue now links those destinations and prepares a WhatsApp draft only on deliberate visitor action. This supersedes the earlier missing-contact note; briefing forms remain admin-provided. Account activation and delivery are not independently verified. No messages are sent by the website itself.
+
+## Navigation and contact consolidation
+One main nav, mobile in-flow disclosure with Escape and auto-close on anchor selection, no duplicated public archive branch or repeated price strip. Contact directory shows the supplied phone and account handles. The previous #pesan anchor is preserved on the order summary inside #kontak. Desktop estimate no longer sticks to viewport. Legacy storybook files and direct URL remain available for historical access. Browser QA now exercises six viewport sizes, navigation state, contact links and switching between Premium and Business without leaking add-ons into the personal order. No contact account verification or message delivery is claimed.

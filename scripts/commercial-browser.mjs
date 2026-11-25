@@ -5,7 +5,7 @@ const origin=process.env.SITE_ORIGIN||'http://127.0.0.1:4186/lazarusdev/';
 mkdirSync('artifacts/commercial',{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
 try {
- for(const [width,height] of [[320,720],[390,844],[768,1024],[1440,900]]){
+ for(const [width,height] of [[320,720],[390,844],[768,1024],[844,390],[1024,768],[1440,900]]){
   const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const response=await page.goto(origin);assert.equal(response.status(),200);
@@ -16,6 +16,17 @@ try {
   await page.locator('.hero-art img').evaluate(img=>img.decode());
   assert.ok(await page.locator('.hero-art img').evaluate(i=>i.naturalWidth>0));
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'overflow '+width);
+  const nav=page.locator('#site-nav'), toggle=page.locator('#menu-toggle');
+  assert.equal(await page.locator('nav').count(),1);
+  if(width<=950){
+   assert.equal(await nav.isVisible(),false);
+   await toggle.click();assert.equal(await nav.isVisible(),true);
+   assert.equal(await toggle.getAttribute('aria-expanded'),'true');
+   await page.keyboard.press('Escape');assert.equal(await nav.isVisible(),false);
+   await toggle.click();await nav.locator('a[href="#kontak"]').click();assert.equal(await nav.isVisible(),false);
+   assert.ok(await page.evaluate(()=>location.hash==='#kontak'));
+  }else{assert.equal(await nav.isVisible(),true);assert.equal(await toggle.isVisible(),false);}
+  await page.evaluate(()=>window.scrollTo(0,0));
   await page.screenshot({path:'artifacts/commercial/'+width+'-hero.png'});
   await page.locator('#addon-0').fill('2');
   await page.locator('#addon-1').fill('1');
@@ -29,7 +40,16 @@ try {
   assert.equal(contact.origin,'https://wa.me');
   assert.equal(contact.pathname,'/6285111507037');
   assert.match(contact.searchParams.get('text'),/1[.]149[.]000/);
-  assert.equal(await page.locator('.footer-social a').count(),3);
+  assert.equal(await page.locator('.contact-directory a').count(),3);
+  assert.equal(await page.locator('.contact-directory a').nth(1).getAttribute('href'),'https://www.instagram.com/lazarus_dev/');
+  assert.equal(await page.locator('.contact-directory a').nth(2).getAttribute('href'),'https://www.tiktok.com/@lazarus.dev');
+  await page.locator('[data-plan="Premium"]').click();
+  assert.match(await page.locator('#order-output').inputValue(),/249[.]000/);
+  assert.doesNotMatch(await page.locator('#order-output').inputValue(),/Katalog produk tambahan/);
+  await page.locator('.estimate [data-plan]').click();
+  assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  await page.locator('#kontak').scrollIntoViewIfNeeded();
+  await page.screenshot({path:'artifacts/commercial/'+width+'-contact.png'});
   await page.locator('#ketentuan details').last().locator('summary').click();
   assert.equal(await page.locator('#ketentuan details').last().getAttribute('open'),'');
   await page.locator('#personal').scrollIntoViewIfNeeded();
@@ -38,6 +58,6 @@ try {
   await page.close();
  }
  const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
- await nojs.goto(origin);assert.equal(await nojs.locator('.steps li').count(),7);assert.equal(await nojs.locator('.terms details').count(),12);await nojs.close();
+ await nojs.goto(origin);assert.equal(await nojs.locator('.steps li').count(),7);assert.equal(await nojs.locator('.terms details').count(),12);assert.equal(await nojs.locator('#site-nav').isVisible(),true);assert.equal(await nojs.locator('.contact-directory a').count(),3);assert.equal(await nojs.locator('#copy-order').isVisible(),false);await nojs.close();
  console.log('Commercial browser QA passed');
 }finally{await browser.close();}
