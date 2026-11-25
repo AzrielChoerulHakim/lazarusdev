@@ -269,3 +269,8 @@ Physical-phone testing and human artistic approval must retain their honest stat
 Start with Stage 1: synchronize scene progress and breakpoint ownership, with a regression reproducing the observed 0.3828 -> 0.7559 frozen walker. Then implement the continuous actor against those same production files.
 
 The objective is a guide that notices, acts and leaves consequences across the page while the visitor retains control of the journey.
+
+
+## 25 November 2026 — user-reported movement and identity correction
+
+The owner reports that Paperkeeper jumps and that the drawings look inconsistent. The old runtime swaps visibly different legacy walk/read cells with the high-detail R02 silhouette, and direct relocations can become visible during an opacity transition. This correction uses the R02 stand cell consistently during ordinary travel, a small grounded lean rather than a mismatched walking cycle, separate facing and positional transforms, capped scroll-distance increments, a short compositor transition and hidden relocation for large skips. Genuine river rescue poses remain a separate authored art set. A new matching hand-drawn gait/action library and final physical-device visual acceptance are still outstanding; do not claim that a stable silhouette is a new anatomical walking cycle. The V3 browser test samples small forward and reverse increments and computed canonical frame selection.

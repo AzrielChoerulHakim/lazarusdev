@@ -28,6 +28,8 @@ const obstacles = [...document.querySelectorAll(
 let ready = false;
 let last = null, previousX = 0, previousY = 0, facing = 1, settle = 0, cueTimer = 0, cuePose = '';
 let walkingDistance = 0;
+let repositionFrame = 0;
+let repositionVersion = 0;
 let previousScroll = scrollY, previousWidth = innerWidth, previousHeight = innerHeight;
 const clamp = (v, a, b) => Math.max(a,Math.min(b,v));
 function trailPoint(points, progress) {
@@ -133,8 +135,9 @@ function sceneForSeam(node) {
 function setPose(pose) {
   if(guide.dataset.pose===pose)return;
   guide.dataset.pose=pose;
-  const frames=['step-a','step-b','step-c','stand','turn','look','reach','read','lantern'];
-  if(frames.includes(pose)) guide.style.backgroundPositionX=(frames.indexOf(pose)*12.5)+'%';
+  // The old walk/read cells change silhouette, texture and apparent height.
+  // Ordinary travel now uses the original R02 three-quarter silhouette.
+  // Only authored rescue actions select the separate action sheet.
 }
 function render(snapshot, settling=false) {
   if(!ready || reduced.matches || document.hidden)return;
@@ -146,25 +149,27 @@ function render(snapshot, settling=false) {
   const target=seam ? sceneForSeam(seam) : phaseForChapter(snapshot.chapter,snapshot);
   root.dataset.livingScene=target?.kind||'resting';
   if(!target) {
+    ++repositionVersion;cancelAnimationFrame(repositionFrame);delete guide.dataset.repositioning;
     entranceStage?.classList.remove('guide-departing');
     guide.style.opacity='0';
     return;
   }
   const size=innerWidth<=670 ? 83 : clamp(innerWidth*.10,105,155);
   const place=safePosition(target.x,target.y,size,target.kind);
-  if(!place){entranceStage?.classList.remove('guide-departing');guide.style.opacity='0';return;}
+  if(!place){++repositionVersion;cancelAnimationFrame(repositionFrame);delete guide.dataset.repositioning;entranceStage?.classList.remove('guide-departing');guide.style.opacity='0';return;}
   // A genuine anchor jump repositions the actor without a sprint animation.
   // Ordinary wheel/touch progress is limited to a fraction of actual scroll
   // distance. At rest there is zero autonomous catch-up movement.
   const jump=Boolean(last)&&deltaScroll>innerHeight*.85&&
     Math.hypot(place[0]-previousX,place[1]-previousY)>innerWidth*.34;
-  const [x,y]=!last||viewportChanged||jump
+  const relocate=!last||viewportChanged||jump;
+  const [x,y]=relocate
     ?place
-    :paceTowards([previousX,previousY],place,deltaScroll,innerWidth<=670?.27:.34);
+    :paceTowards([previousX,previousY],place,Math.min(deltaScroll,64),innerWidth<=670?.27:.34);
   const motion=Math.hypot(x-previousX,y-previousY);
   // Face the actual horizontal travel vector, including reversed scrolling.
   const horizontal=x-previousX;
-  if(last && Math.abs(horizontal)>4 && Math.sign(horizontal)!==facing){
+  if(last && !relocate && Math.abs(horizontal)>5 && Math.sign(horizontal)!==facing){
     facing=Math.sign(horizontal);
     guide.dataset.turn='true';
   }else guide.dataset.turn='false';
@@ -187,16 +192,34 @@ function render(snapshot, settling=false) {
   else if(target.kind==='entrance')pose='lantern';
   if(guide.dataset.turn==='true' && !cuePose && !target.action)pose='turn';
   setPose(pose);
+  const storyArt=(target.kind==='river-stories' && ['look-down','set-lantern','reach','lift','carry'].includes(pose)) || pose==='carry';
+  guide.dataset.art=storyArt?'action':'canonical';
+  guide.style.setProperty('--guide-facing',String(facing));
+  guide.style.setProperty('--guide-lean',(!storyArt && travel && !settling ? (Math.sin(walkingDistance/(size*.12))*1.4).toFixed(2) : '0')+'deg');
   guide.dataset.storyAction=target.action;
   guide.dataset.carrying= snapshot.pageOwner==='keeper' ? 'true' : 'false';
   guide.style.height=size+'px';
-  guide.style.transform='translate3d('+x+'px,'+y+'px,0) scaleX('+facing+')';
-  // Never animate the distance on a clock: a stationary finger or wheel
-  // means stationary feet. Only opacity is eased during discontinuities.
-  if(jump) {
+  // Relocation is reserved for initialization, resize and long anchor skips.
+  // Hide BEFORE writing a discontinuous position; a single RAF reveal can
+  // otherwise paint the jump while the prior opacity transition is active.
+  if(relocate) {
+    const version=++repositionVersion;
+    cancelAnimationFrame(repositionFrame);
+    guide.dataset.repositioning='true';
     guide.style.opacity='0';
-    requestAnimationFrame(()=>{if(guide.isConnected&&!reduced.matches)guide.style.opacity='1';});
-  }else guide.style.opacity='1';
+    guide.style.transform='translate3d('+x+'px,'+y+'px,0)';
+    repositionFrame=requestAnimationFrame(()=>{
+      repositionFrame=requestAnimationFrame(()=>{
+        if(version!==repositionVersion||!guide.isConnected||reduced.matches||document.hidden)return;
+        delete guide.dataset.repositioning;
+        guide.style.opacity='1';
+        repositionFrame=0;
+      });
+    });
+  }else{
+    guide.style.transform='translate3d('+x+'px,'+y+'px,0)';
+    if(!guide.dataset.repositioning)guide.style.opacity='1';
+  }
   root.dataset.guideOutside=target.kind;
   entranceStage?.classList.toggle('guide-departing',
     snapshot.chapter==='entrance' && (snapshot.progress.entrance??0)>.65);
@@ -216,7 +239,7 @@ function onFrame(event) {
   clearTimeout(settle);
   settle=setTimeout(()=>render(lastSnapshot,true),150);
 }
-function stop() {clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';document.querySelector('.entrance-stage')?.classList.remove('guide-departing');last=null;previousScroll=scrollY;}
+function stop() {++repositionVersion;cancelAnimationFrame(repositionFrame);delete guide.dataset.repositioning;clearTimeout(settle);clearTimeout(cueTimer);cuePose='';guide.style.opacity='0';document.querySelector('.entrance-stage')?.classList.remove('guide-departing');last=null;previousScroll=scrollY;}
 addEventListener('lazarus:storyframe',onFrame);
 addEventListener('lazarus:storychange',event=>{
   if(lastSnapshot){

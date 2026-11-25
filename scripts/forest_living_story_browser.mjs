@@ -58,6 +58,27 @@ try{
    assert.ok(Math.hypot(measuredRest.x-measuredAfter.x,measuredRest.y-measuredAfter.y)<1.8,
      'Paperkeeper must not continue walking after scroll stops');
    await capture(page,routeName+'-paperkeeper-pacing');
+   const smooth=await page.evaluate(async()=>{
+     const g=document.querySelector('.living-guide');
+     const frames=[];
+     const sample=()=>{const r=g.getBoundingClientRect(),art=getComputedStyle(g,'::before');
+       return {x:r.x,y:r.y,frame:art.backgroundPositionX,sheet:art.backgroundSize,mode:g.dataset.art};};
+     frames.push(sample());
+     for(const dy of [24,24,24,24,-24,-24,-24,-24]){
+       scrollBy({top:dy,behavior:'instant'});
+       await new Promise(r=>setTimeout(r,100));
+       frames.push(sample());
+     }
+     return frames;
+   });
+   for(let i=1;i<smooth.length;i++){
+     assert.ok(Math.hypot(smooth[i].x-smooth[i-1].x,smooth[i].y-smooth[i-1].y)<=12,
+       'small scroll or reversal must not teleport the guide '+JSON.stringify(smooth));
+     assert.equal(smooth[i].mode,'canonical');
+     assert.equal(smooth[i].frame,'37.5%','ordinary movement retains the canonical silhouette');
+     assert.equal(smooth[i].sheet,'900% 100%');
+   }
+   result.checks.push({route:routeName,canonicalTravel:smooth});
    await at(page,'.v3-path-scroll',.7559);
    const second=await page.evaluate(()=>{
      const walker=document.querySelector('[data-walk="path"]'),guide=document.querySelector('.living-guide');
