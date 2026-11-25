@@ -1,6 +1,6 @@
 {
   "schema": "lazarus-r15a-live-scene-v2",
-  "sourceCommit": "c5644d14d45dd48b33b80b15cf9a195380746d78",
+  "sourceCommit": "b72caab4429e57f7baee759907a2acb218da7f62",
   "browser": "Chrome / production Vite",
   "sizes": [
     [
@@ -202,8 +202,8 @@
     },
     {
       "file": "storybook/844x390/scene-entrance.png",
-      "bytes": 172147,
-      "sha256": "e53cc5e6b475051a36300dd0ce1eaddcff1f45b0aa040a5ed6524b365a9e1a40"
+      "bytes": 172138,
+      "sha256": "b7732b8a676b07dd682c3b501bb45b8957976383f2426e557af70bee1c133153"
     },
     {
       "file": "storybook/844x390/scene-path.png",
@@ -227,13 +227,13 @@
     },
     {
       "file": "root/390x844/rescue-lift.png",
-      "bytes": 318006,
-      "sha256": "f8a53722e64f09a9777a0d95ef3b64317cfbcb1e810126c3e64ddf72204b2ab5"
+      "bytes": 323057,
+      "sha256": "dff152c9bcd29ed295d08c69dd6ac177dba51f13cfaa8d120dab577e13a2c515"
     },
     {
       "file": "root/390x844/rescue-carrying.png",
-      "bytes": 318220,
-      "sha256": "ea203e727f1dd9728f1238c218b995e51cc85b0da55616cc57cc5ea645ebd317"
+      "bytes": 323234,
+      "sha256": "7ac7f53648995d2072696bc038c68d31f47a486c172fbaebd2cb0b47d51aca25"
     },
     {
       "file": "storybook/390x844/rescue-lift.png",
@@ -408,13 +408,13 @@
       "chapter": "path",
       "scene": {
         "x": 21.0625,
-        "y": 144.671875,
+        "y": 116.671875,
         "width": 347.875,
         "height": 643.3125
       },
       "walker": {
         "x": 189.27523803710938,
-        "y": 390.4501647949219,
+        "y": 362.4501647949219,
         "width": 60.15203857421875,
         "height": 67.67474365234375
       },
