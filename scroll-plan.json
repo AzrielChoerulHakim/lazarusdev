@@ -39,7 +39,7 @@
       "systemId": "sticky-evidence-exchange",
       "why": "Seven real service stages each have a distinct input or output; the reader benefits from a compact persistent summary of the stage being read.",
       "readerBenefit": "Understand which material, payment or deliverable is relevant without losing the full ordered SOP.",
-      "implementation": "Desktop-only CSS sticky typographic evidence panel; event-driven frame-coalesced DOM geometry selects the real SOP step; all steps always visible.",
+      "implementation": "Desktop sticky typographic evidence panel; same event-coalesced reading position selects the real SOP step on desktop and mobile. Mobile only marks the inline active step; all text stays visible.",
       "stateSource": "The ordered #alur .steps li elements and the viewport reading line; concise evidence labels sourced from each step.",
       "sourceBasis": "docs-reviewed",
       "sourceDescription": "Design OS 39c41d6528bfdf2005e3a29d2d37e8d0a71a493a Scroll Director registry and implementation recipes",
@@ -53,8 +53,8 @@
       "rejectionConsidered": "No fabricated work-in-progress screenshot or animated illustration, no SVG path, no artificial scrolling distance.",
       "fallback": {
         "noJs": "Complete ordered SOP in normal flow; the supplemental sticky summary is hidden.",
-        "reducedMotion": "Complete static SOP, without sticky panel or scroll-linked emphasis.",
-        "mobile": "Complete inline numbered list, without persistent panel or overlay."
+        "reducedMotion": "Complete static SOP; active marker has no visual highlight and no sticky panel.",
+        "mobile": "Complete inline numbered list with a discrete active step, without persistent panel or overlay."
       }
     },
     {

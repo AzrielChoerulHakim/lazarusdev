@@ -1,6 +1,6 @@
-import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';
+import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';import {gzipSync} from 'node:zlib';
 const html=readFileSync('index.html','utf8');
-for(const id of ['personal','desain','business','addons','alur','ketentuan','kontak','pesan','site-nav','menu-toggle','total','dp','balance','order-output'])assert.ok(html.includes('id="'+id+'"'),id);
+for(const id of ['personal','desain','business','addons','alur','ketentuan','kontak','pesan','site-nav','menu-toggle','total','dp','balance','order-output','order-design','design-finder','finder-results','order-amount','order-payment'])assert.ok(html.includes('id="'+id+'"'),id);
 assert.equal((html.match(/data-addon data-price=/g)||[]).length,10);
 assert.equal((html.match(/<li data-stage-title=/g)||[]).length,7);
 assert.equal((html.match(/<details(?: open)?>/g)||[]).length,12);
@@ -25,4 +25,9 @@ assert.equal(pictures.length,7);
 for(const m of pictures){const bytes=readFileSync(m[1]);assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');assert.ok(bytes.length<125000);}
 for(const m of html.matchAll(/href="\.\/(desain\/[^"]+\.html)"/g)){const preview=readFileSync(m[1],'utf8');assert.ok(!/<svg\b|<script\b|<iframe\b/i.test(preview));assert.ok(preview.includes('href="../#desain"'));}
 assert.ok(!html.includes('class="mini mini-'));
+const scripts=[...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m=>m[1]).join('\n');
+assert.ok(gzipSync(scripts).length<15000,'JS budget');
+assert.equal((html.match(/id="order-design"/g)||[]).length,1);
+assert.equal((html.match(/id="order-plan"/g)||[]).length,1);
+assert.ok(!/animation\s*:[^;}]*infinite/i.test(html),'no permanent animation');
 console.log('Commercial catalogue static content and script syntax checks passed');

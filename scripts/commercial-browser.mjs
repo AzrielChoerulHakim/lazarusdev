@@ -48,6 +48,21 @@ try {
   assert.doesNotMatch(await page.locator('#order-output').inputValue(),/Katalog produk tambahan/);
   await page.locator('.estimate [data-plan]').click();
   assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  await page.locator('#design-finder summary').click();
+  await page.locator('#finder-purpose').selectOption('business');
+  await page.locator('#finder-style').selectOption('object');
+  assert.equal(await page.locator('[data-choose-design]').count(),2);
+  await page.locator('[data-choose-design="object-gallery"]').click();
+  assert.equal(await page.locator('#order-design').inputValue(),'object-gallery');
+  assert.match(await page.locator('#order-output').inputValue(),/Object Gallery/);
+  assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  assert.match(new URL(await page.locator('#whatsapp-order').getAttribute('href')).searchParams.get('text'),/Object Gallery/);
+  await page.locator('#order-plan').selectOption('Standard');
+  assert.match(await page.locator('#order-output').inputValue(),/Object Gallery/);
+  assert.doesNotMatch(await page.locator('#order-output').inputValue(),/Katalog produk tambahan/);
+  await page.locator('#order-plan').selectOption('Business / UMKM');
+  assert.match(await page.locator('#order-output').inputValue(),/1[.]149[.]000/);
+  assert.equal(await page.locator('#edit-addons').isVisible(),true);
   await page.locator('#kontak').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/commercial/'+width+'-contact.png'});
   await page.locator('#ketentuan details').last().locator('summary').click();
@@ -65,7 +80,7 @@ try {
   await page.close();
  }
  const nojs=await browser.newPage({javaScriptEnabled:false,viewport:{width:390,height:844}});
- await nojs.goto(origin);assert.equal(await nojs.locator('.steps li').count(),7);assert.equal(await nojs.locator('.terms details').count(),12);assert.equal(await nojs.locator('#site-nav').isVisible(),true);assert.equal(await nojs.locator('.contact-directory a').count(),3);assert.equal(await nojs.locator('#copy-order').isVisible(),false);await nojs.close();
+ await nojs.goto(origin);assert.equal(await nojs.locator('.steps li').count(),7);assert.equal(await nojs.locator('.terms details').count(),12);assert.equal(await nojs.locator('#site-nav').isVisible(),true);assert.equal(await nojs.locator('.contact-directory a').count(),3);assert.equal(await nojs.locator('#copy-order').isVisible(),false);assert.equal(await nojs.locator('#design-finder').isVisible(),false);assert.equal(await nojs.locator('#order-design').isVisible(),false);await nojs.close();
  const scroll=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
  const scrollErrors=[];scroll.on('pageerror',e=>scrollErrors.push(e.message));
  await scroll.goto(origin+'#alur');
@@ -92,6 +107,8 @@ try {
  assert.equal(await scroll.locator('.steps li').count(),7);
  assert.deepEqual(scrollErrors,[]);
  await scroll.close();
+ const touch=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'no-preference'});
+ await touch.goto(origin+'#desain');await touch.locator('#design-finder summary').tap();await touch.locator('#finder-style').selectOption('film');assert.equal(await touch.locator('#keeper').getAttribute('src'),'./storybook/assets/characters/paperkeeper.read.webp');await touch.locator('#keeper').evaluate(i=>i.decode());await touch.locator('[data-choose-design="film-sequence"]').tap();assert.equal(await touch.locator('#order-design').inputValue(),'film-sequence');assert.equal(await touch.locator('#process-evidence').isVisible(),false);assert.ok(await touch.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await touch.locator('#alur .steps li').nth(3).evaluate(el=>window.scrollTo(0,scrollY+el.getBoundingClientRect().top-innerHeight*.42+5));await touch.waitForFunction(()=>document.querySelectorAll('#alur .steps li')[3].dataset.active==='true');await touch.screenshot({path:'artifacts/commercial/touch-journey.png'});await touch.close();
  const designs=["monograph","cartography","film-sequence","blueprint","public-index","object-gallery","material-journal"];
  for(const width of [320,390,1440]){
   const p=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});const errs=[];p.on('pageerror',e=>errs.push(e.message));
@@ -109,7 +126,9 @@ try {
    assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'preview overflow '+slug+' '+width);
    assert.equal(await p.locator('main figure img').getAttribute('src'),'./assets/'+slug+'.webp');
    await p.screenshot({path:'artifacts/commercial/preview-'+slug+'-'+width+'.png',fullPage:true});
-   await p.locator('.preview-top a').click();await p.locator('#desain').waitFor();
+   await p.locator('.choose').click();await p.locator('#order-design').waitFor();assert.equal(await p.locator('#order-design').inputValue(),slug);
+   assert.equal(await p.locator('#pesan').count(),1);
+   await p.goto(origin+'#desain');await p.locator('#desain').waitFor();
   }
   assert.deepEqual(errs,[]);await p.close();
  }
