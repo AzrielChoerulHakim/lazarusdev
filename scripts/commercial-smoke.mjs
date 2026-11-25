@@ -13,4 +13,7 @@ assert.equal(new Set(ids).size,ids.length,'duplicate ID');
 for(const m of html.matchAll(/href="#([^"]+)"/g))assert.ok(ids.includes(m[1]),'broken anchor '+m[1]);
 assert.equal((html.match(/<nav\b/g)||[]).length,1,'single main navigation');
 assert.ok(!html.includes('href="./storybook/"'),'no public legacy navigation branch');
+assert.ok(!/<svg\b/i.test(html),'no inline SVG in commercial root');
+assert.ok(!/[↗↓↑→]/.test(html),'no ornamental arrows');
+assert.ok(!/Plate 01|Chapter [IVX]+ \/|Ruang digital untuk cerita Anda|Lebih dari<br>/.test(html),'no retired generic copy');
 console.log('Commercial catalogue static content and script syntax checks passed');

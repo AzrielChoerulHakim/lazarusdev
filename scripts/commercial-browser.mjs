@@ -5,7 +5,7 @@ const origin=process.env.SITE_ORIGIN||'http://127.0.0.1:4186/lazarusdev/';
 mkdirSync('artifacts/commercial',{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
 try {
- for(const [width,height] of [[320,720],[390,844],[768,1024],[844,390],[1024,768],[1440,900]]){
+ for(const [width,height] of [[320,720],[390,844],[640,900],[768,1024],[844,390],[1024,768],[1440,900]]){
   const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   const response=await page.goto(origin);assert.equal(response.status(),200);
@@ -54,6 +54,13 @@ try {
   assert.equal(await page.locator('#ketentuan details').last().getAttribute('open'),'');
   await page.locator('#personal').scrollIntoViewIfNeeded();
   await page.screenshot({path:'artifacts/commercial/'+width+'-pricing.png'});
+  assert.equal(await page.locator('svg').count(),0);
+  for(const id of ['personal','business','alur','ketentuan','kontak']){
+   const section=page.locator('#'+id);
+   await section.scrollIntoViewIfNeeded();
+   assert.ok(await section.evaluate(el=>el.getBoundingClientRect().width<=innerWidth+1),'section width '+id);
+   if(width===320||width===390)await section.screenshot({path:'artifacts/commercial/'+width+'-'+id+'.png'});
+  }
   assert.deepEqual(errors,[]);
   await page.close();
  }
