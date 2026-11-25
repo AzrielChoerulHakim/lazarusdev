@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Lazarus Dev commercial website",
+    "audience": "Mahasiswa, pencari kerja, profesional muda dan pemilik UMKM",
+    "readerJobs": [
+      "understand-process",
+      "navigate-longform",
+      "scan-chapters"
+    ],
+    "constraints": "Native scrolling, no SVG, no new libraries or assets, no mobile overlap; prices, SOP, contacts and legal clauses remain accessible.",
+    "baseline": "semantic-document"
+  },
+  "evidence": [
+    {
+      "id": "sop-v2",
+      "claim": "Seven approved ordering stages with distinct actual inputs and deliverables, from package choice through live URL.",
+      "source": "Lazarus_Dev_Konten_Website_Harga_SOP_ToS-v2.docx, pages 4–5; index.html #alur",
+      "status": "verified",
+      "tags": [
+        "verified-evidence",
+        "verified-sections",
+        "verified-process",
+        "verified-chronology"
+      ]
+    },
+    {
+      "id": "catalogue-sections",
+      "claim": "Five named sections: personal, business, order process, terms, contact.",
+      "source": "index.html at 39eae938fb730d3655b24862ad101ba1906a0160",
+      "status": "verified",
+      "tags": [
+        "verified-sections"
+      ]
+    }
+  ],
+  "selections": [
+    {
+      "systemId": "sticky-evidence-exchange",
+      "why": "Seven real service stages each have a distinct input or output; the reader benefits from a compact persistent summary of the stage being read.",
+      "readerBenefit": "Understand which material, payment or deliverable is relevant without losing the full ordered SOP.",
+      "implementation": "Desktop-only CSS sticky typographic evidence panel; event-driven frame-coalesced DOM geometry selects the real SOP step; all steps always visible.",
+      "stateSource": "The ordered #alur .steps li elements and the viewport reading line; concise evidence labels sourced from each step.",
+      "sourceBasis": "docs-reviewed",
+      "sourceDescription": "Design OS 39c41d6528bfdf2005e3a29d2d37e8d0a71a493a Scroll Director registry and implementation recipes",
+      "evidenceIds": [
+        "sop-v2"
+      ],
+      "nonTransferable": [
+        "Demo graphic and palette",
+        "Pinned viewport-height choreography"
+      ],
+      "rejectionConsidered": "No fabricated work-in-progress screenshot or animated illustration, no SVG path, no artificial scrolling distance.",
+      "fallback": {
+        "noJs": "Complete ordered SOP in normal flow; the supplemental sticky summary is hidden.",
+        "reducedMotion": "Complete static SOP, without sticky panel or scroll-linked emphasis.",
+        "mobile": "Complete inline numbered list, without persistent panel or overlay."
+      }
+    },
+    {
+      "systemId": "chapter-index-sync",
+      "why": "Five substantive catalogue sections are long enough that desktop readers need a clear indication of their current section.",
+      "readerBenefit": "Find pricing, procedure, legal terms and contact without creating a second navigation branch.",
+      "implementation": "Existing single navigation receives aria-current=location from one active section; desktop sticky header only when sufficient width and height.",
+      "stateSource": "Ordered main section IDs and the same coalesced scroll snapshot; anchors remain native, no hash rewriting.",
+      "sourceBasis": "docs-reviewed",
+      "sourceDescription": "Design OS 39c41d6528bfdf2005e3a29d2d37e8d0a71a493a Scroll Director registry and implementation recipes",
+      "evidenceIds": [
+        "catalogue-sections"
+      ],
+      "nonTransferable": [
+        "Source demo navigation styling",
+        "Floating chapter overlays"
+      ],
+      "rejectionConsidered": "No extra progress rail or duplicate mobile navigation; the current existing menu is sufficient.",
+      "fallback": {
+        "noJs": "Normal header with working native fragment links and no sticky behavior.",
+        "reducedMotion": "Active link updates discretely; no transition or persistent header.",
+        "mobile": "Existing collapsible in-flow menu stays non-sticky; active section appears when opened."
+      }
+    }
+  ],
+  "noScrollReason": "",
+  "rejected": [
+    {
+      "systemId": "layered-card-stack",
+      "reason": "Previously reported stacked controls; overlap would risk hiding prices and form fields."
+    },
+    {
+      "systemId": "depth-parallax-theatre",
+      "reason": "Existing artwork is static; extra layers add cost without improving package or process comprehension."
+    },
+    {
+      "systemId": "svg-journey-trace",
+      "reason": "Owner explicitly rejected generic SVG; ordered SOP already communicates its sequence."
+    },
+    {
+      "systemId": "object-sequence-scrub",
+      "reason": "No verified frame sequence of actual client project delivery."
+    }
+  ],
+  "qa": {
+    "reviewedCommit": "",
+    "environment": "Pending GitHub Actions Chromium and independent visual/physical-phone review",
+    "checks": [
+      {
+        "id": "no-js-content",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "reduced-motion",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "mobile-320",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "mobile-390",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "short-height",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "keyboard",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "reverse-scroll",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "touch",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "scroll-escape",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "semantic-reading-order",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "performance",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "source-rights",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "focus-order",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "reading-order",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "resize",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "anchor-deeplink",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "hash-history",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "active-state",
+        "status": "not-tested",
+        "evidencePath": ""
+      },
+      {
+        "id": "sticky-header",
+        "status": "not-tested",
+        "evidencePath": ""
+      }
+    ]
+  }
+}
