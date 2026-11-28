@@ -157,7 +157,9 @@ try {
  for(const [name,css] of [['text-200','html{font-size:200%}'],['spacing','*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}']]){
   await proof.setViewportSize({width:390,height:844});
   const style=await proof.addStyleTag({content:css});
-  assert.ok(await proof.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' horizontal overflow');
+  await proof.screenshot({path:`artifacts/commercial/${name}-before-assert.png`,fullPage:true});
+  const overflow=await proof.evaluate(()=>[...document.querySelectorAll('body *')].filter(e=>{const b=e.getBoundingClientRect();return b.width&&b.right>innerWidth+1}).map(e=>({tag:e.tagName,cls:e.className,text:e.textContent.slice(0,70),right:e.getBoundingClientRect().right})));
+  assert.ok(await proof.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),name+' horizontal overflow '+JSON.stringify(overflow));
   await proof.screenshot({path:`artifacts/commercial/${name}.png`,fullPage:true});
   await style.evaluate(el=>el.remove());
  }
