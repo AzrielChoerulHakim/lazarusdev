@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Lazarus Dev atelier enhancement",
+    "audience": "Indonesian personal portfolio and small business buyers",
+    "primaryTask": "Choose a visual direction and prepare a correctly priced inquiry",
+    "thesis": "A surrealist atelier exhibits seven genuine concept illustrations before the service ledger because visual taste is the studio product."
+  },
+  "facts": [
+    {
+      "id": "F1",
+      "claim": "Seven illustrated design directions and existing forest artwork",
+      "source": "index.html and desain/assets at bc3e073",
+      "status": "verified"
+    },
+    {
+      "id": "F2",
+      "claim": "Standard 179000, Premium 249000, Business 899000 with ten add-ons",
+      "source": "index.html at bc3e073",
+      "status": "verified"
+    },
+    {
+      "id": "F3",
+      "claim": "Owner requests stronger visuals and animation guided by Design OS",
+      "source": "User instruction 2026-11-28",
+      "status": "verified"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "A",
+      "name": "Surrealist atelier",
+      "contentOrder": [
+        "invitation",
+        "design exhibition",
+        "package comparison",
+        "business builder",
+        "process",
+        "terms",
+        "order"
+      ],
+      "readingGrammar": "Large editorial invitation, image-led exhibition, quiet aligned pricing",
+      "media": "Existing forest framed as a gateway; seven existing concept illustrations",
+      "interaction": "Native gallery links and existing process exchange",
+      "tradeoff": "Longer gallery before detailed prices; direct price anchors remain",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Commission desk",
+      "contentOrder": [
+        "brief",
+        "calculator",
+        "design samples",
+        "terms"
+      ],
+      "readingGrammar": "Compact sans labels and large numeric totals",
+      "media": "Small swatches beside selections",
+      "interaction": "Configuration first",
+      "tradeoff": "Efficient but undersells the studio visual craft",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Field journal",
+      "contentOrder": [
+        "forest chapters",
+        "process notes",
+        "designs",
+        "prices"
+      ],
+      "readingGrammar": "Continuous serif essay with marginal annotations",
+      "media": "Full painted chapters",
+      "interaction": "Narrative chapter traversal",
+      "tradeoff": "Too much story before shopping",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "D",
+      "name": "Specimen index",
+      "contentOrder": [
+        "design index",
+        "selected work",
+        "packages",
+        "contact"
+      ],
+      "readingGrammar": "Alphabetic sans index and captions",
+      "media": "One enlarged selected print",
+      "interaction": "Filterable index",
+      "tradeoff": "Adds unnecessary filtering for seven designs",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "E",
+      "name": "Diptych comparison",
+      "contentOrder": [
+        "personal versus business",
+        "included features",
+        "designs",
+        "order"
+      ],
+      "readingGrammar": "Parallel headings and aligned table cells",
+      "media": "Paired media columns",
+      "interaction": "Comparison toggles",
+      "tradeoff": "Task efficient but resembles a price comparison service",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "F",
+      "name": "Film programme",
+      "contentOrder": [
+        "sequence",
+        "design scenes",
+        "service menu",
+        "order"
+      ],
+      "readingGrammar": "Short scene titles and subtitle rhythm",
+      "media": "Sequential full-width illustrations",
+      "interaction": "Native vertical sequence",
+      "tradeoff": "Too much cinematic framing for concept illustrations",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "G",
+      "name": "Material archive",
+      "contentOrder": [
+        "material studies",
+        "capabilities",
+        "packages",
+        "brief"
+      ],
+      "readingGrammar": "Dense catalogue entries with restrained serif labels",
+      "media": "Contact sheet of all illustrations",
+      "interaction": "Expandable entries",
+      "tradeoff": "Images too small to demonstrate visual direction",
+      "evidenceIds": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "selection": {
+    "conceptId": "A",
+    "reason": "Balances studio visual authorship with immediately accessible prices and an existing working order state."
+  },
+  "signature": {
+    "description": "Forest gateway invitation followed by an asymmetric exhibition of the actual seven design concepts",
+    "evidenceIds": [
+      "F1",
+      "F3"
+    ],
+    "benefit": "Visitors see what they can commission before comparing service details",
+    "fallback": "Ordinary image links and complete price tables without scripts"
+  },
+  "decisions": [
+    {
+      "choice": "Reorder exhibition before detailed package comparison",
+      "benefit": "Makes design choice tangible while price anchors remain in opening",
+      "tradeoff": "Longer path to detailed prices via scrolling",
+      "evidenceIds": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "choice": "Retain S02 and S04; improve bounded hover and entry feedback",
+      "benefit": "Motion supports exploration without changing scroll input",
+      "tradeoff": "No continuous GPU scene",
+      "evidenceIds": [
+        "F3"
+      ]
+    }
+  ],
+  "avoid": [
+    {
+      "pattern": "Neon crypto dashboard and floating glass cards",
+      "reason": "Web3 quality means depth and interaction craft, not unrelated financial visual language"
+    },
+    {
+      "pattern": "Continuous particle loops or forced horizontal traversal",
+      "reason": "Would compete with pricing and phone reading"
+    }
+  ],
+  "comparison": {
+    "projects": [],
+    "note": "Compared with current commercial root and retained forest documentation; atelier changes reading order and media scale. No external client site comparison or independent review claimed."
+  },
+  "typography": {
+    "spec": "TYPE_SPEC.md",
+    "contentSource": "index.html at bc3e073",
+    "specimens": [
+      {
+        "id": "quiet",
+        "path": "docs/atelier/type-quiet.html",
+        "content": "Website untuk portofolio dan usaha kecil. Kirim CV atau materi usaha. Pilih gaya desain yang kamu suka, lalu kami urus pembuatan sampai website tayang. Portofolio personal mulai Rp179.000. Bisnis / UMKM mulai Rp899.000."
+      },
+      {
+        "id": "atelier",
+        "path": "docs/atelier/type-atelier.html",
+        "content": "Website untuk portofolio dan usaha kecil. Kirim CV atau materi usaha. Pilih gaya desain yang kamu suka, lalu kami urus pembuatan sampai website tayang. Portofolio personal mulai Rp179.000. Bisnis / UMKM mulai Rp899.000."
+      },
+      {
+        "id": "ledger",
+        "path": "docs/atelier/type-ledger.html",
+        "content": "Website untuk portofolio dan usaha kecil. Kirim CV atau materi usaha. Pilih gaya desain yang kamu suka, lalu kami urus pembuatan sampai website tayang. Portofolio personal mulai Rp179.000. Bisnis / UMKM mulai Rp899.000."
+      }
+    ],
+    "chosenId": "atelier",
+    "reason": "Invitation display is separated from compact purchase data; larger image-led compositions benefit from a clear typographic anchor. Quiet lacks authorship, ledger overweights price.",
+    "fontRights": "System Georgia, Times New Roman and system-ui only; no font binaries redistributed.",
+    "fallback": "Times New Roman then generic serif; OS sans for controls."
+  },
+  "voice": {
+    "spec": "TONE_OF_VOICE.md",
+    "language": "id-ID",
+    "tone": "professional-conversational",
+    "audience": "Personal portfolio and UMKM customers",
+    "pronouns": "kami / kamu; legal terms retain original formal wording",
+    "rationale": "Existing clear Indonesian commercial copy is retained",
+    "source": "index.html at bc3e073",
+    "evidenceIds": [
+      "F2"
+    ],
+    "preferred": [
+      "pilih",
+      "paket",
+      "desain"
+    ],
+    "avoid": [
+      "revolusioner",
+      "terbaik di dunia"
+    ],
+    "approval": "editorial-draft",
+    "samples": [
+      {
+        "id": "opening",
+        "copy": "Website untuk portofolio dan usaha kecil."
+      },
+      {
+        "id": "evidence",
+        "copy": "Mulai Rp179.000"
+      },
+      {
+        "id": "action",
+        "copy": "Lihat arah desain"
+      }
+    ]
+  },
+  "mobile": {
+    "spec": "docs/atelier/MOBILE.md",
+    "readingOrder": "Invitation, illustration, gallery, package tables, business configuration, process, terms, inquiry",
+    "sections": [
+      "hero",
+      "desain",
+      "personal",
+      "business",
+      "alur",
+      "ketentuan",
+      "kontak"
+    ],
+    "riskAreas": [
+      "Hero heading with large art",
+      "Gallery columns at tablet widths",
+      "Price numbers at 320",
+      "Long terms and form labels"
+    ],
+    "illustrationPolicy": "Separate artwork below heading at 800; show full image; no illustration overlays over copy",
+    "motionFallback": "No tilt on touch; no entry, hover transforms or sticky process under reduced motion"
+  },
+  "qa": {
+    "commit": "",
+    "environment": "",
+    "screenshots": [],
+    "mobileInspections": [],
+    "checks": [],
+    "reviews": [],
+    "independentReview": {
+      "status": "not-tested",
+      "notes": ""
+    }
+  }
+}
